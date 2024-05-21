@@ -34,7 +34,6 @@
     <Border Style="{StaticResource StyledBorder}" Margin="10">
         <StackPanel Orientation="Vertical">
             <TextBlock Text="{Binding Device.Name}" Foreground="Black" FontWeight="Bold" FontSize="16" Margin="0 10 0 0" HorizontalAlignment="Center"/>
-            <Button Content="Add Device" Command="{Binding AddDeviceCommand}" Width="70" Margin="0 10 0 0"/>
         </StackPanel>
         
     </Border>

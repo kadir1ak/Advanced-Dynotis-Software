@@ -66,7 +66,11 @@ namespace Advanced_Dynotis_Software.ViewModels.Windows
             {
                 if (!string.IsNullOrEmpty(SelectedPort))
                 {
-                    devicesViewModel.Add(new DeviceViewModel(SelectedPort));
+                    // Check if the device with the selected port already exists
+                    if (!devicesViewModel.Any(device => device.Device.Name == SelectedPort))
+                    {
+                        devicesViewModel.Add(new DeviceViewModel(SelectedPort));
+                    }
                 }
             });
         }
