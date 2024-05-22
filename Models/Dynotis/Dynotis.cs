@@ -1,18 +1,20 @@
-﻿using Newtonsoft.Json;
-using System.Collections.ObjectModel;
+﻿using System;
 using System.ComponentModel;
 using System.IO.Ports;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
-
 
 namespace Advanced_Dynotis_Software.Models.Dynotis
 {
     public class Dynotis : INotifyPropertyChanged
     {
-        public string Name { get; set; }
-        public SerialPort Port { get; set; }
+        public string Name { get; set; } // Cihazın adı
+        public SerialPort Port { get; set; } // Seri port bağlantısı
 
-        private Thread DeviceThread;
+        private CancellationTokenSource _cancellationTokenSource; // Veri alımını iptal etmek için kullanılan token kaynağı
+
+        public event Action devicePortsEvent;
 
         private SensorData sensorData;
         public SensorData SensorData
@@ -21,55 +23,55 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             set
             {
                 sensorData = value;
-                OnPropertyChanged(nameof(SensorData));
+                OnPropertyChanged(nameof(SensorData)); // SensorData değiştiğinde UI'ı bilgilendir
             }
         }
-        
-        public Dynotis(string _name)
+
+        public Dynotis(string name)
         {
-            Name = _name;
-            Port = new SerialPort(_name, 921600);
+            Name = name;
+            Port = new SerialPort(name, 921600); // 921600 baud hızında seri port oluştur
             SensorData = new SensorData();
-            DeviceThread = new Thread(DeviceDataReceived);
-            DeviceThread.IsBackground = true;
-            DeviceThread.Start();
+            _cancellationTokenSource = new CancellationTokenSource();
         }
-        private void DeviceDataReceived()
+
+        // Veri alımını başlatır
+        public void StartReceivingData()
+        {
+            _cancellationTokenSource = new CancellationTokenSource();
+            Task.Run(() => DeviceDataReceived(_cancellationTokenSource.Token)); // Veri alımı için yeni bir görev başlatır
+        }
+
+        // Asenkron veri alım işlemi
+        private async Task DeviceDataReceived(CancellationToken token)
         {
             try
             {
-                while (true)
+                while (!token.IsCancellationRequested)
                 {
                     if (Port.IsOpen)
                     {
-                        string indata = Port.ReadLine();
+                        // Seri porttan satır okuma işlemi
+                        string indata = await Task.Run(() => Port.ReadLine());
 
-                        // Split the received CSV string by comma
+                        // Gelen veriyi virgülle ayırma
                         string[] dataParts = indata.Split(',');
 
-                        // Ensure that we have received all expected data parts
+                        // Beklenen tüm veri parçalarının alındığından emin olma
                         if (dataParts.Length == 6)
                         {
-                            // Parse each part and update the sensor data
-                            int time = int.Parse(dataParts[0]);
-                            int ambientTemp = int.Parse(dataParts[1]);
-                            int motorTemp = int.Parse(dataParts[2]);
-                            int motorSpeed = int.Parse(dataParts[3]);
-                            int thrust = int.Parse(dataParts[4]);
-                            int torque = int.Parse(dataParts[5]);
-
-                            // Use a temporary variable to avoid repeated UI thread dispatching
+                            // Her parçayı ayrıştırma ve sensör verilerini güncelleme
                             var newData = new SensorData
                             {
-                                Time = time,
-                                AmbientTemp = ambientTemp,
-                                MotorTemp = motorTemp,
-                                MotorSpeed = motorSpeed,
-                                Thrust = thrust,
-                                Torque = torque
+                                Time = int.Parse(dataParts[0]),
+                                AmbientTemp = int.Parse(dataParts[1]),
+                                MotorTemp = int.Parse(dataParts[2]),
+                                MotorSpeed = int.Parse(dataParts[3]),
+                                Thrust = int.Parse(dataParts[4]),
+                                Torque = int.Parse(dataParts[5])
                             };
 
-                            // Dispatch the UI update only once after all properties are set
+                            // UI güncellemesini tek seferde yapma
                             App.Current.Dispatcher.Invoke(() =>
                             {
                                 SensorData = newData;
@@ -77,43 +79,63 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                         }
                         else
                         {
-                            // If the received data does not match the expected format, handle the error
-                            throw new Exception("Received data does not match the expected format.");
+                            // Beklenen formatta veri gelmediyse hata fırlatma
+                            //MessageBox.Show("sayı hatası");
+                            //throw new Exception("Received data does not match the expected format.");
                         }
                     }
+
+                    await Task.Delay(1); // 1000Hz frekansına uymak için gecikme
                 }
             }
             catch (Exception ex)
             {
-                // Handle any exceptions gracefully
-                MessageBox.Show(ex.Message);
+                // Hataları kullanıcıya gösterme
+                //App.Current.Dispatcher.Invoke(() => MessageBox.Show(ex.Message));
+                devicePortsEvent.Invoke();
             }
         }
 
+        // Seri portu açar ve veri alımını başlatır
         public void OpenPort()
         {
             if (Port != null && !Port.IsOpen)
             {
-                //Port.DataReceived += DataReceivedHandler;
-                Port.Open();
-                MessageBox.Show("(OpenPort): " + Port.PortName);
+                try
+                {
+                    Port.Open();
+                    StartReceivingData();
+                    //MessageBox.Show("(OpenPort): " + Port.PortName);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Failed to open port: {ex.Message}");
+                }
             }
         }
 
+        // Seri portu kapatır ve veri alımını durdurur
         public void ClosePort()
         {
             if (Port != null && Port.IsOpen)
             {
-                //Port.DataReceived -= DataReceivedHandler; // Unsubscribe from DataReceived event
-                Port.Close();
-                MessageBox.Show("(ClosePort): " + Port.PortName);
+                try
+                {
+                    _cancellationTokenSource.Cancel(); // Veri alımını iptal et
+                    Port.Close();
+                    //MessageBox.Show("(ClosePort): " + Port.PortName);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Failed to close port: {ex.Message}");
+                }
             }
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); // Property değişikliklerini bildir
         }
     }
 }

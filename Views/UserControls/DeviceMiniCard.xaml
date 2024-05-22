@@ -33,7 +33,7 @@
 
     <Border Style="{StaticResource StyledBorder}" Margin="10">
         <StackPanel Orientation="Vertical">
-            <TextBlock Text="{Binding Device.Name}" Foreground="Black" FontWeight="Bold" FontSize="16" Margin="0 10 0 0" HorizontalAlignment="Center"/>
+            <TextBlock Text="{Binding Device.Name}" Foreground="Black" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </StackPanel>
         
     </Border>

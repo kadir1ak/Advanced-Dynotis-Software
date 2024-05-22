@@ -37,7 +37,7 @@ namespace Advanced_Dynotis_Software.Models.Serial
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Bağlantı durumu değiştirilemedi: {ex.Message}");
+                MessageBox.Show($"SerialPortsChangedEvents: {ex.Message}");
             }
         }
 
@@ -51,7 +51,7 @@ namespace Advanced_Dynotis_Software.Models.Serial
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Physically İşlem Hatası: {ex.Message}");
+                    MessageBox.Show($"SerialPortsPhysicallyRemovedEventHandler: {ex.Message}");
                 }
             });
         }
@@ -76,7 +76,7 @@ namespace Advanced_Dynotis_Software.Models.Serial
                         SerialPort portToAdd = new SerialPort(portName);
                         serialPorts?.Add(portToAdd);
                         portToAdd.Disposed += (sender, e) => Port_Disposed(sender, e, portToAdd.PortName);
-                        MessageBox.Show($"AddEvent:{portToAdd.PortName}");
+                        //MessageBox.Show($"AddEvent:{portToAdd.PortName}");
                         serialPortsEvent.Invoke();
                     }
                 }
@@ -95,7 +95,7 @@ namespace Advanced_Dynotis_Software.Models.Serial
                         if (portToRemove != null)
                         {
                             serialPorts.Remove(portToRemove);
-                            MessageBox.Show($"RemoveEvent:{portToRemove.PortName}");
+                            //MessageBox.Show($"RemoveEvent:{portToRemove.PortName}");
                             serialPortsEvent.Invoke();
                         }
                     }
@@ -108,7 +108,7 @@ namespace Advanced_Dynotis_Software.Models.Serial
             Application.Current.Dispatcher.Invoke(() =>
             {
                 // Seri port nesnesi artık yok edildiğinde yapılacak işlemler...
-                MessageBox.Show($"Disposed: {portName}");
+                //MessageBox.Show($"Disposed: {portName}");
             });
         }
         public void ScanSerialPorts()
@@ -126,7 +126,7 @@ namespace Advanced_Dynotis_Software.Models.Serial
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"İşlem Hatası: {ex.Message}");
+                MessageBox.Show($"ScanSerialPorts: {ex.Message}");
             }
         }
 

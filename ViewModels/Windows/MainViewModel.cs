@@ -42,13 +42,13 @@ namespace Advanced_Dynotis_Software.ViewModels.Windows
                 OnPropertyChanged(nameof(SelectedPort));
             }
         }
-
         public MainViewModel()
         {
             devicesViewModel = new ObservableCollection<DeviceViewModel>();
             serialPortsManager = new SerialPortsManager();
             serialPortsManager.serialPortsEvent += SerialPortsEvent;
             AvailablePorts = serialPortsManager.serialPorts.Select(port => port.PortName).ToList();
+            AddMiniCard();
             AddDeviceCommand = new RelayCommand(AddDevice);
             RemoveDeviceCommand = new RelayCommand(RemoveDevice);
         }
@@ -57,8 +57,33 @@ namespace Advanced_Dynotis_Software.ViewModels.Windows
             Application.Current.Dispatcher.Invoke(() =>
             {
                 AvailablePorts = serialPortsManager.serialPorts.Select(port => port.PortName).ToList();
+                AddMiniCard();
             });
            
+        }
+        public void AddMiniCard()
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                // Eski cihazları kaldır
+                foreach (var device in devicesViewModel.ToList())
+                {
+                    if (!AvailablePorts.Contains(device.Device.Name))
+                    {
+                        device.Device.ClosePort();
+                        devicesViewModel.Remove(device);
+                    }
+                }
+
+                // Yeni cihazları ekle
+                foreach (var port in AvailablePorts)
+                {
+                    if (!string.IsNullOrEmpty(port) && !devicesViewModel.Any(device => device.Device.Name == port))
+                    {
+                        devicesViewModel.Add(new DeviceViewModel(port));
+                    }
+                }
+            });
         }
         private void AddDevice(object parameter)
         {
