@@ -42,20 +42,29 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
         }
         public async void DevicePortsEvent()
         {
-            // Sorun yaşanan portu kapat
-            Device.ClosePort();
-
-            // Belirli bir süre sonra portu tekrar açmaya çalış
-            await Task.Delay(1000);
-
-            // Cihazı tekrar aç ve güncelle
-            Device.OpenPort();
-
-            // Eğer hala bağlantı sorunu devam ediyorsa, kullanıcıya bilgi ver
-            if (!Device.Port.IsOpen)
+            try
             {
-                MessageBox.Show("DevicePortsEvent");
+                // Sorun yaşanan portu kapat
+                Device.ClosePort();
+
+                // Belirli bir süre sonra portu tekrar açmaya çalış
+                await Task.Delay(1000);
+
+                // Cihazı tekrar aç ve güncelle
+                Device.OpenPort();
+
+                // Eğer hala bağlantı sorunu devam ediyorsa, kullanıcıya bilgi ver
+                if (!Device.Port.IsOpen)
+                {
+                    // MessageBox.Show("DevicePortsEvent");
+                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed DevicePortsEvent: {ex.Message}");
+ 
+            }
+
         }
 
         protected void OnPropertyChanged(string propertyName)
