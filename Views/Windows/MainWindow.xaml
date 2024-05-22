@@ -6,7 +6,6 @@
         xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.Windows"
         xmlns:vmWindows="clr-namespace:Advanced_Dynotis_Software.ViewModels.Windows"
         xmlns:uc="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
-        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
         Title="MainWindow" Height="550" Width="750"
         Background="LightSkyBlue"

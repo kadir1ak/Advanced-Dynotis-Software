@@ -1,5 +1,4 @@
-﻿using Advanced_Dynotis_Software.Views.Pages;
-using LiveCharts.Definitions.Charts;
+﻿using LiveCharts.Definitions.Charts;
 using LiveCharts.Wpf.Charts.Base;
 using System;
 using System.Collections.Generic;
