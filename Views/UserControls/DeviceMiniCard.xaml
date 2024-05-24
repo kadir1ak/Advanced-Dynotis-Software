@@ -4,8 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
+             xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="120">
+             d:DesignHeight="120" d:DesignWidth="200">
 
     <UserControl.Resources>
         <!-- Border Style -->
@@ -32,8 +33,31 @@
     </UserControl.Resources>
 
     <Border Style="{StaticResource StyledBorder}" Margin="10">
-        <StackPanel Orientation="Vertical">
-            <TextBlock Text="{Binding Device.Name}" Foreground="Black" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <StackPanel Orientation="Horizontal">
+            <icon:PackIconMaterial Kind="WindTurbine" Width="80" Height="80" 
+                        Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="PortName:" Grid.Row="0" Grid.Column="0" Foreground="Black" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="2"/>
+                <TextBlock Text="Model:" Grid.Row="1" Grid.Column="0" Foreground="Black" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="2"/>
+                <TextBlock Text="SeriNo:" Grid.Row="2" Grid.Column="0" Foreground="Black" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="2"/>
+
+                <TextBlock Text="{Binding Device.PortName}" Grid.Row="0" Grid.Column="1"  Foreground="Black" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
+                <TextBlock Text="{Binding Device.Model}" Grid.Row="1" Grid.Column="1"  Foreground="Black" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
+                <TextBlock Text="{Binding Device.SeriNo}" Grid.Row="2" Grid.Column="1"  Foreground="Black" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
+
+            </Grid>
+
         </StackPanel>
         
     </Border>

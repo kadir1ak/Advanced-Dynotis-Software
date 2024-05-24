@@ -1,15 +1,15 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.IO.Ports;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Advanced_Dynotis_Software.Models.Dynotis
 {
     public class Dynotis : INotifyPropertyChanged
     {
-        public string Name { get; set; } // Cihazın adı
+        public string PortName { get; set; } // Cihazın adı
+        public string DeviceMode { get; set; } // Cihazın modu
+        public string Model { get; set; } // Cihazın modeli
+        public string SeriNo { get; set; } // Cihazın seri numarası
         public SerialPort Port { get; set; } // Seri port bağlantısı
 
         private CancellationTokenSource _cancellationTokenSource; // Veri alımını iptal etmek için kullanılan token kaynağı
@@ -27,10 +27,11 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             }
         }
 
-        public Dynotis(string name)
+        public Dynotis(string portName)
         {
-            Name = name;
-            Port = new SerialPort(name, 921600); // 921600 baud hızında seri port oluştur
+            PortName = portName;
+            DeviceMode = "DEVICE_INFO";
+            Port = new SerialPort(portName, 921600); // 921600 baud hızında seri port oluştur
             SensorData = new SensorData();
             _cancellationTokenSource = new CancellationTokenSource();
         }
@@ -39,7 +40,52 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         public void StartReceivingData()
         {
             _cancellationTokenSource = new CancellationTokenSource();
-            Task.Run(() => DeviceDataReceived(_cancellationTokenSource.Token)); // Veri alımı için yeni bir görev başlatır
+            Task.Run(() => WaitForKeyMessage(_cancellationTokenSource.Token));
+        }
+
+        // KEY mesajını bekler ve DEVICE_INFO mesajını gönderir
+        private async Task WaitForKeyMessage(CancellationToken token)
+        {
+            try
+            {
+                while (!token.IsCancellationRequested)
+                {
+                    if (Port.IsOpen)
+                    {
+                        // Seri porttan satır okuma işlemi
+                        string indata = await Task.Run(() => Port.ReadLine());
+
+                        // Gelen mesajı kontrol et
+                        if (indata.Trim().StartsWith("KEY:"))
+                        {
+                            // KEY mesajını ayrıştırma
+                            string[] keyParts = indata.Trim().Split(':');
+                            if (keyParts.Length == 3)
+                            {
+                                Model = keyParts[1];
+                                SeriNo = keyParts[2];
+
+                                // SENSOR_DATA mesajını gönder
+                                await Task.Run(() => Port.WriteLine("SENSOR_DATA"));
+                                DeviceMode = "SENSOR_DATA";
+                                // Sensör verilerini almaya başla
+                                await DeviceDataReceived(token);
+                            }
+                        }
+                        if(DeviceMode == "DEVICE_INFO")
+                        {
+                            // DEVICE_INFO mesajını gönder
+                            await Task.Run(() => Port.WriteLine("DEVICE_INFO"));
+                        }
+                    }
+
+                    await Task.Delay(1); // Kısa bir gecikme
+                }
+            }
+            catch (Exception ex)
+            {
+                devicePortsEvent?.Invoke();
+            }
         }
 
         // Asenkron veri alım işlemi
@@ -51,48 +97,48 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 {
                     if (Port.IsOpen)
                     {
-                        // Seri porttan satır okuma işlemi
-                        string indata = await Task.Run(() => Port.ReadLine());
-
-                        // Gelen veriyi virgülle ayırma
-                        string[] dataParts = indata.Split(',');
-
-                        // Beklenen tüm veri parçalarının alındığından emin olma
-                        if (dataParts.Length == 6)
+                        if (DeviceMode == "DEVICE_INFO")
                         {
-                            // Her parçayı ayrıştırma ve sensör verilerini güncelleme
-                            var newData = new SensorData
-                            {
-                                Time = int.Parse(dataParts[0]),
-                                AmbientTemp = int.Parse(dataParts[1]),
-                                MotorTemp = int.Parse(dataParts[2]),
-                                MotorSpeed = int.Parse(dataParts[3]),
-                                Thrust = int.Parse(dataParts[4]),
-                                Torque = int.Parse(dataParts[5])
-                            };
-
-                            // UI güncellemesini tek seferde yapma
-                            App.Current.Dispatcher.Invoke(() =>
-                            {
-                                SensorData = newData;
-                            });
+                            // DEVICE_INFO mesajını gönder
+                            await Task.Run(() => Port.WriteLine("DEVICE_INFO"));
                         }
-                        else
+                        else if (DeviceMode == "SENSOR_DATA")
                         {
-                            // Beklenen formatta veri gelmediyse hata fırlatma
-                            //MessageBox.Show("sayı hatası");
-                            //throw new Exception("Received data does not match the expected format.");
+                            // Seri porttan satır okuma işlemi
+                            string indata = await Task.Run(() => Port.ReadLine());
+
+                            // Gelen veriyi virgülle ayırma
+                            string[] dataParts = indata.Split(',');
+
+                            // Beklenen tüm veri parçalarının alındığından emin olma
+                            if (dataParts.Length == 6)
+                            {
+                                // Her parçayı ayrıştırma ve sensör verilerini güncelleme
+                                var newData = new SensorData
+                                {
+                                    Time = int.Parse(dataParts[0]),
+                                    AmbientTemp = int.Parse(dataParts[1]),
+                                    MotorTemp = int.Parse(dataParts[2]),
+                                    MotorSpeed = int.Parse(dataParts[3]),
+                                    Thrust = int.Parse(dataParts[4]),
+                                    Torque = int.Parse(dataParts[5])
+                                };
+
+                                // UI güncellemesini tek seferde yapma
+                                App.Current.Dispatcher.Invoke(() =>
+                                {
+                                    SensorData = newData;
+                                });
+                            }
                         }
                     }
 
-                    await Task.Delay(1); // 1000Hz frekansına uymak için gecikme
+                    await Task.Delay(10); // 10ms gecikme, 100Hz frekansı
                 }
             }
             catch (Exception ex)
             {
-                // Hataları kullanıcıya gösterme
-                //App.Current.Dispatcher.Invoke(() => MessageBox.Show(ex.Message));
-                devicePortsEvent.Invoke();
+                devicePortsEvent?.Invoke();
             }
         }
 
@@ -105,7 +151,6 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 {
                     Port.Open();
                     StartReceivingData();
-                    //MessageBox.Show("(OpenPort): " + Port.PortName);
                 }
                 catch (Exception ex)
                 {
@@ -123,7 +168,6 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 {
                     _cancellationTokenSource.Cancel(); // Veri alımını iptal et
                     Port.Close();
-                    //MessageBox.Show("(ClosePort): " + Port.PortName);
                 }
                 catch (Exception ex)
                 {

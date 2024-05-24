@@ -68,7 +68,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Windows
                 // Eski cihazları kaldır
                 foreach (var device in devicesViewModel.ToList())
                 {
-                    if (!AvailablePorts.Contains(device.Device.Name))
+                    if (!AvailablePorts.Contains(device.Device.PortName))
                     {
                         device.Device.ClosePort();
                         devicesViewModel.Remove(device);
@@ -78,7 +78,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Windows
                 // Yeni cihazları ekle
                 foreach (var port in AvailablePorts)
                 {
-                    if (!string.IsNullOrEmpty(port) && !devicesViewModel.Any(device => device.Device.Name == port))
+                    if (!string.IsNullOrEmpty(port) && !devicesViewModel.Any(device => device.Device.PortName == port))
                     {
                         devicesViewModel.Add(new DeviceViewModel(port));
                     }
@@ -92,7 +92,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Windows
                 if (!string.IsNullOrEmpty(SelectedPort))
                 {
                     // Check if the device with the selected port already exists
-                    if (!devicesViewModel.Any(device => device.Device.Name == SelectedPort))
+                    if (!devicesViewModel.Any(device => device.Device.PortName == SelectedPort))
                     {
                         devicesViewModel.Add(new DeviceViewModel(SelectedPort));
                     }

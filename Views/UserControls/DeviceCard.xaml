@@ -10,7 +10,7 @@
              Name="Card">
     
     <Grid>
-        <Border Width="400" Height="800">
+        <Border Width="250" Height="720">
             <StackPanel>
                 <TextBlock Text="{Binding Device.Name}" Foreground="Black" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center"/>
                 <Grid HorizontalAlignment="Center">
@@ -99,12 +99,16 @@
                     <TextBlock Text="WindDirection: " Grid.Row="12" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center"/>
                     <TextBlock Text="{Binding  Device.SensorData.WindSpeed}" Grid.Row="12" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center"/>
                 </Grid>
-                <Button Content="Remove Device" 
-                        Command="{Binding DataContext.RemoveDeviceCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
-                        CommandParameter="{Binding}" 
-                        Width="100" Margin="5"/>
+
+                <!--  <Button Content="Remove Device" -->
+                  <!--        Command="{Binding DataContext.RemoveDeviceCommand, RelativeSource={RelativeSource AncestorType=Window}}" -->
+                 <!--         CommandParameter="{Binding}" -->
+                  <!--        Width="100" Margin="5"/> -->
+
+              
+                
                 <!-- Chart -->
-                <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Right" Margin="5" Height="400">
+                <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Right" Margin="5" Height="100">
                     <lvc:CartesianChart.AxisX>
                         <lvc:Axis Title="Time" Labels="{Binding Labels}"/>
                     </lvc:CartesianChart.AxisX>
@@ -112,6 +116,10 @@
                         <lvc:Axis Title="Ambient Temperature"/>
                     </lvc:CartesianChart.AxisY>
                 </lvc:CartesianChart>
+
+                <!-- MiniCard -->
+                <local:DeviceMiniCard DataContext="{Binding}"/>
+                
             </StackPanel>
         </Border>
     </Grid>

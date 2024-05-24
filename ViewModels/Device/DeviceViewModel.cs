@@ -25,60 +25,13 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
                 OnPropertyChanged(nameof(Device));
             }
         }
-
-        //@@@@@@@@@@@@@@@@@@@@@@@
-        private readonly object _dataLock = new object();
-        private readonly Queue<SensorData> _dataQueue = new Queue<SensorData>();
-        private Timer _updateTimer;
-
-        private SeriesCollection seriesCollection;
-        public SeriesCollection SeriesCollection
-        {
-            get => seriesCollection;
-            set
-            {
-                seriesCollection = value;
-                OnPropertyChanged(nameof(SeriesCollection));
-            }
-        }
-
-        private ObservableCollection<string> labels;
-        public ObservableCollection<string> Labels
-        {
-            get => labels;
-            set
-            {
-                labels = value;
-                OnPropertyChanged(nameof(Labels));
-            }
-        }
-        //@@@@@@@@@@@@@@@@@@@@@@@
-
-        public DeviceViewModel(string port)
+        public DeviceViewModel(string portName)
         {
             if (!DesignerProperties.GetIsInDesignMode(new DependencyObject()))
             {
-                Device = new Dynotis(port);
+                Device = new Dynotis(portName);
                 Device.OpenPort();
                 Device.devicePortsEvent += DevicePortsEvent;
-                //@@@@@@@@@@@@@@@@@@@@@@@
-                // Initialize SeriesCollection and Labels
-                SeriesCollection = new SeriesCollection
-                {
-                    new LineSeries
-                    {
-                        Title = "Ambient Temp",
-                        Values = new ChartValues<double>()
-                    }
-                };
-                Labels = new ObservableCollection<string>();
-
-                Device.PropertyChanged += Device_PropertyChanged;
-
-                // Setup a timer to debounce UI updates
-                _updateTimer = new Timer(UpdateChart, null, 100, 100);
-                //@@@@@@@@@@@@@@@@@@@@@@@
-
             }
             else
             {
@@ -86,48 +39,6 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
                 //Device = new Dynotis("DesignModePort");
             }
         }
-        //@@@@@@@@@@@@@@@@@@@@@@@
-
-        private void Device_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(Device.SensorData))
-            {
-                lock (_dataLock)
-                {
-                    _dataQueue.Enqueue(Device.SensorData);
-                }
-            }
-        }
-
-        private void UpdateChart(object state)
-        {
-            App.Current.Dispatcher.Invoke(() =>
-            {
-                lock (_dataLock)
-                {
-                    while (_dataQueue.Count > 0)
-                    {
-                        var sensorData = _dataQueue.Dequeue();
-
-                        // Add new data points to the chart
-                        ((LineSeries)SeriesCollection[0]).Values.Add(sensorData.AmbientTemp);
-                        Labels.Add(sensorData.Time.ToString());
-
-                        // Keep only the latest 100 data points
-                        if (((LineSeries)SeriesCollection[0]).Values.Count > 100)
-                        {
-                            ((LineSeries)SeriesCollection[0]).Values.RemoveAt(0);
-                            Labels.RemoveAt(0);
-                        }
-                    }
-
-                    OnPropertyChanged(nameof(SeriesCollection));
-                    OnPropertyChanged(nameof(Labels));
-                }
-            });
-        }
-
-        //@@@@@@@@@@@@@@@@@@@@@@@
         public async void DevicePortsEvent()
         {
             try

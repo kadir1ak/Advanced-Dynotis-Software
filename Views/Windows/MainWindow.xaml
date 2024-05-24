@@ -7,7 +7,7 @@
         xmlns:vmWindows="clr-namespace:Advanced_Dynotis_Software.ViewModels.Windows"
         xmlns:uc="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="550" Width="750"
+        Title="MainWindow" Height="850" Width="1280"
         Background="LightSkyBlue"
         WindowStartupLocation="CenterScreen">
     <Window.DataContext>
@@ -18,8 +18,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
-                <RowDefinition Height="10*"/>
-                <RowDefinition Height="3*"/>
+                <RowDefinition Height="20*"/>
             </Grid.RowDefinitions>
             <ComboBox Grid.Row="0" ItemsSource="{Binding AvailablePorts}" SelectedItem="{Binding SelectedPort}" Width="200" Margin="5"/>
             <Button Grid.Row="1" Content="Add Device" Command="{Binding AddDeviceCommand}" Width="100" Margin="5"/>
@@ -33,20 +32,6 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <uc:DeviceCard DataContext="{Binding}"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
-            <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto">
-                <ItemsControl ItemsSource="{Binding devicesViewModel}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <uc:DeviceMiniCard DataContext="{Binding}"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
