@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
              xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d" 
-             d:DesignHeight="120" d:DesignWidth="200">
+             d:DesignHeight="120" d:DesignWidth="250">
 
     <UserControl.Resources>
         <!-- Border Style -->

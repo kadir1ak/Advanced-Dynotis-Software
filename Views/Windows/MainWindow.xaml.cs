@@ -2,6 +2,7 @@
 using LiveCharts.Wpf.Charts.Base;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,7 +25,6 @@ namespace Advanced_Dynotis_Software.Views.Windows
         public MainWindow()
         {
             InitializeComponent();
-          
         }
     }
 }

@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Documents\Curser\" />
     <Folder Include="Documents\Icons\" />
     <Folder Include="ViewModels\Settings\" />
     <Folder Include="Views\Pages\" />

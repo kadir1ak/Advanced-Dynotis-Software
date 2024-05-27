@@ -31,39 +31,12 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
             {
                 Device = new Dynotis(portName);
                 Device.OpenPort();
-                Device.devicePortsEvent += DevicePortsEvent;
             }
             else
             {
                 // Tasarım zamanı için örnek veri
                 //Device = new Dynotis("DesignModePort");
             }
-        }
-        public async void DevicePortsEvent()
-        {
-            try
-            {
-                // Sorun yaşanan portu kapat
-                Device.ClosePort();
-
-                // Belirli bir süre sonra portu tekrar açmaya çalış
-                await Task.Delay(1000);
-
-                // Cihazı tekrar aç ve güncelle
-                Device.OpenPort();
-
-                // Eğer hala bağlantı sorunu devam ediyorsa, kullanıcıya bilgi ver
-                if (!Device.Port.IsOpen)
-                {
-                    // MessageBox.Show("DevicePortsEvent");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Failed DevicePortsEvent: {ex.Message}");
- 
-            }
-
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

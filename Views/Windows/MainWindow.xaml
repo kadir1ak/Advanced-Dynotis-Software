@@ -20,8 +20,6 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="20*"/>
             </Grid.RowDefinitions>
-            <ComboBox Grid.Row="0" ItemsSource="{Binding AvailablePorts}" SelectedItem="{Binding SelectedPort}" Width="200" Margin="5"/>
-            <Button Grid.Row="1" Content="Add Device" Command="{Binding AddDeviceCommand}" Width="100" Margin="5"/>
             <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
                 <ItemsControl ItemsSource="{Binding devicesViewModel}">
                     <ItemsControl.ItemsPanel>
