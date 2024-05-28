@@ -176,11 +176,11 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                                 var newData = new SensorData
                                 {
                                     Time = int.Parse(dataParts[0]),
-                                    AmbientTemp = int.Parse(dataParts[1]),
-                                    MotorTemp = int.Parse(dataParts[2]),
-                                    MotorSpeed = int.Parse(dataParts[3]),
-                                    Thrust = int.Parse(dataParts[4]),
-                                    Torque = int.Parse(dataParts[5])
+                                    AmbientTemp = double.Parse(dataParts[1]),
+                                    MotorTemp = double.Parse(dataParts[2]),
+                                    MotorSpeed = double.Parse(dataParts[3]),
+                                    Thrust = double.Parse(dataParts[4]),
+                                    Torque = double.Parse(dataParts[5])
                                 };
 
                                 App.Current.Dispatcher.Invoke(() =>
