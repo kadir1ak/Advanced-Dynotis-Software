@@ -4,7 +4,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 {
     public class SensorData : INotifyPropertyChanged
     {
-        private double time;
+        private int time;
         private double ambientTemp;
         private double motorTemp;
         private double motorSpeed;
@@ -17,7 +17,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         private double windSpeed;
         private double windDirection;
 
-        public double Time
+        public int Time
         {
             get => time;
             set
