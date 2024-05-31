@@ -17,15 +17,16 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
         public SeriesCollection AmbientTempSeriesCollection { get; set; }
         public SeriesCollection MotorTempSeriesCollection { get; set; }
         public SeriesCollection MotorSpeedSeriesCollection { get; set; }
+        public SeriesCollection VoltageSeriesCollection { get; set; }
         public SeriesCollection ThrustSeriesCollection { get; set; }
         public SeriesCollection TorqueSeriesCollection { get; set; }
         public ObservableCollection<string> TimeLabels { get; set; }
 
         private Dynotis device;
-        private List<SensorData> _sensorDataBuffer;
+        private Queue<SensorData> _sensorDataBuffer;
         private object _bufferLock = new object();
-        private DispatcherTimer _dispatcherTimer;
-        private const int BufferLimit = 100;
+        private const int BufferLimit = 1;
+        private const int MaxDataPoints = 100;
 
         public Dynotis Device
         {
@@ -43,75 +44,86 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
             {
                 Device = new Dynotis(portName);
                 Device.OpenPort();
+                Charts_InitializeComponent();
+            }
+        }
 
-                AmbientTempSeriesCollection = new SeriesCollection
-                {
-                   new LineSeries
-                   {
-                        Title = "Ambient Temperature",
-                        Values = new ChartValues<double>(),
-                        PointGeometrySize = 0,
-                        LineSmoothness = 0,
-                        Stroke = new SolidColorBrush((Color)ColorConverter.ConvertFromString("orange"))
-                   }
+        private void Charts_InitializeComponent()
+        {
+            AmbientTempSeriesCollection = CreateSeriesCollection("Ambient Temperature", Colors.IndianRed);
+            MotorTempSeriesCollection = CreateSeriesCollection("Motor Temperature", Colors.DarkOliveGreen);
+            MotorSpeedSeriesCollection = CreateSeriesCollection("Motor Speed", Colors.PaleVioletRed);
+            VoltageSeriesCollection = CreateSeriesCollection("Voltage", Colors.Orange);
+            ThrustSeriesCollection = CreateSeriesCollection("Thrust", Colors.DarkOliveGreen);
+            TorqueSeriesCollection = CreateSeriesCollection("Torque", Colors.HotPink);
 
-                };
-                MotorTempSeriesCollection = new SeriesCollection
+            TimeLabels = new ObservableCollection<string>();
+            _sensorDataBuffer = new Queue<SensorData>();
+
+            Device.PropertyChanged += Device_PropertyChanged;
+
+            InitializeDefaultChartData();
+
+            _ = UpdateChartDataAsync(); // Başlangıçta asenkron veri güncelleme işlemi başlatılıyor
+        }
+        private void InitializeDefaultChartData()
+        {
+            double defaultValue = 50; // Varsayılan başlangıç değeri
+            for (int i = 0; i < MaxDataPoints; i++)
+            {
+                TimeLabels.Add(i.ToString());
+                UpdateSeries(AmbientTempSeriesCollection, defaultValue);
+                UpdateSeries(MotorTempSeriesCollection, defaultValue);
+                UpdateSeries(MotorSpeedSeriesCollection, defaultValue);
+                UpdateSeries(VoltageSeriesCollection, defaultValue);
+                UpdateSeries(ThrustSeriesCollection, defaultValue);
+                UpdateSeries(TorqueSeriesCollection, defaultValue);
+            }
+        }
+        private SeriesCollection CreateSeriesCollection(string title, Color color)
+        {
+            var seriesCollection = new SeriesCollection
+            {
+                new LineSeries
                 {
-                    new LineSeries
+                    Title = title,
+                    Values = new ChartValues<double>(),
+                    PointGeometrySize = 0, // Veri noktalarının boyutunu belirler
+                    LineSmoothness = 1, // Çizgi yumuşaklığını belirler
+                    Stroke = new SolidColorBrush(color),
+                    StrokeThickness = 2, // Çizgi kalınlığını belirler
+                    Fill = new SolidColorBrush(Color.FromArgb(50, color.R, color.G, color.B)), // Serinin altını doldurmak için kullanılır
+                    PointForeground = new SolidColorBrush(Colors.Black), // Veri noktalarının rengini belirler
+                    LabelPoint = point => point.Y.ToString("N1") // Veri noktalarının etiketlerini biçimlendirmek için kullanılır
+                }
+            };
+
+            return seriesCollection;
+        }
+
+
+        private async Task UpdateChartDataAsync()
+        {
+            while (true)
+            {
+                SensorData sensorData = null;
+                lock (_bufferLock)
+                {
+                    if (_sensorDataBuffer.Count > 0)
                     {
-                        Title = "Motor Temperature",
-                        Values = new ChartValues<double>(),
-                        PointGeometrySize = 0,
-                        LineSmoothness = 0,
-                        Stroke = new SolidColorBrush(Colors.HotPink)
+                        sensorData = _sensorDataBuffer.Dequeue();
                     }
-                };
-                MotorSpeedSeriesCollection = new SeriesCollection
-                {
-                    new LineSeries
-                    {
-                        Title = "Motor Speed",
-                        Values = new ChartValues<double>(),
-                        PointGeometrySize = 0,
-                        LineSmoothness = 0,
-                        Stroke = new SolidColorBrush(Colors.PaleVioletRed)
-                    }
-                };
-                ThrustSeriesCollection = new SeriesCollection
-                {
-                    new LineSeries
-                    {
-                        Title = "Thrust",
-                        Values = new ChartValues<double>(),
-                        PointGeometrySize = 0,
-                        LineSmoothness = 0,
-                        Stroke = new SolidColorBrush(Colors.DarkOliveGreen)
-                    }
-                };
-                TorqueSeriesCollection = new SeriesCollection
-                {
-                    new LineSeries
-                    {
-                        Title = "Torque",
-                        Values = new ChartValues<double>(),
-                        PointGeometrySize = 0,
-                        LineSmoothness = 0,
-                        Stroke = new SolidColorBrush(Colors.IndianRed)
-                    }
-                };
+                }
 
-                TimeLabels = new ObservableCollection<string>();
-                _sensorDataBuffer = new List<SensorData>();
-
-                Device.PropertyChanged += Device_PropertyChanged;
-
-                _dispatcherTimer = new DispatcherTimer
+                if (sensorData != null)
                 {
-                    Interval = TimeSpan.FromMilliseconds(10) // 10 ms'de bir UI güncelle (100 Hz)
-                };
-                _dispatcherTimer.Tick += DispatcherTimer_Tick;
-                _dispatcherTimer.Start();
+                    await Application.Current.Dispatcher.InvokeAsync(() =>
+                    {
+                        UpdateChartData(sensorData);
+                    });
+                }
+
+                await Task.Delay(10); // Güncelleme aralığını artırarak CPU ve RAM kullanımını azalt
             }
         }
 
@@ -121,51 +133,39 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
             {
                 lock (_bufferLock)
                 {
-                    _sensorDataBuffer.Add(Device.SensorData);
-
-                    if (_sensorDataBuffer.Count > BufferLimit)
+                    if (_sensorDataBuffer.Count >= BufferLimit)
                     {
-                        _sensorDataBuffer.RemoveAt(0);
+                        _sensorDataBuffer.Dequeue(); // En eski veriyi çıkar
                     }
+                    _sensorDataBuffer.Enqueue(Device.SensorData); // Yeni veriyi ekle
                 }
             }
         }
 
-        private async void DispatcherTimer_Tick(object sender, EventArgs e)
+        private void UpdateChartData(SensorData sensorData)
         {
-            List<SensorData> bufferCopy;
-
-            lock (_bufferLock)
+            if (TimeLabels.Count >= MaxDataPoints)
             {
-                bufferCopy = new List<SensorData>(_sensorDataBuffer);
-                _sensorDataBuffer.Clear();
+                TimeLabels.RemoveAt(0);
             }
+            TimeLabels.Add(sensorData.Time.ToString());
 
-            await Task.Run(() =>
+            UpdateSeries(AmbientTempSeriesCollection, sensorData.AmbientTemp);
+            UpdateSeries(MotorTempSeriesCollection, sensorData.MotorTemp);
+            UpdateSeries(MotorSpeedSeriesCollection, sensorData.MotorSpeed);
+            UpdateSeries(VoltageSeriesCollection, sensorData.Voltage);
+            UpdateSeries(ThrustSeriesCollection, sensorData.Thrust);
+            UpdateSeries(TorqueSeriesCollection, sensorData.Torque);
+        }
+
+        private void UpdateSeries(SeriesCollection seriesCollection, double value)
+        {
+            var values = ((LineSeries)seriesCollection[0]).Values;
+            if (values.Count >= MaxDataPoints)
             {
-                foreach (var sensorData in bufferCopy)
-                {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        TimeLabels.Add(sensorData.Time.ToString());
-                        AmbientTempSeriesCollection[0].Values.Add(sensorData.AmbientTemp);
-                        MotorTempSeriesCollection[0].Values.Add(sensorData.MotorTemp);
-                        MotorSpeedSeriesCollection[0].Values.Add(sensorData.MotorSpeed);
-                        ThrustSeriesCollection[0].Values.Add(sensorData.Thrust);
-                        TorqueSeriesCollection[0].Values.Add(sensorData.Torque);
-
-                        if (TimeLabels.Count > 100)
-                        {
-                            TimeLabels.RemoveAt(0);
-                            AmbientTempSeriesCollection[0].Values.RemoveAt(0);
-                            MotorTempSeriesCollection[0].Values.RemoveAt(0);
-                            MotorSpeedSeriesCollection[0].Values.RemoveAt(0);
-                            ThrustSeriesCollection[0].Values.RemoveAt(0);
-                            TorqueSeriesCollection[0].Values.RemoveAt(0);
-                        }
-                    });
-                }
-            });
+                values.RemoveAt(0);
+            }
+            values.Add(value);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -175,3 +175,5 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
         }
     }
 }
+
+

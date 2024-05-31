@@ -11,7 +11,7 @@
              d:DataContext="{d:DesignInstance Type=vmWindows:MainViewModel}"
              Name="Card">
     <Grid>
-        <Border Width="500" Height="1280">
+        <Border Width="300" Height="1280">
             <StackPanel>
                 <TextBlock Text="{Binding Device.Name}" Foreground="Black" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center"/>
                 <Grid HorizontalAlignment="Center">
@@ -90,7 +90,7 @@
 
                     <!-- Titreşim -->
                     <TextBlock Text="Vibration: " Grid.Row="10" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center"/>
-                    <TextBlock Text="{Binding  Device.SensorData.Vibration}" Grid.Row="10" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding  Device.SensorData.VibrationX}" Grid.Row="10" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center"/>
 
                     <!-- Rüzgar Hızı -->
                     <TextBlock Text="WindSpeed: " Grid.Row="11" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center"/>
@@ -101,15 +101,13 @@
                     <TextBlock Text="{Binding  Device.SensorData.WindSpeed}" Grid.Row="12" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center"/>
                 </Grid>
 
+
+          
+                
                 <!-- Ambient Temperature Chart -->
-                <TextBlock Text="Ambient Temperature" Grid.Row="1" Grid.ColumnSpan="2" Foreground="Black" FontWeight="Bold" FontSize="14" HorizontalAlignment="Center"/>
-                <lvc:CartesianChart Series="{Binding AmbientTempSeriesCollection}" Grid.Row="2" Grid.ColumnSpan="2" Height="150" Margin="5">
+                <lvc:CartesianChart Series="{Binding AmbientTempSeriesCollection}" Grid.Row="2" Grid.ColumnSpan="2" Height="150" Margin="5" DisableAnimations="True">
                     <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="Black">
-                            <lvc:Axis.Separator>
-                                <lvc:Separator Step="10"/>
-                            </lvc:Axis.Separator>
-                        </lvc:Axis>
+                        <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="Black"></lvc:Axis>
                     </lvc:CartesianChart.AxisX>
                     <lvc:CartesianChart.AxisY>
                         <lvc:Axis Title="Temperature (°C)" Foreground="Black"></lvc:Axis>
@@ -117,7 +115,7 @@
                 </lvc:CartesianChart>
 
                 <!-- Motor Temperature Chart -->
-                <lvc:CartesianChart Series="{Binding MotorTempSeriesCollection}" Height="100" Margin="5">
+                <lvc:CartesianChart Series="{Binding MotorTempSeriesCollection}" Height="100" Margin="5" DisableAnimations="True">
                     <lvc:CartesianChart.AxisX>
                         <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="Black"></lvc:Axis>
                     </lvc:CartesianChart.AxisX>
@@ -127,7 +125,7 @@
                 </lvc:CartesianChart>
 
                 <!-- Motor Speed Chart -->
-                <lvc:CartesianChart Series="{Binding MotorSpeedSeriesCollection}" Height="100" Margin="5">
+                <lvc:CartesianChart Series="{Binding MotorSpeedSeriesCollection}" Height="100" Margin="5" DisableAnimations="True">
                     <lvc:CartesianChart.AxisX>
                         <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="Black"></lvc:Axis>
                     </lvc:CartesianChart.AxisX>
@@ -135,9 +133,19 @@
                         <lvc:Axis Title="Motor Speed (RPM)" Foreground="Black"></lvc:Axis>
                     </lvc:CartesianChart.AxisY>
                 </lvc:CartesianChart>
+                
+                <!-- Voltage Chart -->
+                <lvc:CartesianChart Series="{Binding VoltageSeriesCollection}" Height="100" Margin="5" DisableAnimations="True">
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="Black"></lvc:Axis>
+                    </lvc:CartesianChart.AxisX>
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="Voltage (V)" Foreground="Black"></lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                </lvc:CartesianChart>
 
                 <!-- Thrust Chart -->
-                <lvc:CartesianChart Series="{Binding ThrustSeriesCollection}" Height="100" Margin="5">
+                <lvc:CartesianChart Series="{Binding ThrustSeriesCollection}" Height="100" Margin="5" DisableAnimations="True">
                     <lvc:CartesianChart.AxisX>
                         <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="Black"></lvc:Axis>
                     </lvc:CartesianChart.AxisX>
@@ -147,7 +155,7 @@
                 </lvc:CartesianChart>
 
                 <!-- Torque Chart -->
-                <lvc:CartesianChart Series="{Binding TorqueSeriesCollection}" Height="100" Margin="5">
+                <lvc:CartesianChart Series="{Binding TorqueSeriesCollection}" Height="100" Margin="5" DisableAnimations="True">
                     <lvc:CartesianChart.AxisX>
                         <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="Black"></lvc:Axis>
                     </lvc:CartesianChart.AxisX>

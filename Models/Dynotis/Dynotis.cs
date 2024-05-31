@@ -118,7 +118,6 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 await WaitForKeyMessage(_cancellationTokenSource.Token);
             });
         }
-
         private async Task WaitForKeyMessage(CancellationToken token)
         {
             try
@@ -147,8 +146,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                             await Task.Run(() => Port.WriteLine("DEVICE_INFO"));
                         }
                     }
-
-                    Thread.Sleep(1);
+                    Thread.Sleep(10);
                 }
             }
             catch (Exception ex)
@@ -171,16 +169,23 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                         {
                             string[] dataParts = indata.Split(',');
 
-                            if (dataParts.Length == 6)
+                            if (dataParts.Length == 13)
                             {
                                 var newData = new SensorData
                                 {
                                     Time = int.Parse(dataParts[0]),
-                                    AmbientTemp = double.Parse(dataParts[1]),
-                                    MotorTemp = double.Parse(dataParts[2]),
-                                    MotorSpeed = double.Parse(dataParts[3]),
-                                    Thrust = double.Parse(dataParts[4]),
-                                    Torque = double.Parse(dataParts[5])
+                                    Current = double.Parse(dataParts[1]),
+                                    Voltage = double.Parse(dataParts[2]),
+                                    Thrust = double.Parse(dataParts[3]),
+                                    Torque = double.Parse(dataParts[4]),
+                                    MotorSpeed = double.Parse(dataParts[5]),
+                                    VibrationX = double.Parse(dataParts[6]),
+                                    VibrationY = double.Parse(dataParts[7]),
+                                    VibrationZ = double.Parse(dataParts[8]),
+                                    AmbientTemp = double.Parse(dataParts[9]),
+                                    MotorTemp = double.Parse(dataParts[10]),
+                                    Pressure = double.Parse(dataParts[11]),
+                                    Humidity = double.Parse(dataParts[12])
                                 };
 
                                 App.Current.Dispatcher.Invoke(() =>
@@ -190,8 +195,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                             }
                         }
                     }
-
-                    Thread.Sleep(1); // 10ms gecikme
+                    Thread.Sleep(10);
                 }
             }
             catch (Exception ex)

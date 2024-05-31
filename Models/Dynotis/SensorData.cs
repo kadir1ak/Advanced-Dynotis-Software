@@ -13,9 +13,11 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         private double voltage;
         private double current;
         private double pressure;
+        private double humidity;
+        private double vibrationX;
+        private double vibrationY;
+        private double vibrationZ;
         private double vibration;
-        private double windSpeed;
-        private double windDirection;
 
         public int Time
         {
@@ -134,6 +136,57 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             }
         }
 
+        public double Humidity
+        {
+            get => humidity;
+            set
+            {
+                if (humidity != value)
+                {
+                    humidity = value;
+                    OnPropertyChanged(nameof(Humidity));
+                }
+            }
+        }
+
+        public double VibrationX
+        {
+            get => vibrationX;
+            set
+            {
+                if (vibrationX != value)
+                {
+                    vibrationX = value;
+                    OnPropertyChanged(nameof(VibrationX));
+                }
+            }
+        }
+
+        public double VibrationY
+        {
+            get => vibrationY;
+            set
+            {
+                if (vibrationY != value)
+                {
+                    vibrationY = value;
+                    OnPropertyChanged(nameof(VibrationY));
+                }
+            }
+        }
+
+        public double VibrationZ
+        {
+            get => vibrationZ;
+            set
+            {
+                if (vibrationZ != value)
+                {
+                    vibrationZ = value;
+                    OnPropertyChanged(nameof(VibrationZ));
+                }
+            }
+        }
         public double Vibration
         {
             get => vibration;
@@ -147,32 +200,6 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             }
         }
 
-        public double WindSpeed
-        {
-            get => windSpeed;
-            set
-            {
-                if (windSpeed != value)
-                {
-                    windSpeed = value;
-                    OnPropertyChanged(nameof(WindSpeed));
-                }
-            }
-        }
-
-        public double WindDirection
-        {
-            get => windDirection;
-            set
-            {
-                if (windDirection != value)
-                {
-                    windDirection = value;
-                    OnPropertyChanged(nameof(WindDirection));
-                }
-            }
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged(string propertyName)
@@ -180,5 +207,4 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
-
 }
