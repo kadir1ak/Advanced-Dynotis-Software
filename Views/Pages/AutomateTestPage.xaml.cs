@@ -1,5 +1,4 @@
-﻿using Advanced_Dynotis_Software.Models.Dynotis;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,21 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Advanced_Dynotis_Software.Views.UserControls
+namespace Advanced_Dynotis_Software.Views.Pages
 {
     /// <summary>
-    /// DeviceMiniCard.xaml etkileşim mantığı
+    /// Interaction logic for AutomateTestPage.xaml
     /// </summary>
-    public partial class DeviceMiniCard : UserControl
+    public partial class AutomateTestPage : UserControl
     {
-        public DeviceMiniCard()
+        public AutomateTestPage()
         {
             InitializeComponent();
-        }
-
-        private void DeviceOpenButton_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

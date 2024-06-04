@@ -8,31 +8,63 @@
         xmlns:uc="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
         mc:Ignorable="d"
         Title="MainWindow" Height="1080" Width="1920"
-        WindowStartupLocation="CenterScreen"
-        Background="LightSkyBlue">
+        AllowsTransparency="True" Background="Transparent"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None">
     <Window.DataContext>
         <vmWindows:MainViewModel/>
     </Window.DataContext>
-    <Grid>
+    <Border CornerRadius="25" Background="#151f2d" MouseDown="MainBorder_MouseDown">
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="2*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <ScrollViewer Grid.Row="0" Grid.Column="0" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left">
-                <ItemsControl ItemsSource="{Binding devicesViewModel}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <uc:DeviceMiniCard DataContext="{Binding}"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="75"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <!-- Device List Menu -->
+                <ScrollViewer Grid.Row="3" Grid.Column="0" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 50 0 0">
+                    <ItemsControl ItemsSource="{Binding devicesViewModel}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <uc:DeviceMiniCard DataContext="{Binding}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+                <!-- Left Menu -->
+                <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="1">
+                    <Grid>
+                        <StackPanel x:Name="LeftMenuPanel" VerticalAlignment="Top">
+                            <!-- Ellipses-->
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 30 0 40">
+                                <Ellipse Width="8" Height="8" Fill="#eb1700"/>
+                                <Ellipse Width="8" Height="8" Fill="#ffaf01" Margin="10 0"/>
+                                <Ellipse Width="8" Height="8" Fill="#009d00"/>
+                            </StackPanel>
+                            <!--Menu Button-->
+                            <uc:MenuButton Icon="Devices" Text="Device" IsActive="True" Click="MenuButton_Click" MouseEnter="MenuButton_MouseEnter" MouseLeave="MenuButton_MouseLeave"/>
+                            <uc:MenuButton Icon="Application" Text="Single Test" Click="MenuButton_Click" MouseEnter="MenuButton_MouseEnter" MouseLeave="MenuButton_MouseLeave"/>
+                            <uc:MenuButton Icon="Multiplication" Text="Coaxial" Click="MenuButton_Click" MouseEnter="MenuButton_MouseEnter" MouseLeave="MenuButton_MouseLeave"/>
+                            <uc:MenuButton Icon="Multiplication" Text="Multi Test" Click="MenuButton_Click" MouseEnter="MenuButton_MouseEnter" MouseLeave="MenuButton_MouseLeave"/>
+                            <uc:MenuButton Icon="ChartLine" Text="Chart" Click="MenuButton_Click" MouseEnter="MenuButton_MouseEnter" MouseLeave="MenuButton_MouseLeave"/>
+                            <uc:MenuButton Icon="Autorenew" Text="Automate Test" Click="MenuButton_Click" MouseEnter="MenuButton_MouseEnter" MouseLeave="MenuButton_MouseLeave"/>
+                            <uc:MenuButton Icon="ContentSaveCog" Text="Save Config" Click="MenuButton_Click" MouseEnter="MenuButton_MouseEnter" MouseLeave="MenuButton_MouseLeave"/>
+                            <uc:MenuButton Icon="BookSyncOutline" Text="Books" Click="MenuButton_Click" MouseEnter="MenuButton_MouseEnter" MouseLeave="MenuButton_MouseLeave"/>
+                            <uc:MenuButton Icon="AlertCircleCheckOutline" Text="Alerts" Click="MenuButton_Click" MouseEnter="MenuButton_MouseEnter" MouseLeave="MenuButton_MouseLeave"/>
+                            <uc:MenuButton Icon="CogOutline" Text="Settings" Click="MenuButton_Click" MouseEnter="MenuButton_MouseEnter" MouseLeave="MenuButton_MouseLeave"/>
+                            <uc:MenuButton Icon="Update" Text="Software Update" Click="MenuButton_Click" MouseEnter="MenuButton_MouseEnter" MouseLeave="MenuButton_MouseLeave"/>
+                        </StackPanel>
+                        <uc:MenuButton Icon="Power" Text="Power" VerticalAlignment="Bottom" Margin="0 0 0 15" Click="MenuButton_Click"/>
+                    </Grid>
+                </Border>
+                <!-- Content Area -->
+                <ContentControl x:Name="ContentArea" Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" Grid.ColumnSpan="3"/>
+            </Grid>
         </Grid>
-    </Grid>
+    </Border>
 </Window>

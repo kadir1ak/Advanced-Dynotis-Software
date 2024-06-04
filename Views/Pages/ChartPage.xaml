@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="Advanced_Dynotis_Software.Views.Pages.ChartPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.Pages"
+             xmlns:vmWindows="clr-namespace:Advanced_Dynotis_Software.ViewModels.Windows"
+             xmlns:uc="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
+             mc:Ignorable="d">
+    <Grid>
+        <!-- Device List Menu -->
+        <ScrollViewer VerticalScrollBarVisibility="Auto" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <ItemsControl ItemsSource="{Binding devicesViewModel}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <uc:DeviceCard DataContext="{Binding}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

@@ -92,7 +92,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
                     LineSmoothness = 1, // Çizgi yumuşaklığını belirler
                     Stroke = new SolidColorBrush(color),
                     StrokeThickness = 2, // Çizgi kalınlığını belirler
-                    Fill = new SolidColorBrush(Color.FromArgb(50, color.R, color.G, color.B)), // Serinin altını doldurmak için kullanılır
+                    Fill = new SolidColorBrush(Color.FromArgb(10, color.R, color.G, color.B)), // Serinin altını doldurmak için kullanılır
                     PointForeground = new SolidColorBrush(Colors.Black), // Veri noktalarının rengini belirler
                     LabelPoint = point => point.Y.ToString("N1") // Veri noktalarının etiketlerini biçimlendirmek için kullanılır
                 }
