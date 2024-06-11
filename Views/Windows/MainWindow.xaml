@@ -9,7 +9,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="1080" Width="1920"
         AllowsTransparency="True" Background="Transparent"
-        WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None">
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None"
+        d:DataContext="{d:DesignInstance Type=vmWindows:MainViewModel, IsDesignTimeCreatable=True}">
     <Window.DataContext>
         <vmWindows:MainViewModel/>
     </Window.DataContext>
@@ -19,15 +20,15 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="75"/>
                     <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <!-- Device List Menu -->
-                <ScrollViewer Grid.Row="3" Grid.Column="0" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 50 0 0">
+                <ScrollViewer Grid.Row="2" Grid.Column="0" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 50 0 0">
                     <ItemsControl ItemsSource="{Binding devicesViewModel}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -40,35 +41,30 @@
                 <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="1">
                     <Grid>
                         <StackPanel x:Name="LeftMenuPanel" VerticalAlignment="Top">
-                            <!-- Ellipses-->
+                            <!-- Ellipses -->
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 30 0 40">
                                 <Ellipse Width="8" Height="8" Fill="#eb1700"/>
                                 <Ellipse Width="8" Height="8" Fill="#ffaf01" Margin="10 0"/>
                                 <Ellipse Width="8" Height="8" Fill="#009d00"/>
                             </StackPanel>
-                            <!--Menu Button-->
-                            <uc:MenuButton Icon="Devices" Text="Device" IsActive="True" Click="MenuButton_Click" MouseEnter="MenuButton_MouseEnter" MouseLeave="MenuButton_MouseLeave"/>
-                            <uc:MenuButton Icon="Application" Text="Single Test" Click="MenuButton_Click" MouseEnter="MenuButton_MouseEnter" MouseLeave="MenuButton_MouseLeave"/>
-                            <uc:MenuButton Icon="Multiplication" Text="Coaxial" Click="MenuButton_Click" MouseEnter="MenuButton_MouseEnter" MouseLeave="MenuButton_MouseLeave"/>
-                            <uc:MenuButton Icon="Multiplication" Text="Multi Test" Click="MenuButton_Click" MouseEnter="MenuButton_MouseEnter" MouseLeave="MenuButton_MouseLeave"/>
-                            <uc:MenuButton Icon="ChartLine" Text="Chart" Click="MenuButton_Click" MouseEnter="MenuButton_MouseEnter" MouseLeave="MenuButton_MouseLeave"/>
-                            <uc:MenuButton Icon="Autorenew" Text="Automate Test" Click="MenuButton_Click" MouseEnter="MenuButton_MouseEnter" MouseLeave="MenuButton_MouseLeave"/>
-                            <uc:MenuButton Icon="ContentSaveCog" Text="Save Config" Click="MenuButton_Click" MouseEnter="MenuButton_MouseEnter" MouseLeave="MenuButton_MouseLeave"/>
-                            <uc:MenuButton Icon="BookSyncOutline" Text="Books" Click="MenuButton_Click" MouseEnter="MenuButton_MouseEnter" MouseLeave="MenuButton_MouseLeave"/>
-                            <uc:MenuButton Icon="AlertCircleCheckOutline" Text="Alerts" Click="MenuButton_Click" MouseEnter="MenuButton_MouseEnter" MouseLeave="MenuButton_MouseLeave"/>
-                            <uc:MenuButton Icon="CogOutline" Text="Settings" Click="MenuButton_Click" MouseEnter="MenuButton_MouseEnter" MouseLeave="MenuButton_MouseLeave"/>
-                            <uc:MenuButton Icon="Update" Text="Software Update" Click="MenuButton_Click" MouseEnter="MenuButton_MouseEnter" MouseLeave="MenuButton_MouseLeave"/>
+                            <!-- Menu Buttons -->
+                            <uc:MenuButton Icon="Devices" Text="Device" IsActive="True" Click="MenuButton_Click"/>
+                            <uc:MenuButton Icon="Application" Text="Single Test" Click="MenuButton_Click"/>
+                            <uc:MenuButton Icon="Multiplication" Text="Coaxial" Click="MenuButton_Click"/>
+                            <uc:MenuButton Icon="Multiplication" Text="Multi Test" Click="MenuButton_Click"/>
+                            <uc:MenuButton Icon="ChartLine" Text="Chart" Click="MenuButton_Click"/>
+                            <uc:MenuButton Icon="Autorenew" Text="Automate Test" Click="MenuButton_Click"/>
+                            <uc:MenuButton Icon="ContentSaveCog" Text="Save Config" Click="MenuButton_Click"/>
+                            <uc:MenuButton Icon="BookSyncOutline" Text="Books" Click="MenuButton_Click"/>
+                            <uc:MenuButton Icon="AlertCircleCheckOutline" Text="Alerts" Click="MenuButton_Click"/>
+                            <uc:MenuButton Icon="CogOutline" Text="Settings" Click="MenuButton_Click"/>
+                            <uc:MenuButton Icon="Update" Text="Software Update" Click="MenuButton_Click"/>
                         </StackPanel>
                         <uc:MenuButton Icon="Power" Text="Power" VerticalAlignment="Bottom" Margin="0 0 0 15" Click="MenuButton_Click"/>
                     </Grid>
                 </Border>
                 <!-- Content Area -->
-                <ContentControl x:Name="ContentArea" Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" Grid.ColumnSpan="3"/>
-                <Button x:Name="button1" Content="Hover over me" Width="150" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Button.ToolTip>
-                        <ToolTip Content="üzerine geldin" />
-                    </Button.ToolTip>
-                </Button>
+                <ContentControl x:Name="ContentArea" Grid.Row="0" Grid.RowSpan="3" Grid.Column="2"/>
             </Grid>
         </Grid>
     </Border>

@@ -8,8 +8,20 @@
              xmlns:uc="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
              mc:Ignorable="d">
     <Grid>
-        <!-- Device List Menu -->
-        <ScrollViewer VerticalScrollBarVisibility="Auto" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="100*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" Orientation="Vertical">
+            <Label Content="Device List" Foreground="LawnGreen"/>
+            <ComboBox  ></ComboBox>
+            <Button Content="Device Add" Height="50" Width="100"></Button>
+            <Button Content="Device Exit" Height="50" Width="100"></Button>
+        </StackPanel>
+        
+       
+        <!-- Device List -->
+        <ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Auto" VerticalAlignment="Center" HorizontalAlignment="Center">
             <ItemsControl ItemsSource="{Binding devicesViewModel}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>

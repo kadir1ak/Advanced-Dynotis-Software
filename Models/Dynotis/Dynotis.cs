@@ -4,13 +4,14 @@ using System.IO.Ports;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using Advanced_Dynotis_Software.Services.Logger;
 
 namespace Advanced_Dynotis_Software.Models.Dynotis
 {
     public class Dynotis : INotifyPropertyChanged
     {
         public readonly SerialPort Port;
-        private CancellationTokenSource _cancellationTokenSource;
+        private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -20,8 +21,11 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             get => _portName;
             set
             {
-                _portName = value;
-                OnPropertyChanged(nameof(PortName));
+                if (_portName != value)
+                {
+                    _portName = value;
+                    OnPropertyChanged(nameof(PortName));
+                }
             }
         }
 
@@ -31,8 +35,11 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             get => _mode;
             set
             {
-                _mode = value;
-                OnPropertyChanged(nameof(Mode));
+                if (_mode != value)
+                {
+                    _mode = value;
+                    OnPropertyChanged(nameof(Mode));
+                }
             }
         }
 
@@ -42,8 +49,11 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             get => _model;
             set
             {
-                _model = value;
-                OnPropertyChanged(nameof(Model));
+                if (_model != value)
+                {
+                    _model = value;
+                    OnPropertyChanged(nameof(Model));
+                }
             }
         }
 
@@ -53,8 +63,11 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             get => _seriNo;
             set
             {
-                _seriNo = value;
-                OnPropertyChanged(nameof(SeriNo));
+                if (_seriNo != value)
+                {
+                    _seriNo = value;
+                    OnPropertyChanged(nameof(SeriNo));
+                }
             }
         }
 
@@ -64,37 +77,38 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             get => _sensorData;
             set
             {
-                _sensorData = value;
-                OnPropertyChanged(nameof(SensorData));
+                if (_sensorData != value)
+                {
+                    _sensorData = value;
+                    OnPropertyChanged(nameof(SensorData));
+                }
             }
         }
 
         public Dynotis(string portName)
         {
-            _portName = portName;
-            _mode = "DEVICE_INFO";
             Port = new SerialPort(portName, 921600);
+            _portName = portName;
             _sensorData = new SensorData();
-            _cancellationTokenSource = new CancellationTokenSource();
         }
 
-        public void OpenPort()
+        public async Task OpenPortAsync()
         {
             if (Port != null && !Port.IsOpen)
             {
                 try
                 {
                     Port.Open();
-                    StartReceivingData();
+                    await StartReceivingDataAsync();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Failed to open port: {ex.Message}");
+                    Logger.Log($"Failed to open port: {ex.Message}");
                 }
             }
         }
 
-        public void ClosePort()
+        public async Task ClosePortAsync()
         {
             if (Port != null && Port.IsOpen)
             {
@@ -105,102 +119,111 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Failed to close port: {ex.Message}");
+                    Logger.Log($"Failed to close port: {ex.Message}");
                 }
             }
         }
 
-        private async void StartReceivingData()
+        private async Task StartReceivingDataAsync()
         {
-            _cancellationTokenSource = new CancellationTokenSource();
             await Task.Run(async () =>
             {
-                await WaitForKeyMessage(_cancellationTokenSource.Token);
+                await WaitForKeyMessageAsync(_cancellationTokenSource.Token);
             });
         }
-        private async Task WaitForKeyMessage(CancellationToken token)
+
+        private async Task WaitForKeyMessageAsync(CancellationToken token)
         {
             try
             {
-                while (!token.IsCancellationRequested)
+                bool deviceInfoReceived = false;
+
+                while (!token.IsCancellationRequested && Port.IsOpen && !deviceInfoReceived)
                 {
-                    if (Port.IsOpen)
+                    string indata = await Task.Run(() => Port.ReadLine(), token);
+                    Logger.Log($"Received data: {indata}"); // Log raw data
+
+                    if (indata.Trim().StartsWith("KEY:"))
                     {
-                        string indata = await Task.Run(() => Port.ReadLine());
-
-                        if (indata.Trim().StartsWith("KEY:") && _mode != "SENSOR_DATA")
+                        string[] keyParts = indata.Trim().Split(':');
+                        if (keyParts.Length == 3)
                         {
-                            string[] keyParts = indata.Trim().Split(':');
-                            if (keyParts.Length == 3)
-                            {
-                                Model = keyParts[1];
-                                SeriNo = keyParts[2];
+                            Model = keyParts[1];
+                            SeriNo = keyParts[2];
 
-                                await Task.Run(() => Port.WriteLine("SENSOR_DATA"));
+                            if (!string.IsNullOrEmpty(Model) && !string.IsNullOrEmpty(SeriNo))
+                            {
+                                deviceInfoReceived = true;
+                                await Task.Run(() => Port.WriteLine("SENSOR_DATA"), token);
                                 Mode = "SENSOR_DATA";
-                                await DeviceDataReceived(token);
+                                await DeviceDataReceivedAsync(token);
                             }
                         }
-                        else if (_mode == "DEVICE_INFO")
-                        {
-                            await Task.Run(() => Port.WriteLine("DEVICE_INFO"));
-                        }
                     }
-                    Thread.Sleep(10);
+
+                    if (!deviceInfoReceived)
+                    {
+                        await Task.Run(() => Port.WriteLine("DEVICE_INFO"), token);
+                    }
+
+                    await Task.Delay(100); // Adjust delay if necessary
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error occurred: {ex.Message}");
+                Logger.Log($"An error occurred: {ex.Message}");
             }
         }
 
-        private async Task DeviceDataReceived(CancellationToken token)
+        private async Task DeviceDataReceivedAsync(CancellationToken token)
         {
             try
             {
-                while (!token.IsCancellationRequested)
+                while (!token.IsCancellationRequested && Port.IsOpen)
                 {
-                    if (Port.IsOpen && _mode == "SENSOR_DATA")
+                    string indata = await Task.Run(() => Port.ReadLine(), token);
+                    Logger.Log($"Received data: {indata}"); // Log raw data
+
+                    if (!indata.Trim().StartsWith("KEY:"))
                     {
-                        string indata = await Task.Run(() => Port.ReadLine());
+                        string[] dataParts = indata.Split(',');
 
-                        if (!indata.Trim().StartsWith("KEY:"))
+                        if (dataParts.Length == 13)
                         {
-                            string[] dataParts = indata.Split(',');
-
-                            if (dataParts.Length == 13)
+                            var newData = new SensorData
                             {
-                                var newData = new SensorData
-                                {
-                                    Time = int.Parse(dataParts[0]),
-                                    Current = double.Parse(dataParts[1]),
-                                    Voltage = double.Parse(dataParts[2]),
-                                    Thrust = double.Parse(dataParts[3]),
-                                    Torque = double.Parse(dataParts[4]),
-                                    MotorSpeed = double.Parse(dataParts[5]),
-                                    VibrationX = double.Parse(dataParts[6]),
-                                    VibrationY = double.Parse(dataParts[7]),
-                                    VibrationZ = double.Parse(dataParts[8]),
-                                    AmbientTemp = double.Parse(dataParts[9]),
-                                    MotorTemp = double.Parse(dataParts[10]),
-                                    Pressure = double.Parse(dataParts[11]),
-                                    Humidity = double.Parse(dataParts[12])
-                                };
+                                Time = int.Parse(dataParts[0]),
+                                Current = double.Parse(dataParts[1]),
+                                Voltage = double.Parse(dataParts[2]),
+                                Thrust = double.Parse(dataParts[3]),
+                                Torque = double.Parse(dataParts[4]),
+                                MotorSpeed = double.Parse(dataParts[5]),
+                                VibrationX = double.Parse(dataParts[6]),
+                                VibrationY = double.Parse(dataParts[7]),
+                                VibrationZ = double.Parse(dataParts[8]),
+                                AmbientTemp = double.Parse(dataParts[9]),
+                                MotorTemp = double.Parse(dataParts[10]),
+                                Pressure = double.Parse(dataParts[11]),
+                                Humidity = double.Parse(dataParts[12])
+                            };
 
-                                App.Current.Dispatcher.Invoke(() =>
-                                {
-                                    SensorData = newData;
-                                });
-                            }
+                            App.Current.Dispatcher.Invoke(() =>
+                            {
+                                SensorData = newData;
+                            });
+                        }
+                        else
+                        {
+                            Logger.Log($"Unexpected data format: {indata}");
                         }
                     }
-                    Thread.Sleep(10);
+
+                    await Task.Delay(10); // Adjust delay if necessary
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error occurred: {ex.Message}");
+                Logger.Log($"An error occurred: {ex.Message}");
             }
         }
 

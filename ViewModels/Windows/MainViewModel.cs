@@ -1,6 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO.Ports;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -15,20 +16,17 @@ namespace Advanced_Dynotis_Software.ViewModels.Windows
         public ObservableCollection<DeviceViewModel> devicesViewModel { get; set; }
         public SerialPortsManager serialPortsManager { get; set; }
 
-        private List<string>? _availablePorts;
-        public List<string>? AvailablePorts
+        private ObservableCollection<string>? _availablePorts;
+        public ObservableCollection<string>? AvailablePorts
         {
             get => _availablePorts;
             set
             {
                 _availablePorts = value;
-                OnPropertyPortsChanged();
+                OnPropertyChanged();
             }
         }
-        protected void OnPropertyPortsChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+
         public ICommand AddDeviceCommand { get; set; }
         public ICommand RemoveDeviceCommand { get; set; }
 
@@ -39,28 +37,30 @@ namespace Advanced_Dynotis_Software.ViewModels.Windows
             set
             {
                 selectedPort = value;
-                OnPropertyChanged(nameof(SelectedPort));
+                OnPropertyChanged();
             }
         }
+
         public MainViewModel()
         {
             devicesViewModel = new ObservableCollection<DeviceViewModel>();
             serialPortsManager = new SerialPortsManager();
-            serialPortsManager.serialPortsEvent += SerialPortsEvent;
-            AvailablePorts = serialPortsManager.serialPorts.Select(port => port.PortName).ToList();
+            serialPortsManager.SerialPortsEvent += SerialPortsEvent;
+            AvailablePorts = new ObservableCollection<string>(serialPortsManager.GetSerialPorts());
             AddMiniCard();
             AddDeviceCommand = new RelayCommand(AddDevice);
             RemoveDeviceCommand = new RelayCommand(RemoveDevice);
         }
+
         public void SerialPortsEvent()
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                AvailablePorts = serialPortsManager.serialPorts.Select(port => port.PortName).ToList();
+                AvailablePorts = new ObservableCollection<string>(serialPortsManager.GetSerialPorts());
                 AddMiniCard();
             });
-           
         }
+
         public void AddMiniCard()
         {
             Application.Current.Dispatcher.Invoke(() =>
@@ -70,7 +70,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Windows
                 {
                     if (!AvailablePorts.Contains(device.Device.PortName))
                     {
-                        device.Device.ClosePort();
+                        _ = device.Device.ClosePortAsync();
                         devicesViewModel.Remove(device);
                     }
                 }
@@ -85,6 +85,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Windows
                 }
             });
         }
+
         private void AddDevice(object parameter)
         {
             Application.Current.Dispatcher.Invoke(() =>
@@ -106,7 +107,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Windows
             {
                 if (parameter is DeviceViewModel deviceViewModel)
                 {
-                    deviceViewModel.Device.ClosePort();
+                    _ = deviceViewModel.Device.ClosePortAsync();
                     devicesViewModel.Remove(deviceViewModel);
                 }
             });
@@ -114,7 +115,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Windows
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void OnPropertyChanged(string name)
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }

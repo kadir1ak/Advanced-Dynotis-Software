@@ -33,8 +33,11 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
             get => device;
             set
             {
-                device = value;
-                OnPropertyChanged(nameof(Device));
+                if (device != value)
+                {
+                    device = value;
+                    OnPropertyChanged(nameof(Device));
+                }
             }
         }
 
@@ -43,9 +46,14 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
             if (!DesignerProperties.GetIsInDesignMode(new DependencyObject()))
             {
                 Device = new Dynotis(portName);
-                Device.OpenPort();
+                InitializeDeviceAsync();
                 Charts_InitializeComponent();
             }
+        }
+
+        private async void InitializeDeviceAsync()
+        {
+            await Device.OpenPortAsync();  // Correct usage of asynchronous method
         }
 
         private void Charts_InitializeComponent()
@@ -63,12 +71,12 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
             Device.PropertyChanged += Device_PropertyChanged;
 
             InitializeDefaultChartData();
-
-            _ = UpdateChartDataAsync(); // Başlangıçta asenkron veri güncelleme işlemi başlatılıyor
+            _ = UpdateChartDataAsync();  // Asynchronous chart data update
         }
+
         private void InitializeDefaultChartData()
         {
-            double defaultValue = 50; // Varsayılan başlangıç değeri
+            double defaultValue = 50;
             for (int i = 0; i < MaxDataPoints; i++)
             {
                 TimeLabels.Add(i.ToString());
@@ -80,27 +88,25 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
                 UpdateSeries(TorqueSeriesCollection, defaultValue);
             }
         }
+
         private SeriesCollection CreateSeriesCollection(string title, Color color)
         {
-            var seriesCollection = new SeriesCollection
+            return new SeriesCollection
             {
                 new LineSeries
                 {
                     Title = title,
                     Values = new ChartValues<double>(),
-                    PointGeometrySize = 0, // Veri noktalarının boyutunu belirler
-                    LineSmoothness = 1, // Çizgi yumuşaklığını belirler
+                    PointGeometrySize = 0,
+                    LineSmoothness = 1,
                     Stroke = new SolidColorBrush(color),
-                    StrokeThickness = 2, // Çizgi kalınlığını belirler
-                    Fill = new SolidColorBrush(Color.FromArgb(10, color.R, color.G, color.B)), // Serinin altını doldurmak için kullanılır
-                    PointForeground = new SolidColorBrush(Colors.Black), // Veri noktalarının rengini belirler
-                    LabelPoint = point => point.Y.ToString("N1") // Veri noktalarının etiketlerini biçimlendirmek için kullanılır
+                    StrokeThickness = 2,
+                    Fill = new SolidColorBrush(Color.FromArgb(10, color.R, color.G, color.B)),
+                    PointForeground = new SolidColorBrush(Colors.Black),
+                    LabelPoint = point => point.Y.ToString("N1")
                 }
             };
-
-            return seriesCollection;
         }
-
 
         private async Task UpdateChartDataAsync()
         {
@@ -123,7 +129,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
                     });
                 }
 
-                await Task.Delay(10); // Güncelleme aralığını artırarak CPU ve RAM kullanımını azalt
+                await Task.Delay(10);
             }
         }
 
@@ -135,9 +141,9 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
                 {
                     if (_sensorDataBuffer.Count >= BufferLimit)
                     {
-                        _sensorDataBuffer.Dequeue(); // En eski veriyi çıkar
+                        _sensorDataBuffer.Dequeue();  // Remove the oldest data
                     }
-                    _sensorDataBuffer.Enqueue(Device.SensorData); // Yeni veriyi ekle
+                    _sensorDataBuffer.Enqueue(Device.SensorData);  // Add new data
                 }
             }
         }
@@ -175,5 +181,3 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
         }
     }
 }
-
-
