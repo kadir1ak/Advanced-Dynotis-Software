@@ -64,6 +64,11 @@
                 </Border>
                 <!-- Content Area -->
                 <ContentControl x:Name="ContentArea" Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" Grid.ColumnSpan="3"/>
+                <Button x:Name="button1" Content="Hover over me" Width="150" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Button.ToolTip>
+                        <ToolTip Content="üzerine geldin" />
+                    </Button.ToolTip>
+                </Button>
             </Grid>
         </Grid>
     </Border>
