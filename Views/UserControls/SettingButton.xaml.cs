@@ -6,9 +6,9 @@ using MahApps.Metro.IconPacks;
 
 namespace Advanced_Dynotis_Software.Views.UserControls
 {
-    public partial class MenuButton : UserControl
+    public partial class SettingButton : UserControl
     {
-        public MenuButton()
+        public SettingButton()
         {
             InitializeComponent();
         }
@@ -20,7 +20,7 @@ namespace Advanced_Dynotis_Software.Views.UserControls
         }
 
         public static readonly DependencyProperty IconProperty =
-            DependencyProperty.Register(nameof(Icon), typeof(PackIconMaterialKind), typeof(MenuButton));
+            DependencyProperty.Register(nameof(Icon), typeof(PackIconMaterialKind), typeof(SettingButton));
 
         public bool IsActive
         {
@@ -29,7 +29,7 @@ namespace Advanced_Dynotis_Software.Views.UserControls
         }
 
         public static readonly DependencyProperty IsActiveProperty =
-            DependencyProperty.Register(nameof(IsActive), typeof(bool), typeof(MenuButton));
+            DependencyProperty.Register(nameof(IsActive), typeof(bool), typeof(SettingButton));
 
         public string Text
         {
@@ -38,7 +38,7 @@ namespace Advanced_Dynotis_Software.Views.UserControls
         }
 
         public static readonly DependencyProperty TextProperty =
-            DependencyProperty.Register(nameof(Text), typeof(string), typeof(MenuButton));
+            DependencyProperty.Register(nameof(Text), typeof(string), typeof(SettingButton));
 
         public event RoutedEventHandler Click;
         public event MouseEventHandler MouseEnterEvent;

@@ -18,7 +18,6 @@
         <Grid>
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="75"/>
                     <ColumnDefinition Width="100"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
@@ -27,18 +26,32 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <!-- Device List Menu -->
-                <ScrollViewer Grid.Row="2" Grid.Column="0" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 50 0 0">
-                    <ItemsControl ItemsSource="{Binding devicesViewModel}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <uc:DeviceMiniCard DataContext="{Binding}"/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </ScrollViewer>
+                <!-- Top Menu -->
+                <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="0 0 0 0">
+                    <!-- Device List Menu -->
+
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" VerticalAlignment="Center">
+                        <WrapPanel Orientation="Horizontal">
+                            <ItemsControl ItemsSource="{Binding devicesViewModel}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <uc:DeviceMiniCard DataContext="{Binding}" Margin="5"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </WrapPanel>
+                    </ScrollViewer>
+
+                    <!-- İçerik buraya gelecek -->
+                </Border>
+
                 <!-- Left Menu -->
-                <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="1">
+                <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="0">
                     <Grid>
                         <StackPanel x:Name="LeftMenuPanel" VerticalAlignment="Top">
                             <!-- Ellipses -->
@@ -48,23 +61,21 @@
                                 <Ellipse Width="8" Height="8" Fill="#009d00"/>
                             </StackPanel>
                             <!-- Menu Buttons -->
-                            <uc:MenuButton Icon="Devices" Text="Device" IsActive="True" Click="MenuButton_Click"/>
-                            <uc:MenuButton Icon="Application" Text="Single Test" Click="MenuButton_Click"/>
-                            <uc:MenuButton Icon="Multiplication" Text="Coaxial" Click="MenuButton_Click"/>
-                            <uc:MenuButton Icon="Multiplication" Text="Multi Test" Click="MenuButton_Click"/>
+                            <uc:MenuButton Icon="Devices" Text="Devices" IsActive="True" Click="MenuButton_Click"/>
+                            <uc:MenuButton Icon="UsbPort" Text="Single" Click="MenuButton_Click"/>
+                            <uc:MenuButton Icon="Usb" Text="Coaxial" Click="MenuButton_Click"/>
+                            <uc:MenuButton Icon="Multicast" Text="Multi" Click="MenuButton_Click"/>
+                            <uc:MenuButton Icon="Network" Text="API" Click="MenuButton_Click"/>
+                            <uc:MenuButton Icon="Script" Text="Script" Click="MenuButton_Click"/>
                             <uc:MenuButton Icon="ChartLine" Text="Chart" Click="MenuButton_Click"/>
                             <uc:MenuButton Icon="Autorenew" Text="Automate Test" Click="MenuButton_Click"/>
-                            <uc:MenuButton Icon="ContentSaveCog" Text="Save Config" Click="MenuButton_Click"/>
-                            <uc:MenuButton Icon="BookSyncOutline" Text="Books" Click="MenuButton_Click"/>
-                            <uc:MenuButton Icon="AlertCircleCheckOutline" Text="Alerts" Click="MenuButton_Click"/>
                             <uc:MenuButton Icon="CogOutline" Text="Settings" Click="MenuButton_Click"/>
-                            <uc:MenuButton Icon="Update" Text="Software Update" Click="MenuButton_Click"/>
                         </StackPanel>
                         <uc:MenuButton Icon="Power" Text="Power" VerticalAlignment="Bottom" Margin="0 0 0 15" Click="MenuButton_Click"/>
                     </Grid>
                 </Border>
                 <!-- Content Area -->
-                <ContentControl x:Name="ContentArea" Grid.Row="0" Grid.RowSpan="3" Grid.Column="2"/>
+                <ContentControl x:Name="ContentArea" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"/>
             </Grid>
         </Grid>
     </Border>

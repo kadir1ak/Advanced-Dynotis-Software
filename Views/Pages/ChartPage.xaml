@@ -14,14 +14,13 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0" Orientation="Vertical">
             <Label Content="Device List" Foreground="LawnGreen"/>
-            <ComboBox  ></ComboBox>
-            <Button Content="Device Add" Height="50" Width="100"></Button>
-            <Button Content="Device Exit" Height="50" Width="100"></Button>
+            <ComboBox ItemsSource="{Binding AvailablePorts}" SelectedItem="{Binding SelectedPort}" />
+            <Button Content="Device Add" Height="50" Width="100" Command="{Binding AddDeviceCommand}"/>
+            <Button Content="Device Exit" Height="50" Width="100" Command="{Binding RemoveDeviceCommand}"/>
         </StackPanel>
-        
-       
+
         <!-- Device List -->
-        <ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Auto" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" VerticalAlignment="Center" HorizontalAlignment="Center">
             <ItemsControl ItemsSource="{Binding devicesViewModel}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>

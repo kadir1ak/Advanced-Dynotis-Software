@@ -47,8 +47,23 @@ namespace Advanced_Dynotis_Software.Views.Windows
                 // İşlemlere devam et...
                 switch (clickedButton.Icon)
                 {
-                    case PackIconMaterialKind.HomeVariant:
-                        ContentArea.Content = new HomePage();
+                    case PackIconMaterialKind.Devices:
+                        ContentArea.Content = new DevicesPage();
+                        break;
+                    case PackIconMaterialKind.UsbPort:
+                        ContentArea.Content = new SingleTestPage();
+                        break;
+                    case PackIconMaterialKind.Usb:
+                        ContentArea.Content = new CoaxialTestPage();
+                        break;
+                    case PackIconMaterialKind.Multicast:
+                        ContentArea.Content = new MultiTestPage();
+                        break;
+                    case PackIconMaterialKind.Network:
+                        ContentArea.Content = new APIPage();
+                        break;
+                    case PackIconMaterialKind.Script:
+                        ContentArea.Content = new ScriptPage();
                         break;
                     case PackIconMaterialKind.ChartLine:
                         ContentArea.Content = new ChartPage();
@@ -56,20 +71,8 @@ namespace Advanced_Dynotis_Software.Views.Windows
                     case PackIconMaterialKind.Autorenew:
                         ContentArea.Content = new AutomateTestPage();
                         break;
-                    case PackIconMaterialKind.ContentSaveCog:
-                        MessageBox.Show("ContentSaveCog button clicked!");
-                        break;
-                    case PackIconMaterialKind.BookSyncOutline:
-                        MessageBox.Show("BookSyncOutline button clicked!");
-                        break;
-                    case PackIconMaterialKind.AlertCircleCheckOutline:
-                        MessageBox.Show("AlertCircleCheckOutline button clicked!");
-                        break;
                     case PackIconMaterialKind.CogOutline:
-                        MessageBox.Show("CogOutline button clicked!");
-                        break;
-                    case PackIconMaterialKind.Update:
-                        MessageBox.Show("Update button clicked!");
+                        ContentArea.Content = new SettingsPage();
                         break;
                     case PackIconMaterialKind.Power:
                         Application.Current.Shutdown();

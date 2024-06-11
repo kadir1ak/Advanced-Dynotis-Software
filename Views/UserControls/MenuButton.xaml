@@ -6,24 +6,72 @@
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
              xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d"
-             d:DesignWidth="100"
-             d:DesignHeight="150"
+             d:DesignWidth="200"
+             d:DesignHeight="250"
              Name="menuButton">
-    <Button Style="{StaticResource menuButton}" Click="Button_Click" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
-        <Grid ClipToBounds="True">
-            <Ellipse Width="100" Height="150" Fill="Gray" Margin="-250 -30 0 0">
-                <Ellipse.Style>
-                    <Style TargetType="Ellipse">
-                        <Setter Property="Visibility" Value="{Binding Path=Tag, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}"/>
-                        <Style.Triggers>
+
+    <UserControl.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#151F2D" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Height" Value="48" />
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="Margin" Value="0 12" />
+            <Setter Property="Tag" Value="Hidden" />
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="1" ScaleY="1" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="10">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation To="1.1" Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleX)" Duration="0:0:0.3" />
+                                            <DoubleAnimation To="1.1" Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleY)" Duration="0:0:0.3" />
+                                            <ColorAnimation To="#FF202930" Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" Duration="0:0:0.3"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation To="1" Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleX)" Duration="0:0:0.3" />
+                                            <DoubleAnimation To="1" Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleY)" Duration="0:0:0.3" />
+                                            <ColorAnimation To="#151F2D" Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" Duration="0:0:0.3"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
                             <DataTrigger Binding="{Binding ElementName=menuButton, Path=IsActive}" Value="True">
-                                <Setter Property="Visibility" Value="Visible"/>
+                                <Setter Property="Foreground" Value="#7368ff" />
+                                <Setter Property="Tag" Value="Visible" />
                             </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Ellipse.Style>
-            </Ellipse>
-            <icon:PackIconMaterial Kind="{Binding ElementName=menuButton, Path=Icon}" Style="{StaticResource menuButtonIcon}" Margin="0,-10,0,0"/>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="icon:PackIconMaterial">
+            <Setter Property="Width" Value="18" />
+            <Setter Property="Height" Value="18" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Foreground" Value="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Button Click="Button_Click" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
+        <Grid ClipToBounds="True">
+            <icon:PackIconMaterial Kind="{Binding ElementName=menuButton, Path=Icon}" Margin="0,-10,0,0"/>
             <TextBlock Text="{Binding ElementName=menuButton, Path=Text}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,30,0,0"/>
         </Grid>
     </Button>
