@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.Pages"
              xmlns:vmWindows="clr-namespace:Advanced_Dynotis_Software.ViewModels.Windows"
              xmlns:uc="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
-             mc:Ignorable="d">
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance vmWindows:SingleTestViewModel, IsDesignTimeCreatable=True}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100" />
@@ -15,8 +15,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0" Orientation="Vertical" Width="100" HorizontalAlignment="Left" Margin="10 0 0 0">
             <Label Content="Device List" Foreground="Black" FontSize="18"/>
@@ -27,10 +26,10 @@
         <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="DarkTurquoise" Margin="10 10 10 10">
             <Label Content="Device List" Foreground="Black" FontSize="26" HorizontalAlignment="Center"/>
         </Border>
-        
+
         <!-- Device List -->
-        <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
-            <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled">
+        <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 0 10 0" BorderThickness="1" BorderBrush="Orange">
+            <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled">
                 <ItemsControl ItemsSource="{Binding devicesViewModel}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -39,18 +38,41 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <uc:DeviceCard 
-                                Width="{Binding ActualWidth, ElementName=stackPanel}" 
-                                DataContext="{Binding}"
-                                Margin="10 5 0 0"/>
+                            <Border Margin="10 5 10 0" BorderThickness="1" BorderBrush="BlueViolet">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Border Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="0 10 10 10" BorderThickness="1" BorderBrush="Brown">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <Button Height="20" Width="50" Content="Test" Margin="0 0 5 0"/>
+                                            <Label Content="Test" Margin="0 5 0 0"/>
+                                            <Label Content="Test" Margin="0 5 0 0"/>
+                                            <Label Content="Test" Margin="0 5 0 0"/>
+                                        </StackPanel>
+                                    </Border>
+                                
+                                    <uc:DeviceCard Grid.Column="1" Grid.Row="0" DataContext="{Binding}" Margin="0 10 10 0"/>
+
+                                    <Border Grid.Column="1" Grid.Row="1" Margin="0 10 10 10" BorderThickness="1" BorderBrush="Goldenrod">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <Button Height="20" Width="50" Content="Test" Margin="0 0 5 0"/>
+                                            <Label Content="Test" Margin="0 5 0 0"/>
+                                            <Label Content="Test" Margin="0 5 0 0"/>
+                                            <Label Content="Test" Margin="0 5 0 0"/>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+                            </Border>            
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
-        </Border>
-
-        <Border Grid.Row="2" Grid.Column="3" BorderThickness="1" BorderBrush="CadetBlue" Margin="0 10 10 10">
-            
         </Border>
     </Grid>
 </UserControl>

@@ -10,7 +10,7 @@
              xmlns:icon="http://schemas.fontawesome.io/icons/" 
              d:DataContext="{d:DesignInstance Type=vmWindows:MainViewModel}"
              Name="Card">
-    <Border BorderThickness="1" BorderBrush="#151F2D" Margin="0 0 50 0">
+    <Border BorderThickness="1" BorderBrush="#151F2D" Margin="0 0 0 0">
         <!--#151F2D-->
         <Grid>
             <Grid.ColumnDefinitions>
