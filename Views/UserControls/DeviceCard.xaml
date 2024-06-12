@@ -10,164 +10,168 @@
              xmlns:icon="http://schemas.fontawesome.io/icons/" 
              d:DataContext="{d:DesignInstance Type=vmWindows:MainViewModel}"
              Name="Card">
-    <Grid>
-        <Border Width="300" Height="1000">
-            <StackPanel>
-                <TextBlock Text="{Binding Device.Name}" Foreground="White" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center"/>
-                <Grid HorizontalAlignment="Center">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <!-- Başlık -->
-                        <RowDefinition Height="Auto"/>
-                        <!-- Zaman -->
-                        <RowDefinition Height="Auto"/>
-                        <!-- Sıcaklık -->
-                        <RowDefinition Height="Auto"/>
-                        <!-- Motor Sıcaklığı -->
-                        <RowDefinition Height="Auto"/>
-                        <!-- Motor Hızı -->
-                        <RowDefinition Height="Auto"/>
-                        <!-- İtme -->
-                        <RowDefinition Height="Auto"/>
-                        <!-- Tork -->
-                        <RowDefinition Height="Auto"/>
-                        <!-- Gerilim -->
-                        <RowDefinition Height="Auto"/>
-                        <!-- Akım -->
-                        <RowDefinition Height="Auto"/>
-                        <!-- Basınç -->
-                        <RowDefinition Height="Auto"/>
-                        <!-- Titreşim -->
-                        <RowDefinition Height="Auto"/>
-                        <!-- Rüzgar Hızı -->
-                        <RowDefinition Height="Auto"/>
-                        <!-- Rüzgar Yönü -->
-                        <RowDefinition Height="3*"/>
-                        <!-- Grafik -->
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Text="Device Information" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,0,0,5" FontWeight="Bold" FontSize="16" Foreground="White"/>
-
+    <Border BorderThickness="1" BorderBrush="#151F2D" Margin="0 0 50 0">
+        <!--#151F2D-->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="10*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Text="Device Panel" Foreground="Black" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center"/>
+            <Grid Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" HorizontalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <!-- Başlık -->
+                    <RowDefinition Height="Auto"/>
                     <!-- Zaman -->
-                    <TextBlock Text="Time: " Grid.Row="1" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="White"/>
-                    <TextBlock Text="{Binding  Device.SensorData.Time}" Grid.Row="1" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="White"/>
-
+                    <RowDefinition Height="Auto"/>
                     <!-- Sıcaklık -->
-                    <TextBlock Text="Temperature: " Grid.Row="2" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="White"/>
-                    <TextBlock Text="{Binding  Device.SensorData.AmbientTemp}" Grid.Row="2" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="White"/>
-
+                    <RowDefinition Height="Auto"/>
                     <!-- Motor Sıcaklığı -->
-                    <TextBlock Text="Motor Temperature: " Grid.Row="3" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="White"/>
-                    <TextBlock Text="{Binding  Device.SensorData.MotorTemp}" Grid.Row="3" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="White"/>
-
+                    <RowDefinition Height="Auto"/>
                     <!-- Motor Hızı -->
-                    <TextBlock Text="MotorSpeed: " Grid.Row="4" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="White"/>
-                    <TextBlock Text="{Binding  Device.SensorData.MotorSpeed}" Grid.Row="4" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="White"/>
-
+                    <RowDefinition Height="Auto"/>
                     <!-- İtme -->
-                    <TextBlock Text="Thrust: " Grid.Row="5" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="White"/>
-                    <TextBlock Text="{Binding  Device.SensorData.Thrust}" Grid.Row="5" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="White"/>
-
+                    <RowDefinition Height="Auto"/>
                     <!-- Tork -->
-                    <TextBlock Text="Torque: " Grid.Row="6" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="White"/>
-                    <TextBlock Text="{Binding  Device.SensorData.Torque}" Grid.Row="6" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="White"/>
-
+                    <RowDefinition Height="Auto"/>
                     <!-- Gerilim -->
-                    <TextBlock Text="Voltage: " Grid.Row="7" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="White"/>
-                    <TextBlock Text="{Binding  Device.SensorData.Voltage}" Grid.Row="7" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="White"/>
-
+                    <RowDefinition Height="Auto"/>
                     <!-- Akım -->
-                    <TextBlock Text="Current: " Grid.Row="8" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="White"/>
-                    <TextBlock Text="{Binding  Device.SensorData.Current}" Grid.Row="8" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="White"/>
-
+                    <RowDefinition Height="Auto"/>
                     <!-- Basınç -->
-                    <TextBlock Text="Pressure: " Grid.Row="9" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="White"/>
-                    <TextBlock Text="{Binding  Device.SensorData.Pressure}" Grid.Row="9" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="White"/>
-
+                    <RowDefinition Height="Auto"/>
                     <!-- Titreşim -->
-                    <TextBlock Text="Vibration: " Grid.Row="10" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="White"/>
-                    <TextBlock Text="{Binding  Device.SensorData.VibrationX}" Grid.Row="10" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="White"/>
-
+                    <RowDefinition Height="Auto"/>
                     <!-- Rüzgar Hızı -->
-                    <TextBlock Text="WindSpeed: " Grid.Row="11" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="White"/>
-                    <TextBlock Text="{Binding  Device.SensorData.WindSpeed}" Grid.Row="11" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="White"/>
-
+                    <RowDefinition Height="Auto"/>
                     <!-- Rüzgar Yönü -->
-                    <TextBlock Text="WindDirection: " Grid.Row="12" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="White"/>
-                    <TextBlock Text="{Binding  Device.SensorData.WindSpeed}" Grid.Row="12" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="White"/>
-                </Grid>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Device Information" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,0,0,5" FontWeight="Bold" FontSize="16" Foreground="Black"/>
+
+                <!-- Zaman -->
+                <TextBlock Text="Time: " Grid.Row="1" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="Black"/>
+                <TextBlock Text="{Binding  Device.SensorData.Time}" Grid.Row="1" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="Black"/>
+
+                <!-- Sıcaklık -->
+                <TextBlock Text="Temperature: " Grid.Row="2" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="Black"/>
+                <TextBlock Text="{Binding  Device.SensorData.AmbientTemp}" Grid.Row="2" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="Black"/>
+
+                <!-- Motor Sıcaklığı -->
+                <TextBlock Text="Motor Temperature: " Grid.Row="3" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="Black"/>
+                <TextBlock Text="{Binding  Device.SensorData.MotorTemp}" Grid.Row="3" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="Black"/>
+
+                <!-- Motor Hızı -->
+                <TextBlock Text="MotorSpeed: " Grid.Row="4" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="Black"/>
+                <TextBlock Text="{Binding  Device.SensorData.MotorSpeed}" Grid.Row="4" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="Black"/>
+
+                <!-- İtme -->
+                <TextBlock Text="Thrust: " Grid.Row="5" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="Black"/>
+                <TextBlock Text="{Binding  Device.SensorData.Thrust}" Grid.Row="5" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="Black"/>
+
+                <!-- Tork -->
+                <TextBlock Text="Torque: " Grid.Row="6" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="Black"/>
+                <TextBlock Text="{Binding  Device.SensorData.Torque}" Grid.Row="6" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="Black"/>
+
+                <!-- Gerilim -->
+                <TextBlock Text="Voltage: " Grid.Row="7" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="Black"/>
+                <TextBlock Text="{Binding  Device.SensorData.Voltage}" Grid.Row="7" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="Black"/>
+
+                <!-- Akım -->
+                <TextBlock Text="Current: " Grid.Row="8" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="Black"/>
+                <TextBlock Text="{Binding  Device.SensorData.Current}" Grid.Row="8" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="Black"/>
+
+                <!-- Basınç -->
+                <TextBlock Text="Pressure: " Grid.Row="9" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="Black"/>
+                <TextBlock Text="{Binding  Device.SensorData.Pressure}" Grid.Row="9" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="Black"/>
+
+                <!-- Titreşim -->
+                <TextBlock Text="Vibration: " Grid.Row="10" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="Black"/>
+                <TextBlock Text="{Binding  Device.SensorData.VibrationX}" Grid.Row="10" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="Black"/>
+
+                <!-- Rüzgar Hızı -->
+                <TextBlock Text="WindSpeed: " Grid.Row="11" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="Black"/>
+                <TextBlock Text="{Binding  Device.SensorData.WindSpeed}" Grid.Row="11" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="Black"/>
+
+                <!-- Rüzgar Yönü -->
+                <TextBlock Text="WindDirection: " Grid.Row="12" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="Black"/>
+                <TextBlock Text="{Binding  Device.SensorData.WindSpeed}" Grid.Row="12" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="Black"/>
+            </Grid>
 
 
-          
-                
-                <!-- Ambient Temperature Chart -->
-                <lvc:CartesianChart Series="{Binding AmbientTempSeriesCollection}" Grid.Row="2" Grid.ColumnSpan="2" Height="150" Margin="5" DisableAnimations="True">
-                    <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="White"></lvc:Axis>
-                    </lvc:CartesianChart.AxisX>
-                    <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="Temperature (°C)" Foreground="White"></lvc:Axis>
-                    </lvc:CartesianChart.AxisY>
-                </lvc:CartesianChart>
 
-                <!-- Motor Temperature Chart -->
-                <lvc:CartesianChart Series="{Binding MotorTempSeriesCollection}" Height="100" Margin="5" DisableAnimations="True">
-                    <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="White"></lvc:Axis>
-                    </lvc:CartesianChart.AxisX>
-                    <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="Motor Temperature (°C)" Foreground="White"></lvc:Axis>
-                    </lvc:CartesianChart.AxisY>
-                </lvc:CartesianChart>
 
-                <!-- Motor Speed Chart -->
-                <lvc:CartesianChart Series="{Binding MotorSpeedSeriesCollection}" Height="100" Margin="5" DisableAnimations="True">
-                    <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="White"></lvc:Axis>
-                    </lvc:CartesianChart.AxisX>
-                    <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="Motor Speed (RPM)" Foreground="White"></lvc:Axis>
-                    </lvc:CartesianChart.AxisY>
-                </lvc:CartesianChart>
-                
-                <!-- Voltage Chart -->
-                <lvc:CartesianChart Series="{Binding VoltageSeriesCollection}" Height="100" Margin="5" DisableAnimations="True">
-                    <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="White"></lvc:Axis>
-                    </lvc:CartesianChart.AxisX>
-                    <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="Voltage (V)" Foreground="White"></lvc:Axis>
-                    </lvc:CartesianChart.AxisY>
-                </lvc:CartesianChart>
+            <!-- Ambient Temperature Chart -->
+            <lvc:CartesianChart Grid.Row="1" Grid.Column="1" Series="{Binding AmbientTempSeriesCollection}" Margin="5" DisableAnimations="True">
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="Black"></lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Temperature (°C)" Foreground="Black"></lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+            </lvc:CartesianChart>
 
-                <!-- Thrust Chart -->
-                <lvc:CartesianChart Series="{Binding ThrustSeriesCollection}" Height="100" Margin="5" DisableAnimations="True">
-                    <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="White"></lvc:Axis>
-                    </lvc:CartesianChart.AxisX>
-                    <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="Thrust (N)" Foreground="White"></lvc:Axis>
-                    </lvc:CartesianChart.AxisY>
-                </lvc:CartesianChart>
+            <!-- Motor Temperature Chart -->
+            <lvc:CartesianChart Grid.Row="1" Grid.Column="2" Series="{Binding MotorTempSeriesCollection}" Margin="5" DisableAnimations="True">
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="Black"></lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Motor Temperature (°C)" Foreground="Black"></lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+            </lvc:CartesianChart>
 
-                <!-- Torque Chart -->
-                <lvc:CartesianChart Series="{Binding TorqueSeriesCollection}" Height="100" Margin="5" DisableAnimations="True">
-                    <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="White"></lvc:Axis>
-                    </lvc:CartesianChart.AxisX>
-                    <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="Torque (Nm)" Foreground="White"></lvc:Axis>
-                    </lvc:CartesianChart.AxisY>
-                </lvc:CartesianChart>
+            <!-- Motor Speed Chart -->
+            <lvc:CartesianChart Grid.Row="1" Grid.Column="3" Series="{Binding MotorSpeedSeriesCollection}" Margin="5" DisableAnimations="True">
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="Black"></lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Motor Speed (RPM)" Foreground="Black"></lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+            </lvc:CartesianChart>
 
-              
-                
-            </StackPanel>
-        </Border>
-    </Grid>
-    
+            <!-- Voltage Chart -->
+            <lvc:CartesianChart Grid.Row="2" Grid.Column="1" Series="{Binding VoltageSeriesCollection}" Margin="5" DisableAnimations="True">
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="Black"></lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Voltage (V)" Foreground="Black"></lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+            </lvc:CartesianChart>
+
+            <!-- Thrust Chart -->
+            <lvc:CartesianChart Grid.Row="2" Grid.Column="2" Series="{Binding ThrustSeriesCollection}" Margin="5" DisableAnimations="True">
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="Black"></lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Thrust (N)" Foreground="Black"></lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+            </lvc:CartesianChart>
+
+            <!-- Torque Chart -->
+            <lvc:CartesianChart Grid.Row="2" Grid.Column="3" Series="{Binding TorqueSeriesCollection}" Margin="5" DisableAnimations="True">
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="Black"></lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Torque (Nm)" Foreground="Black"></lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+            </lvc:CartesianChart>
+        </Grid>
+    </Border>
 </UserControl>

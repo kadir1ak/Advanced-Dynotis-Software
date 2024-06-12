@@ -6,6 +6,8 @@
         xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.Windows"
         xmlns:vmWindows="clr-namespace:Advanced_Dynotis_Software.ViewModels.Windows"
         xmlns:uc="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
+        xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="MainWindow" Height="1080" Width="1920"
         AllowsTransparency="True" Background="Transparent"
@@ -14,7 +16,7 @@
     <Window.DataContext>
         <vmWindows:MainViewModel/>
     </Window.DataContext>
-    <Border CornerRadius="25" Background="#151f2d" MouseDown="MainBorder_MouseDown">
+    <Border CornerRadius="25" Background="White" MouseDown="MainBorder_MouseDown" BorderThickness="1" BorderBrush="#151F2D">
         <Grid>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -27,27 +29,40 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <!-- Top Menu -->
-                <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="0 0 0 0">
-                    <!-- Device List Menu -->
+                <Border Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="0 0 0 0">
+                    <Grid VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <!-- Device List Menu -->
+                        <ScrollViewer Grid.Column="0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" VerticalAlignment="Center" HorizontalAlignment="Left">
+                            <WrapPanel Orientation="Horizontal">
+                                <ItemsControl ItemsSource="{Binding devicesViewModel}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <uc:DeviceMiniCard DataContext="{Binding}" Margin="5"/>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
+                            </WrapPanel>
+                        </ScrollViewer>
 
-                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" VerticalAlignment="Center">
-                        <WrapPanel Orientation="Horizontal">
-                            <ItemsControl ItemsSource="{Binding devicesViewModel}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <uc:DeviceMiniCard DataContext="{Binding}" Margin="5"/>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <WrapPanel />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                            </ItemsControl>
-                        </WrapPanel>
-                    </ScrollViewer>
-
-                    <!-- İçerik buraya gelecek -->
+                        <!-- Status Bar -->
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 15 0">
+                            <TextBlock Text="{Binding Source={x:Static sys:DateTime.Now}, StringFormat='t' ,ConverterCulture=en-EN}" Foreground="#151F2D" FontSize="28" VerticalAlignment="Center"/>
+                            <StackPanel Margin="13 0" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding Source={x:Static sys:DateTime.Today}, StringFormat='{}{0:MMMM dd}', ConverterCulture=en-EN}" Foreground="#151F2D" FontSize="12"/>
+                                <TextBlock Text="{Binding Source={x:Static sys:DateTime.Today}, StringFormat='{}{0:dddd}', ConverterCulture=en-EN}" Foreground="#151F2D" FontSize="12"/>
+                            </StackPanel>
+                            <icon:PackIconMaterial x:Name="Time_Icon" Kind="DotsGrid" Foreground="#151F2D" Width="25" Height="25" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Grid>
                 </Border>
 
                 <!-- Left Menu -->
@@ -61,15 +76,14 @@
                                 <Ellipse Width="8" Height="8" Fill="#009d00"/>
                             </StackPanel>
                             <!-- Menu Buttons -->
-                            <uc:MenuButton Icon="Devices" Text="Devices" IsActive="True" Click="MenuButton_Click"/>
-                            <uc:MenuButton Icon="UsbPort" Text="Single" Click="MenuButton_Click"/>
-                            <uc:MenuButton Icon="Usb" Text="Coaxial" Click="MenuButton_Click"/>
-                            <uc:MenuButton Icon="Multicast" Text="Multi" Click="MenuButton_Click"/>
-                            <uc:MenuButton Icon="Network" Text="API" Click="MenuButton_Click"/>
-                            <uc:MenuButton Icon="Script" Text="Script" Click="MenuButton_Click"/>
-                            <uc:MenuButton Icon="ChartLine" Text="Chart" Click="MenuButton_Click"/>
-                            <uc:MenuButton Icon="Autorenew" Text="Automate Test" Click="MenuButton_Click"/>
-                            <uc:MenuButton Icon="CogOutline" Text="Settings" Click="MenuButton_Click"/>
+                            <uc:MenuButton x:Name="HomeButton" Icon="Home" Text="Home" IsActive="True" Click="MenuButton_Click"/>
+                            <uc:MenuButton x:Name="SingleButton" Icon="UsbPort" Text="Single" Click="MenuButton_Click"/>
+                            <uc:MenuButton x:Name="CoaxialButton" Icon="Usb" Text="Coaxial" Click="MenuButton_Click"/>
+                            <uc:MenuButton x:Name="MultiButton" Icon="Multicast" Text="Multi" Click="MenuButton_Click"/>
+                            <uc:MenuButton x:Name="APIButton" Icon="Network" Text="API" Click="MenuButton_Click"/>
+                            <uc:MenuButton x:Name="ScriptButton" Icon="Script" Text="Script" Click="MenuButton_Click"/>
+                            <uc:MenuButton x:Name="AutomateTestButton" Icon="Autorenew" Text="Automate Test" Click="MenuButton_Click"/>
+                            <uc:MenuButton x:Name="SettingsButton" Icon="Tools" Text="Settings" Click="MenuButton_Click"/>
                         </StackPanel>
                         <uc:MenuButton Icon="Power" Text="Power" VerticalAlignment="Bottom" Margin="0 0 0 15" Click="MenuButton_Click"/>
                     </Grid>

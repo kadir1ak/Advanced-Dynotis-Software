@@ -10,13 +10,13 @@
         <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="1">
             <Grid>
                 <StackPanel x:Name="LeftMenuPanel" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
-                    <!-- Menu Buttons -->
-                    <uc:SettingButton Icon="Autorenew" Text="Automate Test" Margin="25"/>
                     <uc:SettingButton Icon="ContentSaveCog" Text="Save Config" Margin="25"/>
                     <uc:SettingButton Icon="Layers" Text="Units Settings" Margin="25"/>
-                    <uc:SettingButton Icon="BookSyncOutline" Text="Books" Margin="25"/>
                     <uc:SettingButton Icon="AlertCircleCheckOutline" Text="Alerts" Margin="25"/>
                     <uc:SettingButton Icon="Update" Text="Software Update" Margin="25"/>
+                    <uc:SettingButton Icon="Translate" Text="Language" Margin="25"/>
+                    <uc:SettingButton Icon="Information" Text="About" Margin="25"/>
+                    <uc:SettingButton Icon="Help" Text="Help" Margin="25"/>
                 </StackPanel>
             </Grid>
         </Border>

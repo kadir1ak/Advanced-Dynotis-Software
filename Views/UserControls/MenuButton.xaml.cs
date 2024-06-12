@@ -11,6 +11,7 @@ namespace Advanced_Dynotis_Software.Views.UserControls
         public MenuButton()
         {
             InitializeComponent();
+            DataContext = this; // DataContext'i UserControl'e ayarla
         }
 
         public PackIconMaterialKind Icon

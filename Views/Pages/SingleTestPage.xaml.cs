@@ -24,5 +24,6 @@ namespace Advanced_Dynotis_Software.Views.Pages
         {
             InitializeComponent();
         }
+
     }
 }

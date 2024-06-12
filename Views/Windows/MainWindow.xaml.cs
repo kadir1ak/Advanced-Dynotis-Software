@@ -6,6 +6,8 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
+using System.Windows.Media;
+using Advanced_Dynotis_Software.ViewModels.Windows;
 
 namespace Advanced_Dynotis_Software.Views.Windows
 {
@@ -17,6 +19,8 @@ namespace Advanced_Dynotis_Software.Views.Windows
         public MainWindow()
         {
             InitializeComponent();
+            AnimateButtonScale(HomeButton, 1.15);
+            ContentArea.Content = new HomePage();
         }
 
         private void MainBorder_MouseDown(object sender, MouseButtonEventArgs e)
@@ -38,17 +42,19 @@ namespace Advanced_Dynotis_Software.Views.Windows
                     foreach (var menuButton in LeftMenuPanel.Children.OfType<MenuButton>())
                     {
                         menuButton.IsActive = false;
+                        AnimateButtonScale(menuButton, 1.0);
                     }
 
                     // Tıklanan düğmeyi aktifleştir
                     clickedButton.IsActive = true;
+                    AnimateButtonScale(clickedButton, 1.15);
                 }
 
                 // İşlemlere devam et...
                 switch (clickedButton.Icon)
                 {
-                    case PackIconMaterialKind.Devices:
-                        ContentArea.Content = new DevicesPage();
+                    case PackIconMaterialKind.Home:
+                        ContentArea.Content = new HomePage();
                         break;
                     case PackIconMaterialKind.UsbPort:
                         ContentArea.Content = new SingleTestPage();
@@ -65,13 +71,10 @@ namespace Advanced_Dynotis_Software.Views.Windows
                     case PackIconMaterialKind.Script:
                         ContentArea.Content = new ScriptPage();
                         break;
-                    case PackIconMaterialKind.ChartLine:
-                        ContentArea.Content = new ChartPage();
-                        break;
                     case PackIconMaterialKind.Autorenew:
                         ContentArea.Content = new AutomateTestPage();
                         break;
-                    case PackIconMaterialKind.CogOutline:
+                    case PackIconMaterialKind.Tools:
                         ContentArea.Content = new SettingsPage();
                         break;
                     case PackIconMaterialKind.Power:
@@ -82,6 +85,17 @@ namespace Advanced_Dynotis_Software.Views.Windows
                         break;
                 }
             }
+        }
+        private void AnimateButtonScale(MenuButton button, double scale)
+        {
+            var scaleTransform = new ScaleTransform(1.0, 1.0);
+            button.RenderTransform = scaleTransform;
+
+            var scaleXAnimation = new DoubleAnimation(scale, TimeSpan.FromSeconds(0.5));
+            var scaleYAnimation = new DoubleAnimation(scale, TimeSpan.FromSeconds(0.5));
+
+            scaleTransform.BeginAnimation(ScaleTransform.ScaleXProperty, scaleXAnimation);
+            scaleTransform.BeginAnimation(ScaleTransform.ScaleYProperty, scaleYAnimation);
         }
 
         private void MenuButton_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
