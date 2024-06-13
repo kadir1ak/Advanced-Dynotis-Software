@@ -6,16 +6,14 @@
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
              xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d"
-             d:DesignWidth="200"
-             d:DesignHeight="250"
              Name="settingButton">
 
     <UserControl.Resources>
         <Style TargetType="Button" x:Key="settingButton">
             <Setter Property="Background" Value="#151F2D" />
             <Setter Property="Foreground" Value="White" />
-            <Setter Property="Height" Value="120" />
-            <Setter Property="Width" Value="120" />
+            <Setter Property="Height" Value="200" />
+            <Setter Property="Width" Value="100" />
             <Setter Property="FocusVisualStyle" Value="{x:Null}" />
             <Setter Property="Margin" Value="10" />
             <Setter Property="Tag" Value="Hidden" />

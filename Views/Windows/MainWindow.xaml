@@ -85,7 +85,7 @@
                             <uc:MenuButton x:Name="AutomateTestButton" Icon="Autorenew" Text="Automate Test" Click="MenuButton_Click"/>
                             <uc:MenuButton x:Name="SettingsButton" Icon="Tools" Text="Settings" Click="MenuButton_Click"/>
                         </StackPanel>
-                        <uc:MenuButton Icon="Power" Text="Power" VerticalAlignment="Bottom" Margin="0 0 0 15" Click="MenuButton_Click"/>
+                        <uc:MenuButton Icon="Power" Text="Exit" VerticalAlignment="Bottom" Margin="0 0 0 15" Click="MenuButton_Click"/>
                     </Grid>
                 </Border>
                 <!-- Content Area -->
