@@ -14,10 +14,10 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
 {
     public class DeviceViewModel : INotifyPropertyChanged
     {
-        public SeriesCollection AmbientTempSeriesCollection { get; set; }
-        public SeriesCollection MotorTempSeriesCollection { get; set; }
+        public SeriesCollection VibrationSeriesCollection { get; set; }
         public SeriesCollection MotorSpeedSeriesCollection { get; set; }
         public SeriesCollection VoltageSeriesCollection { get; set; }
+        public SeriesCollection CurrentSeriesCollection { get; set; }
         public SeriesCollection ThrustSeriesCollection { get; set; }
         public SeriesCollection TorqueSeriesCollection { get; set; }
         public ObservableCollection<string> TimeLabels { get; set; }
@@ -58,8 +58,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
 
         private void Charts_InitializeComponent()
         {
-            AmbientTempSeriesCollection = CreateSeriesCollection("Ambient Temperature", Colors.IndianRed);
-            MotorTempSeriesCollection = CreateSeriesCollection("Motor Temperature", Colors.DarkOliveGreen);
+            VibrationSeriesCollection = CreateSeriesCollection("Vibration", Colors.IndianRed);
+            CurrentSeriesCollection = CreateSeriesCollection("Current", Colors.DarkOliveGreen);
             MotorSpeedSeriesCollection = CreateSeriesCollection("Motor Speed", Colors.PaleVioletRed);
             VoltageSeriesCollection = CreateSeriesCollection("Voltage", Colors.Orange);
             ThrustSeriesCollection = CreateSeriesCollection("Thrust", Colors.DarkOliveGreen);
@@ -80,8 +80,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
             for (int i = 0; i < MaxDataPoints; i++)
             {
                 TimeLabels.Add(i.ToString());
-                UpdateSeries(AmbientTempSeriesCollection, defaultValue);
-                UpdateSeries(MotorTempSeriesCollection, defaultValue);
+                UpdateSeries(VibrationSeriesCollection, defaultValue);
+                UpdateSeries(CurrentSeriesCollection, defaultValue);
                 UpdateSeries(MotorSpeedSeriesCollection, defaultValue);
                 UpdateSeries(VoltageSeriesCollection, defaultValue);
                 UpdateSeries(ThrustSeriesCollection, defaultValue);
@@ -155,9 +155,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
                 TimeLabels.RemoveAt(0);
             }
             TimeLabels.Add(sensorData.Time.ToString());
-
-            UpdateSeries(AmbientTempSeriesCollection, sensorData.AmbientTemp);
-            UpdateSeries(MotorTempSeriesCollection, sensorData.MotorTemp);
+            UpdateSeries(VibrationSeriesCollection, sensorData.Vibration);
+            UpdateSeries(CurrentSeriesCollection, sensorData.Current);
             UpdateSeries(MotorSpeedSeriesCollection, sensorData.MotorSpeed);
             UpdateSeries(VoltageSeriesCollection, sensorData.Voltage);
             UpdateSeries(ThrustSeriesCollection, sensorData.Thrust);

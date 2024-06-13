@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Advanced_Dynotis_Software.Views.UserControls;
+using MahApps.Metro.IconPacks;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,54 @@ namespace Advanced_Dynotis_Software.Views.Pages
         public SettingsPage()
         {
             InitializeComponent();
+        }
+
+        private void SettingButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is SettingButton clickedButton)
+            {
+                // Tıklanan düğmenin önceki aktiflik durumunu kontrol et
+                if (!clickedButton.IsActive)
+                {
+                    // Tüm menü düğmelerini pasifleştir
+                    foreach (var settingButton in LeftMenuPanel.Children.OfType<SettingButton>())
+                    {
+                        settingButton.IsActive = false;
+                    }
+
+                    // Tıklanan düğmeyi aktifleştir
+                    clickedButton.IsActive = true;
+                }
+
+                // İşlemlere devam et...
+                switch (clickedButton.Icon)
+                {
+                    case PackIconMaterialKind.ContentSaveCog:
+                        ContentArea.Content = new SaveConfigPage();
+                        break;
+                    case PackIconMaterialKind.Layers:
+                        ContentArea.Content = new UnitsSettingsPage();
+                        break;
+                    case PackIconMaterialKind.AlertCircleCheckOutline:
+                        ContentArea.Content = new AlertsPage();
+                        break;
+                    case PackIconMaterialKind.Update:
+                        ContentArea.Content = new SoftwareUpdatePage();
+                        break;
+                    case PackIconMaterialKind.Translate:
+                        ContentArea.Content = new LanguagePage();
+                        break;
+                    case PackIconMaterialKind.Information:
+                        ContentArea.Content = new AboutPage();
+                        break;
+                    case PackIconMaterialKind.Help:
+                        ContentArea.Content = new HelpPage();
+                        break;
+                    default:
+                        MessageBox.Show("Unknown button clicked!");
+                        break;
+                }
+            }
         }
     }
 }

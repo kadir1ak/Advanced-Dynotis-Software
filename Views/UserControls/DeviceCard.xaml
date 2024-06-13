@@ -14,137 +14,197 @@
         <!--#151F2D-->
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="10*"/>
                 <ColumnDefinition Width="10*"/>
                 <ColumnDefinition Width="10*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Text="Device Panel" Foreground="Black" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center"/>
-            <Grid Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" HorizontalAlignment="Center">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <!-- Başlık -->
-                    <RowDefinition Height="Auto"/>
-                    <!-- Zaman -->
-                    <RowDefinition Height="Auto"/>
-                    <!-- Sıcaklık -->
-                    <RowDefinition Height="Auto"/>
-                    <!-- Motor Sıcaklığı -->
-                    <RowDefinition Height="Auto"/>
-                    <!-- Motor Hızı -->
-                    <RowDefinition Height="Auto"/>
-                    <!-- İtme -->
-                    <RowDefinition Height="Auto"/>
-                    <!-- Tork -->
-                    <RowDefinition Height="Auto"/>
-                    <!-- Gerilim -->
-                    <RowDefinition Height="Auto"/>
-                    <!-- Akım -->
-                    <RowDefinition Height="Auto"/>
-                    <!-- Basınç -->
-                    <RowDefinition Height="Auto"/>
-                    <!-- Titreşim -->
-                    <RowDefinition Height="Auto"/>
-                    <!-- Rüzgar Hızı -->
-                    <RowDefinition Height="Auto"/>
-                    <!-- Rüzgar Yönü -->
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
-                <TextBlock Text="Device Information" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,0,0,5" FontWeight="Bold" FontSize="16" Foreground="Black"/>
-
-                <!-- Zaman -->
-                <TextBlock Text="Time: " Grid.Row="1" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="Black"/>
-                <TextBlock Text="{Binding  Device.SensorData.Time}" Grid.Row="1" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="Black"/>
-
-                <!-- Sıcaklık -->
-                <TextBlock Text="Temperature: " Grid.Row="2" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="Black"/>
-                <TextBlock Text="{Binding  Device.SensorData.AmbientTemp}" Grid.Row="2" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="Black"/>
-
-                <!-- Motor Sıcaklığı -->
-                <TextBlock Text="Motor Temperature: " Grid.Row="3" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="Black"/>
-                <TextBlock Text="{Binding  Device.SensorData.MotorTemp}" Grid.Row="3" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="Black"/>
-
-                <!-- Motor Hızı -->
-                <TextBlock Text="MotorSpeed: " Grid.Row="4" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="Black"/>
-                <TextBlock Text="{Binding  Device.SensorData.MotorSpeed}" Grid.Row="4" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="Black"/>
-
-                <!-- İtme -->
-                <TextBlock Text="Thrust: " Grid.Row="5" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="Black"/>
-                <TextBlock Text="{Binding  Device.SensorData.Thrust}" Grid.Row="5" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="Black"/>
-
-                <!-- Tork -->
-                <TextBlock Text="Torque: " Grid.Row="6" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="Black"/>
-                <TextBlock Text="{Binding  Device.SensorData.Torque}" Grid.Row="6" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="Black"/>
-
-                <!-- Gerilim -->
-                <TextBlock Text="Voltage: " Grid.Row="7" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="Black"/>
-                <TextBlock Text="{Binding  Device.SensorData.Voltage}" Grid.Row="7" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="Black"/>
-
-                <!-- Akım -->
-                <TextBlock Text="Current: " Grid.Row="8" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="Black"/>
-                <TextBlock Text="{Binding  Device.SensorData.Current}" Grid.Row="8" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="Black"/>
-
-                <!-- Basınç -->
-                <TextBlock Text="Pressure: " Grid.Row="9" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="Black"/>
-                <TextBlock Text="{Binding  Device.SensorData.Pressure}" Grid.Row="9" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="Black"/>
-
-                <!-- Titreşim -->
-                <TextBlock Text="Vibration: " Grid.Row="10" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="Black"/>
-                <TextBlock Text="{Binding  Device.SensorData.VibrationX}" Grid.Row="10" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="Black"/>
-
-                <!-- Rüzgar Hızı -->
-                <TextBlock Text="WindSpeed: " Grid.Row="11" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="Black"/>
-                <TextBlock Text="{Binding  Device.SensorData.WindSpeed}" Grid.Row="11" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="Black"/>
-
-                <!-- Rüzgar Yönü -->
-                <TextBlock Text="WindDirection: " Grid.Row="12" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Center" Foreground="Black"/>
-                <TextBlock Text="{Binding  Device.SensorData.WindSpeed}" Grid.Row="12" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" Foreground="Black"/>
-            </Grid>
+            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Orientation="Horizontal"  VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="Auto" Height="Auto">
+                <CheckBox x:Name="MotorSpeedCheckBox" Background="Red" Content="Motor Speed" IsChecked="True" FontSize="10" Foreground="Black" Margin="10 0 0 0"/>
+                <CheckBox x:Name="ThrustCheckBox" Background="#FFE3EC4E" Content="Thrust" IsChecked="True" FontSize="10" Foreground="Black" Margin="10 0 0 0"/>
+                <CheckBox x:Name="TorqueCheckBox" Background="#FFB237B9" Content="Torque" IsChecked="True" FontSize="10" Foreground="Black" Margin="10 0 0 0"/>
+                <CheckBox x:Name="VoltageCheckBox" Background="#FFEDB8C1" Content="Voltage" IsChecked="True" FontSize="10" Foreground="Black" Margin="10 0 0 0"/>
+                <CheckBox x:Name="CurrentCheckBox" Background="#FF67DC67" Content="Current" IsChecked="True"  FontSize="10" Foreground="Black" Margin="10 0 0 0"/>
+                <CheckBox x:Name="VibrationCheckBox" Background="#FF139DA1" Content="Vibration" IsChecked="True"  FontSize="10" Foreground="Black" Margin="10 0 0 0"/>
+            </StackPanel>
 
 
+            <StackPanel x:Name="Variables_StackPanel" Grid.Row="1" Grid.RowSpan="3" Grid.Column="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Orientation="Vertical" Margin="0 0 0 0" >
+                <!-- 1. Değişken -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0 0 0 0">
+                    <!-- Değişken Rengi -->
+                    <Border CornerRadius="5" Background="Red" Width="20" Height="22" Margin="5 2 5 0" HorizontalAlignment="Center"/>
+                    <!-- Değişken Adı -->
+                    <TextBlock x:Name="MotorSpeedNameLabel" Text="Motor Speed" Width="120" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 5 0" HorizontalAlignment="Left"/>
+                    <!-- Değişken Değeri -->
+                    <TextBlock x:Name="MotorSpeedValueLabel" Text="{Binding  Device.SensorData.MotorSpeed, StringFormat={}{0:0}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <!-- Değişken Birimi -->
+                    <TextBlock x:Name="MotorSpeedUnitLabel" Text="RPM" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 0 0" HorizontalAlignment="Right"/>
+                </StackPanel>
+
+                <!-- 2. Değişken -->
+                <StackPanel Orientation="Horizontal" Margin="0 12 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <!-- Değişken Rengi -->
+                    <Border CornerRadius="5" Background="#FFE3EC4E" Width="20" Height="22" Margin="5 2 5 0" HorizontalAlignment="Left"/>
+                    <!-- Değişken Adı -->
+                    <TextBlock x:Name="ThrustNameLabel" Text="Thrust" Width="120" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 5 0" HorizontalAlignment="Left"/>
+                    <!-- Değişken Değeri -->
+                    <TextBlock x:Name="ThrustValueLabel"  Text="{Binding  Device.SensorData.Thrust, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <!-- Değişken Birimi -->
+                    <TextBlock x:Name="ThrustUnitLabel" Text="gr.F" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 0 0" HorizontalAlignment="Right"/>
+                </StackPanel>
+
+                <!-- 3. Değişken -->
+                <StackPanel Orientation="Horizontal" Margin="0 12 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <!-- Değişken Rengi -->
+                    <Border CornerRadius="5" Background="Orange" Width="20" Height="22" Margin="5 2 5 0" HorizontalAlignment="Left"/>
+                    <!-- Değişken Adı -->
+                    <TextBlock x:Name="TorqueNameLabel" Text="Torque" Width="120" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 5 0" HorizontalAlignment="Left"/>
+                    <!-- Değişken Değeri -->
+                    <TextBlock x:Name="TorqueValueLabel"  Text="{Binding  Device.SensorData.Torque, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <!-- Değişken Birimi -->
+                    <TextBlock x:Name="TorqueUnitLabel" Text="N.mm" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 0 0" HorizontalAlignment="Right"/>
+                </StackPanel>
+
+                <!-- 4. Değişken -->
+                <StackPanel Orientation="Horizontal" Margin="0 12 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <!-- Değişken Rengi -->
+                    <Border CornerRadius="5" Background="#FFEDB8C1" Width="20" Height="22" Margin="5 2 5 0" HorizontalAlignment="Left"/>
+                    <!-- Değişken Adı -->
+                    <TextBlock x:Name="VoltageNameLabel" Text="Voltage" Width="120" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 5 0" HorizontalAlignment="Left"/>
+                    <!-- Değişken Değeri -->
+                    <TextBlock x:Name="VoltageValueLabel"  Text="{Binding  Device.SensorData.Voltage, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <!-- Değişken Birimi -->
+                    <TextBlock x:Name="VoltageUnitLabel" Text="V" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 0 0" HorizontalAlignment="Right"/>
+                </StackPanel>
+
+                <!-- 5. Değişken -->
+                <StackPanel Orientation="Horizontal" Margin="0 12 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <!-- Değişken Rengi -->
+                    <Border CornerRadius="5" Background="#FF67DC67" Width="20" Height="22" Margin="5 2 5 0" HorizontalAlignment="Left"/>
+                    <!-- Değişken Adı -->
+                    <TextBlock x:Name="CurrentNameLabel" Text="Current" Width="120" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 5 0" HorizontalAlignment="Left"/>
+                    <!-- Değişken Değeri -->
+                    <TextBlock x:Name="CurrentValueLabel"  Text="{Binding  Device.SensorData.Current, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <!-- Değişken Birimi -->
+                    <TextBlock x:Name="CurrentUnitLabel" Text="A" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 0 0" HorizontalAlignment="Right"/>
+                </StackPanel>
+
+                <!-- 6. Değişken -->
+                <StackPanel Orientation="Horizontal" Margin="0 12 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <!-- Değişken Rengi -->
+                    <Border CornerRadius="10" Background="LightCoral" Width="10" Height="10" Margin="10 2 10 0" HorizontalAlignment="Left"/>
+                    <!-- Değişken Adı -->
+                    <TextBlock x:Name="PowerNameLabel" Text="Power" Width="120" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 5 0" HorizontalAlignment="Left"/>
+                    <!-- Değişken Değeri -->
+                    <TextBlock x:Name="PowerValueLabel"  Text="{Binding  Device.SensorData.Power, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <!-- Değişken Birimi -->
+                    <TextBlock x:Name="PowerUnitLabel" Text="Watt" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 0 0" HorizontalAlignment="Right"/>
+                </StackPanel>
+
+                <!-- 7a. Değişken -->
+                <StackPanel Orientation="Horizontal" Margin="0 12 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <!-- Değişken Rengi -->
+                    <Border CornerRadius="10" Background="CornflowerBlue" Width="10" Height="10" Margin="10 2 10 0" HorizontalAlignment="Left"/>
+                    <!-- Değişken Adı -->
+                    <TextBlock x:Name="PressureNameLabel" Text="Pressure" Width="120" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 5 0" HorizontalAlignment="Left"/>
+                    <!-- Değişken Değeri -->
+                    <TextBlock x:Name="PressureValueLabel"  Text="{Binding  Device.SensorData.Pressure, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <!-- Değişken Birimi -->
+                    <TextBlock x:Name="PressureUnitLabel" Text="kPa" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 0 0" HorizontalAlignment="Right"/>
+                </StackPanel>
+
+                <!-- 7b. Değişken -->
+                <StackPanel Orientation="Horizontal" Margin="0 12 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <!-- Değişken Rengi -->
+                    <Border CornerRadius="10" Background="LightBlue" Width="10" Height="10" Margin="10 2 10 0" HorizontalAlignment="Left"/>
+                    <!-- Değişken Adı -->
+                    <TextBlock x:Name="AirDensityNameLabel" Text="Air Density" Width="120" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 5 0" HorizontalAlignment="Left"/>
+                    <!-- Değişken Değeri -->
+                    <TextBlock x:Name="AirDensityValueLabel"  Text="{Binding  Device.SensorData.AirDensity, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <!-- Değişken Birimi -->
+                    <TextBlock x:Name="AirDensityUnitLabel" Text="kg/m³" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 0 0" HorizontalAlignment="Right"/>
+                </StackPanel>
+
+                <!-- 8. Değişken -->
+                <StackPanel Orientation="Horizontal" Margin="0 12 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <!-- Değişken Rengi -->
+                    <Border CornerRadius="10" Background="Brown" Width="10" Height="10" Margin="10 2 10 0" HorizontalAlignment="Left"/>
+                    <!-- Değişken Adı -->
+                    <TextBlock x:Name="MotorTemperatureNameLabel" Text="Motor Temp" Width="120" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 5 0" HorizontalAlignment="Left"/>
+                    <!-- Değişken Değeri -->
+                    <TextBlock x:Name="MotorTemperatureValueLabel"  Text="{Binding  Device.SensorData.MotorTemp, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <!-- Değişken Birimi -->
+                    <TextBlock x:Name="MotorTemperatureUnitLabel" Text="°C" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 0 0" HorizontalAlignment="Right"/>
+                </StackPanel>
 
 
-            <!-- Ambient Temperature Chart -->
-            <lvc:CartesianChart Grid.Row="1" Grid.Column="1" Series="{Binding AmbientTempSeriesCollection}" Margin="5" DisableAnimations="True">
+                <!-- 9. Değişken -->
+                <StackPanel Orientation="Horizontal" Margin="0 12 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <!-- Değişken Rengi -->
+                    <Border CornerRadius="10" Background="ForestGreen" Width="10" Height="10" Margin="10 2 10 0" HorizontalAlignment="Left"/>
+                    <!-- Değişken Adı -->
+                    <TextBlock x:Name="AmbientTemperatureNameLabel" Text="Ambient Temp" Width="120" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 5 0" HorizontalAlignment="Left"/>
+                    <!-- Değişken Değeri -->
+                    <TextBlock x:Name="AmbientTemperatureValueLabel"  Text="{Binding  Device.SensorData.AmbientTemp, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <!-- Değişken Birimi -->
+                    <TextBlock x:Name="AmbientTemperatureUnitLabel" Text="°C" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 0 0" HorizontalAlignment="Right"/>
+                </StackPanel>
+
+                <!-- 9. Değişken -->
+                <StackPanel Orientation="Horizontal" Margin="0 13 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <!-- Değişken Rengi -->
+                    <Border CornerRadius="10" Background="#FF139DA1" Width="10" Height="10" Margin="10 2 10 0" HorizontalAlignment="Left"/>
+                    <!-- Değişken Adı -->
+                    <TextBlock x:Name="VibrationNameLabel" Text="Vibration" Width="120" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 5 0" HorizontalAlignment="Left"/>
+                    <!-- Değişken Değeri -->
+                    <TextBlock x:Name="VibrationValueLabel"  Text="{Binding  Device.SensorData.Vibration, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <!-- Değişken Birimi -->
+                    <TextBlock x:Name="VibrationUnitLabel" Text="g" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 0 0" HorizontalAlignment="Right"/>
+                </StackPanel>
+                <!-- 10. Değişken -->
+                <StackPanel Orientation="Horizontal" Margin="0 14 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <!-- Değişken Rengi -->
+                    <Border x:Name="WindSpeedColorBorder" CornerRadius="10" Background="Wheat" Width="10" Height="10" Margin="10 2 10 0" HorizontalAlignment="Left"/>
+                    <!-- Değişken Adı -->
+                    <TextBlock x:Name="WindSpeedNameLabel" Text="Wind Speed" Width="120" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 5 0"/>
+                    <!-- Değişken Değeri -->
+                    <TextBlock x:Name="WindSpeedValueLabel"  Text="{Binding  Device.SensorData.WindSpeed, StringFormat={}{0:0.0}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <!-- Değişken Birimi -->
+                    <TextBlock x:Name="WindSpeedUnitLabel" Text="m/s" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 0 0" HorizontalAlignment="Right"/>
+                </StackPanel>
+
+                <!-- 11. Değişken -->
+                <StackPanel Orientation="Horizontal" Margin="0 15 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <!-- Değişken Rengi -->
+                    <Border x:Name="WindDirectionColorBorder" CornerRadius="10" Background="LightGray" Width="10" Height="10" Margin="10 2 10 0" HorizontalAlignment="Left"/>
+                    <!-- Değişken Adı -->
+                    <TextBlock x:Name="WindDirectionNameLabel" Text="Wind Direction" Width="120" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 5 0" HorizontalAlignment="Left"/>
+                    <!-- Değişken Değeri -->
+                    <TextBlock x:Name="WindDirectionValueLabel"  Text="{Binding  Device.SensorData.WindDirection, StringFormat={}{0:0.0}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <!-- Değişken Birimi -->
+                    <TextBlock x:Name="WindDirectionUnitLabel" Text="°" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="Black" Margin="0 0 0 0" HorizontalAlignment="Right"/>
+                </StackPanel>
+            </StackPanel>
+
+ 
+            <!-- @@@@@@@@@@@@@@@    Current Chart    @@@@@@@@@@@@@@@ -->
+            <lvc:CartesianChart Grid.Row="1" Grid.Column="1" Series="{Binding CurrentSeriesCollection}" Margin="5" DisableAnimations="True">
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="Black"></lvc:Axis>
                 </lvc:CartesianChart.AxisX>
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Temperature (°C)" Foreground="Black"></lvc:Axis>
+                    <lvc:Axis Title="Current (A)" Foreground="Black"></lvc:Axis>
                 </lvc:CartesianChart.AxisY>
             </lvc:CartesianChart>
 
-            <!-- Motor Temperature Chart -->
-            <lvc:CartesianChart Grid.Row="1" Grid.Column="2" Series="{Binding MotorTempSeriesCollection}" Margin="5" DisableAnimations="True">
-                <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="Black"></lvc:Axis>
-                </lvc:CartesianChart.AxisX>
-                <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Motor Temperature (°C)" Foreground="Black"></lvc:Axis>
-                </lvc:CartesianChart.AxisY>
-            </lvc:CartesianChart>
-
-            <!-- Motor Speed Chart -->
-            <lvc:CartesianChart Grid.Row="1" Grid.Column="3" Series="{Binding MotorSpeedSeriesCollection}" Margin="5" DisableAnimations="True">
-                <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="Black"></lvc:Axis>
-                </lvc:CartesianChart.AxisX>
-                <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Motor Speed (RPM)" Foreground="Black"></lvc:Axis>
-                </lvc:CartesianChart.AxisY>
-            </lvc:CartesianChart>
-
-            <!-- Voltage Chart -->
-            <lvc:CartesianChart Grid.Row="2" Grid.Column="1" Series="{Binding VoltageSeriesCollection}" Margin="5" DisableAnimations="True">
+            <!-- @@@@@@@@@@@@@@@    Voltage Chart    @@@@@@@@@@@@@@@ -->
+            <lvc:CartesianChart Grid.Row="1" Grid.Column="2" Series="{Binding VoltageSeriesCollection}" Margin="5" DisableAnimations="True">
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="Black"></lvc:Axis>
                 </lvc:CartesianChart.AxisX>
@@ -153,8 +213,38 @@
                 </lvc:CartesianChart.AxisY>
             </lvc:CartesianChart>
 
-            <!-- Thrust Chart -->
-            <lvc:CartesianChart Grid.Row="2" Grid.Column="2" Series="{Binding ThrustSeriesCollection}" Margin="5" DisableAnimations="True">
+            <!-- @@@@@@@@@@@@@@@    Vibration Chart    @@@@@@@@@@@@@@@ -->
+            <lvc:CartesianChart Grid.Row="1" Grid.Column="3" Series="{Binding VibrationSeriesCollection}" Margin="5" DisableAnimations="True">
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="Black"></lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Vibration (g)" Foreground="Black"></lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+            </lvc:CartesianChart>
+
+            <!-- @@@@@@@@@@@@@@@    Motor Speed Chart    @@@@@@@@@@@@@@@ -->
+            <lvc:CartesianChart Grid.Row="2" Grid.Column="1" Series="{Binding MotorSpeedSeriesCollection}" Margin="5" DisableAnimations="True">
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="Black"></lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Motor Speed (RPM)" Foreground="Black"></lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+            </lvc:CartesianChart>
+
+            <!-- @@@@@@@@@@@@@@@    Torque Chart    @@@@@@@@@@@@@@@ -->
+            <lvc:CartesianChart Grid.Row="2" Grid.Column="2" Series="{Binding TorqueSeriesCollection}" Margin="5" DisableAnimations="True">
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="Black"></lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Torque (Nmm)" Foreground="Black"></lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+            </lvc:CartesianChart>
+
+            <!-- @@@@@@@@@@@@@@@    Thrust Chart    @@@@@@@@@@@@@@@ -->
+            <lvc:CartesianChart Grid.Row="2" Grid.Column="3" Series="{Binding ThrustSeriesCollection}" Margin="5" DisableAnimations="True">
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="Black"></lvc:Axis>
                 </lvc:CartesianChart.AxisX>
@@ -163,15 +253,7 @@
                 </lvc:CartesianChart.AxisY>
             </lvc:CartesianChart>
 
-            <!-- Torque Chart -->
-            <lvc:CartesianChart Grid.Row="2" Grid.Column="3" Series="{Binding TorqueSeriesCollection}" Margin="5" DisableAnimations="True">
-                <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="Black"></lvc:Axis>
-                </lvc:CartesianChart.AxisX>
-                <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Torque (Nm)" Foreground="Black"></lvc:Axis>
-                </lvc:CartesianChart.AxisY>
-            </lvc:CartesianChart>
+
         </Grid>
     </Border>
 </UserControl>

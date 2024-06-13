@@ -14,8 +14,18 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         private SerialPortsManager _serialPortsManager;
         private string _selectedPort;
         private ObservableCollection<DeviceViewModel> _connectedDevices;
+        private ObservableCollection<string> _availablePorts;
 
-        public ObservableCollection<string> AvailablePorts { get; set; }
+        public ObservableCollection<string> AvailablePorts
+        {
+            get => _availablePorts;
+            set
+            {
+                _availablePorts = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ObservableCollection<DeviceViewModel> ConnectedDevices
         {
             get => _connectedDevices;
@@ -42,7 +52,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         {
             _serialPortsManager = new SerialPortsManager();
             AvailablePorts = new ObservableCollection<string>(_serialPortsManager.GetSerialPorts());
-            _connectedDevices = new ObservableCollection<DeviceViewModel>();
+            ConnectedDevices = new ObservableCollection<DeviceViewModel>();
             _serialPortsManager.SerialPortsEvent += OnSerialPortsChanged;
             ConnectCommand = new RelayCommand(ConnectToDevice);
         }
@@ -50,6 +60,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         private void OnSerialPortsChanged()
         {
             AvailablePorts = new ObservableCollection<string>(_serialPortsManager.GetSerialPorts());
+            OnPropertyChanged(nameof(AvailablePorts));
         }
 
         private void ConnectToDevice(object parameter)
@@ -57,9 +68,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             if (!string.IsNullOrEmpty(SelectedPort))
             {
                 var deviceViewModel = new DeviceViewModel(SelectedPort);
-                _connectedDevices.Clear();
-                _connectedDevices.Add(deviceViewModel);
-                
+                ConnectedDevices.Clear();
+                ConnectedDevices.Add(deviceViewModel);
             }
         }
 

@@ -12,6 +12,7 @@
   <ItemGroup>
     <Folder Include="Documents\Curser\" />
     <Folder Include="Documents\Icons\" />
+    <Folder Include="Documents\Images\" />
   </ItemGroup>
 
   <ItemGroup>

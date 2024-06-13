@@ -29,7 +29,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <!-- Top Menu -->
-                <Border Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="0 0 0 0" BorderThickness="1" BorderBrush="ForestGreen">
+                <Border Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="0 0 0 0" BorderThickness="1" BorderBrush="White">
                     <Grid VerticalAlignment="Top">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -52,7 +52,7 @@
                                 </ItemsControl>
                             </WrapPanel>
                         </ScrollViewer>
-
+                        
                         <!-- Status Bar -->
                         <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 15 0">
                             <TextBlock Text="{Binding Source={x:Static sys:DateTime.Now}, StringFormat='t' ,ConverterCulture=en-EN}" Foreground="#151F2D" FontSize="28" VerticalAlignment="Center"/>
@@ -66,7 +66,7 @@
                 </Border>
 
                 <!-- Left Menu -->
-                <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" BorderThickness="1" BorderBrush="Orange">
+                <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" BorderThickness="1" BorderBrush="White">
                     <Grid>
                         <StackPanel x:Name="LeftMenuPanel" VerticalAlignment="Top">
                             <!-- Ellipses -->
@@ -76,7 +76,7 @@
                                 <Ellipse Width="8" Height="8" Fill="#009d00"/>
                             </StackPanel>
                             <!-- Menu Buttons -->
-                            <uc:MenuButton x:Name="HomeButton" Icon="Home" Text="Home" IsActive="True" Click="MenuButton_Click"/>
+                            <!-- <uc:MenuButton x:Name="HomeButton" Icon="Home" Text="Home" IsActive="True" Click="MenuButton_Click"/> -->
                             <uc:MenuButton x:Name="SingleButton" Icon="UsbPort" Text="Single" Click="MenuButton_Click"/>
                             <uc:MenuButton x:Name="CoaxialButton" Icon="Usb" Text="Coaxial" Click="MenuButton_Click"/>
                             <uc:MenuButton x:Name="MultiButton" Icon="Multicast" Text="Multi" Click="MenuButton_Click"/>
@@ -89,7 +89,7 @@
                     </Grid>
                 </Border>
                 <!-- Content Area -->
-                <Border Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" BorderThickness="1" BorderBrush="Purple">
+                <Border Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" BorderThickness="1" BorderBrush="White">
                     <ContentControl x:Name="ContentArea" />
                 </Border>
                 

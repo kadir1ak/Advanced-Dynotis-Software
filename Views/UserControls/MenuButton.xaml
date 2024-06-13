@@ -10,7 +10,7 @@
 
     <UserControl.Resources>
         <Style TargetType="Button">
-            <Setter Property="Background" Value="White" />
+            <Setter Property="Background" Value="Transparent" />
             <Setter Property="Foreground" Value="#151F2D" />
             <Setter Property="Height" Value="56" />
             <Setter Property="FocusVisualStyle" Value="{x:Null}" />
@@ -34,7 +34,7 @@
                                         <Storyboard>
                                             <DoubleAnimation To="1.1" Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleX)" Duration="0:0:0.3" />
                                             <DoubleAnimation To="1.1" Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleY)" Duration="0:0:0.3" />
-                                            <ColorAnimation To="White" Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" Duration="0:0:0.3"/>
+                                            <ColorAnimation To="Transparent" Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" Duration="0:0:0.3"/>
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </Trigger.EnterActions>
@@ -43,7 +43,7 @@
                                         <Storyboard>
                                             <DoubleAnimation To="1" Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleX)" Duration="0:0:0.3" />
                                             <DoubleAnimation To="1" Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleY)" Duration="0:0:0.3" />
-                                            <ColorAnimation To="White" Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" Duration="0:0:0.3"/>
+                                            <ColorAnimation To="Transparent" Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" Duration="0:0:0.3"/>
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </Trigger.ExitActions>

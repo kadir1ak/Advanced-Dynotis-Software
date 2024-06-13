@@ -14,14 +14,18 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" x:Name="LeftMenuPanel" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
-                    <uc:SettingButton Icon="ContentSaveCog" Text="Save Config" Margin="10"/>
-                    <uc:SettingButton Icon="Layers" Text="Units Settings" Margin="10"/>
-                    <uc:SettingButton Icon="AlertCircleCheckOutline" Text="Alerts" Margin="10"/>
-                    <uc:SettingButton Icon="Update" Text="Software Update" Margin="10"/>
-                    <uc:SettingButton Icon="Translate" Text="Language" Margin="10"/>
-                    <uc:SettingButton Icon="Information" Text="About" Margin="10"/>
-                    <uc:SettingButton Icon="Help" Text="Help" Margin="10"/>
+                    <uc:SettingButton Icon="ContentSaveCog" Text="Save Config" Margin="10" Click="SettingButton_Click"/>
+                    <uc:SettingButton Icon="Layers" Text="Units Settings" Margin="10" Click="SettingButton_Click"/>
+                    <uc:SettingButton Icon="AlertCircleCheckOutline" Text="Alerts" Margin="10" Click="SettingButton_Click"/>
+                    <uc:SettingButton Icon="Update" Text="Software Update" Margin="10" Click="SettingButton_Click"/>
+                    <uc:SettingButton Icon="Translate" Text="Language" Margin="10" Click="SettingButton_Click"/>
+                    <uc:SettingButton Icon="Information" Text="About" Margin="10" Click="SettingButton_Click"/>
+                    <uc:SettingButton Icon="Help" Text="Help" Margin="10" Click="SettingButton_Click"/>
                 </StackPanel>
+                <!-- Content Area -->
+                <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" BorderThickness="1" BorderBrush="Black">
+                    <ContentControl x:Name="ContentArea" />
+                </Border>
             </Grid>
         </Border>
     </Grid>

@@ -19,8 +19,11 @@ namespace Advanced_Dynotis_Software.Views.Windows
         public MainWindow()
         {
             InitializeComponent();
-            AnimateButtonScale(HomeButton, 1.15);
-            ContentArea.Content = new HomePage();
+            // AnimateButtonScale(HomeButton, 1.15);
+            //ContentArea.Content = new HomePage();
+
+            AnimateButtonScale(SingleButton, 1.15);
+            ContentArea.Content = new SingleTestPage();
         }
 
         private void MainBorder_MouseDown(object sender, MouseButtonEventArgs e)

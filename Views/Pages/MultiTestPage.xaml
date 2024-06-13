@@ -26,7 +26,7 @@
         </Border>
 
         <!-- Device List -->
-        <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 0 10 0" BorderThickness="1" BorderBrush="Orange">
+        <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 0 10 0" BorderThickness="1" BorderBrush="White">
             <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled">
                 <ItemsControl ItemsSource="{Binding devicesViewModel}">
                     <ItemsControl.ItemsPanel>
@@ -41,28 +41,45 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <Border Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="0 10 10 10" BorderThickness="1" BorderBrush="Brown">
-                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                            <Button Height="20" Width="50" Content="Test" Margin="0 0 5 0"/>
-                                            <Label Content="Test" Margin="0 5 0 0"/>
-                                            <Label Content="Test" Margin="0 5 0 0"/>
-                                            <Label Content="Test" Margin="0 5 0 0"/>
+
+                                    <!-- Üst -->
+                                    <Border Grid.Column="1" Grid.ColumnSpan="1" Grid.Row="0" Margin="0 10 10 0" BorderThickness="1" BorderBrush="White">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                <TextBlock Text="Port: " Foreground="Black" FontWeight="Bold" FontSize="16"/>
+                                                <TextBlock Text="{Binding  Device.PortName}" Foreground="Black" FontWeight="Bold" FontSize="16"/>
+                                                <TextBlock Text=" - " Foreground="Black" FontWeight="Bold" FontSize="16"/>
+                                                <TextBlock Text="{Binding  Device.Model}" Foreground="Black" FontWeight="Bold" FontSize="16"/>
+                                                <TextBlock Text=" - " Foreground="Black" FontWeight="Bold" FontSize="16"/>
+                                                <TextBlock Text="{Binding  Device.SeriNo}" Foreground="Black" FontWeight="Bold" FontSize="16"/>
+                                            </StackPanel>
                                         </StackPanel>
                                     </Border>
-
-                                    <uc:DeviceCard Grid.Column="1" Grid.Row="0" DataContext="{Binding}" Margin="0 10 10 0"/>
-
-                                    <Border Grid.Column="1" Grid.Row="1" Margin="0 10 10 10" BorderThickness="1" BorderBrush="Goldenrod">
+                                    <!-- Sağ -->
+                                    <Border Grid.Column="3" Grid.Row="0" Grid.RowSpan="3" Margin="0 10 10 10" BorderThickness="1" BorderBrush="White">
                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                            <Button Height="20" Width="50" Content="Test" Margin="0 0 5 0"/>
-                                            <Label Content="Test" Margin="0 5 0 0"/>
-                                            <Label Content="Test" Margin="0 5 0 0"/>
-                                            <Label Content="Test" Margin="0 5 0 0"/>
+                                            <Label Content="Sağ" FontSize="24" Margin="5"/>
+                                        </StackPanel>
+                                    </Border>
+                                    <!-- Orta -->
+                                    <uc:DeviceCard Grid.Column="1" Grid.Row="1" DataContext="{Binding}" Margin="0 10 10 0"/>
+                                    <!-- Sol -->
+                                    <Border Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Margin="0 10 10 10" BorderThickness="1" BorderBrush="White">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <Label Content="Sol" FontSize="24" Margin="5"/>
+                                        </StackPanel>
+                                    </Border>
+                                    <!-- Alt -->
+                                    <Border Grid.Column="1" Grid.Row="2" Margin="0 10 10 10" BorderThickness="1" BorderBrush="White">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <Label Content="Alt" FontSize="24" Margin="5"/>
                                         </StackPanel>
                                     </Border>
                                 </Grid>

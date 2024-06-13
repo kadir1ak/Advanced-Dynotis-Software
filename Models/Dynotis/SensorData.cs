@@ -5,6 +5,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
     public class SensorData : INotifyPropertyChanged
     {
         private int time;
+        private double sampleRate;
         private double ambientTemp;
         private double motorTemp;
         private double motorSpeed;
@@ -12,12 +13,65 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         private double torque;
         private double voltage;
         private double current;
+        private double power;
         private double pressure;
-        private double humidity;
         private double vibrationX;
         private double vibrationY;
         private double vibrationZ;
         private double vibration;
+        private double windSpeed;
+        private double windDirection;
+        private double airDensity;
+
+        public double AirDensity
+        {
+            get => airDensity;
+            set
+            {
+                if (airDensity != value)
+                {
+                    airDensity = value;
+                    OnPropertyChanged(nameof(AirDensity));
+                }
+            }
+        }
+        public double SampleRate
+        {
+            get => sampleRate;
+            set
+            {
+                if (sampleRate != value)
+                {
+                    sampleRate = value;
+                    OnPropertyChanged(nameof(SampleRate));
+                }
+            }
+        }
+
+        public double WindSpeed
+        {
+            get => windSpeed;
+            set
+            {
+                if (windSpeed != value)
+                {
+                    windSpeed = value;
+                    OnPropertyChanged(nameof(WindSpeed));
+                }
+            }
+        }
+        public double WindDirection
+        {
+            get => windDirection;
+            set
+            {
+                if (windDirection != value)
+                {
+                    windDirection = value;
+                    OnPropertyChanged(nameof(WindDirection));
+                }
+            }
+        }
 
         public int Time
         {
@@ -122,7 +176,18 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 }
             }
         }
-
+        public double Power
+        {
+            get => power;
+            set
+            {
+                if (power != value)
+                {
+                    power = value;
+                    OnPropertyChanged(nameof(Power));
+                }
+            }
+        }
         public double Pressure
         {
             get => pressure;
@@ -132,19 +197,6 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 {
                     pressure = value;
                     OnPropertyChanged(nameof(Pressure));
-                }
-            }
-        }
-
-        public double Humidity
-        {
-            get => humidity;
-            set
-            {
-                if (humidity != value)
-                {
-                    humidity = value;
-                    OnPropertyChanged(nameof(Humidity));
                 }
             }
         }

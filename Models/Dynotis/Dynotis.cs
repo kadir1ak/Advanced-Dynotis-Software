@@ -204,12 +204,19 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                                 AmbientTemp = double.Parse(dataParts[9]),
                                 MotorTemp = double.Parse(dataParts[10]),
                                 Pressure = double.Parse(dataParts[11]),
-                                Humidity = double.Parse(dataParts[12])
+                                WindSpeed = double.Parse(dataParts[12])
                             };
+
+
 
                             App.Current.Dispatcher.Invoke(() =>
                             {
                                 SensorData = newData;
+
+                                SensorData.Vibration = CalculateMagnitude(newData.VibrationX, newData.VibrationY, newData.VibrationZ);
+                                SensorData.Power = newData.Current * newData.Voltage;
+                                SensorData.WindDirection = 275 * newData.Voltage;
+                                SensorData.AirDensity = 10.0 * newData.Voltage;
                             });
                         }
                         else
@@ -225,6 +232,10 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             {
                 Logger.Log($"An error occurred: {ex.Message}");
             }
+        }
+        private static double CalculateMagnitude(double x, double y, double z)
+        {
+            return Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2) + Math.Pow(z, 2));
         }
 
         protected void OnPropertyChanged(string propertyName)
