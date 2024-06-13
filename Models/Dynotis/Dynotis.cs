@@ -99,6 +99,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 try
                 {
                     Port.Open();
+                    _cancellationTokenSource = new CancellationTokenSource(); // CancellationTokenSource nesnesini yeniden oluştur
                     await StartReceivingDataAsync();
                 }
                 catch (Exception ex)

@@ -38,6 +38,11 @@
         <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="10" BorderThickness="1" BorderBrush="White">
             <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Auto">
                 <ItemsControl ItemsSource="{Binding ConnectedDevices}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel Orientation="Vertical" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border Margin="10 5 10 0" BorderThickness="1" BorderBrush="White">
