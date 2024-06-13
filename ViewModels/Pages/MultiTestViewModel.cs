@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Windows.Input;
+using System.Threading.Tasks;
 using Advanced_Dynotis_Software.Models.Serial;
 using Advanced_Dynotis_Software.ViewModels.Device;
-using Advanced_Dynotis_Software.Services.Helpers;
 
 namespace Advanced_Dynotis_Software.ViewModels.Pages
 {
@@ -41,6 +41,10 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             AvailablePorts = new ObservableCollection<string>(_serialPortsManager.GetSerialPorts());
             DevicesViewModel = new ObservableCollection<DeviceViewModel>();
             _serialPortsManager.SerialPortsEvent += OnSerialPortsChanged;
+        }
+
+        public void OnNavigatedTo()
+        {
             InitializeDevices();
         }
 
@@ -57,7 +61,9 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             {
                 if (!DevicesViewModel.Any(device => device.Device.PortName == port))
                 {
-                    DevicesViewModel.Add(new DeviceViewModel(port));
+                    var deviceViewModel = new DeviceViewModel(port);
+                    deviceViewModel.Device.OpenPortAsync();  // Cihazı otomatik olarak bağla
+                    DevicesViewModel.Add(deviceViewModel);
                 }
             }
         }

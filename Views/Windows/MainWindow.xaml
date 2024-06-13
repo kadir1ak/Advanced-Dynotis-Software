@@ -76,7 +76,7 @@
                                 <Ellipse Width="8" Height="8" Fill="#009d00"/>
                             </StackPanel>
                             <!-- Menu Buttons -->
-                            <!-- <uc:MenuButton x:Name="HomeButton" Icon="Home" Text="Home" IsActive="True" Click="MenuButton_Click"/> -->
+                            <uc:MenuButton x:Name="HomeButton" Icon="Home" Text="Home" IsActive="True" Click="MenuButton_Click"/>
                             <uc:MenuButton x:Name="SingleButton" Icon="UsbPort" Text="Single" Click="MenuButton_Click"/>
                             <uc:MenuButton x:Name="CoaxialButton" Icon="Usb" Text="Coaxial" Click="MenuButton_Click"/>
                             <uc:MenuButton x:Name="MultiButton" Icon="Multicast" Text="Multi" Click="MenuButton_Click"/>

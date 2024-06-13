@@ -63,14 +63,31 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             OnPropertyChanged(nameof(AvailablePorts));
         }
 
-        private void ConnectToDevice(object parameter)
+        private async void ConnectToDevice(object parameter)
         {
             if (!string.IsNullOrEmpty(SelectedPort))
             {
+                var existingDevice = ConnectedDevices.FirstOrDefault(d => d.Device.PortName == SelectedPort);
+                if (existingDevice != null)
+                {
+                    await existingDevice.Device.ClosePortAsync();  // Bağlantıyı kapat
+                    ConnectedDevices.Remove(existingDevice);
+                }
+
                 var deviceViewModel = new DeviceViewModel(SelectedPort);
+                await deviceViewModel.Device.OpenPortAsync();  // Yeni bağlantı aç
                 ConnectedDevices.Clear();
                 ConnectedDevices.Add(deviceViewModel);
             }
+        }
+
+        public async void OnNavigatedFrom()
+        {
+            foreach (var device in ConnectedDevices)
+            {
+                await device.Device.ClosePortAsync();
+            }
+            ConnectedDevices.Clear();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
