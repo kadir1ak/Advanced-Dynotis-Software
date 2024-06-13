@@ -28,7 +28,7 @@
         <!-- Device List -->
         <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 0 10 0" BorderThickness="1" BorderBrush="White">
             <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled">
-                <ItemsControl ItemsSource="{Binding devicesViewModel}">
+                <ItemsControl ItemsSource="{Binding DevicesViewModel}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="stackPanel"/>

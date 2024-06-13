@@ -13,11 +13,11 @@ namespace Advanced_Dynotis_Software.ViewModels.Windows
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<DeviceViewModel> devicesViewModel { get; set; }
-        public SerialPortsManager serialPortsManager { get; set; }
+        public ObservableCollection<DeviceViewModel> DevicesViewModel { get; set; }
+        public SerialPortsManager SerialPortsManager { get; set; }
 
-        private ObservableCollection<string>? _availablePorts;
-        public ObservableCollection<string>? AvailablePorts
+        private ObservableCollection<string> _availablePorts;
+        public ObservableCollection<string> AvailablePorts
         {
             get => _availablePorts;
             set
@@ -27,60 +27,57 @@ namespace Advanced_Dynotis_Software.ViewModels.Windows
             }
         }
 
-        public ICommand AddDeviceCommand { get; set; }
-        public ICommand RemoveDeviceCommand { get; set; }
-
-        private string selectedPort;
+        private string _selectedPort;
         public string SelectedPort
         {
-            get => selectedPort;
+            get => _selectedPort;
             set
             {
-                selectedPort = value;
+                _selectedPort = value;
                 OnPropertyChanged();
             }
         }
 
+        public ICommand AddDeviceCommand { get; set; }
+        public ICommand RemoveDeviceCommand { get; set; }
+
         public MainViewModel()
         {
-            devicesViewModel = new ObservableCollection<DeviceViewModel>();
-            serialPortsManager = new SerialPortsManager();
-            serialPortsManager.SerialPortsEvent += SerialPortsEvent;
-            AvailablePorts = new ObservableCollection<string>(serialPortsManager.GetSerialPorts());
-            AddMiniCard();
+            DevicesViewModel = new ObservableCollection<DeviceViewModel>();
+            SerialPortsManager = new SerialPortsManager();
+            SerialPortsManager.SerialPortsEvent += SerialPortsEvent;
+            AvailablePorts = new ObservableCollection<string>(SerialPortsManager.GetSerialPorts());
             AddDeviceCommand = new RelayCommand(AddDevice);
             RemoveDeviceCommand = new RelayCommand(RemoveDevice);
         }
 
-        public void SerialPortsEvent()
+        private void SerialPortsEvent()
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                AvailablePorts = new ObservableCollection<string>(serialPortsManager.GetSerialPorts());
+                AvailablePorts = new ObservableCollection<string>(SerialPortsManager.GetSerialPorts());
                 AddMiniCard();
             });
         }
 
-        public void AddMiniCard()
+        private void AddMiniCard()
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                // Eski cihazları kaldır
-                foreach (var device in devicesViewModel.ToList())
+                foreach (var device in DevicesViewModel.ToList())
                 {
                     if (!AvailablePorts.Contains(device.Device.PortName))
                     {
                         _ = device.Device.ClosePortAsync();
-                        devicesViewModel.Remove(device);
+                        DevicesViewModel.Remove(device);
                     }
                 }
 
-                // Yeni cihazları ekle
                 foreach (var port in AvailablePorts)
                 {
-                    if (!string.IsNullOrEmpty(port) && !devicesViewModel.Any(device => device.Device.PortName == port))
+                    if (!DevicesViewModel.Any(device => device.Device.PortName == port))
                     {
-                        devicesViewModel.Add(new DeviceViewModel(port));
+                        DevicesViewModel.Add(new DeviceViewModel(port));
                     }
                 }
             });
@@ -88,33 +85,22 @@ namespace Advanced_Dynotis_Software.ViewModels.Windows
 
         private void AddDevice(object parameter)
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            if (!string.IsNullOrEmpty(SelectedPort) && !DevicesViewModel.Any(device => device.Device.PortName == SelectedPort))
             {
-                if (!string.IsNullOrEmpty(SelectedPort))
-                {
-                    // Check if the device with the selected port already exists
-                    if (!devicesViewModel.Any(device => device.Device.PortName == SelectedPort))
-                    {
-                        devicesViewModel.Add(new DeviceViewModel(SelectedPort));
-                    }
-                }
-            });
+                DevicesViewModel.Add(new DeviceViewModel(SelectedPort));
+            }
         }
 
         private void RemoveDevice(object parameter)
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            if (parameter is DeviceViewModel deviceViewModel)
             {
-                if (parameter is DeviceViewModel deviceViewModel)
-                {
-                    _ = deviceViewModel.Device.ClosePortAsync();
-                    devicesViewModel.Remove(deviceViewModel);
-                }
-            });
+                _ = deviceViewModel.Device.ClosePortAsync();
+                DevicesViewModel.Remove(deviceViewModel);
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));

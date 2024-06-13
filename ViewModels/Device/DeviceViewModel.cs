@@ -1,14 +1,13 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Threading;
+using Advanced_Dynotis_Software.Models.Dynotis;
 using LiveCharts;
 using LiveCharts.Wpf;
-using Advanced_Dynotis_Software.Models.Dynotis;
-using System.Windows.Media;
+using System.Windows.Threading;
+using System.Windows;
 
 namespace Advanced_Dynotis_Software.ViewModels.Device
 {
@@ -22,7 +21,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
         public SeriesCollection TorqueSeriesCollection { get; set; }
         public ObservableCollection<string> TimeLabels { get; set; }
 
-        private Dynotis device;
+        private Dynotis _device;
         private Queue<SensorData> _sensorDataBuffer;
         private object _bufferLock = new object();
         private const int BufferLimit = 1;
@@ -30,13 +29,13 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
 
         public Dynotis Device
         {
-            get => device;
+            get => _device;
             set
             {
-                if (device != value)
+                if (_device != value)
                 {
-                    device = value;
-                    OnPropertyChanged(nameof(Device));
+                    _device = value;
+                    OnPropertyChanged();
                 }
             }
         }
@@ -53,17 +52,17 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
 
         private async void InitializeDeviceAsync()
         {
-            await Device.OpenPortAsync();  // Correct usage of asynchronous method
+            await Device.OpenPortAsync();
         }
 
         private void Charts_InitializeComponent()
         {
-            VibrationSeriesCollection = CreateSeriesCollection("Vibration", Colors.IndianRed);
-            CurrentSeriesCollection = CreateSeriesCollection("Current", Colors.DarkOliveGreen);
-            MotorSpeedSeriesCollection = CreateSeriesCollection("Motor Speed", Colors.PaleVioletRed);
-            VoltageSeriesCollection = CreateSeriesCollection("Voltage", Colors.Orange);
-            ThrustSeriesCollection = CreateSeriesCollection("Thrust", Colors.DarkOliveGreen);
-            TorqueSeriesCollection = CreateSeriesCollection("Torque", Colors.HotPink);
+            VibrationSeriesCollection = CreateSeriesCollection("Vibration", System.Windows.Media.Colors.IndianRed);
+            CurrentSeriesCollection = CreateSeriesCollection("Current", System.Windows.Media.Colors.DarkOliveGreen);
+            MotorSpeedSeriesCollection = CreateSeriesCollection("Motor Speed", System.Windows.Media.Colors.PaleVioletRed);
+            VoltageSeriesCollection = CreateSeriesCollection("Voltage", System.Windows.Media.Colors.Orange);
+            ThrustSeriesCollection = CreateSeriesCollection("Thrust", System.Windows.Media.Colors.DarkOliveGreen);
+            TorqueSeriesCollection = CreateSeriesCollection("Torque", System.Windows.Media.Colors.HotPink);
 
             TimeLabels = new ObservableCollection<string>();
             _sensorDataBuffer = new Queue<SensorData>();
@@ -71,7 +70,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
             Device.PropertyChanged += Device_PropertyChanged;
 
             InitializeDefaultChartData();
-            _ = UpdateChartDataAsync();  // Asynchronous chart data update
+            _ = UpdateChartDataAsync();
         }
 
         private void InitializeDefaultChartData()
@@ -89,7 +88,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
             }
         }
 
-        private SeriesCollection CreateSeriesCollection(string title, Color color)
+        private SeriesCollection CreateSeriesCollection(string title, System.Windows.Media.Color color)
         {
             return new SeriesCollection
             {
@@ -99,10 +98,10 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
                     Values = new ChartValues<double>(),
                     PointGeometrySize = 0,
                     LineSmoothness = 1,
-                    Stroke = new SolidColorBrush(color),
+                    Stroke = new System.Windows.Media.SolidColorBrush(color),
                     StrokeThickness = 2,
-                    Fill = new SolidColorBrush(Color.FromArgb(10, color.R, color.G, color.B)),
-                    PointForeground = new SolidColorBrush(Colors.Black),
+                    Fill = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromArgb(10, color.R, color.G, color.B)),
+                    PointForeground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Black),
                     LabelPoint = point => point.Y.ToString("N1")
                 }
             };
@@ -141,9 +140,9 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
                 {
                     if (_sensorDataBuffer.Count >= BufferLimit)
                     {
-                        _sensorDataBuffer.Dequeue();  // Remove the oldest data
+                        _sensorDataBuffer.Dequeue();
                     }
-                    _sensorDataBuffer.Enqueue(Device.SensorData);  // Add new data
+                    _sensorDataBuffer.Enqueue(Device.SensorData);
                 }
             }
         }
@@ -174,7 +173,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

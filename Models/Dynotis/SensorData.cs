@@ -1,260 +1,261 @@
 ﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Advanced_Dynotis_Software.Models.Dynotis
 {
     public class SensorData : INotifyPropertyChanged
     {
-        private int time;
-        private double sampleRate;
-        private double ambientTemp;
-        private double motorTemp;
-        private double motorSpeed;
-        private double thrust;
-        private double torque;
-        private double voltage;
-        private double current;
-        private double power;
-        private double pressure;
-        private double vibrationX;
-        private double vibrationY;
-        private double vibrationZ;
-        private double vibration;
-        private double windSpeed;
-        private double windDirection;
-        private double airDensity;
+        private int _time;
+        private double _sampleRate;
+        private double _ambientTemp;
+        private double _motorTemp;
+        private double _motorSpeed;
+        private double _thrust;
+        private double _torque;
+        private double _voltage;
+        private double _current;
+        private double _power;
+        private double _pressure;
+        private double _vibrationX;
+        private double _vibrationY;
+        private double _vibrationZ;
+        private double _vibration;
+        private double _windSpeed;
+        private double _windDirection;
+        private double _airDensity;
 
         public double AirDensity
         {
-            get => airDensity;
+            get => _airDensity;
             set
             {
-                if (airDensity != value)
+                if (_airDensity != value)
                 {
-                    airDensity = value;
-                    OnPropertyChanged(nameof(AirDensity));
+                    _airDensity = value;
+                    OnPropertyChanged();
                 }
             }
         }
         public double SampleRate
         {
-            get => sampleRate;
+            get => _sampleRate;
             set
             {
-                if (sampleRate != value)
+                if (_sampleRate != value)
                 {
-                    sampleRate = value;
-                    OnPropertyChanged(nameof(SampleRate));
+                    _sampleRate = value;
+                    OnPropertyChanged();
                 }
             }
         }
 
         public double WindSpeed
         {
-            get => windSpeed;
+            get => _windSpeed;
             set
             {
-                if (windSpeed != value)
+                if (_windSpeed != value)
                 {
-                    windSpeed = value;
-                    OnPropertyChanged(nameof(WindSpeed));
+                    _windSpeed = value;
+                    OnPropertyChanged();
                 }
             }
         }
         public double WindDirection
         {
-            get => windDirection;
+            get => _windDirection;
             set
             {
-                if (windDirection != value)
+                if (_windDirection != value)
                 {
-                    windDirection = value;
-                    OnPropertyChanged(nameof(WindDirection));
+                    _windDirection = value;
+                    OnPropertyChanged();
                 }
             }
         }
 
         public int Time
         {
-            get => time;
+            get => _time;
             set
             {
-                if (time != value)
+                if (_time != value)
                 {
-                    time = value;
-                    OnPropertyChanged(nameof(Time));
+                    _time = value;
+                    OnPropertyChanged();
                 }
             }
         }
 
         public double AmbientTemp
         {
-            get => ambientTemp;
+            get => _ambientTemp;
             set
             {
-                if (ambientTemp != value)
+                if (_ambientTemp != value)
                 {
-                    ambientTemp = value;
-                    OnPropertyChanged(nameof(AmbientTemp));
+                    _ambientTemp = value;
+                    OnPropertyChanged();
                 }
             }
         }
 
         public double MotorTemp
         {
-            get => motorTemp;
+            get => _motorTemp;
             set
             {
-                if (motorTemp != value)
+                if (_motorTemp != value)
                 {
-                    motorTemp = value;
-                    OnPropertyChanged(nameof(MotorTemp));
+                    _motorTemp = value;
+                    OnPropertyChanged();
                 }
             }
         }
 
         public double MotorSpeed
         {
-            get => motorSpeed;
+            get => _motorSpeed;
             set
             {
-                if (motorSpeed != value)
+                if (_motorSpeed != value)
                 {
-                    motorSpeed = value;
-                    OnPropertyChanged(nameof(MotorSpeed));
+                    _motorSpeed = value;
+                    OnPropertyChanged();
                 }
             }
         }
 
         public double Thrust
         {
-            get => thrust;
+            get => _thrust;
             set
             {
-                if (thrust != value)
+                if (_thrust != value)
                 {
-                    thrust = value;
-                    OnPropertyChanged(nameof(Thrust));
+                    _thrust = value;
+                    OnPropertyChanged();
                 }
             }
         }
 
         public double Torque
         {
-            get => torque;
+            get => _torque;
             set
             {
-                if (torque != value)
+                if (_torque != value)
                 {
-                    torque = value;
-                    OnPropertyChanged(nameof(Torque));
+                    _torque = value;
+                    OnPropertyChanged();
                 }
             }
         }
 
         public double Voltage
         {
-            get => voltage;
+            get => _voltage;
             set
             {
-                if (voltage != value)
+                if (_voltage != value)
                 {
-                    voltage = value;
-                    OnPropertyChanged(nameof(Voltage));
+                    _voltage = value;
+                    OnPropertyChanged();
                 }
             }
         }
 
         public double Current
         {
-            get => current;
+            get => _current;
             set
             {
-                if (current != value)
+                if (_current != value)
                 {
-                    current = value;
-                    OnPropertyChanged(nameof(Current));
+                    _current = value;
+                    OnPropertyChanged();
                 }
             }
         }
         public double Power
         {
-            get => power;
+            get => _power;
             set
             {
-                if (power != value)
+                if (_power != value)
                 {
-                    power = value;
-                    OnPropertyChanged(nameof(Power));
+                    _power = value;
+                    OnPropertyChanged();
                 }
             }
         }
         public double Pressure
         {
-            get => pressure;
+            get => _pressure;
             set
             {
-                if (pressure != value)
+                if (_pressure != value)
                 {
-                    pressure = value;
-                    OnPropertyChanged(nameof(Pressure));
+                    _pressure = value;
+                    OnPropertyChanged();
                 }
             }
         }
 
         public double VibrationX
         {
-            get => vibrationX;
+            get => _vibrationX;
             set
             {
-                if (vibrationX != value)
+                if (_vibrationX != value)
                 {
-                    vibrationX = value;
-                    OnPropertyChanged(nameof(VibrationX));
+                    _vibrationX = value;
+                    OnPropertyChanged();
                 }
             }
         }
 
         public double VibrationY
         {
-            get => vibrationY;
+            get => _vibrationY;
             set
             {
-                if (vibrationY != value)
+                if (_vibrationY != value)
                 {
-                    vibrationY = value;
-                    OnPropertyChanged(nameof(VibrationY));
+                    _vibrationY = value;
+                    OnPropertyChanged();
                 }
             }
         }
 
         public double VibrationZ
         {
-            get => vibrationZ;
+            get => _vibrationZ;
             set
             {
-                if (vibrationZ != value)
+                if (_vibrationZ != value)
                 {
-                    vibrationZ = value;
-                    OnPropertyChanged(nameof(VibrationZ));
+                    _vibrationZ = value;
+                    OnPropertyChanged();
                 }
             }
         }
         public double Vibration
         {
-            get => vibration;
+            get => _vibration;
             set
             {
-                if (vibration != value)
+                if (_vibration != value)
                 {
-                    vibration = value;
-                    OnPropertyChanged(nameof(Vibration));
+                    _vibration = value;
+                    OnPropertyChanged();
                 }
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void OnPropertyChanged(string propertyName)
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

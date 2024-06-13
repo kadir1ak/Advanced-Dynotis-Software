@@ -1,29 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Advanced_Dynotis_Software.Services.Logger
 {
     public static class Logger
     {
-        private static string logFilePath = "ApplicationLog.txt";
+        private static readonly string LogFilePath = "log.txt";
 
         public static void Log(string message)
         {
             try
             {
-                using (var writer = new StreamWriter(logFilePath, true))
+                using (StreamWriter writer = new StreamWriter(LogFilePath, true))
                 {
-                    writer.WriteLine($"{DateTime.Now}: {message}");
+                    writer.WriteLine($"{DateTime.Now:G}: {message}");
                 }
             }
             catch (Exception ex)
             {
-                // Log dosyasına yazma işlemi başarısız olursa burada ele alınabilir.
-                Console.WriteLine($"Unable to log message to file. Error: {ex.Message}");
+                // Handle exceptions related to logging
+                Console.WriteLine($"Failed to log message: {ex.Message}");
             }
         }
     }

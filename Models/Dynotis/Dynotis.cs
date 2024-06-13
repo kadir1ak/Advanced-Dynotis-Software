@@ -141,7 +141,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 while (!token.IsCancellationRequested && Port.IsOpen && !deviceInfoReceived)
                 {
                     string indata = await Task.Run(() => Port.ReadLine(), token);
-                    Logger.Log($"Received data: {indata}"); // Log raw data
+                    Logger.Log($"Received data: {indata}");
 
                     if (indata.Trim().StartsWith("KEY:"))
                     {
@@ -166,7 +166,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                         await Task.Run(() => Port.WriteLine("DEVICE_INFO"), token);
                     }
 
-                    await Task.Delay(100); // Adjust delay if necessary
+                    await Task.Delay(100);
                 }
             }
             catch (Exception ex)
@@ -182,7 +182,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 while (!token.IsCancellationRequested && Port.IsOpen)
                 {
                     string indata = await Task.Run(() => Port.ReadLine(), token);
-                    Logger.Log($"Received data: {indata}"); // Log raw data
+                    Logger.Log($"Received data: {indata}");
 
                     if (!indata.Trim().StartsWith("KEY:"))
                     {
@@ -207,9 +207,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                                 WindSpeed = double.Parse(dataParts[12])
                             };
 
-
-
-                            App.Current.Dispatcher.Invoke(() =>
+                            Application.Current.Dispatcher.Invoke(() =>
                             {
                                 SensorData = newData;
 
@@ -225,7 +223,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                         }
                     }
 
-                    await Task.Delay(10); // Adjust delay if necessary
+                    await Task.Delay(10);
                 }
             }
             catch (Exception ex)
@@ -233,6 +231,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 Logger.Log($"An error occurred: {ex.Message}");
             }
         }
+
         private static double CalculateMagnitude(double x, double y, double z)
         {
             return Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2) + Math.Pow(z, 2));
