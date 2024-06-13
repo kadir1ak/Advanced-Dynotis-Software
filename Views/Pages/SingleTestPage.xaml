@@ -17,14 +17,19 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Vertical" Width="100" HorizontalAlignment="Left" Margin="10 0 0 0">
-            <Label Content="Device List" Foreground="Black" FontSize="18"/>
-            <ComboBox ItemsSource="{Binding AvailablePorts}" SelectedItem="{Binding SelectedPort}"/>
-        </StackPanel>
+
         <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="Single Test Page" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#151F2D"/>
 
-        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="DarkTurquoise" Margin="10 10 10 10">
-            <Label Content="Device List" Foreground="Black" FontSize="26" HorizontalAlignment="Center"/>
+        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="DarkTurquoise" Margin="10 10 10 10">
+            <Grid>
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="10 5 0 0">
+                    <Label Content="Device List" Foreground="Black" FontSize="18"/>
+                    <ComboBox ItemsSource="{Binding AvailablePorts}" SelectedItem="{Binding SelectedPort}" Margin="0 0 0 5"/>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="110 0 0 0">
+                    <Button Content="Connetion" Width="100" Height="50"/>
+                </StackPanel>
+            </Grid>
         </Border>
 
         <!-- Device List -->
