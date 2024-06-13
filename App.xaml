@@ -5,7 +5,6 @@
              xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
              StartupUri="\Views\Windows\MainWindow.xaml">
     <Application.Resources>
-
-
+        <ResourceDictionary Source="Themes/Dark.xaml"/>
     </Application.Resources>
 </Application>

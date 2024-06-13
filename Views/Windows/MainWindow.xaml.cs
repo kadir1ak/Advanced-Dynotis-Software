@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using System.Windows.Media;
 using Advanced_Dynotis_Software.ViewModels.Windows;
+using Advanced_Dynotis_Software.Themes;
 
 namespace Advanced_Dynotis_Software.Views.Windows
 {
@@ -108,6 +109,14 @@ namespace Advanced_Dynotis_Software.Views.Windows
  
         }
 
+        private void A_Click(object sender, MouseButtonEventArgs e)
+        {
+            AppTheme.ChangeTheme(new Uri("Themes/Light.xaml", UriKind.Relative));
+        }
 
+        private void B_Click(object sender, MouseButtonEventArgs e)
+        {
+            AppTheme.ChangeTheme(new Uri("Themes/Dark.xaml", UriKind.Relative));
+        }
     }
 }

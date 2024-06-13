@@ -16,7 +16,7 @@
     <Window.DataContext>
         <vmWindows:MainViewModel/>
     </Window.DataContext>
-    <Border CornerRadius="25" Background="White" MouseDown="MainBorder_MouseDown" BorderThickness="1" BorderBrush="#151F2D">
+    <Border CornerRadius="25" Background="{DynamicResource Page}" MouseDown="MainBorder_MouseDown" BorderThickness="1" BorderBrush="#151F2D">
         <Grid>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -71,9 +71,9 @@
                         <StackPanel x:Name="LeftMenuPanel" VerticalAlignment="Top">
                             <!-- Ellipses -->
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 30 0 40">
-                                <Ellipse Width="8" Height="8" Fill="#eb1700"/>
+                                <Ellipse Width="8" Height="8" Fill="#eb1700" MouseDown="A_Click"/>
                                 <Ellipse Width="8" Height="8" Fill="#ffaf01" Margin="10 0"/>
-                                <Ellipse Width="8" Height="8" Fill="#009d00"/>
+                                <Ellipse Width="8" Height="8" Fill="#009d00" MouseDown="B_Click"/>
                             </StackPanel>
                             <!-- Menu Buttons -->
                             <uc:MenuButton x:Name="HomeButton" Icon="Home" Text="Home" IsActive="True" Click="MenuButton_Click"/>
@@ -90,7 +90,7 @@
                 </Border>
                 <!-- Content Area -->
                 <Border Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" BorderThickness="1" BorderBrush="White">
-                    <ContentControl x:Name="ContentArea" />
+                    <ContentControl x:Name="ContentArea" Foreground="{DynamicResource Text}" Background="{DynamicResource Page}"/>
                 </Border>
                 
             </Grid>
