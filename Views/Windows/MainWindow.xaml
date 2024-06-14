@@ -71,10 +71,10 @@
                     <Grid>
                         <StackPanel x:Name="LeftMenuPanel" VerticalAlignment="Top">
                             <!-- Themes Button -->
-                            <themes:ThemesButton Checked="ThemesButton_Checked" Unchecked="ThemesButton_Unchecked" />
+                            <themes:ThemesButton Checked="ThemesButton_Checked" Unchecked="ThemesButton_Unchecked" Margin="10" />
 
                             <!-- Ellipses -->
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 20 0 40">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 10 0 40">
                                 <Ellipse Width="8" Height="8" Fill="#eb1700" />
                                 <Ellipse Width="8" Height="8" Fill="#ffaf01" Margin="10 0"/>
                                 <Ellipse Width="8" Height="8" Fill="#009d00" />

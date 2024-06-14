@@ -2,10 +2,19 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
 
+    
+ 
+    <!-- Colors -->
     <SolidColorBrush Color="#dcdde1" x:Key="Backdrop"/>
     <SolidColorBrush Color="#718093" x:Key="Text"/>
     <SolidColorBrush Color="#fff" x:Key="Page"/>
+
+    <!-- Clock and Data -->
     <SolidColorBrush Color="#151F2D" x:Key="TimeText"/>
+
+    <!-- Menu Button -->
     <SolidColorBrush Color="#151F2D" x:Key="menuButtonStandart"/>
     <SolidColorBrush Color="Orange" x:Key="menuButtonTrigger"/>
+
+    
 </ResourceDictionary>
