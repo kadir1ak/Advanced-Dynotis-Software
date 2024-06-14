@@ -1,21 +1,17 @@
-﻿using Advanced_Dynotis_Software.Views.UserControls;
-using Advanced_Dynotis_Software.Views.Pages; 
-using LiveCharts.Definitions.Charts;
-using MahApps.Metro.IconPacks;
+﻿using System;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.Animation;
-using System.Windows.Media;
-using Advanced_Dynotis_Software.ViewModels.Windows;
 using Advanced_Dynotis_Software.Themes;
+using MahApps.Metro.IconPacks;
 using System.Windows.Controls.Primitives;
+using System.Windows.Media;
+using Advanced_Dynotis_Software.Views.Pages;
+using Advanced_Dynotis_Software.Views.UserControls;
 
 namespace Advanced_Dynotis_Software.Views.Windows
 {
-    /// <summary>
-    /// MainWindow.xaml etkileşim mantığı
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -32,28 +28,24 @@ namespace Advanced_Dynotis_Software.Views.Windows
             {
                 this.DragMove();
             }
-
         }
+
         private void MenuButton_Click(object sender, RoutedEventArgs e)
         {
             if (sender is MenuButton clickedButton)
             {
-                // Tıklanan düğmenin önceki aktiflik durumunu kontrol et
                 if (!clickedButton.IsActive)
                 {
-                    // Tüm menü düğmelerini pasifleştir
                     foreach (var menuButton in LeftMenuPanel.Children.OfType<MenuButton>())
                     {
                         menuButton.IsActive = false;
                         AnimateButtonScale(menuButton, 1.0);
                     }
 
-                    // Tıklanan düğmeyi aktifleştir
                     clickedButton.IsActive = true;
                     AnimateButtonScale(clickedButton, 1.15);
                 }
 
-                // İşlemlere devam et...
                 switch (clickedButton.Icon)
                 {
                     case PackIconMaterialKind.Home:
@@ -89,6 +81,7 @@ namespace Advanced_Dynotis_Software.Views.Windows
                 }
             }
         }
+
         private void AnimateButtonScale(MenuButton button, double scale)
         {
             var scaleTransform = new ScaleTransform(1.0, 1.0);
@@ -101,16 +94,6 @@ namespace Advanced_Dynotis_Software.Views.Windows
             scaleTransform.BeginAnimation(ScaleTransform.ScaleYProperty, scaleYAnimation);
         }
 
-        private void MenuButton_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
-        {
- 
-        }
-
-        private void MenuButton_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
-        {
- 
-        }
-
         private void OnThemeChanged(object sender, EventArgs e)
         {
             foreach (var menuButton in LeftMenuPanel.Children.OfType<MenuButton>())
@@ -119,17 +102,15 @@ namespace Advanced_Dynotis_Software.Views.Windows
             }
         }
 
-        private void ThemesButton_Click(object sender, RoutedEventArgs e)
+        private void ThemesButton_Checked(object sender, RoutedEventArgs e)
         {
-            var toggleButton = sender as ToggleButton;
-            if (toggleButton?.IsChecked == true)
-            {
-                AppTheme.ChangeTheme(new Uri("Themes/Light.xaml", UriKind.Relative));
-            }
-            else
-            {
-                AppTheme.ChangeTheme(new Uri("Themes/Dark.xaml", UriKind.Relative));
-            }
+            AppTheme.ChangeTheme(new Uri("Themes/Light.xaml", UriKind.Relative));
+        }
+
+        private void ThemesButton_Unchecked(object sender, RoutedEventArgs e)
+        {
+   
+            AppTheme.ChangeTheme(new Uri("Themes/Dark.xaml", UriKind.Relative));
         }
     }
 }

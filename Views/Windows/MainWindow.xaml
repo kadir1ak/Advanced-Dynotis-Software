@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.Windows"
         xmlns:vmWindows="clr-namespace:Advanced_Dynotis_Software.ViewModels.Windows"
         xmlns:uc="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
+        xmlns:themes="clr-namespace:Advanced_Dynotis_Software.Themes"
         xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
@@ -55,58 +56,22 @@
 
                         <!-- Status Bar -->
                         <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 15 0">
-                            <TextBlock Text="{Binding Source={x:Static sys:DateTime.Now}, StringFormat='t' ,ConverterCulture=en-EN}" Foreground="#151F2D" FontSize="28" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding Source={x:Static sys:DateTime.Now}, StringFormat='t' ,ConverterCulture=en-EN}" Foreground="{DynamicResource TimeText}" FontSize="28" VerticalAlignment="Center"/>
                             <StackPanel Margin="13 0" VerticalAlignment="Center">
-                                <TextBlock Text="{Binding Source={x:Static sys:DateTime.Today}, StringFormat='{}{0:MMMM dd}', ConverterCulture=en-EN}" Foreground="#151F2D" FontSize="12"/>
-                                <TextBlock Text="{Binding Source={x:Static sys:DateTime.Today}, StringFormat='{}{0:dddd}', ConverterCulture=en-EN}" Foreground="#151F2D" FontSize="12"/>
+                                <TextBlock Text="{Binding Source={x:Static sys:DateTime.Today}, StringFormat='{}{0:MMMM dd}', ConverterCulture=en-EN}" Foreground="{DynamicResource TimeText}" FontSize="12"/>
+                                <TextBlock Text="{Binding Source={x:Static sys:DateTime.Today}, StringFormat='{}{0:dddd}', ConverterCulture=en-EN}" Foreground="{DynamicResource TimeText}" FontSize="12"/>
                             </StackPanel>
-                            <icon:PackIconMaterial x:Name="Time_Icon" Kind="DotsGrid" Foreground="#151F2D" Width="25" Height="25" VerticalAlignment="Center"/>
+                            <icon:PackIconMaterial x:Name="Time_Icon" Kind="DotsGrid" Foreground="{DynamicResource TimeText}" Width="25" Height="25" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Grid>
                 </Border>
 
                 <!-- Left Menu -->
-                <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" BorderThickness="1" BorderBrush="Transparent" Margin="-10">
+                <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" BorderThickness="1" BorderBrush="Transparent" Margin="0">
                     <Grid>
                         <StackPanel x:Name="LeftMenuPanel" VerticalAlignment="Top">
-                            <!-- Dark/Light Mode -->
-                            <Grid Margin="0 20 0 0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                    <ToggleButton x:Name="toggleButton" Height="36" Width="70" Background="#ebebeb" BorderBrush="Transparent" Click="ThemesButton_Click">
-                                        <ToggleButton.Template>
-                                            <ControlTemplate TargetType="ToggleButton">
-                                                <Grid>
-                                                    <Border x:Name="toggleBackground" Background="{TemplateBinding Background}" CornerRadius="18" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
-                                                        <Border.Effect>
-                                                            <DropShadowEffect BlurRadius="10" Direction="10" ShadowDepth="2" Color="#66000000" />
-                                                        </Border.Effect>
-                                                    </Border>
-                                                    <Ellipse x:Name="toggleCircle" Width="24" Height="24" Fill="Orange" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,5,0,5">
-                                                        <Ellipse.Effect>
-                                                            <DropShadowEffect BlurRadius="10" ShadowDepth="2" Color="#33000000" />
-                                                        </Ellipse.Effect>
-                                                    </Ellipse>
-                                                    <TextBlock Text="🌙" FontSize="16" Height="24" Width="24" Margin="35,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Transparent" />
-                                                    <TextBlock Text="☀️" FontSize="16" Height="24" Width="24" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="Gray"  />
-                                                </Grid>
-                                                <ControlTemplate.Triggers>
-                                                    <Trigger Property="IsChecked" Value="True">
-                                                        <Setter TargetName="toggleBackground" Property="Background" Value="#242424" />
-                                                        <Setter TargetName="toggleCircle" Property="HorizontalAlignment" Value="Right" />
-                                                        <Setter TargetName="toggleCircle" Property="Fill" Value="#3a3a3a" />
-                                                        <Setter TargetName="toggleCircle" Property="Margin" Value="5,5,5,5" />
-                                                    </Trigger>
-                                                </ControlTemplate.Triggers>
-                                            </ControlTemplate>
-                                        </ToggleButton.Template>
-                                    </ToggleButton>
-                                </StackPanel>
-                            </Grid>
+                            <!-- Themes Button -->
+                            <themes:ThemesButton Checked="ThemesButton_Checked" Unchecked="ThemesButton_Unchecked" />
 
                             <!-- Ellipses -->
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 20 0 40">
