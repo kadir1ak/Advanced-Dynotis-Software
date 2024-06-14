@@ -8,5 +8,15 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <TextBlock Text="Alerts Page" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#151F2D"/>
+        <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Device" Binding="{Binding Hardware}" Width="*"/>
+                <DataGridTextColumn Header="Sensor" Binding="{Binding Sensor}" Width="*"/>
+                <DataGridTextColumn Header="Current Value" Binding="{Binding CurrentValue}" Width="*"/>
+                <DataGridTextColumn Header="Cutoff Min" Binding="{Binding CutoffMin}" Width="*"/>
+                <DataGridTextColumn Header="Cutoff Max" Binding="{Binding CutoffMax}" Width="*"/>
+                <DataGridTextColumn Header="System Limits" Binding="{Binding SystemLimits}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>

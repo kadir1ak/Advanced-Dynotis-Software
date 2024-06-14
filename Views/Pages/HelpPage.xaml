@@ -7,6 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TextBlock Text="Help Page" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#151F2D"/>
+
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#151F2D"><Hyperlink NavigateUri="https://dynotis.semai.com.tr/" RequestNavigate="Hyperlink_RequestNavigate" Cursor="Hand" Foreground="Transparent"><Run x:Name="HelpHyperlink"  Text="Help Page" FontSize="24" Foreground="White"/></Hyperlink></TextBlock>
+
     </Grid>
 </UserControl>

@@ -10,7 +10,7 @@
         xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="MainWindow" Height="1080" Width="1920"
+        Title="MainWindow" Height="920" Width="1640"
         AllowsTransparency="True" Background="Transparent"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None"
         d:DataContext="{d:DesignInstance Type=vmWindows:MainViewModel, IsDesignTimeCreatable=True}">

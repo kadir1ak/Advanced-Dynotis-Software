@@ -4,9 +4,75 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.Pages"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <TextBlock Text="Units Settings Page" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#151F2D"/>
+             mc:Ignorable="d" Width="400" Height="300">
+    <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Units Settings Page" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="#151F2D" Margin="20"/>
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Foreground="WhiteSmoke" FontSize="16" Content="Torque:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Label Grid.Row="1" Grid.Column="0" Foreground="WhiteSmoke" FontSize="16" Content="Thrust:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Label Grid.Row="2" Grid.Column="0" Foreground="WhiteSmoke" FontSize="16" Content="Motor Speed:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Label Grid.Row="3" Grid.Column="0" Foreground="WhiteSmoke" FontSize="16" Content="Temperature:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Label Grid.Row="4" Grid.Column="0" Foreground="WhiteSmoke" FontSize="16" Content="Speed:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Label Grid.Row="5" Grid.Column="0" Foreground="WhiteSmoke" FontSize="16" Content="Pressure:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <ComboBox x:Name="TorqueComboBox" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200">
+                <ComboBoxItem Content="Newton metre [N.mm]" IsSelected="True"/>
+                <ComboBoxItem Content="Newton metre [N.m]" />
+                <ComboBoxItem Content="Ounce-force inch [ozf.in]"/>
+                <ComboBoxItem Content="Ounce-force foot [ozf.ft]"/>
+                <ComboBoxItem Content="Pound-force inch [ıbf.in]"/>
+                <ComboBoxItem Content="Pound-force foot [ıbf.ft]"/>
+                <ComboBoxItem Content="Kilogram-force meter [kgf.m]"/>
+                <ComboBoxItem Content="Gram-force meter [gf.m]"/>
+            </ComboBox>
+            <ComboBox x:Name="ThrustComboBox" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200">
+                <ComboBoxItem Content="Gram-force [gf]" IsSelected="True"/>
+                <ComboBoxItem Content="Kilogram-force [kgf]"/>
+                <ComboBoxItem Content="Ounce-force [ozf]"/>
+                <ComboBoxItem Content="Pound-force [ıbf]"/>
+                <ComboBoxItem Content="Newton [N]"/>
+            </ComboBox>
+            <ComboBox x:Name="MotorSpeedComboBox" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200">
+                <ComboBoxItem Content="Revolutions per minute [RPM]" IsSelected="True"/>
+                <ComboBoxItem Content="Hertz [Hz]"/>
+                <ComboBoxItem Content="Radian per second [rad/s]"/>
+            </ComboBox>
+            <ComboBox x:Name="TemperatureComboBox" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200">
+                <ComboBoxItem Content="Celcius [°C]" IsSelected="True"/>
+                <ComboBoxItem Content="Fahrenheit [°F]"/>
+                <ComboBoxItem Content="Kelvin [K]"/>
+            </ComboBox>
+            <ComboBox x:Name="SpeedComboBox" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200">
+                <ComboBoxItem Content="Meters per second [m/s]" IsSelected="True"/>
+                <ComboBoxItem Content="Feet per second [ft/s]"/>
+                <ComboBoxItem Content="Kilometers per hour [km/h]"/>
+                <ComboBoxItem Content="Miles per hour [mph]"/>
+            </ComboBox>
+            <ComboBox x:Name="PressureComboBox" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200">
+                <ComboBoxItem Content="Pascal [Pa]" IsSelected="True"/>
+                <ComboBoxItem Content="Hectopascal [hPa]"/>
+                <ComboBoxItem Content="Inches of water [in H2O]"/>
+                <ComboBoxItem Content="Milimeters of water [mm H2O]"/>
+            </ComboBox>
+        </Grid>
     </Grid>
 </UserControl>
