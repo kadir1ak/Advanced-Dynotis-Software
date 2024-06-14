@@ -31,18 +31,18 @@
                         <Trigger.EnterActions>
                             <BeginStoryboard>
                                 <Storyboard>
-                                    <DoubleAnimation Storyboard.TargetName="toggleCircle" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" To="38" Duration="0:0:0.2" />
-                                    <ColorAnimation Storyboard.TargetName="toggleBackground" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#242424" Duration="0:0:0.2" />
-                                    <ColorAnimation Storyboard.TargetName="toggleCircle" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" To="#3a3a3a" Duration="0:0:0.2" />
+                                    <DoubleAnimation Storyboard.TargetName="toggleCircle" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" To="38" Duration="0:0:0.3" />
+                                    <ColorAnimation Storyboard.TargetName="toggleBackground" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#242424" Duration="0:0:0.3" />
+                                    <ColorAnimation Storyboard.TargetName="toggleCircle" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" To="#3a3a3a" Duration="0:0:0.4" />
                                 </Storyboard>
                             </BeginStoryboard>
                         </Trigger.EnterActions>
                         <Trigger.ExitActions>
                             <BeginStoryboard>
                                 <Storyboard>
-                                    <DoubleAnimation Storyboard.TargetName="toggleCircle" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" To="0" Duration="0:0:0.2" />
-                                    <ColorAnimation Storyboard.TargetName="toggleBackground" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#ebebeb" Duration="0:0:0.2" />
-                                    <ColorAnimation Storyboard.TargetName="toggleCircle" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" To="Orange" Duration="0:0:0.2" />
+                                    <DoubleAnimation Storyboard.TargetName="toggleCircle" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" To="0" Duration="0:0:0.3" />
+                                    <ColorAnimation Storyboard.TargetName="toggleBackground" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#ebebeb" Duration="0:0:0.3" />
+                                    <ColorAnimation Storyboard.TargetName="toggleCircle" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" To="Orange" Duration="0:0:0.3" />
                                 </Storyboard>
                             </BeginStoryboard>
                         </Trigger.ExitActions>
