@@ -1,21 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Advanced_Dynotis_Software.Themes
 {
-    class AppTheme
+    public static class AppTheme
     {
-        public static void ChangeTheme(Uri themeuri)
+        public static event EventHandler ThemeChanged;
+
+        public static void ChangeTheme(Uri themeUri)
         {
-            ResourceDictionary Theme = new ResourceDictionary() { Source = themeuri };
-
-            App.Current.Resources.Clear();
-            App.Current.Resources.MergedDictionaries.Add(Theme);
-
+            ResourceDictionary theme = new ResourceDictionary() { Source = themeUri };
+            Application.Current.Resources.Clear();
+            Application.Current.Resources.MergedDictionaries.Add(theme);
+            ThemeChanged?.Invoke(null, EventArgs.Empty);
         }
     }
 }

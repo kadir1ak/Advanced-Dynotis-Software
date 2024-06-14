@@ -9,6 +9,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media;
 using Advanced_Dynotis_Software.ViewModels.Windows;
 using Advanced_Dynotis_Software.Themes;
+using System.Windows.Controls.Primitives;
 
 namespace Advanced_Dynotis_Software.Views.Windows
 {
@@ -20,6 +21,7 @@ namespace Advanced_Dynotis_Software.Views.Windows
         public MainWindow()
         {
             InitializeComponent();
+            AppTheme.ThemeChanged += OnThemeChanged;
             AnimateButtonScale(HomeButton, 1.15);
             ContentArea.Content = new HomePage();
         }
@@ -109,14 +111,25 @@ namespace Advanced_Dynotis_Software.Views.Windows
  
         }
 
-        private void A_Click(object sender, MouseButtonEventArgs e)
+        private void OnThemeChanged(object sender, EventArgs e)
         {
-            AppTheme.ChangeTheme(new Uri("Themes/Light.xaml", UriKind.Relative));
+            foreach (var menuButton in LeftMenuPanel.Children.OfType<MenuButton>())
+            {
+                menuButton.UpdateTheme();
+            }
         }
 
-        private void B_Click(object sender, MouseButtonEventArgs e)
+        private void ThemesButton_Click(object sender, RoutedEventArgs e)
         {
-            AppTheme.ChangeTheme(new Uri("Themes/Dark.xaml", UriKind.Relative));
+            var toggleButton = sender as ToggleButton;
+            if (toggleButton?.IsChecked == true)
+            {
+                AppTheme.ChangeTheme(new Uri("Themes/Light.xaml", UriKind.Relative));
+            }
+            else
+            {
+                AppTheme.ChangeTheme(new Uri("Themes/Dark.xaml", UriKind.Relative));
+            }
         }
     }
 }

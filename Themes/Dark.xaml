@@ -5,4 +5,6 @@
     <SolidColorBrush Color="#1c1b21" x:Key="Backdrop"/>
     <SolidColorBrush Color="#dfe6e9" x:Key="Text"/>
     <SolidColorBrush Color="#353b48" x:Key="Page"/>
+    <SolidColorBrush Color="#dfe6e9" x:Key="menuButtonStandart"/>
+    <SolidColorBrush Color="MediumPurple" x:Key="menuButtonTrigger"/>
 </ResourceDictionary>

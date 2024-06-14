@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using MahApps.Metro.IconPacks;
 
 namespace Advanced_Dynotis_Software.Views.UserControls
@@ -50,5 +51,18 @@ namespace Advanced_Dynotis_Software.Views.UserControls
         private void Button_MouseEnter(object sender, MouseEventArgs e) => MouseEnterEvent?.Invoke(this, e);
 
         private void Button_MouseLeave(object sender, MouseEventArgs e) => MouseLeaveEvent?.Invoke(this, e);
+
+        private void OnThemeChanged(object sender, EventArgs e)
+        {
+            UpdateTheme();
+        }
+
+        public void UpdateTheme()
+        {
+            var newForeground = (SolidColorBrush)Application.Current.Resources["Text"];
+            var button = (Button)Content;
+            //button.Foreground = newForeground;
+           //button.Background = newForeground;
+        }
     }
 }
