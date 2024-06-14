@@ -12,7 +12,7 @@
 
     <!-- Menu Button -->
     <SolidColorBrush Color="#dfe6e9" x:Key="menuButtonStandart"/>
-    <SolidColorBrush Color="MediumPurple" x:Key="menuButtonTrigger"/>
+    <SolidColorBrush Color="#3A9FF3" x:Key="menuButtonTrigger"/>
 
     
 </ResourceDictionary>

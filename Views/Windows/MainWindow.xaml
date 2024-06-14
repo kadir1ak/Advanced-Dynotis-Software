@@ -10,14 +10,21 @@
         xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="MainWindow" Height="920" Width="1640"
+        Title="MainWindow" MinHeight="870" MinWidth="1280"
         AllowsTransparency="True" Background="Transparent"
-        WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None"
+        WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" WindowStyle="None"
         d:DataContext="{d:DesignInstance Type=vmWindows:MainViewModel, IsDesignTimeCreatable=True}">
     <Window.DataContext>
         <vmWindows:MainViewModel/>
     </Window.DataContext>
-    <Border CornerRadius="25" Background="{DynamicResource Page}" MouseDown="MainBorder_MouseDown" BorderThickness="1" BorderBrush="#151F2D">
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+        CaptionHeight="0" 
+        CornerRadius="0"
+        GlassFrameThickness="0"
+        ResizeBorderThickness="5"/>
+    </WindowChrome.WindowChrome>
+    <Border CornerRadius="15" Background="{DynamicResource Page}" MouseDown="MainBorder_MouseDown" BorderThickness="1" BorderBrush="#151F2D">
         <Grid>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -55,14 +62,18 @@
                         </ScrollViewer>
 
                         <!-- Status Bar -->
-                        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 15 0">
+                        <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0 5 0 0">
+                            <icon:PackIconMaterial x:Name="Time_Icon" Kind="DotsGrid" Foreground="{DynamicResource TimeText}" Width="25" Height="25" VerticalAlignment="Center" Margin="10"/>
                             <TextBlock Text="{Binding Source={x:Static sys:DateTime.Now}, StringFormat='t' ,ConverterCulture=en-EN}" Foreground="{DynamicResource TimeText}" FontSize="28" VerticalAlignment="Center"/>
                             <StackPanel Margin="13 0" VerticalAlignment="Center">
                                 <TextBlock Text="{Binding Source={x:Static sys:DateTime.Today}, StringFormat='{}{0:MMMM dd}', ConverterCulture=en-EN}" Foreground="{DynamicResource TimeText}" FontSize="12"/>
                                 <TextBlock Text="{Binding Source={x:Static sys:DateTime.Today}, StringFormat='{}{0:dddd}', ConverterCulture=en-EN}" Foreground="{DynamicResource TimeText}" FontSize="12"/>
                             </StackPanel>
-                            <icon:PackIconMaterial x:Name="Time_Icon" Kind="DotsGrid" Foreground="{DynamicResource TimeText}" Width="25" Height="25" VerticalAlignment="Center"/>
+                           
+                           
                         </StackPanel>
+                        <uc:WindowControlButtons  Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,0,0"/>
+
                     </Grid>
                 </Border>
 
@@ -71,7 +82,7 @@
                     <Grid>
                         <StackPanel x:Name="LeftMenuPanel" VerticalAlignment="Top">
                             <!-- Themes Button -->
-                            <themes:ThemesButton Checked="ThemesButton_Checked" Unchecked="ThemesButton_Unchecked" Margin="10" />
+                            <themes:ThemesButton Checked="ThemesButton_Checked" Unchecked="ThemesButton_Unchecked" Margin="12" />
 
                             <!-- Ellipses -->
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 10 0 40">

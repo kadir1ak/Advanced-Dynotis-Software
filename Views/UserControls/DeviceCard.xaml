@@ -24,16 +24,6 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Orientation="Horizontal"  VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="Auto" Height="Auto">
-                <CheckBox x:Name="MotorSpeedCheckBox" Background="Red" Content="Motor Speed" IsChecked="True" FontSize="10" Foreground="{DynamicResource Text}" Margin="10 0 0 0"/>
-                <CheckBox x:Name="ThrustCheckBox" Background="#FFE3EC4E" Content="Thrust" IsChecked="True" FontSize="10" Foreground="{DynamicResource Text}" Margin="10 0 0 0"/>
-                <CheckBox x:Name="TorqueCheckBox" Background="#FFB237B9" Content="Torque" IsChecked="True" FontSize="10" Foreground="{DynamicResource Text}" Margin="10 0 0 0"/>
-                <CheckBox x:Name="VoltageCheckBox" Background="#FFEDB8C1" Content="Voltage" IsChecked="True" FontSize="10" Foreground="{DynamicResource Text}" Margin="10 0 0 0"/>
-                <CheckBox x:Name="CurrentCheckBox" Background="#FF67DC67" Content="Current" IsChecked="True"  FontSize="10" Foreground="{DynamicResource Text}" Margin="10 0 0 0"/>
-                <CheckBox x:Name="VibrationCheckBox" Background="#FF139DA1" Content="Vibration" IsChecked="True"  FontSize="10" Foreground="{DynamicResource Text}" Margin="10 0 0 0"/>
-            </StackPanel>
-
-
             <StackPanel x:Name="Variables_StackPanel" Grid.Row="1" Grid.RowSpan="3" Grid.Column="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Orientation="Vertical" Margin="0 0 0 0" >
                 <!-- 1. Değişken -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0 0 0 0">
@@ -96,15 +86,15 @@
                 </StackPanel>
 
                 <!-- 6. Değişken -->
-                <StackPanel Orientation="Horizontal" Margin="0 12 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <StackPanel Orientation="Horizontal" Margin="0 13 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <!-- Değişken Rengi -->
-                    <Border CornerRadius="10" Background="LightCoral" Width="10" Height="10" Margin="10 2 10 0" HorizontalAlignment="Left"/>
+                    <Border CornerRadius="5" Background="#FF139DA1" Width="20" Height="22" Margin="5 2 5 0" HorizontalAlignment="Left"/>
                     <!-- Değişken Adı -->
-                    <TextBlock x:Name="PowerNameLabel" Text="Power" Width="120" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Left"/>
+                    <TextBlock x:Name="VibrationNameLabel" Text="Vibration" Width="120" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Left"/>
                     <!-- Değişken Değeri -->
-                    <TextBlock x:Name="PowerValueLabel"  Text="{Binding  Device.SensorData.Power, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <TextBlock x:Name="VibrationValueLabel"  Text="{Binding  Device.SensorData.Vibration, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <!-- Değişken Birimi -->
-                    <TextBlock x:Name="PowerUnitLabel" Text="Watt" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
+                    <TextBlock x:Name="VibrationUnitLabel" Text="g" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
 
                 <!-- 7a. Değişken -->
@@ -157,15 +147,15 @@
                 </StackPanel>
 
                 <!-- 9. Değişken -->
-                <StackPanel Orientation="Horizontal" Margin="0 13 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <StackPanel Orientation="Horizontal" Margin="0 12 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <!-- Değişken Rengi -->
-                    <Border CornerRadius="10" Background="#FF139DA1" Width="10" Height="10" Margin="10 2 10 0" HorizontalAlignment="Left"/>
+                    <Border CornerRadius="10" Background="LightCoral" Width="10" Height="10" Margin="10 2 10 0" HorizontalAlignment="Left"/>
                     <!-- Değişken Adı -->
-                    <TextBlock x:Name="VibrationNameLabel" Text="Vibration" Width="120" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Left"/>
+                    <TextBlock x:Name="PowerNameLabel" Text="Power" Width="120" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Left"/>
                     <!-- Değişken Değeri -->
-                    <TextBlock x:Name="VibrationValueLabel"  Text="{Binding  Device.SensorData.Vibration, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <TextBlock x:Name="PowerValueLabel"  Text="{Binding  Device.SensorData.Power, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <!-- Değişken Birimi -->
-                    <TextBlock x:Name="VibrationUnitLabel" Text="g" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
+                    <TextBlock x:Name="PowerUnitLabel" Text="Watt" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
                 <!-- 10. Değişken -->
                 <StackPanel Orientation="Horizontal" Margin="0 14 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
