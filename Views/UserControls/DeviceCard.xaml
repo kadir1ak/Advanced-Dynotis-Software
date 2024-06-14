@@ -184,7 +184,7 @@
 
  
             <!-- @@@@@@@@@@@@@@@    Current Chart    @@@@@@@@@@@@@@@ -->
-            <lvc:CartesianChart Grid.Row="1" Grid.Column="1" Series="{Binding CurrentSeriesCollection}" Margin="5" DisableAnimations="True">
+            <lvc:CartesianChart Grid.Row="1" Grid.Column="1" Series="{Binding CurrentSeriesCollection}" Margin="5" DisableAnimations="True" DataTooltip="{x:Null}">
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="{DynamicResource Text}"></lvc:Axis>
                 </lvc:CartesianChart.AxisX>
@@ -194,7 +194,7 @@
             </lvc:CartesianChart>
 
             <!-- @@@@@@@@@@@@@@@    Voltage Chart    @@@@@@@@@@@@@@@ -->
-            <lvc:CartesianChart Grid.Row="1" Grid.Column="2" Series="{Binding VoltageSeriesCollection}" Margin="5" DisableAnimations="True">
+            <lvc:CartesianChart Grid.Row="1" Grid.Column="2" Series="{Binding VoltageSeriesCollection}" Margin="5" DisableAnimations="True" DataTooltip="{x:Null}">
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="{DynamicResource Text}"></lvc:Axis>
                 </lvc:CartesianChart.AxisX>
@@ -204,7 +204,7 @@
             </lvc:CartesianChart>
 
             <!-- @@@@@@@@@@@@@@@    Vibration Chart    @@@@@@@@@@@@@@@ -->
-            <lvc:CartesianChart Grid.Row="1" Grid.Column="3" Series="{Binding VibrationSeriesCollection}" Margin="5" DisableAnimations="True">
+            <lvc:CartesianChart Grid.Row="1" Grid.Column="3" Series="{Binding VibrationSeriesCollection}" Margin="5" DisableAnimations="True" DataTooltip="{x:Null}">
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="{DynamicResource Text}"></lvc:Axis>
                 </lvc:CartesianChart.AxisX>
@@ -214,7 +214,7 @@
             </lvc:CartesianChart>
 
             <!-- @@@@@@@@@@@@@@@    Motor Speed Chart    @@@@@@@@@@@@@@@ -->
-            <lvc:CartesianChart Grid.Row="2" Grid.Column="1" Series="{Binding MotorSpeedSeriesCollection}" Margin="5" DisableAnimations="True">
+            <lvc:CartesianChart Grid.Row="2" Grid.Column="1" Series="{Binding MotorSpeedSeriesCollection}" Margin="5" DisableAnimations="True" DataTooltip="{x:Null}">
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="{DynamicResource Text}"></lvc:Axis>
                 </lvc:CartesianChart.AxisX>
@@ -224,7 +224,7 @@
             </lvc:CartesianChart>
 
             <!-- @@@@@@@@@@@@@@@    Torque Chart    @@@@@@@@@@@@@@@ -->
-            <lvc:CartesianChart Grid.Row="2" Grid.Column="2" Series="{Binding TorqueSeriesCollection}" Margin="5" DisableAnimations="True">
+            <lvc:CartesianChart Grid.Row="2" Grid.Column="2" Series="{Binding TorqueSeriesCollection}" Margin="5" DisableAnimations="True" DataTooltip="{x:Null}">
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="{DynamicResource Text}"></lvc:Axis>
                 </lvc:CartesianChart.AxisX>
@@ -234,7 +234,7 @@
             </lvc:CartesianChart>
 
             <!-- @@@@@@@@@@@@@@@    Thrust Chart    @@@@@@@@@@@@@@@ -->
-            <lvc:CartesianChart Grid.Row="2" Grid.Column="3" Series="{Binding ThrustSeriesCollection}" Margin="5" DisableAnimations="True">
+            <lvc:CartesianChart Grid.Row="2" Grid.Column="3" Series="{Binding ThrustSeriesCollection}" Margin="5" DisableAnimations="True" DataTooltip="{x:Null}">
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="{DynamicResource Text}"></lvc:Axis>
                 </lvc:CartesianChart.AxisX>
