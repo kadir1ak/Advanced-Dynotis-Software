@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Advanced_Dynotis_Software.Models.Serial;
 using Advanced_Dynotis_Software.ViewModels.Device;
 using Advanced_Dynotis_Software.Services.Helpers;
+using Advanced_Dynotis_Software.Services;
 
 namespace Advanced_Dynotis_Software.ViewModels.Pages
 {
@@ -67,17 +67,12 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         {
             if (!string.IsNullOrEmpty(SelectedPort))
             {
-                var existingDevice = ConnectedDevices.FirstOrDefault(d => d.Device.PortName == SelectedPort);
-                if (existingDevice != null)
+                var deviceViewModel = await DeviceManager.Instance.ConnectToDeviceAsync(SelectedPort);
+                if (!ConnectedDevices.Contains(deviceViewModel))
                 {
-                    await existingDevice.Device.ClosePortAsync();  // Bağlantıyı kapat
-                    ConnectedDevices.Remove(existingDevice);
+                    ConnectedDevices.Clear();
+                    ConnectedDevices.Add(deviceViewModel);
                 }
-
-                var deviceViewModel = new DeviceViewModel(SelectedPort);
-                await deviceViewModel.Device.OpenPortAsync();  // Yeni bağlantı aç
-                ConnectedDevices.Clear();
-                ConnectedDevices.Add(deviceViewModel);
             }
         }
 
@@ -85,7 +80,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         {
             foreach (var device in ConnectedDevices)
             {
-                await device.Device.ClosePortAsync();
+                await DeviceManager.Instance.DisconnectDeviceAsync(device.Device.PortName);
             }
             ConnectedDevices.Clear();
         }

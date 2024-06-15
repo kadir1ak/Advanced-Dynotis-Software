@@ -109,7 +109,7 @@ namespace Advanced_Dynotis_Software.Views.Windows
 
         private void ThemesButton_Unchecked(object sender, RoutedEventArgs e)
         {
-            AppTheme.ChangeTheme(new Uri("Themes/Light.xaml", UriKind.Relative));          
+            AppTheme.ChangeTheme(new Uri("Themes/Light.xaml", UriKind.Relative));
         }
     }
 }

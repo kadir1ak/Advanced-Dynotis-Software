@@ -49,6 +49,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Windows
             AvailablePorts = new ObservableCollection<string>(SerialPortsManager.GetSerialPorts());
             AddDeviceCommand = new RelayCommand(AddDevice);
             RemoveDeviceCommand = new RelayCommand(RemoveDevice);
+
+            InitializeDevices();
         }
 
         private void SerialPortsEvent()
@@ -56,28 +58,31 @@ namespace Advanced_Dynotis_Software.ViewModels.Windows
             Application.Current.Dispatcher.Invoke(() =>
             {
                 AvailablePorts = new ObservableCollection<string>(SerialPortsManager.GetSerialPorts());
-                AddMiniCard();
+                InitializeDevices();
             });
         }
 
-        private void AddMiniCard()
+        private void InitializeDevices()
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                foreach (var device in DevicesViewModel.ToList())
-                {
-                    if (!AvailablePorts.Contains(device.Device.PortName))
-                    {
-                        _ = device.Device.ClosePortAsync();
-                        DevicesViewModel.Remove(device);
-                    }
-                }
-
                 foreach (var port in AvailablePorts)
                 {
                     if (!DevicesViewModel.Any(device => device.Device.PortName == port))
                     {
-                        DevicesViewModel.Add(new DeviceViewModel(port));
+                        var deviceViewModel = new DeviceViewModel(port);
+                        deviceViewModel.Device.OpenPortAsync();  // Cihazı otomatik olarak bağla
+                        DevicesViewModel.Add(deviceViewModel);
+                    }
+                }
+
+                // Mevcut port listesinde olmayan cihazları kapat
+                foreach (var device in DevicesViewModel.ToList())
+                {
+                    if (!AvailablePorts.Contains(device.Device.PortName))
+                    {
+                        device.Device.ClosePortAsync();
+                        DevicesViewModel.Remove(device);
                     }
                 }
             });
@@ -105,6 +110,5 @@ namespace Advanced_Dynotis_Software.ViewModels.Windows
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
     }
 }

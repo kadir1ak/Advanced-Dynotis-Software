@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Advanced_Dynotis_Software.Models.Serial;
 using Advanced_Dynotis_Software.ViewModels.Device;
+using Advanced_Dynotis_Software.Services;
 
 namespace Advanced_Dynotis_Software.ViewModels.Pages
 {
@@ -55,14 +55,13 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             InitializeDevices();
         }
 
-        private void InitializeDevices()
+        private async void InitializeDevices()
         {
             foreach (var port in AvailablePorts)
             {
-                if (!DevicesViewModel.Any(device => device.Device.PortName == port))
+                var deviceViewModel = await DeviceManager.Instance.ConnectToDeviceAsync(port);
+                if (!DevicesViewModel.Contains(deviceViewModel))
                 {
-                    var deviceViewModel = new DeviceViewModel(port);
-                    deviceViewModel.Device.OpenPortAsync();  // Cihazı otomatik olarak bağla
                     DevicesViewModel.Add(deviceViewModel);
                 }
             }

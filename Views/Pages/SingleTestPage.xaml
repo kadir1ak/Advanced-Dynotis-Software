@@ -63,11 +63,11 @@
                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                                             <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                                                 <TextBlock Text="Port: " Foreground="Black" FontWeight="Bold" FontSize="16"/>
-                                                <TextBlock Text="{Binding  Device.PortName}" Foreground="Black" FontWeight="Bold" FontSize="16"/>
+                                                <TextBlock Text="{Binding Device.PortName}" Foreground="Black" FontWeight="Bold" FontSize="16"/>
                                                 <TextBlock Text=" - " Foreground="Black" FontWeight="Bold" FontSize="16"/>
-                                                <TextBlock Text="{Binding  Device.Model}" Foreground="Black" FontWeight="Bold" FontSize="16"/>
+                                                <TextBlock Text="{Binding Device.Model}" Foreground="Black" FontWeight="Bold" FontSize="16"/>
                                                 <TextBlock Text=" - " Foreground="Black" FontWeight="Bold" FontSize="16"/>
-                                                <TextBlock Text="{Binding  Device.SeriNo}" Foreground="Black" FontWeight="Bold" FontSize="16"/>
+                                                <TextBlock Text="{Binding Device.SeriNo}" Foreground="Black" FontWeight="Bold" FontSize="16"/>
                                             </StackPanel>
                                         </StackPanel>
                                     </Border>

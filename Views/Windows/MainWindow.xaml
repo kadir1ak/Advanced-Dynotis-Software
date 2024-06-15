@@ -46,7 +46,7 @@
                         <!-- Device List Menu -->
                         <ScrollViewer Grid.Column="0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" VerticalAlignment="Center" HorizontalAlignment="Left">
                             <WrapPanel Orientation="Horizontal">
-                                <ItemsControl ItemsSource="{Binding devicesViewModel}">
+                                <ItemsControl ItemsSource="{Binding DevicesViewModel}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <uc:DeviceMiniCard DataContext="{Binding}" Margin="5"/>
@@ -69,8 +69,6 @@
                                 <TextBlock Text="{Binding Source={x:Static sys:DateTime.Today}, StringFormat='{}{0:MMMM dd}', ConverterCulture=en-EN}" Foreground="{DynamicResource TimeText}" FontSize="12"/>
                                 <TextBlock Text="{Binding Source={x:Static sys:DateTime.Today}, StringFormat='{}{0:dddd}', ConverterCulture=en-EN}" Foreground="{DynamicResource TimeText}" FontSize="12"/>
                             </StackPanel>
-                           
-                           
                         </StackPanel>
                         <uc:WindowControlButtons  Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,0,0"/>
 
@@ -107,7 +105,6 @@
                 <Border Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" BorderThickness="1" BorderBrush="Transparent">
                     <ContentControl x:Name="ContentArea" Foreground="{DynamicResource Text}" Background="{DynamicResource Page}"/>
                 </Border>
-
             </Grid>
         </Grid>
     </Border>

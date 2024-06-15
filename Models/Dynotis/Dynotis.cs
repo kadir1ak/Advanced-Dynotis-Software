@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.IO.Ports;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -87,6 +88,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
         public Dynotis(string portName)
         {
+            _cancellationTokenSource = new CancellationTokenSource();
             Port = new SerialPort(portName, 921600);
             _portName = portName;
             _sensorData = new SensorData();
@@ -99,7 +101,8 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 try
                 {
                     Port.Open();
-                    _cancellationTokenSource = new CancellationTokenSource(); // CancellationTokenSource nesnesini yeniden oluştur
+                    _cancellationTokenSource?.Cancel(); // Mevcut CancellationTokenSource varsa iptal et
+                    _cancellationTokenSource = new CancellationTokenSource(); // Yeni bir CancellationTokenSource nesnesi oluştur
                     await StartReceivingDataAsync();
                 }
                 catch (Exception ex)
@@ -115,7 +118,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             {
                 try
                 {
-                    _cancellationTokenSource.Cancel();
+                    _cancellationTokenSource?.Cancel();
                     Port.Close();
                 }
                 catch (Exception ex)
@@ -141,7 +144,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
                 while (!token.IsCancellationRequested && Port.IsOpen && !deviceInfoReceived)
                 {
-                    string indata = await Task.Run(() => Port.ReadLine(), token);
+                    string indata = await Task.Run(() => Port.ReadLine(), token); // Port.ReadLine asenkron olarak çalıştırıldı
                     Logger.Log($"Received data: {indata}");
 
                     if (indata.Trim().StartsWith("KEY:"))
@@ -182,7 +185,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             {
                 while (!token.IsCancellationRequested && Port.IsOpen)
                 {
-                    string indata = await Task.Run(() => Port.ReadLine(), token);
+                    string indata = await Task.Run(() => Port.ReadLine(), token); // Port.ReadLine asenkron olarak çalıştırıldı
                     Logger.Log($"Received data: {indata}");
 
                     if (!indata.Trim().StartsWith("KEY:"))
@@ -238,9 +241,10 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             return Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2) + Math.Pow(z, 2));
         }
 
-        protected void OnPropertyChanged(string propertyName)
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
     }
 }
