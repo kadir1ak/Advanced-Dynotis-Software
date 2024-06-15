@@ -44,7 +44,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <!-- Device List Menu -->
-                        <ScrollViewer Grid.Column="0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" VerticalAlignment="Center" HorizontalAlignment="Left">
+                        <ScrollViewer Grid.Column="0" Grid.ColumnSpan="2" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 150 0">
                             <WrapPanel Orientation="Horizontal">
                                 <ItemsControl ItemsSource="{Binding DevicesViewModel}">
                                     <ItemsControl.ItemTemplate>

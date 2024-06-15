@@ -14,13 +14,14 @@
             <Setter Property="Padding" Value="1" />
             <Setter Property="FontSize" Value="12" />
             <Setter Property="FontWeight" Value="Bold" />
-            <Setter Property="BorderThickness" Value="3" />
+            <Setter Property="BorderThickness" Value="1" />
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="Margin" Value="0,1,0,1" />
-            <Setter Property="Background" Value="#FF5B41DC"/>
+            <Setter Property="Background" Value="{DynamicResource deviceMiniBackground}"/>
             <Setter Property="BorderBrush" Value="#FF6652C8" />
-            <Setter Property="Width" Value="75"/>
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="Height" Value="30"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -29,40 +30,34 @@
                         BorderBrush="{TemplateBinding BorderBrush}">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF6652C8"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#FF6652C8" />
+                    <Setter Property="Background" Value="{DynamicResource deviceMiniBackdrop}" />
                 </Trigger>
             </Style.Triggers>
         </Style>
-
     </UserControl.Resources>
 
     <StackPanel>
-        <Button x:Name="DeviceOpenButton" Style="{StaticResource StyledButton}" Click="DeviceOpenButton_Click" BorderThickness="2" BorderBrush="{x:Null}" Foreground="{x:Null}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0 5 0 5">
+        <Button x:Name="DeviceOpenButton" Style="{StaticResource StyledButton}" Click="DeviceOpenButton_Click" BorderThickness="2" BorderBrush="{x:Null}" Foreground="{x:Null}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0 2 0 2">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="10"/>
+                    <Setter Property="CornerRadius" Value="5"/>
                 </Style>
             </Button.Resources>
             <Button.ToolTip>
                 <ToolTip>
                     <ToolTip.Resources>
                         <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="10"/>
+                            <Setter Property="CornerRadius" Value="5"/>
                         </Style>
                     </ToolTip.Resources>
                     <StackPanel Orientation="Vertical" Width="150">
                         <StackPanel Orientation="Horizontal" Background="Transparent">
-           
+
                             <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="1*"/>
@@ -95,7 +90,7 @@
                                 <TextBlock Text="Connection Status:" Grid.Row="5" Grid.Column="0" Foreground="Black" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="2"/>
                                 <TextBlock Text="Working Status:" Grid.Row="6" Grid.Column="0" Foreground="Black" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="2"/>
                                 <TextBlock Text="Error:" Grid.Row="7" Grid.Column="0" Foreground="Black" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="2"/>
-                               
+
                                 <TextBlock Text="{Binding Device.PortName}" Grid.Row="1" Grid.Column="1"  Foreground="Black" FontSize="10" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
                                 <TextBlock Text="{Binding Device.Model}" Grid.Row="2" Grid.Column="1"  Foreground="Black" FontSize="10" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
                                 <TextBlock Text="{Binding Device.SeriNo}" Grid.Row="3" Grid.Column="1"  Foreground="Black" FontSize="10" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
@@ -103,7 +98,7 @@
                                 <TextBlock Text="{Binding Device.ConnectionStatus}" Grid.Row="5" Grid.Column="1"  Foreground="Black" FontSize="10" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
                                 <TextBlock Text="{Binding Device.WorkingStatus}" Grid.Row="6" Grid.Column="1"  Foreground="Black" FontSize="10" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
                                 <TextBlock Text="{Binding Device.Error}" Grid.Row="7" Grid.Column="1"  Foreground="Black" FontSize="10" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                                
+
                             </Grid>
                         </StackPanel>
                         <Line Stroke="LightGray" StrokeThickness="2" X2="200" Cursor=""/>
@@ -113,33 +108,14 @@
             </Button.ToolTip>
             <ToolTipService.InitialShowDelay>100</ToolTipService.InitialShowDelay>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center">
-                    <icon:PackIconMaterial Kind="WindTurbine" 
-                               Foreground="White" VerticalAlignment="Center"
-                               HorizontalAlignment="Center" Width="15" Height="20"  Margin="0 0 5 0"/>
-                </StackPanel>
+                <icon:PackIconMaterial Kind="UsbPort" 
+                               Foreground="{DynamicResource deviceMiniForeground}" VerticalAlignment="Center"
+                               HorizontalAlignment="Left" Width="10" Height="15"  Margin="2 0 3 0"/>
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="1*"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
-                        </Grid.ColumnDefinitions>
-                        <!--
-                        <TextBlock Text="Model:" Grid.Row="0" Grid.Column="0" Foreground="Black" FontWeight="Bold" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"/>
-                        <TextBlock Text="SeriNo:" Grid.Row="1" Grid.Column="0" Foreground="Black" FontWeight="Bold" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"/>
-                        -->
-                        <TextBlock Text="{Binding Device.Model}" Grid.Row="0" Grid.Column="1"  Foreground="Black" FontWeight="Normal" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                        <TextBlock Text="{Binding Device.SeriNo}" Grid.Row="1" Grid.Column="1"  Foreground="Black" FontWeight="Normal" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-
-                    </Grid>
+                    <TextBlock Text="{Binding Device.Model}" Grid.Row="0" Grid.Column="1"  Foreground="{DynamicResource deviceMiniForeground}" FontWeight="Normal" FontSize="10" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="1"/>
                 </StackPanel>
             </StackPanel>
         </Button>
-
     </StackPanel>
 
 </UserControl>
