@@ -1,7 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Advanced_Dynotis_Software.Services;
 using Advanced_Dynotis_Software.Services.Helpers;
@@ -49,27 +48,30 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
 
         public SingleTestViewModel()
         {
-            AvailableDevices = new ObservableCollection<DeviceViewModel>(DeviceManager.Instance.GetAllDevices());
+            AvailableDevices = DeviceManager.Instance.GetAllDevices();
             ConnectedDevices = new ObservableCollection<DeviceViewModel>();
             ConnectCommand = new RelayCommand(ConnectToDevice);
         }
 
-        private async void ConnectToDevice(object parameter)
+        private void ConnectToDevice(object parameter)
         {
-            if (SelectedDevice != null && !ConnectedDevices.Contains(SelectedDevice))
+            if (SelectedDevice != null)
             {
-                ConnectedDevices.Add(SelectedDevice);
-                await DeviceManager.Instance.ConnectToDeviceAsync(SelectedDevice.Device.PortName);
+                if (!ConnectedDevices.Contains(SelectedDevice))
+                {
+                    ConnectedDevices.Clear();
+                    ConnectedDevices.Add(SelectedDevice);
+                }
             }
         }
 
         public async void OnNavigatedFrom()
         {
-            foreach (var device in ConnectedDevices.ToList())
+            foreach (var device in ConnectedDevices)
             {
                 await DeviceManager.Instance.DisconnectDeviceAsync(device.Device.PortName);
-                ConnectedDevices.Remove(device);
             }
+            ConnectedDevices.Clear();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

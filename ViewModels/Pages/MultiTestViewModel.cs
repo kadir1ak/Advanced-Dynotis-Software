@@ -1,24 +1,14 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Advanced_Dynotis_Software.Services;
 using Advanced_Dynotis_Software.ViewModels.Device;
+using Advanced_Dynotis_Software.Services;
 
 namespace Advanced_Dynotis_Software.ViewModels.Pages
 {
     public class MultiTestViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<DeviceViewModel> _devicesViewModel;
-
-        public ObservableCollection<DeviceViewModel> DevicesViewModel
-        {
-            get => _devicesViewModel;
-            set
-            {
-                _devicesViewModel = value;
-                OnPropertyChanged();
-            }
-        }
+        public ObservableCollection<DeviceViewModel> DevicesViewModel { get; set; }
 
         public MultiTestViewModel()
         {

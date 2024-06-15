@@ -22,12 +22,10 @@ namespace Advanced_Dynotis_Software.Services
 
         private void InitializeDevices()
         {
-            // Mevcut portları tarayıp cihazları bağlama işlemi burada yapılacak.
-            // Bu örnekte sabit port isimleri kullanılmıştır. Gerçek uygulamada dinamik olarak taranmalıdır.
-            string[] portNames = SerialPort.GetPortNames(); // Dinamik olarak port isimlerini alır.
+            string[] portNames = SerialPort.GetPortNames();
             foreach (var portName in portNames)
             {
-                ConnectToDeviceAsync(portName);
+                _ = ConnectToDeviceAsync(portName);
             }
         }
 
@@ -60,5 +58,4 @@ namespace Advanced_Dynotis_Software.Services
             return Devices;
         }
     }
-
 }
