@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.IO.Ports;
 using System.Linq;
 using System.Threading.Tasks;
 using Advanced_Dynotis_Software.Models.Dynotis;
@@ -16,6 +17,18 @@ namespace Advanced_Dynotis_Software.Services
         private DeviceManager()
         {
             Devices = new ObservableCollection<DeviceViewModel>();
+            InitializeDevices();
+        }
+
+        private void InitializeDevices()
+        {
+            // Mevcut portları tarayıp cihazları bağlama işlemi burada yapılacak.
+            // Bu örnekte sabit port isimleri kullanılmıştır. Gerçek uygulamada dinamik olarak taranmalıdır.
+            string[] portNames = SerialPort.GetPortNames(); // Dinamik olarak port isimlerini alır.
+            foreach (var portName in portNames)
+            {
+                ConnectToDeviceAsync(portName);
+            }
         }
 
         public async Task<DeviceViewModel> ConnectToDeviceAsync(string portName)
@@ -41,5 +54,11 @@ namespace Advanced_Dynotis_Software.Services
                 Devices.Remove(device);
             }
         }
+
+        public ObservableCollection<DeviceViewModel> GetAllDevices()
+        {
+            return Devices;
+        }
     }
+
 }

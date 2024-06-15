@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using Advanced_Dynotis_Software.Models.Dynotis;
 using LiveCharts;
 using LiveCharts.Wpf;
-using System.Windows.Threading;
 using System.Windows;
+using System.Windows.Threading;
+using System.Collections.Generic;
+using System.Windows.Media;
 
 namespace Advanced_Dynotis_Software.ViewModels.Device
 {
@@ -19,10 +21,11 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
         public SeriesCollection ThrustSeriesCollection { get; set; }
         public SeriesCollection TorqueSeriesCollection { get; set; }
         public ObservableCollection<string> TimeLabels { get; set; }
+        public string DeviceDisplayName => $"{Device.Model} - {Device.SeriNo}";
 
         private Dynotis _device;
         private Queue<SensorData> _sensorDataBuffer;
-        private object _bufferLock = new object();
+        private readonly object _bufferLock = new();
         private const int BufferLimit = 1;
         private const int MaxDataPoints = 100;
 
@@ -45,7 +48,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
             {
                 Device = new Dynotis(portName);
                 InitializeDeviceAsync();
-                Charts_InitializeComponent();
+                InitializeCharts();
             }
         }
 
@@ -54,14 +57,14 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
             await Device.OpenPortAsync();
         }
 
-        private void Charts_InitializeComponent()
+        private void InitializeCharts()
         {
-            VibrationSeriesCollection = CreateSeriesCollection("Vibration", System.Windows.Media.Colors.IndianRed);
-            CurrentSeriesCollection = CreateSeriesCollection("Current", System.Windows.Media.Colors.DarkOliveGreen);
-            MotorSpeedSeriesCollection = CreateSeriesCollection("Motor Speed", System.Windows.Media.Colors.PaleVioletRed);
-            VoltageSeriesCollection = CreateSeriesCollection("Voltage", System.Windows.Media.Colors.Orange);
-            ThrustSeriesCollection = CreateSeriesCollection("Thrust", System.Windows.Media.Colors.DarkOliveGreen);
-            TorqueSeriesCollection = CreateSeriesCollection("Torque", System.Windows.Media.Colors.HotPink);
+            VibrationSeriesCollection = CreateSeriesCollection("Vibration", Colors.IndianRed);
+            CurrentSeriesCollection = CreateSeriesCollection("Current", Colors.DarkOliveGreen);
+            MotorSpeedSeriesCollection = CreateSeriesCollection("Motor Speed", Colors.PaleVioletRed);
+            VoltageSeriesCollection = CreateSeriesCollection("Voltage", Colors.Orange);
+            ThrustSeriesCollection = CreateSeriesCollection("Thrust", Colors.DarkOliveGreen);
+            TorqueSeriesCollection = CreateSeriesCollection("Torque", Colors.HotPink);
 
             TimeLabels = new ObservableCollection<string>();
             _sensorDataBuffer = new Queue<SensorData>();
@@ -74,7 +77,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
 
         private void InitializeDefaultChartData()
         {
-            double defaultValue = 50;
+            const double defaultValue = 50;
             for (int i = 0; i < MaxDataPoints; i++)
             {
                 TimeLabels.Add(i.ToString());
@@ -87,7 +90,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
             }
         }
 
-        private SeriesCollection CreateSeriesCollection(string title, System.Windows.Media.Color color)
+        private static SeriesCollection CreateSeriesCollection(string title, Color color)
         {
             return new SeriesCollection
             {
@@ -97,10 +100,10 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
                     Values = new ChartValues<double>(),
                     PointGeometrySize = 0,
                     LineSmoothness = 1,
-                    Stroke = new System.Windows.Media.SolidColorBrush(color),
+                    Stroke = new SolidColorBrush(color),
                     StrokeThickness = 2,
-                    Fill = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromArgb(10, color.R, color.G, color.B)),
-                    PointForeground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Black),
+                    Fill = new SolidColorBrush(Color.FromArgb(10, color.R, color.G, color.B)),
+                    PointForeground = new SolidColorBrush(Colors.Black),
                     LabelPoint = point => point.Y.ToString("N1")
                 }
             };
@@ -161,7 +164,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
             UpdateSeries(TorqueSeriesCollection, sensorData.Torque);
         }
 
-        private void UpdateSeries(SeriesCollection seriesCollection, double value)
+        private static void UpdateSeries(SeriesCollection seriesCollection, double value)
         {
             var values = ((LineSeries)seriesCollection[0]).Values;
             if (values.Count >= MaxDataPoints)

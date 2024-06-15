@@ -24,7 +24,7 @@
 
         <StackPanel Grid.Row="0" Orientation="Vertical" Width="Auto" Height="Auto" HorizontalAlignment="Left" Margin="20 0 0 20">
             <Label Content="Device List" Foreground="Black" FontSize="18"/>
-            <ComboBox ItemsSource="{Binding AvailablePorts}" SelectedItem="{Binding SelectedPort}" />
+            <ComboBox ItemsSource="{Binding AvailableDevices}" SelectedItem="{Binding SelectedDevice}" DisplayMemberPath="DeviceDisplayName"/>
             <Button Content="Open" Command="{Binding ConnectCommand}" Margin="0,10,0,0"/>
         </StackPanel>
 

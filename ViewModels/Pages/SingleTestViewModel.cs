@@ -1,27 +1,26 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows.Input;
-using Advanced_Dynotis_Software.Models.Serial;
-using Advanced_Dynotis_Software.ViewModels.Device;
-using Advanced_Dynotis_Software.Services.Helpers;
 using Advanced_Dynotis_Software.Services;
+using Advanced_Dynotis_Software.Services.Helpers;
+using Advanced_Dynotis_Software.ViewModels.Device;
 
 namespace Advanced_Dynotis_Software.ViewModels.Pages
 {
     public class SingleTestViewModel : INotifyPropertyChanged
     {
-        private SerialPortsManager _serialPortsManager;
-        private string _selectedPort;
+        private DeviceViewModel _selectedDevice;
         private ObservableCollection<DeviceViewModel> _connectedDevices;
-        private ObservableCollection<string> _availablePorts;
+        private ObservableCollection<DeviceViewModel> _availableDevices;
 
-        public ObservableCollection<string> AvailablePorts
+        public ObservableCollection<DeviceViewModel> AvailableDevices
         {
-            get => _availablePorts;
+            get => _availableDevices;
             set
             {
-                _availablePorts = value;
+                _availableDevices = value;
                 OnPropertyChanged();
             }
         }
@@ -36,12 +35,12 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             }
         }
 
-        public string SelectedPort
+        public DeviceViewModel SelectedDevice
         {
-            get => _selectedPort;
+            get => _selectedDevice;
             set
             {
-                _selectedPort = value;
+                _selectedDevice = value;
                 OnPropertyChanged();
             }
         }
@@ -50,39 +49,27 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
 
         public SingleTestViewModel()
         {
-            _serialPortsManager = new SerialPortsManager();
-            AvailablePorts = new ObservableCollection<string>(_serialPortsManager.GetSerialPorts());
+            AvailableDevices = new ObservableCollection<DeviceViewModel>(DeviceManager.Instance.GetAllDevices());
             ConnectedDevices = new ObservableCollection<DeviceViewModel>();
-            _serialPortsManager.SerialPortsEvent += OnSerialPortsChanged;
             ConnectCommand = new RelayCommand(ConnectToDevice);
-        }
-
-        private void OnSerialPortsChanged()
-        {
-            AvailablePorts = new ObservableCollection<string>(_serialPortsManager.GetSerialPorts());
-            OnPropertyChanged(nameof(AvailablePorts));
         }
 
         private async void ConnectToDevice(object parameter)
         {
-            if (!string.IsNullOrEmpty(SelectedPort))
+            if (SelectedDevice != null && !ConnectedDevices.Contains(SelectedDevice))
             {
-                var deviceViewModel = await DeviceManager.Instance.ConnectToDeviceAsync(SelectedPort);
-                if (!ConnectedDevices.Contains(deviceViewModel))
-                {
-                    ConnectedDevices.Clear();
-                    ConnectedDevices.Add(deviceViewModel);
-                }
+                ConnectedDevices.Add(SelectedDevice);
+                await DeviceManager.Instance.ConnectToDeviceAsync(SelectedDevice.Device.PortName);
             }
         }
 
         public async void OnNavigatedFrom()
         {
-            foreach (var device in ConnectedDevices)
+            foreach (var device in ConnectedDevices.ToList())
             {
                 await DeviceManager.Instance.DisconnectDeviceAsync(device.Device.PortName);
+                ConnectedDevices.Remove(device);
             }
-            ConnectedDevices.Clear();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
