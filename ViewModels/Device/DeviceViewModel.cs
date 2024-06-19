@@ -24,7 +24,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
         public string DeviceDisplayName => $"{Device.Model} - {Device.SeriNo}";
 
         private Dynotis _device;
-        private Queue<SensorData> _sensorDataBuffer;
+        private Queue<DynotisData> _dynotisDataBuffer;
         private readonly object _bufferLock = new();
         private const int BufferLimit = 1;
         private const int MaxDataPoints = 100;
@@ -67,7 +67,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
             TorqueSeriesCollection = CreateSeriesCollection("Torque", Colors.HotPink);
 
             TimeLabels = new ObservableCollection<string>();
-            _sensorDataBuffer = new Queue<SensorData>();
+            _dynotisDataBuffer = new Queue<DynotisData>();
 
             Device.PropertyChanged += Device_PropertyChanged;
 
@@ -113,20 +113,20 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
         {
             while (true)
             {
-                SensorData sensorData = null;
+                DynotisData dynotisData = null;
                 lock (_bufferLock)
                 {
-                    if (_sensorDataBuffer.Count > 0)
+                    if (_dynotisDataBuffer.Count > 0)
                     {
-                        sensorData = _sensorDataBuffer.Dequeue();
+                        dynotisData = _dynotisDataBuffer.Dequeue();
                     }
                 }
 
-                if (sensorData != null)
+                if (dynotisData != null)
                 {
                     await Application.Current.Dispatcher.InvokeAsync(() =>
                     {
-                        UpdateChartData(sensorData);
+                        UpdateChartData(dynotisData);
                     });
                 }
 
@@ -136,20 +136,20 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
 
         private void Device_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(Dynotis.SensorData))
+            if (e.PropertyName == nameof(Dynotis.DynotisData))
             {
                 lock (_bufferLock)
                 {
-                    if (_sensorDataBuffer.Count >= BufferLimit)
+                    if (_dynotisDataBuffer.Count >= BufferLimit)
                     {
-                        _sensorDataBuffer.Dequeue();
+                        _dynotisDataBuffer.Dequeue();
                     }
-                    _sensorDataBuffer.Enqueue(Device.SensorData);
+                    _dynotisDataBuffer.Enqueue(Device.DynotisData);
                 }
             }
         }
 
-        private void UpdateChartData(SensorData sensorData)
+        private void UpdateChartData(DynotisData sensorData)
         {
             if (TimeLabels.Count >= MaxDataPoints)
             {

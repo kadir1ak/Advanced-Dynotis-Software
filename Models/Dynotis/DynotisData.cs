@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace Advanced_Dynotis_Software.Models.Dynotis
 {
-    public class SensorData : INotifyPropertyChanged
+    public class DynotisData : INotifyPropertyChanged
     {
         private int _time;
         private double _sampleRate;

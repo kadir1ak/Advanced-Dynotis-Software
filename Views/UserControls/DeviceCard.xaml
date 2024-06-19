@@ -32,7 +32,7 @@
                     <!-- Değişken Adı -->
                     <TextBlock x:Name="MotorSpeedNameLabel" Text="Motor Speed" Width="120" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Left"/>
                     <!-- Değişken Değeri -->
-                    <TextBlock x:Name="MotorSpeedValueLabel" Text="{Binding  Device.SensorData.MotorSpeed, StringFormat={}{0:0}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <TextBlock x:Name="MotorSpeedValueLabel" Text="{Binding  Device.DynotisData.MotorSpeed, StringFormat={}{0:0}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <!-- Değişken Birimi -->
                     <TextBlock x:Name="MotorSpeedUnitLabel" Text="RPM" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
@@ -44,7 +44,7 @@
                     <!-- Değişken Adı -->
                     <TextBlock x:Name="ThrustNameLabel" Text="Thrust" Width="120" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Left"/>
                     <!-- Değişken Değeri -->
-                    <TextBlock x:Name="ThrustValueLabel"  Text="{Binding  Device.SensorData.Thrust, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <TextBlock x:Name="ThrustValueLabel"  Text="{Binding  Device.DynotisData.Thrust, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <!-- Değişken Birimi -->
                     <TextBlock x:Name="ThrustUnitLabel" Text="gr.F" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
@@ -56,7 +56,7 @@
                     <!-- Değişken Adı -->
                     <TextBlock x:Name="TorqueNameLabel" Text="Torque" Width="120" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Left"/>
                     <!-- Değişken Değeri -->
-                    <TextBlock x:Name="TorqueValueLabel"  Text="{Binding  Device.SensorData.Torque, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <TextBlock x:Name="TorqueValueLabel"  Text="{Binding  Device.DynotisData.Torque, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <!-- Değişken Birimi -->
                     <TextBlock x:Name="TorqueUnitLabel" Text="N.mm" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
@@ -68,7 +68,7 @@
                     <!-- Değişken Adı -->
                     <TextBlock x:Name="VoltageNameLabel" Text="Voltage" Width="120" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Left"/>
                     <!-- Değişken Değeri -->
-                    <TextBlock x:Name="VoltageValueLabel"  Text="{Binding  Device.SensorData.Voltage, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <TextBlock x:Name="VoltageValueLabel"  Text="{Binding  Device.DynotisData.Voltage, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <!-- Değişken Birimi -->
                     <TextBlock x:Name="VoltageUnitLabel" Text="V" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
@@ -80,7 +80,7 @@
                     <!-- Değişken Adı -->
                     <TextBlock x:Name="CurrentNameLabel" Text="Current" Width="120" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Left"/>
                     <!-- Değişken Değeri -->
-                    <TextBlock x:Name="CurrentValueLabel"  Text="{Binding  Device.SensorData.Current, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <TextBlock x:Name="CurrentValueLabel"  Text="{Binding  Device.DynotisData.Current, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <!-- Değişken Birimi -->
                     <TextBlock x:Name="CurrentUnitLabel" Text="A" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
@@ -92,7 +92,7 @@
                     <!-- Değişken Adı -->
                     <TextBlock x:Name="VibrationNameLabel" Text="Vibration" Width="120" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Left"/>
                     <!-- Değişken Değeri -->
-                    <TextBlock x:Name="VibrationValueLabel"  Text="{Binding  Device.SensorData.Vibration, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <TextBlock x:Name="VibrationValueLabel"  Text="{Binding  Device.DynotisData.Vibration, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <!-- Değişken Birimi -->
                     <TextBlock x:Name="VibrationUnitLabel" Text="g" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
@@ -104,7 +104,7 @@
                     <!-- Değişken Adı -->
                     <TextBlock x:Name="PressureNameLabel" Text="Pressure" Width="120" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Left"/>
                     <!-- Değişken Değeri -->
-                    <TextBlock x:Name="PressureValueLabel"  Text="{Binding  Device.SensorData.Pressure, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <TextBlock x:Name="PressureValueLabel"  Text="{Binding  Device.DynotisData.Pressure, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <!-- Değişken Birimi -->
                     <TextBlock x:Name="PressureUnitLabel" Text="kPa" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
@@ -116,7 +116,7 @@
                     <!-- Değişken Adı -->
                     <TextBlock x:Name="AirDensityNameLabel" Text="Air Density" Width="120" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Left"/>
                     <!-- Değişken Değeri -->
-                    <TextBlock x:Name="AirDensityValueLabel"  Text="{Binding  Device.SensorData.AirDensity, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <TextBlock x:Name="AirDensityValueLabel"  Text="{Binding  Device.DynotisData.AirDensity, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <!-- Değişken Birimi -->
                     <TextBlock x:Name="AirDensityUnitLabel" Text="kg/m³" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
@@ -128,7 +128,7 @@
                     <!-- Değişken Adı -->
                     <TextBlock x:Name="MotorTemperatureNameLabel" Text="Motor Temp" Width="120" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Left"/>
                     <!-- Değişken Değeri -->
-                    <TextBlock x:Name="MotorTemperatureValueLabel"  Text="{Binding  Device.SensorData.MotorTemp, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <TextBlock x:Name="MotorTemperatureValueLabel"  Text="{Binding  Device.DynotisData.MotorTemp, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <!-- Değişken Birimi -->
                     <TextBlock x:Name="MotorTemperatureUnitLabel" Text="°C" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
@@ -141,7 +141,7 @@
                     <!-- Değişken Adı -->
                     <TextBlock x:Name="AmbientTemperatureNameLabel" Text="Ambient Temp" Width="120" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Left"/>
                     <!-- Değişken Değeri -->
-                    <TextBlock x:Name="AmbientTemperatureValueLabel"  Text="{Binding  Device.SensorData.AmbientTemp, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <TextBlock x:Name="AmbientTemperatureValueLabel"  Text="{Binding  Device.DynotisData.AmbientTemp, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <!-- Değişken Birimi -->
                     <TextBlock x:Name="AmbientTemperatureUnitLabel" Text="°C" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
@@ -153,7 +153,7 @@
                     <!-- Değişken Adı -->
                     <TextBlock x:Name="PowerNameLabel" Text="Power" Width="120" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Left"/>
                     <!-- Değişken Değeri -->
-                    <TextBlock x:Name="PowerValueLabel"  Text="{Binding  Device.SensorData.Power, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <TextBlock x:Name="PowerValueLabel"  Text="{Binding  Device.DynotisData.Power, StringFormat={}{0:0.00}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <!-- Değişken Birimi -->
                     <TextBlock x:Name="PowerUnitLabel" Text="Watt" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
@@ -164,7 +164,7 @@
                     <!-- Değişken Adı -->
                     <TextBlock x:Name="WindSpeedNameLabel" Text="Wind Speed" Width="120" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0"/>
                     <!-- Değişken Değeri -->
-                    <TextBlock x:Name="WindSpeedValueLabel"  Text="{Binding  Device.SensorData.WindSpeed, StringFormat={}{0:0.0}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <TextBlock x:Name="WindSpeedValueLabel"  Text="{Binding  Device.DynotisData.WindSpeed, StringFormat={}{0:0.0}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <!-- Değişken Birimi -->
                     <TextBlock x:Name="WindSpeedUnitLabel" Text="m/s" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
@@ -176,7 +176,7 @@
                     <!-- Değişken Adı -->
                     <TextBlock x:Name="WindDirectionNameLabel" Text="Wind Direction" Width="120" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Left"/>
                     <!-- Değişken Değeri -->
-                    <TextBlock x:Name="WindDirectionValueLabel"  Text="{Binding  Device.SensorData.WindDirection, StringFormat={}{0:0.0}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <TextBlock x:Name="WindDirectionValueLabel"  Text="{Binding  Device.DynotisData.WindDirection, StringFormat={}{0:0.0}}" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <!-- Değişken Birimi -->
                     <TextBlock x:Name="WindDirectionUnitLabel" Text="°" Width="80" Height="22" FontSize="16" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>

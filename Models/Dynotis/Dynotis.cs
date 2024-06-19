@@ -72,16 +72,16 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             }
         }
 
-        private SensorData _sensorData;
-        public SensorData SensorData
+        private DynotisData _dynotisData;
+        public DynotisData DynotisData
         {
-            get => _sensorData;
+            get => _dynotisData;
             set
             {
-                if (_sensorData != value)
+                if (_dynotisData != value)
                 {
-                    _sensorData = value;
-                    OnPropertyChanged(nameof(SensorData));
+                    _dynotisData = value;
+                    OnPropertyChanged(nameof(DynotisData));
                 }
             }
         }
@@ -91,7 +91,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             _cancellationTokenSource = new CancellationTokenSource();
             Port = new SerialPort(portName, 921600);
             _portName = portName;
-            _sensorData = new SensorData();
+            _dynotisData = new DynotisData();
         }
 
         public async Task OpenPortAsync()
@@ -194,7 +194,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
                         if (dataParts.Length == 13)
                         {
-                            var newData = new SensorData
+                            var newData = new DynotisData
                             {
                                 Time = int.Parse(dataParts[0]),
                                 Current = double.Parse(dataParts[1]),
@@ -213,12 +213,12 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
                             Application.Current.Dispatcher.Invoke(() =>
                             {
-                                SensorData = newData;
+                                DynotisData = newData;
 
-                                SensorData.Vibration = CalculateMagnitude(newData.VibrationX, newData.VibrationY, newData.VibrationZ);
-                                SensorData.Power = newData.Current * newData.Voltage;
-                                SensorData.WindDirection = 275 * newData.Voltage;
-                                SensorData.AirDensity = 10.0 * newData.Voltage;
+                                DynotisData.Vibration = CalculateMagnitude(newData.VibrationX, newData.VibrationY, newData.VibrationZ);
+                                DynotisData.Power = newData.Current * newData.Voltage;
+                                DynotisData.WindDirection = 275 * newData.Voltage;
+                                DynotisData.AirDensity = 10.0 * newData.Voltage;
                             });
                         }
                         else
