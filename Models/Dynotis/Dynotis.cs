@@ -1,11 +1,8 @@
-﻿using System;
+﻿using Advanced_Dynotis_Software.Services.Logger;
 using System.ComponentModel;
 using System.IO.Ports;
 using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using Advanced_Dynotis_Software.Services.Logger;
 
 namespace Advanced_Dynotis_Software.Models.Dynotis
 {
