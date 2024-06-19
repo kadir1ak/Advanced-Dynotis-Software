@@ -38,7 +38,6 @@ namespace Advanced_Dynotis_Software.Models.Serial
                 MessageBox.Show($"SerialPortsChangedEvents: {ex.Message}");
             }
         }
-
         private void SerialPortsPhysicallyRemovedEventHandler(object sender, EventArrivedEventArgs e)
         {
             Application.Current.Dispatcher.Invoke(() =>

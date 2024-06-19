@@ -70,7 +70,6 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 }
             }
         }
-
         private DynotisData _dynotisData;
         public DynotisData DynotisData
         {
@@ -84,14 +83,12 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 }
             }
         }
-
         public Dynotis(string portName)
         {
             Port = new SerialPort(portName, 921600);
             _portName = portName;
             _dynotisData = new DynotisData();
         }
-
         public async Task OpenPortAsync()
         {
             if (Port != null && !Port.IsOpen)
@@ -111,7 +108,6 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 }
             }
         }
-
         public async Task ClosePortAsync()
         {
             if (Port != null && Port.IsOpen)
@@ -144,7 +140,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
                 while (!token.IsCancellationRequested && Port.IsOpen && !deviceInfoReceived)
                 {
-                    string indata = await Task.Run(() => Port.ReadLine(), token); // Port.ReadLine asenkron olarak çalıştırıldı
+                    string indata = Port.ReadLine(); // Port.ReadLine doğrudan kullanıldı
                     Logger.Log($"Received data: {indata}");
 
                     if (indata.Trim().StartsWith("KEY:"))
@@ -158,7 +154,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                             if (!string.IsNullOrEmpty(Model) && !string.IsNullOrEmpty(SeriNo))
                             {
                                 deviceInfoReceived = true;
-                                await Task.Run(() => Port.WriteLine("SENSOR_DATA"), token);
+                                Port.WriteLine("SENSOR_DATA");
                                 Mode = "SENSOR_DATA";
                                 await DeviceDataReceivedAsync(token);
                             }
@@ -167,7 +163,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
                     if (!deviceInfoReceived)
                     {
-                        await Task.Run(() => Port.WriteLine("DEVICE_INFO"), token);
+                        Port.WriteLine("DEVICE_INFO");
                     }
 
                     await Task.Delay(100);
@@ -185,7 +181,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             {
                 while (!token.IsCancellationRequested && Port.IsOpen)
                 {
-                    string indata = await Task.Run(() => Port.ReadLine(), token); // Port.ReadLine asenkron olarak çalıştırıldı
+                    string indata = Port.ReadLine(); // Port.ReadLine doğrudan kullanıldı
                     Logger.Log($"Received data: {indata}");
 
                     if (!indata.Trim().StartsWith("KEY:"))
