@@ -11,28 +11,9 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
     public class SingleTestViewModel : INotifyPropertyChanged
     {
         private DeviceViewModel _selectedDevice;
-        private ObservableCollection<DeviceViewModel> _connectedDevices;
-        private ObservableCollection<DeviceViewModel> _availableDevices;
 
-        public ObservableCollection<DeviceViewModel> AvailableDevices
-        {
-            get => _availableDevices;
-            set
-            {
-                _availableDevices = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public ObservableCollection<DeviceViewModel> ConnectedDevices
-        {
-            get => _connectedDevices;
-            set
-            {
-                _connectedDevices = value;
-                OnPropertyChanged();
-            }
-        }
+        public ObservableCollection<DeviceViewModel> AvailableDevices { get; set; }
+        public ObservableCollection<DeviceViewModel> ConnectedDevices { get; set; }
 
         public DeviceViewModel SelectedDevice
         {
@@ -49,7 +30,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         public SingleTestViewModel()
         {
             AvailableDevices = DeviceManager.Instance.GetAllDevices();
-            ConnectedDevices = new ObservableCollection<DeviceViewModel>();
+            ConnectedDevices = DeviceManager.Instance.ConnectedDevices;
             ConnectCommand = new RelayCommand(ConnectToDevice);
 
             DeviceManager.Instance.DeviceDisconnected += OnDeviceDisconnected;
@@ -57,13 +38,9 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
 
         private void ConnectToDevice(object parameter)
         {
-            if (SelectedDevice != null)
+            if (SelectedDevice != null && !ConnectedDevices.Contains(SelectedDevice))
             {
-                if (!ConnectedDevices.Contains(SelectedDevice))
-                {
-                    ConnectedDevices.Clear();
-                    ConnectedDevices.Add(SelectedDevice);
-                }
+                DeviceManager.Instance.AddConnectedDevice(SelectedDevice);
             }
         }
 

@@ -1,25 +1,28 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using Advanced_Dynotis_Software.Themes;
 using MahApps.Metro.IconPacks;
-using System.Windows.Controls.Primitives;
-using System.Windows.Media;
 using Advanced_Dynotis_Software.Views.Pages;
 using Advanced_Dynotis_Software.Views.UserControls;
+using Advanced_Dynotis_Software.ViewModels.Pages;
+using System.Windows.Media;
 
 namespace Advanced_Dynotis_Software.Views.Windows
 {
     public partial class MainWindow : Window
     {
+        private SingleTestViewModel _singleTestViewModel;
+
         public MainWindow()
         {
             InitializeComponent();
             AppTheme.ThemeChanged += OnThemeChanged;
             AnimateButtonScale(HomeButton, 1.15);
             ContentArea.Content = new HomePage();
+
+            _singleTestViewModel = new SingleTestViewModel();
         }
 
         private void MainBorder_MouseDown(object sender, MouseButtonEventArgs e)
@@ -52,7 +55,15 @@ namespace Advanced_Dynotis_Software.Views.Windows
                         ContentArea.Content = new HomePage();
                         break;
                     case PackIconMaterialKind.UsbPort:
-                        ContentArea.Content = new SingleTestPage();
+                        if (ContentArea.Content is SingleTestPage singleTestPage)
+                        {
+                            singleTestPage.DataContext = _singleTestViewModel;
+                        }
+                        else
+                        {
+                            var singleTestPageNew = new SingleTestPage { DataContext = _singleTestViewModel };
+                            ContentArea.Content = singleTestPageNew;
+                        }
                         break;
                     case PackIconMaterialKind.Usb:
                         ContentArea.Content = new CoaxialTestPage();

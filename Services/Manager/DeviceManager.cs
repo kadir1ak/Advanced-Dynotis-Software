@@ -16,12 +16,14 @@ namespace Advanced_Dynotis_Software.Services
         private readonly SerialPortsManager _serialPortsManager;
 
         public ObservableCollection<DeviceViewModel> Devices { get; private set; }
+        public ObservableCollection<DeviceViewModel> ConnectedDevices { get; private set; }
 
         public event Action<DeviceViewModel> DeviceDisconnected;
 
         private DeviceManager()
         {
             Devices = new ObservableCollection<DeviceViewModel>();
+            ConnectedDevices = new ObservableCollection<DeviceViewModel>();
             _serialPortsManager = new SerialPortsManager();
             _serialPortsManager.SerialPortAdded += OnSerialPortAdded;
             _serialPortsManager.SerialPortRemoved += OnSerialPortRemoved;
@@ -68,7 +70,16 @@ namespace Advanced_Dynotis_Software.Services
             {
                 await device.Device.ClosePortAsync();
                 Devices.Remove(device);
+                ConnectedDevices.Remove(device);
                 DeviceDisconnected?.Invoke(device);
+            }
+        }
+
+        public void AddConnectedDevice(DeviceViewModel device)
+        {
+            if (!ConnectedDevices.Contains(device))
+            {
+                ConnectedDevices.Add(device);
             }
         }
 
