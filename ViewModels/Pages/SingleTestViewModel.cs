@@ -11,9 +11,9 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
     public class SingleTestViewModel : INotifyPropertyChanged
     {
         private DeviceViewModel _selectedDevice;
+        private DeviceViewModel _connectedDevice;
 
         public ObservableCollection<DeviceViewModel> AvailableDevices { get; set; }
-        public ObservableCollection<DeviceViewModel> ConnectedDevices { get; set; }
 
         public DeviceViewModel SelectedDevice
         {
@@ -25,40 +25,41 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             }
         }
 
+        public DeviceViewModel ConnectedDevice
+        {
+            get => _connectedDevice;
+            set
+            {
+                _connectedDevice = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ICommand ConnectCommand { get; set; }
 
         public SingleTestViewModel()
         {
             AvailableDevices = DeviceManager.Instance.GetAllDevices();
-            ConnectedDevices = DeviceManager.Instance.ConnectedDevices;
             ConnectCommand = new RelayCommand(ConnectToDevice);
 
             DeviceManager.Instance.DeviceDisconnected += OnDeviceDisconnected;
         }
 
-        private void ConnectToDevice(object parameter)
+        private async void ConnectToDevice(object parameter)
         {
-            if (SelectedDevice != null && !ConnectedDevices.Contains(SelectedDevice))
-            {
-                DeviceManager.Instance.AddConnectedDevice(SelectedDevice);
-            }
+            if (SelectedDevice == null) return;
+
+            // Yeni cihazı bağla
+            DeviceManager.Instance.AddConnectedDevice(SelectedDevice);
+            ConnectedDevice = SelectedDevice;
         }
 
         private void OnDeviceDisconnected(DeviceViewModel device)
         {
-            if (ConnectedDevices.Contains(device))
+            if (ConnectedDevice == device)
             {
-                ConnectedDevices.Remove(device);
+                ConnectedDevice = null;
             }
-        }
-
-        public async void OnNavigatedFrom()
-        {
-            foreach (var device in ConnectedDevices)
-            {
-                await DeviceManager.Instance.DisconnectDeviceAsync(device.Device.PortName);
-            }
-            ConnectedDevices.Clear();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
