@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
@@ -13,16 +15,32 @@ namespace Advanced_Dynotis_Software.Views.Windows
 {
     public partial class MainWindow : Window
     {
+        private HomeViewModel _homeViewModel;
         private SingleTestViewModel _singleTestViewModel;
+        private CoaxialTestViewModel _coaxialTestViewModel;
+        private MultiTestViewModel _multiTestViewModel;
+        private APIViewModel _apiViewModel;
+        private ScriptViewModel _scriptViewModel;
+        private AutomateTestViewModel _automateTestViewModel;
+        private SettingsViewModel _settingsViewModel;
 
         public MainWindow()
         {
             InitializeComponent();
             AppTheme.ThemeChanged += OnThemeChanged;
-            AnimateButtonScale(HomeButton, 1.15);
-            ContentArea.Content = new HomePage();
 
+            _homeViewModel = new HomeViewModel();
             _singleTestViewModel = new SingleTestViewModel();
+            _coaxialTestViewModel = new CoaxialTestViewModel();
+            _multiTestViewModel = new MultiTestViewModel();
+            _apiViewModel = new APIViewModel();
+            _scriptViewModel = new ScriptViewModel();
+            _automateTestViewModel = new AutomateTestViewModel();
+            _settingsViewModel = new SettingsViewModel();
+
+            HomeButton.IsActive = true;
+            AnimateButtonScale(HomeButton, 1.15);
+            ContentArea.Content = new HomePage { DataContext = _homeViewModel };
         }
 
         private void MainBorder_MouseDown(object sender, MouseButtonEventArgs e)
@@ -52,36 +70,28 @@ namespace Advanced_Dynotis_Software.Views.Windows
                 switch (clickedButton.Icon)
                 {
                     case PackIconMaterialKind.Home:
-                        ContentArea.Content = new HomePage();
+                        ContentArea.Content = new HomePage { DataContext = _homeViewModel };
                         break;
                     case PackIconMaterialKind.UsbPort:
-                        if (ContentArea.Content is SingleTestPage singleTestPage)
-                        {
-                            singleTestPage.DataContext = _singleTestViewModel;
-                        }
-                        else
-                        {
-                            var singleTestPageNew = new SingleTestPage { DataContext = _singleTestViewModel };
-                            ContentArea.Content = singleTestPageNew;
-                        }
+                        ContentArea.Content = new SingleTestPage { DataContext = _singleTestViewModel };
                         break;
                     case PackIconMaterialKind.Usb:
-                        ContentArea.Content = new CoaxialTestPage();
+                        ContentArea.Content = new CoaxialTestPage { DataContext = _coaxialTestViewModel };
                         break;
                     case PackIconMaterialKind.Multicast:
-                        ContentArea.Content = new MultiTestPage();
+                        ContentArea.Content = new MultiTestPage { DataContext = _multiTestViewModel };
                         break;
                     case PackIconMaterialKind.Network:
-                        ContentArea.Content = new APIPage();
+                        ContentArea.Content = new APIPage { DataContext = _apiViewModel };
                         break;
                     case PackIconMaterialKind.Script:
-                        ContentArea.Content = new ScriptPage();
+                        ContentArea.Content = new ScriptPage { DataContext = _scriptViewModel };
                         break;
                     case PackIconMaterialKind.Autorenew:
-                        ContentArea.Content = new AutomateTestPage();
+                        ContentArea.Content = new AutomateTestPage { DataContext = _automateTestViewModel };
                         break;
                     case PackIconMaterialKind.Tools:
-                        ContentArea.Content = new SettingsPage();
+                        ContentArea.Content = new SettingsPage { DataContext = _settingsViewModel };
                         break;
                     case PackIconMaterialKind.Power:
                         Application.Current.Shutdown();

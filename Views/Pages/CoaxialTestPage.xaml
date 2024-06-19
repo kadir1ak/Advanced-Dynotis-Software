@@ -41,26 +41,32 @@
             </StackPanel>
         </Border>
 
-        <!-- 1. Device Card -->
+        <!-- Devices Card -->
         <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="10" BorderThickness="1" BorderBrush="Transparent">
-            <ContentControl Content="{Binding ConnectedOneDevice}">
-                <ContentControl.ContentTemplate>
-                    <DataTemplate>
-                        <uc:DeviceCard DataContext="{Binding}"/>
-                    </DataTemplate>
-                </ContentControl.ContentTemplate>
-            </ContentControl>
-        </Border>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
-        <!-- 2. Device Card -->
-        <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="10" BorderThickness="1" BorderBrush="Transparent">
-            <ContentControl Content="{Binding ConnectedTwoDevice}">
-                <ContentControl.ContentTemplate>
-                    <DataTemplate>
-                        <uc:DeviceCard DataContext="{Binding}"/>
-                    </DataTemplate>
-                </ContentControl.ContentTemplate>
-            </ContentControl>
+                <!-- 1. Device Card -->
+                <ContentControl Grid.Row="0" Content="{Binding ConnectedOneDevice}">
+                    <ContentControl.ContentTemplate>
+                        <DataTemplate>
+                            <uc:DeviceCard DataContext="{Binding}"/>
+                        </DataTemplate>
+                    </ContentControl.ContentTemplate>
+                </ContentControl>
+
+                <!-- 2. Device Card -->
+                <ContentControl Grid.Row="1" Content="{Binding ConnectedTwoDevice}">
+                    <ContentControl.ContentTemplate>
+                        <DataTemplate>
+                            <uc:DeviceCard DataContext="{Binding}"/>
+                        </DataTemplate>
+                    </ContentControl.ContentTemplate>
+                </ContentControl>
+            </Grid>
         </Border>
     </Grid>
 </UserControl>

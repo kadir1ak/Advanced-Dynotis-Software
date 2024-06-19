@@ -118,20 +118,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         {
             var allDevices = DeviceManager.Instance.GetAllDevices().ToList();
 
-            AvailableDevicesOne.Clear();
-            AvailableDevicesTwo.Clear();
-
-            foreach (var device in allDevices)
-            {
-                if (device != SelectedDeviceTwo)
-                {
-                    AvailableDevicesOne.Add(device);
-                }
-                if (device != SelectedDeviceOne)
-                {
-                    AvailableDevicesTwo.Add(device);
-                }
-            }
+            AvailableDevicesOne = new ObservableCollection<DeviceViewModel>(allDevices.Where(d => d != SelectedDeviceTwo));
+            AvailableDevicesTwo = new ObservableCollection<DeviceViewModel>(allDevices.Where(d => d != SelectedDeviceOne));
 
             OnPropertyChanged(nameof(AvailableDevicesOne));
             OnPropertyChanged(nameof(AvailableDevicesTwo));

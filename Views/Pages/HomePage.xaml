@@ -7,6 +7,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TextBlock Text="Home Page" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#151F2D"/>
+        <TextBlock Text="Welcome to Advanced Dynotis Software" 
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center" 
+                   FontSize="24" 
+                   FontWeight="Bold"/>
     </Grid>
 </UserControl>

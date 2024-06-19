@@ -24,7 +24,7 @@
         GlassFrameThickness="0"
         ResizeBorderThickness="5"/>
     </WindowChrome.WindowChrome>
-    <Border CornerRadius="15" Background="{DynamicResource Page}" MouseDown="MainBorder_MouseDown" BorderThickness="1" BorderBrush="#151F2D">
+    <Border Name="MainBorder" CornerRadius="15" Background="{DynamicResource Page}" MouseDown="MainBorder_MouseDown" BorderThickness="1" BorderBrush="#151F2D">
         <Grid>
             <Grid>
                 <Grid.ColumnDefinitions>
