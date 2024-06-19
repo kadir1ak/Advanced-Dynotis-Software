@@ -26,8 +26,9 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
         private Dynotis _device;
         private Queue<DynotisData> _dynotisDataBuffer;
         private readonly object _bufferLock = new();
-        private const int BufferLimit = 1;
+        private const int BufferLimit = 10;
         private const int MaxDataPoints = 100;
+        private bool _isUpdatingChart;
 
         public Dynotis Device
         {
@@ -122,15 +123,17 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
                     }
                 }
 
-                if (dynotisData != null)
+                if (dynotisData != null && !_isUpdatingChart)
                 {
+                    _isUpdatingChart = true;
                     await Application.Current.Dispatcher.InvokeAsync(() =>
                     {
                         UpdateChartData(dynotisData);
+                        _isUpdatingChart = false;
                     });
                 }
 
-                await Task.Delay(10);
+                await Task.Delay(10); // Optimizasyon için bekleme süresi artırıldı
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Advanced_Dynotis_Software.Services;
 using Advanced_Dynotis_Software.Services.Helpers;
@@ -50,6 +51,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             if (SelectedDevice == null) return;
 
             // Yeni cihazı bağla
+            await DeviceManager.Instance.ConnectToDeviceAsync(SelectedDevice.Device.PortName);
             DeviceManager.Instance.AddConnectedDevice(SelectedDevice);
             ConnectedDevice = SelectedDevice;
         }

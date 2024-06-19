@@ -242,8 +242,6 @@
                     <lvc:Axis Title="Thrust (N)" Foreground="{DynamicResource Text}"></lvc:Axis>
                 </lvc:CartesianChart.AxisY>
             </lvc:CartesianChart>
-
-
         </Grid>
     </Border>
 </UserControl>

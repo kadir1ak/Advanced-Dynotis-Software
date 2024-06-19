@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using System.IO.Ports;
 using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace Advanced_Dynotis_Software.Models.Dynotis
@@ -85,7 +87,6 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
         public Dynotis(string portName)
         {
-            _cancellationTokenSource = new CancellationTokenSource();
             Port = new SerialPort(portName, 921600);
             _portName = portName;
             _dynotisData = new DynotisData();
@@ -98,8 +99,10 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 try
                 {
                     Port.Open();
-                    _cancellationTokenSource?.Cancel(); // Mevcut CancellationTokenSource varsa iptal et
-                    _cancellationTokenSource = new CancellationTokenSource(); // Yeni bir CancellationTokenSource nesnesi oluştur
+                    if (_cancellationTokenSource == null || _cancellationTokenSource.IsCancellationRequested)
+                    {
+                        _cancellationTokenSource = new CancellationTokenSource();
+                    }
                     await StartReceivingDataAsync();
                 }
                 catch (Exception ex)
@@ -208,7 +211,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                                 WindSpeed = double.Parse(dataParts[12])
                             };
 
-                            Application.Current.Dispatcher.Invoke(() =>
+                            await Application.Current.Dispatcher.InvokeAsync(() =>
                             {
                                 DynotisData = newData;
 
@@ -242,6 +245,5 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
     }
 }

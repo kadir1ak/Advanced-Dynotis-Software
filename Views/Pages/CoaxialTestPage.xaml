@@ -5,8 +5,62 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.Pages"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             xmlns:vmPages="clr-namespace:Advanced_Dynotis_Software.ViewModels.Pages"
+             xmlns:uc="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
+             d:DataContext="{d:DesignInstance vmPages:CoaxialTestViewModel, IsDesignTimeCreatable=True}">
+    <UserControl.DataContext>
+        <vmPages:CoaxialTestViewModel/>
+    </UserControl.DataContext>
     <Grid>
-        <TextBlock Text="Coaxial Test Page" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#151F2D"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Width="Auto" Height="Auto" HorizontalAlignment="Left" Margin="20 0 0 20">
+            <Label Content="1. Device" Foreground="Black" FontSize="18"/>
+            <ComboBox ItemsSource="{Binding AvailableDevicesOne}" SelectedItem="{Binding SelectedDeviceOne}" DisplayMemberPath="DeviceDisplayName"/>
+            <Button Content="Open" Command="{Binding ConnectCommand}" CommandParameter="One" Margin="0,10,0,0"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical" Width="Auto" Height="Auto" HorizontalAlignment="Left" Margin="20 0 0 20">
+            <Label Content="2. Device" Foreground="Black" FontSize="18"/>
+            <ComboBox ItemsSource="{Binding AvailableDevicesTwo}" SelectedItem="{Binding SelectedDeviceTwo}" DisplayMemberPath="DeviceDisplayName"/>
+            <Button Content="Open" Command="{Binding ConnectCommand}" CommandParameter="Two" Margin="0,10,0,0"/>
+        </StackPanel>
+
+        <Border Grid.Row="0" Grid.Column="1" BorderThickness="1" BorderBrush="White" Margin="10 10 10 10">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="Coaxial Test Page" FontSize="34" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#151F2D"/>
+            </StackPanel>
+        </Border>
+
+        <!-- 1. Device Card -->
+        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="10" BorderThickness="1" BorderBrush="Transparent">
+            <ContentControl Content="{Binding ConnectedOneDevice}">
+                <ContentControl.ContentTemplate>
+                    <DataTemplate>
+                        <uc:DeviceCard DataContext="{Binding}"/>
+                    </DataTemplate>
+                </ContentControl.ContentTemplate>
+            </ContentControl>
+        </Border>
+
+        <!-- 2. Device Card -->
+        <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="10" BorderThickness="1" BorderBrush="Transparent">
+            <ContentControl Content="{Binding ConnectedTwoDevice}">
+                <ContentControl.ContentTemplate>
+                    <DataTemplate>
+                        <uc:DeviceCard DataContext="{Binding}"/>
+                    </DataTemplate>
+                </ContentControl.ContentTemplate>
+            </ContentControl>
+        </Border>
     </Grid>
 </UserControl>
