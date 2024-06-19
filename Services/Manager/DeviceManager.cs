@@ -1,8 +1,9 @@
-﻿using System.Collections.ObjectModel;
-using System.IO.Ports;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Advanced_Dynotis_Software.Models.Dynotis;
+using Advanced_Dynotis_Software.Models.Serial;
 using Advanced_Dynotis_Software.ViewModels.Device;
 
 namespace Advanced_Dynotis_Software.Services
@@ -12,21 +13,38 @@ namespace Advanced_Dynotis_Software.Services
         private static DeviceManager _instance;
         public static DeviceManager Instance => _instance ??= new DeviceManager();
 
+        private readonly SerialPortsManager _serialPortsManager;
+
         public ObservableCollection<DeviceViewModel> Devices { get; private set; }
+
+        public event Action<DeviceViewModel> DeviceDisconnected;
 
         private DeviceManager()
         {
             Devices = new ObservableCollection<DeviceViewModel>();
+            _serialPortsManager = new SerialPortsManager();
+            _serialPortsManager.SerialPortAdded += OnSerialPortAdded;
+            _serialPortsManager.SerialPortRemoved += OnSerialPortRemoved;
+
             InitializeDevices();
         }
 
         private void InitializeDevices()
         {
-            string[] portNames = SerialPort.GetPortNames();
-            foreach (var portName in portNames)
+            foreach (var portName in _serialPortsManager.GetSerialPorts())
             {
                 _ = ConnectToDeviceAsync(portName);
             }
+        }
+
+        private async void OnSerialPortAdded(string portName)
+        {
+            await ConnectToDeviceAsync(portName);
+        }
+
+        private async void OnSerialPortRemoved(string portName)
+        {
+            await DisconnectDeviceAsync(portName);
         }
 
         public async Task<DeviceViewModel> ConnectToDeviceAsync(string portName)
@@ -50,6 +68,7 @@ namespace Advanced_Dynotis_Software.Services
             {
                 await device.Device.ClosePortAsync();
                 Devices.Remove(device);
+                DeviceDisconnected?.Invoke(device);
             }
         }
 

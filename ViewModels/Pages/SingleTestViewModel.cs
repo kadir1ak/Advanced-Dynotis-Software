@@ -51,6 +51,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             AvailableDevices = DeviceManager.Instance.GetAllDevices();
             ConnectedDevices = new ObservableCollection<DeviceViewModel>();
             ConnectCommand = new RelayCommand(ConnectToDevice);
+
+            DeviceManager.Instance.DeviceDisconnected += OnDeviceDisconnected;
         }
 
         private void ConnectToDevice(object parameter)
@@ -62,6 +64,14 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                     ConnectedDevices.Clear();
                     ConnectedDevices.Add(SelectedDevice);
                 }
+            }
+        }
+
+        private void OnDeviceDisconnected(DeviceViewModel device)
+        {
+            if (ConnectedDevices.Contains(device))
+            {
+                ConnectedDevices.Remove(device);
             }
         }
 

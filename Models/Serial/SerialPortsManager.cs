@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.IO.Ports;
 using System.Linq;
 using System.Management;
@@ -10,12 +8,13 @@ namespace Advanced_Dynotis_Software.Models.Serial
 {
     public class SerialPortsManager
     {
-        public ObservableCollection<SerialPort> SerialPorts { get; private set; }
-        public event Action SerialPortsEvent;
+        public ObservableCollection<string> SerialPorts { get; private set; }
+        public event Action<string> SerialPortAdded;
+        public event Action<string> SerialPortRemoved;
 
         public SerialPortsManager()
         {
-            SerialPorts = new ObservableCollection<SerialPort>();
+            SerialPorts = new ObservableCollection<string>();
             SerialPortsChangedEvents();
             ScanSerialPorts();
         }
@@ -29,7 +28,7 @@ namespace Advanced_Dynotis_Software.Models.Serial
                 serialPortsPhysicallyRemovedEvents.EventArrived += SerialPortsPhysicallyRemovedEventHandler;
                 serialPortsPhysicallyRemovedEvents.Start();
 
-                WqlEventQuery query = new WqlEventQuery("SELECT * FROM __InstanceOperationEvent WITHIN 1 WHERE TargetInstance ISA 'Win32_USBControllerDevice'");
+                WqlEventQuery query = new WqlEventQuery("SELECT * FROM __InstanceOperationEvent WITHIN 1 WHERE TargetInstance ISA 'Win32_SerialPort'");
                 var serialPortsCreationDeletionEvents = new ManagementEventWatcher(query);
                 serialPortsCreationDeletionEvents.EventArrived += SerialPortsCreationDeletionEventHandler;
                 serialPortsCreationDeletionEvents.Start();
@@ -44,14 +43,7 @@ namespace Advanced_Dynotis_Software.Models.Serial
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                try
-                {
-                    // Handle event
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"SerialPortsPhysicallyRemovedEventHandler: {ex.Message}");
-                }
+                ScanSerialPorts();
             });
         }
 
@@ -60,7 +52,6 @@ namespace Advanced_Dynotis_Software.Models.Serial
             Application.Current.Dispatcher.Invoke(() =>
             {
                 ScanSerialPorts();
-                SerialPortsEvent?.Invoke();
             });
         }
 
@@ -68,12 +59,25 @@ namespace Advanced_Dynotis_Software.Models.Serial
         {
             try
             {
-                SerialPorts.Clear();
-                string[] portNames = SerialPort.GetPortNames();
-                foreach (var portName in portNames)
+                var existingPorts = SerialPorts.ToList();
+                var currentPorts = SerialPort.GetPortNames().ToList();
+
+                foreach (var port in currentPorts)
                 {
-                    var port = new SerialPort(portName);
-                    SerialPorts.Add(port);
+                    if (!SerialPorts.Contains(port))
+                    {
+                        SerialPorts.Add(port);
+                        SerialPortAdded?.Invoke(port);
+                    }
+                }
+
+                foreach (var port in existingPorts)
+                {
+                    if (!currentPorts.Contains(port))
+                    {
+                        SerialPorts.Remove(port);
+                        SerialPortRemoved?.Invoke(port);
+                    }
                 }
             }
             catch (Exception ex)
@@ -84,7 +88,7 @@ namespace Advanced_Dynotis_Software.Models.Serial
 
         public IEnumerable<string> GetSerialPorts()
         {
-            return SerialPorts.Select(p => p.PortName);
+            return SerialPorts;
         }
     }
 }
