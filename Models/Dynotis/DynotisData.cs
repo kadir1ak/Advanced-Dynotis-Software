@@ -24,6 +24,147 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         private double _windDirection;
         private double _airDensity;
 
+        private double _propellerArea;
+        private double _motorInner;
+        private double _noLoadCurrents;
+        private double _maxCurrent;
+        private double _batteryLevel;
+        private double _escValue;
+        private string _csvFile;
+        private string _csvFileDirectory;
+        private int _saveSpeed;
+        private string _testMode;
+
+        public double PropellerArea
+        {
+            get => _propellerArea;
+            set
+            {
+                if (_propellerArea != value)
+                {
+                    _propellerArea = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public double MotorInner
+        {
+            get => _motorInner;
+            set
+            {
+                if (_motorInner != value)
+                {
+                    _motorInner = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public double NoLoadCurrents
+        {
+            get => _noLoadCurrents;
+            set
+            {
+                if (_noLoadCurrents != value)
+                {
+                    _noLoadCurrents = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public double MaxCurrent
+        {
+            get => _maxCurrent;
+            set
+            {
+                if (_maxCurrent != value)
+                {
+                    _maxCurrent = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public double BatteryLevel
+        {
+            get => _batteryLevel;
+            set
+            {
+                if (_batteryLevel != value)
+                {
+                    _batteryLevel = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public double ESCValue
+        {
+            get => _escValue;
+            set
+            {
+                if (_escValue != value)
+                {
+                    _escValue = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string CsvFile
+        {
+            get => _csvFile;
+            set
+            {
+                if (_csvFile != value)
+                {
+                    _csvFile = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string CsvFileDirectory
+        {
+            get => _csvFileDirectory;
+            set
+            {
+                if (_csvFileDirectory != value)
+                {
+                    _csvFileDirectory = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public int SaveSpeed
+        {
+            get => _saveSpeed;
+            set
+            {
+                if (_saveSpeed != value)
+                {
+                    _saveSpeed = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string TestMode
+        {
+            get => _testMode;
+            set
+            {
+                if (_testMode != value)
+                {
+                    _testMode = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public double AirDensity
         {
             get => _airDensity;
