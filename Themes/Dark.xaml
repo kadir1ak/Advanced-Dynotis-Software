@@ -4,19 +4,23 @@
 
     <!-- Colors -->
     <SolidColorBrush Color="#1c1b21" x:Key="Backdrop"/>
-    <SolidColorBrush Color="#dfe6e9" x:Key="Text"/>
+    <SolidColorBrush Color="White" x:Key="Text"/>
     <SolidColorBrush Color="#353b48" x:Key="Page"/>
 
     <!-- Clock and Data -->
-    <SolidColorBrush Color="#dfe6e9" x:Key="TimeText"/>
+    <SolidColorBrush Color="White" x:Key="TimeText"/>
 
     <!-- Menu Button -->
-    <SolidColorBrush Color="#dfe6e9" x:Key="menuButtonStandart"/>
+    <SolidColorBrush Color="White" x:Key="menuButtonStandart"/>
     <SolidColorBrush Color="#3A9FF3" x:Key="menuButtonTrigger"/>
 
     <!-- Device Mini Card -->
     <SolidColorBrush Color="White" x:Key="deviceMiniForeground"/>
     <SolidColorBrush Color="#3A9FF3" x:Key="deviceMiniBackdrop"/>
     <SolidColorBrush Color="#151F2D" x:Key="deviceMiniBackground"/>
+
+    <!-- Eff Variables Control -->
+    <SolidColorBrush Color="White" x:Key="EffVariablesControlText"/>
+    <SolidColorBrush Color="#3A9FF3" x:Key="EffVariablesControlIcon"/>
 
 </ResourceDictionary>

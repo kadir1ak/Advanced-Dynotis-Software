@@ -5,7 +5,7 @@
     
  
     <!-- Colors -->
-    <SolidColorBrush Color="#dcdde1" x:Key="Backdrop"/>
+    <SolidColorBrush Color="White" x:Key="Backdrop"/>
     <SolidColorBrush Color="#151F2D" x:Key="Text"/>
     <SolidColorBrush Color="White" x:Key="Page"/>
 
@@ -21,5 +21,9 @@
     <SolidColorBrush Color="White" x:Key="deviceMiniForeground"/>
     <SolidColorBrush Color="Orange" x:Key="deviceMiniBackdrop"/>
     <SolidColorBrush Color="#151F2D" x:Key="deviceMiniBackground"/>
+
+    <!-- Eff Variables Control -->
+    <SolidColorBrush Color="#151F2D" x:Key="EffVariablesControlText"/>
+    <SolidColorBrush Color="#151F2D" x:Key="EffVariablesControlIcon"/>
 
 </ResourceDictionary>

@@ -1,0 +1,165 @@
+﻿<UserControl x:Class="Advanced_Dynotis_Software.Views.UserControls.EffVariablesControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style x:Key="TooltipStyle" TargetType="{x:Type ToolTip}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToolTip}">
+                        <Border CornerRadius="12" Background="{TemplateBinding Background}">
+                            <ContentPresenter Margin="2"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="StackPanelStyle" TargetType="StackPanel">
+            <Setter Property="Orientation" Value="Horizontal"/>
+        </Style>
+
+        <Style x:Key="IconStyle" TargetType="icon:PackIconMaterial">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="{DynamicResource EffVariablesControlIcon}"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Width" Value="25"/>
+        </Style>
+
+        <Style x:Key="NameLabelStyle" TargetType="TextBlock">
+            <Setter Property="Width" Value="220"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontFamily" Value="Yu Gothic UI Semilight"/>
+            <Setter Property="Foreground" Value="{DynamicResource EffVariablesControlText}"/>
+            <Setter Property="Margin" Value="5 0 0 0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
+
+        <Style x:Key="ValueLabelStyle" TargetType="TextBlock">
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontFamily" Value="Yu Gothic UI Semilight"/>
+            <Setter Property="Foreground" Value="{DynamicResource EffVariablesControlText}"/>
+            <Setter Property="Margin" Value="5 0 0 0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="UnitLabelStyle" TargetType="TextBlock">
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontFamily" Value="Yu Gothic UI Semilight"/>
+            <Setter Property="Foreground" Value="{DynamicResource EffVariablesControlText}"/>
+            <Setter Property="Margin" Value="5 0 0 0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style>
+
+        <DataTemplate x:Key="TooltipTemplate1">
+            <StackPanel Width="200">
+                <StackPanel Orientation="Horizontal" Background="Transparent">
+                    <icon:PackIconMaterial Width="20" Height="20" Margin="0,1,0,0" Kind="Abacus"/>
+                    <Label Content="Propulsion System Efficiency I" Margin="4,0,0,0" FontSize="12" FontWeight="Bold" Foreground="Black" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </StackPanel>
+                <Line Stroke="LightGray" StrokeThickness="2" X2="200"/>
+                <TextBlock Text="This is the overall efficiency of the propulsion system including motor, ESC and the propeller." FontStyle="Italic" TextWrapping="WrapWithOverflow" FontSize="11" Margin="0,0,0,0"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="TooltipTemplate2">
+            <StackPanel Width="200">
+                <StackPanel Orientation="Horizontal" Background="Transparent">
+                    <icon:PackIconMaterial Width="20" Height="20" Margin="0,1,0,0" Kind="BatteryCharging"/>
+                    <Label Content="Propulsion System Efficiency II" Margin="4,0,0,0" FontSize="12" FontWeight="Bold" Foreground="Black" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </StackPanel>
+                <Line Stroke="LightGray" StrokeThickness="2" X2="200"/>
+                <TextBlock Text="Propulsion system efficiency in terms of grams per watt power. The higher is the better. Typical range is between 6 to 15. If it is below 6, then your propeller disc loading is high. Try using lower Kv motor and bigger diameter propeller." FontStyle="Italic" TextWrapping="WrapWithOverflow" FontSize="11" Margin="0,0,0,0"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="TooltipTemplate3">
+            <StackPanel Width="200">
+                <StackPanel Orientation="Horizontal" Background="Transparent">
+                    <icon:PackIconMaterial Width="20" Height="20" Margin="0,1,0,0" Kind="EngineOutline"/>
+                    <Label Content="Propeller Efficiency" Margin="4,0,0,0" FontSize="12" FontWeight="Bold" Foreground="Black" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </StackPanel>
+                <Line Stroke="LightGray" StrokeThickness="2" X2="200"/>
+                <TextBlock Text="Also known as Figure of Merit, this value gives you the static performance of your propeller. Motor and ESC is not included in the calculations. Propeller diameter, RPM, air density, torque and thrust values are used as input for this calculation." FontStyle="Italic" TextWrapping="WrapWithOverflow" FontSize="11" Margin="0,0,0,0"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="TooltipTemplate4">
+            <StackPanel Width="200">
+                <StackPanel Orientation="Horizontal" Background="Transparent">
+                    <icon:PackIconMaterial Width="20" Height="20" Margin="0,1,0,0" Kind="Cog"/>
+                    <Label Content="Motor Efficiency" Margin="4,0,0,0" FontSize="12" FontWeight="Bold" Foreground="Black" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </StackPanel>
+                <Line Stroke="LightGray" StrokeThickness="2" X2="200"/>
+                <TextBlock Text="Efficiency of the brushless motor used. Calculated based on the motor parameter inputs. Note that ESC efficiency is considered as constant as %95." FontStyle="Italic" TextWrapping="WrapWithOverflow" FontSize="11" Margin="0,0,0,0"/>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- 1. Değişken -->
+        <StackPanel Style="{StaticResource StackPanelStyle}" Grid.Row="0">
+            <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="Abacus" ToolTipService.InitialShowDelay="2">
+                <icon:PackIconMaterial.ToolTip>
+                    <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate1}"/>
+                </icon:PackIconMaterial.ToolTip>
+            </icon:PackIconMaterial>
+            <TextBlock Style="{StaticResource NameLabelStyle}" Text="Propulsion System Efficiency I" />
+            <TextBlock Style="{StaticResource ValueLabelStyle}" Text="0.0" />
+            <TextBlock Style="{StaticResource UnitLabelStyle}" Text="%" />
+        </StackPanel>
+
+        <!-- 2. Değişken -->
+        <StackPanel Style="{StaticResource StackPanelStyle}" Grid.Row="1">
+            <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="BatteryCharging" ToolTipService.InitialShowDelay="2">
+                <icon:PackIconMaterial.ToolTip>
+                    <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate2}"/>
+                </icon:PackIconMaterial.ToolTip>
+            </icon:PackIconMaterial>
+            <TextBlock Style="{StaticResource NameLabelStyle}" Text="Propulsion System Efficiency II" />
+            <TextBlock Style="{StaticResource ValueLabelStyle}" Text="0.0" />
+            <TextBlock Style="{StaticResource UnitLabelStyle}" Text="g/Watt" />
+        </StackPanel>
+
+        <!-- 3. Değişken -->
+        <StackPanel Style="{StaticResource StackPanelStyle}" Grid.Row="2">
+            <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="EngineOutline" ToolTipService.InitialShowDelay="2">
+                <icon:PackIconMaterial.ToolTip>
+                    <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate3}"/>
+                </icon:PackIconMaterial.ToolTip>
+            </icon:PackIconMaterial>
+            <TextBlock Style="{StaticResource NameLabelStyle}" Text="Propeller Efficiency" />
+            <TextBlock Style="{StaticResource ValueLabelStyle}" Text="0.0" />
+            <TextBlock Style="{StaticResource UnitLabelStyle}" Text="%" />
+        </StackPanel>
+
+        <!-- 4. Değişken -->
+        <StackPanel Style="{StaticResource StackPanelStyle}" Grid.Row="3">
+            <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="Cog" ToolTipService.InitialShowDelay ="2">
+                <icon:PackIconMaterial.ToolTip>
+                    <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate4}"/>
+                </icon:PackIconMaterial.ToolTip>
+            </icon:PackIconMaterial>
+            <TextBlock Style="{StaticResource NameLabelStyle}" Text="Motor Efficiency" />
+            <TextBlock Style="{StaticResource ValueLabelStyle}" Text="0.0" />
+            <TextBlock Style="{StaticResource UnitLabelStyle}" Text="%" />
+        </StackPanel>
+    </Grid>
+</UserControl>

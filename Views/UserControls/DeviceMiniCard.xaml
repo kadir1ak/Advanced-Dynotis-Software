@@ -106,7 +106,7 @@
                     </StackPanel>
                 </ToolTip>
             </Button.ToolTip>
-            <ToolTipService.InitialShowDelay>5</ToolTipService.InitialShowDelay>
+            <ToolTipService.InitialShowDelay>2</ToolTipService.InitialShowDelay>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
                 <icon:PackIconMaterial Kind="UsbPort" 
                                Foreground="{DynamicResource deviceMiniForeground}" VerticalAlignment="Center"
