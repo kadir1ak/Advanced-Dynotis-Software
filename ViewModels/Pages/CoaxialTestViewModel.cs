@@ -25,7 +25,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             get => _selectedDeviceOne;
             set
             {
-                if (_selectedDeviceTwo == null || _selectedDeviceTwo.Device.PortName != value.Device.PortName)
+                if (_selectedDeviceTwo == null || _selectedDeviceTwo.Device.PortName != value?.Device.PortName)
                 {
                     _selectedDeviceOne = value;
                     OnPropertyChanged();
@@ -42,7 +42,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             get => _selectedDeviceTwo;
             set
             {
-                if (_selectedDeviceOne == null || _selectedDeviceOne.Device.PortName != value.Device.PortName)
+                if (_selectedDeviceOne == null || _selectedDeviceOne.Device.PortName != value?.Device.PortName)
                 {
                     _selectedDeviceTwo = value;
                     OnPropertyChanged();
@@ -150,6 +150,15 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             if (ConnectedTwoDevice == device)
             {
                 ConnectedTwoDevice = null;
+            }
+
+            if (SelectedDeviceOne == device)
+            {
+                SelectedDeviceOne = null;
+            }
+            if (SelectedDeviceTwo == device)
+            {
+                SelectedDeviceTwo = null;
             }
 
             UpdateAvailableDevices();
