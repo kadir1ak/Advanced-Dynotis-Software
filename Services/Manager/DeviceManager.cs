@@ -19,6 +19,7 @@ namespace Advanced_Dynotis_Software.Services
         public ObservableCollection<DeviceViewModel> ConnectedDevices { get; private set; }
 
         public event Action<DeviceViewModel> DeviceDisconnected;
+        public event Action<DeviceViewModel> DeviceConnected;
 
         private DeviceManager()
         {
@@ -41,12 +42,14 @@ namespace Advanced_Dynotis_Software.Services
 
         private async void OnSerialPortAdded(string portName)
         {
-            await ConnectToDeviceAsync(portName);
+            var device = await ConnectToDeviceAsync(portName);
+            DeviceConnected?.Invoke(device);
         }
 
         private async void OnSerialPortRemoved(string portName)
         {
-            await DisconnectDeviceAsync(portName);
+            var device = await DisconnectDeviceAsync(portName);
+            DeviceDisconnected?.Invoke(device);
         }
 
         public async Task<DeviceViewModel> ConnectToDeviceAsync(string portName)
@@ -60,10 +63,11 @@ namespace Advanced_Dynotis_Software.Services
             var deviceViewModel = new DeviceViewModel(portName);
             await deviceViewModel.Device.OpenPortAsync();
             Devices.Add(deviceViewModel);
+            DeviceConnected?.Invoke(deviceViewModel);
             return deviceViewModel;
         }
 
-        public async Task DisconnectDeviceAsync(string portName)
+        public async Task<DeviceViewModel> DisconnectDeviceAsync(string portName)
         {
             var device = Devices.FirstOrDefault(d => d.Device.PortName == portName);
             if (device != null)
@@ -72,7 +76,10 @@ namespace Advanced_Dynotis_Software.Services
                 Devices.Remove(device);
                 ConnectedDevices.Remove(device);
                 DeviceDisconnected?.Invoke(device);
+                return device;
             }
+
+            return null;
         }
 
         public void AddConnectedDevice(DeviceViewModel device)

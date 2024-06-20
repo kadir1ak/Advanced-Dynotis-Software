@@ -1,12 +1,12 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using Advanced_Dynotis_Software.Services;
 using Advanced_Dynotis_Software.Services.Helpers;
 using Advanced_Dynotis_Software.ViewModels.Device;
-using System.Linq;
 
 namespace Advanced_Dynotis_Software.ViewModels.Pages
 {
@@ -25,11 +25,14 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             get => _selectedDeviceOne;
             set
             {
-                if (_selectedDeviceOne != value)
+                if (_selectedDeviceTwo == null || _selectedDeviceTwo.Device.PortName != value.Device.PortName)
                 {
                     _selectedDeviceOne = value;
                     OnPropertyChanged();
-                    UpdateAvailableDevices();
+                }
+                else
+                {
+                    MessageBox.Show("Bu cihaz zaten 2. cihaz olarak seçildi. Lütfen farklı bir cihaz seçin.");
                 }
             }
         }
@@ -39,11 +42,14 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             get => _selectedDeviceTwo;
             set
             {
-                if (_selectedDeviceTwo != value)
+                if (_selectedDeviceOne == null || _selectedDeviceOne.Device.PortName != value.Device.PortName)
                 {
                     _selectedDeviceTwo = value;
                     OnPropertyChanged();
-                    UpdateAvailableDevices();
+                }
+                else
+                {
+                    MessageBox.Show("Bu cihaz zaten 1. cihaz olarak seçildi. Lütfen farklı bir cihaz seçin.");
                 }
             }
         }
@@ -83,9 +89,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             ConnectCommand = new RelayCommand(ConnectToDevice);
 
             DeviceManager.Instance.DeviceDisconnected += OnDeviceDisconnected;
-
-            // Sayfa yüklenirken mevcut bağlantıları kontrol et ve ayarla
-            UpdateAvailableDevices();
+            DeviceManager.Instance.DeviceConnected += OnDeviceConnected;
         }
 
         private async void ConnectToDevice(object parameter)
@@ -118,11 +122,23 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         {
             var allDevices = DeviceManager.Instance.GetAllDevices().ToList();
 
-            AvailableDevicesOne = new ObservableCollection<DeviceViewModel>(allDevices.Where(d => d != SelectedDeviceTwo));
-            AvailableDevicesTwo = new ObservableCollection<DeviceViewModel>(allDevices.Where(d => d != SelectedDeviceOne));
+            var selectedDeviceOnePortName = SelectedDeviceOne?.Device.PortName;
+            var selectedDeviceTwoPortName = SelectedDeviceTwo?.Device.PortName;
+
+            AvailableDevicesOne.Clear();
+            AvailableDevicesTwo.Clear();
+
+            foreach (var device in allDevices)
+            {
+                AvailableDevicesOne.Add(device);
+                AvailableDevicesTwo.Add(device);
+            }
 
             OnPropertyChanged(nameof(AvailableDevicesOne));
             OnPropertyChanged(nameof(AvailableDevicesTwo));
+
+            SelectedDeviceOne = AvailableDevicesOne.FirstOrDefault(d => d.Device.PortName == selectedDeviceOnePortName);
+            SelectedDeviceTwo = AvailableDevicesTwo.FirstOrDefault(d => d.Device.PortName == selectedDeviceTwoPortName);
         }
 
         private void OnDeviceDisconnected(DeviceViewModel device)
@@ -136,6 +152,11 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 ConnectedTwoDevice = null;
             }
 
+            UpdateAvailableDevices();
+        }
+
+        private void OnDeviceConnected(DeviceViewModel device)
+        {
             UpdateAvailableDevices();
         }
 
