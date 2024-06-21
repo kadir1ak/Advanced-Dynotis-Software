@@ -14,6 +14,9 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
 {
     public class DeviceViewModel : INotifyPropertyChanged
     {
+        public InterfaceVariables InterfaceVariables { get; set; }
+        private bool _isUpdatingInterfaceVariables;
+
         public SeriesCollection VibrationSeriesCollection { get; set; }
         public SeriesCollection MotorSpeedSeriesCollection { get; set; }
         public SeriesCollection VoltageSeriesCollection { get; set; }
@@ -29,6 +32,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
         private const int BufferLimit = 10;
         private const int MaxDataPoints = 100;
         private bool _isUpdatingChart;
+        private DispatcherTimer _chartUpdateTimer;
+        private DispatcherTimer _interfaceUpdateTimer;
 
         public Dynotis Device
         {
@@ -47,9 +52,11 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
         {
             if (!DesignerProperties.GetIsInDesignMode(new DependencyObject()))
             {
+                InterfaceVariables = new InterfaceVariables();
                 Device = new Dynotis(portName);
                 InitializeDeviceAsync();
                 InitializeCharts();
+                InitializeTimers();
             }
         }
 
@@ -73,7 +80,6 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
             Device.PropertyChanged += Device_PropertyChanged;
 
             InitializeDefaultChartData();
-            _ = UpdateChartDataAsync();
         }
 
         private void InitializeDefaultChartData()
@@ -110,31 +116,59 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
             };
         }
 
-        private async Task UpdateChartDataAsync()
+        private void InitializeTimers()
         {
-            while (true)
+            _chartUpdateTimer = new DispatcherTimer
             {
-                DynotisData dynotisData = null;
-                lock (_bufferLock)
-                {
-                    if (_dynotisDataBuffer.Count > 0)
-                    {
-                        dynotisData = _dynotisDataBuffer.Dequeue();
-                    }
-                }
+                Interval = TimeSpan.FromMilliseconds(10) // Chart update interval
+            };
+            _chartUpdateTimer.Tick += (sender, args) => UpdateChartData();
 
-                if (dynotisData != null && !_isUpdatingChart)
-                {
-                    _isUpdatingChart = true;
-                    await Application.Current.Dispatcher.InvokeAsync(() =>
-                    {
-                        UpdateChartData(dynotisData);
-                        _isUpdatingChart = false;
-                    });
-                }
+            _interfaceUpdateTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(100) // Interface update interval
+            };
+            _interfaceUpdateTimer.Tick += (sender, args) => UpdateInterfaceVariables();
 
-                await Task.Delay(10); // Optimizasyon için bekleme süresi artırıldı
+            _chartUpdateTimer.Start();
+            _interfaceUpdateTimer.Start();
+        }
+
+        private void UpdateChartData()
+        {
+            DynotisData dynotisData = null;
+            lock (_bufferLock)
+            {
+                if (_dynotisDataBuffer.Count > 0)
+                {
+                    dynotisData = _dynotisDataBuffer.Dequeue();
+                }
             }
+
+            if (dynotisData != null && !_isUpdatingChart)
+            {
+                _isUpdatingChart = true;
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    UpdateChartData(dynotisData);
+                    _isUpdatingChart = false;
+                });
+            }
+        }
+
+        private void UpdateChartData(DynotisData sensorData)
+        {
+            if (TimeLabels.Count >= MaxDataPoints)
+            {
+                TimeLabels.RemoveAt(0);
+            }
+            TimeLabels.Add(sensorData.Time.ToString());
+            UpdateSeries(VibrationSeriesCollection, sensorData.Vibration);
+            UpdateSeries(CurrentSeriesCollection, sensorData.Current);
+            UpdateSeries(MotorSpeedSeriesCollection, sensorData.MotorSpeed);
+            UpdateSeries(VoltageSeriesCollection, sensorData.Voltage);
+            UpdateSeries(ThrustSeriesCollection, sensorData.Thrust);
+            UpdateSeries(TorqueSeriesCollection, sensorData.Torque);
         }
 
         private void Device_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -152,19 +186,35 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
             }
         }
 
-        private void UpdateChartData(DynotisData sensorData)
+        private void UpdateInterfaceVariables()
         {
-            if (TimeLabels.Count >= MaxDataPoints)
+            if (!_isUpdatingInterfaceVariables && _dynotisDataBuffer.Count > 0)
             {
-                TimeLabels.RemoveAt(0);
+                _isUpdatingInterfaceVariables = true;
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    var sensorData = _dynotisDataBuffer.Dequeue();
+                    InterfaceVariables.Time = sensorData.Time;
+                    InterfaceVariables.SampleRate = sensorData.SampleRate;
+                    InterfaceVariables.AmbientTemp = sensorData.AmbientTemp;
+                    InterfaceVariables.MotorTemp = sensorData.MotorTemp;
+                    InterfaceVariables.MotorSpeed = sensorData.MotorSpeed;
+                    InterfaceVariables.Thrust = sensorData.Thrust;
+                    InterfaceVariables.Torque = sensorData.Torque;
+                    InterfaceVariables.Current = sensorData.Current;
+                    InterfaceVariables.Voltage = sensorData.Voltage;
+                    InterfaceVariables.Power = sensorData.Power;
+                    InterfaceVariables.Pressure = sensorData.Pressure;
+                    InterfaceVariables.VibrationX = sensorData.VibrationX;
+                    InterfaceVariables.VibrationY = sensorData.VibrationY;
+                    InterfaceVariables.VibrationZ = sensorData.VibrationZ;
+                    InterfaceVariables.Vibration = sensorData.Vibration;
+                    InterfaceVariables.WindSpeed = sensorData.WindSpeed;
+                    InterfaceVariables.WindDirection = sensorData.WindDirection;
+                    InterfaceVariables.AirDensity = sensorData.AirDensity;
+                    _isUpdatingInterfaceVariables = false;
+                });
             }
-            TimeLabels.Add(sensorData.Time.ToString());
-            UpdateSeries(VibrationSeriesCollection, sensorData.Vibration);
-            UpdateSeries(CurrentSeriesCollection, sensorData.Current);
-            UpdateSeries(MotorSpeedSeriesCollection, sensorData.MotorSpeed);
-            UpdateSeries(VoltageSeriesCollection, sensorData.Voltage);
-            UpdateSeries(ThrustSeriesCollection, sensorData.Thrust);
-            UpdateSeries(TorqueSeriesCollection, sensorData.Torque);
         }
 
         private static void UpdateSeries(SeriesCollection seriesCollection, double value)
