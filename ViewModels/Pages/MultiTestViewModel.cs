@@ -8,11 +8,42 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
 {
     public class MultiTestViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<DeviceViewModel> DevicesViewModel { get; set; }
+        private ObservableCollection<DeviceViewModel> _devicesViewModel;
+
+        public ObservableCollection<DeviceViewModel> DevicesViewModel
+        {
+            get => _devicesViewModel;
+            private set
+            {
+                if (_devicesViewModel != value)
+                {
+                    _devicesViewModel = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public MultiTestViewModel()
         {
-            DevicesViewModel = DeviceManager.Instance.GetAllDevices();
+            DevicesViewModel = new ObservableCollection<DeviceViewModel>(DeviceManager.Instance.GetAllDevices());
+            DeviceManager.Instance.DeviceConnected += OnDeviceConnected;
+            DeviceManager.Instance.DeviceDisconnected += OnDeviceDisconnected;
+        }
+
+        private void OnDeviceConnected(DeviceViewModel device)
+        {
+            if (!DevicesViewModel.Contains(device))
+            {
+                DevicesViewModel.Add(device);
+            }
+        }
+
+        private void OnDeviceDisconnected(DeviceViewModel device)
+        {
+            if (DevicesViewModel.Contains(device))
+            {
+                DevicesViewModel.Remove(device);
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

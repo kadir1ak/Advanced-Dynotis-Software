@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Advanced_Dynotis_Software.Services;
@@ -101,20 +102,30 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                     case "One":
                         if (SelectedDeviceOne != null)
                         {
-                            await DeviceManager.Instance.ConnectToDeviceAsync(SelectedDeviceOne.Device.PortName);
-                            DeviceManager.Instance.AddConnectedDevice(SelectedDeviceOne);
-                            ConnectedOneDevice = SelectedDeviceOne;
+                            await ConnectToDeviceAsync(SelectedDeviceOne);
                         }
                         break;
                     case "Two":
                         if (SelectedDeviceTwo != null)
                         {
-                            await DeviceManager.Instance.ConnectToDeviceAsync(SelectedDeviceTwo.Device.PortName);
-                            DeviceManager.Instance.AddConnectedDevice(SelectedDeviceTwo);
-                            ConnectedTwoDevice = SelectedDeviceTwo;
+                            await ConnectToDeviceAsync(SelectedDeviceTwo);
                         }
                         break;
                 }
+            }
+        }
+
+        private async Task ConnectToDeviceAsync(DeviceViewModel deviceViewModel)
+        {
+            await DeviceManager.Instance.ConnectToDeviceAsync(deviceViewModel.Device.PortName);
+            DeviceManager.Instance.AddConnectedDevice(deviceViewModel);
+            if (deviceViewModel == SelectedDeviceOne)
+            {
+                ConnectedOneDevice = SelectedDeviceOne;
+            }
+            else if (deviceViewModel == SelectedDeviceTwo)
+            {
+                ConnectedTwoDevice = SelectedDeviceTwo;
             }
         }
 

@@ -1,14 +1,16 @@
 ﻿using Advanced_Dynotis_Software.Services.Logger;
+using System;
 using System.ComponentModel;
 using System.IO.Ports;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
 namespace Advanced_Dynotis_Software.Models.Dynotis
 {
-    public class Dynotis : INotifyPropertyChanged
+    public class Dynotis : INotifyPropertyChanged, IDisposable
     {
         public readonly SerialPort Port;
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
@@ -24,7 +26,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 if (_portName != value)
                 {
                     _portName = value;
-                    OnPropertyChanged(nameof(PortName));
+                    OnPropertyChanged();
                 }
             }
         }
@@ -38,7 +40,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 if (_mode != value)
                 {
                     _mode = value;
-                    OnPropertyChanged(nameof(Mode));
+                    OnPropertyChanged();
                 }
             }
         }
@@ -52,7 +54,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 if (_model != value)
                 {
                     _model = value;
-                    OnPropertyChanged(nameof(Model));
+                    OnPropertyChanged();
                 }
             }
         }
@@ -66,10 +68,11 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 if (_seriNo != value)
                 {
                     _seriNo = value;
-                    OnPropertyChanged(nameof(SeriNo));
+                    OnPropertyChanged();
                 }
             }
         }
+
         private DynotisData _dynotisData;
         public DynotisData DynotisData
         {
@@ -79,16 +82,22 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 if (_dynotisData != value)
                 {
                     _dynotisData = value;
-                    OnPropertyChanged(nameof(DynotisData));
+                    OnPropertyChanged();
                 }
             }
         }
+
         public Dynotis(string portName)
         {
-            Port = new SerialPort(portName, 921600);
+            Port = new SerialPort(portName, 921600)
+            {
+                Encoding = Encoding.UTF8,
+                NewLine = "\r\n"
+            };
             _portName = portName;
             _dynotisData = new DynotisData();
         }
+
         public async Task OpenPortAsync()
         {
             if (Port != null && !Port.IsOpen)
@@ -108,6 +117,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 }
             }
         }
+
         public async Task ClosePortAsync()
         {
             if (Port != null && Port.IsOpen)
@@ -140,7 +150,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
                 while (!token.IsCancellationRequested && Port.IsOpen && !deviceInfoReceived)
                 {
-                    string indata = Port.ReadLine(); // Port.ReadLine doğrudan kullanıldı
+                    string indata = await ReadLineAsync(Port, token);
                     Logger.Log($"Received data: {indata}");
 
                     if (indata.Trim().StartsWith("KEY:"))
@@ -154,7 +164,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                             if (!string.IsNullOrEmpty(Model) && !string.IsNullOrEmpty(SeriNo))
                             {
                                 deviceInfoReceived = true;
-                                Port.WriteLine("SENSOR_DATA");
+                                await WriteLineAsync(Port, "SENSOR_DATA", token);
                                 Mode = "SENSOR_DATA";
                                 await DeviceDataReceivedAsync(token);
                             }
@@ -163,7 +173,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
                     if (!deviceInfoReceived)
                     {
-                        Port.WriteLine("DEVICE_INFO");
+                        await WriteLineAsync(Port, "DEVICE_INFO", token);
                     }
 
                     await Task.Delay(100);
@@ -181,7 +191,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             {
                 while (!token.IsCancellationRequested && Port.IsOpen)
                 {
-                    string indata = Port.ReadLine(); // Port.ReadLine doğrudan kullanıldı
+                    string indata = await ReadLineAsync(Port, token);
                     Logger.Log($"Received data: {indata}");
 
                     if (!indata.Trim().StartsWith("KEY:"))
@@ -232,6 +242,38 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             }
         }
 
+        private static async Task<string> ReadLineAsync(SerialPort port, CancellationToken token)
+        {
+            return await Task.Run(() =>
+            {
+                try
+                {
+                    return port.ReadLine();
+                }
+                catch (Exception ex)
+                {
+                    Logger.Log($"ReadLine error: {ex.Message}");
+                    throw;
+                }
+            }, token);
+        }
+
+        private static async Task WriteLineAsync(SerialPort port, string message, CancellationToken token)
+        {
+            await Task.Run(() =>
+            {
+                try
+                {
+                    port.WriteLine(message);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Log($"WriteLine error: {ex.Message}");
+                    throw;
+                }
+            }, token);
+        }
+
         private static double CalculateMagnitude(double x, double y, double z)
         {
             return Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2) + Math.Pow(z, 2));
@@ -240,6 +282,16 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void Dispose()
+        {
+            if (Port.IsOpen)
+            {
+                Port.Close();
+            }
+            Port.Dispose();
+            _cancellationTokenSource?.Dispose();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -14,15 +15,18 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         private DeviceViewModel _selectedDevice;
         private DeviceViewModel _connectedDevice;
 
-        public ObservableCollection<DeviceViewModel> AvailableDevices { get; set; }
+        public ObservableCollection<DeviceViewModel> AvailableDevices { get; }
 
         public DeviceViewModel SelectedDevice
         {
             get => _selectedDevice;
             set
             {
-                _selectedDevice = value;
-                OnPropertyChanged();
+                if (_selectedDevice != value)
+                {
+                    _selectedDevice = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -31,28 +35,30 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             get => _connectedDevice;
             set
             {
-                _connectedDevice = value;
-                OnPropertyChanged();
+                if (_connectedDevice != value)
+                {
+                    _connectedDevice = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
-        public ICommand ConnectCommand { get; set; }
+        public ICommand ConnectCommand { get; }
 
         public SingleTestViewModel()
         {
-            AvailableDevices = DeviceManager.Instance.GetAllDevices();
-            ConnectCommand = new RelayCommand(ConnectToDevice);
+            AvailableDevices = new ObservableCollection<DeviceViewModel>(DeviceManager.Instance.GetAllDevices());
+            ConnectCommand = new RelayCommand(async _ => await ConnectToDeviceAsync());
 
             DeviceManager.Instance.DeviceDisconnected += OnDeviceDisconnected;
+            DeviceManager.Instance.DeviceConnected += OnDeviceConnected;
         }
 
-        private async void ConnectToDevice(object parameter)
+        private async Task ConnectToDeviceAsync()
         {
-            if (SelectedDevice == null) return;
+            if (SelectedDevice == null || ConnectedDevice == SelectedDevice) return;
 
-            // Yeni cihazı bağla
             await DeviceManager.Instance.ConnectToDeviceAsync(SelectedDevice.Device.PortName);
-            DeviceManager.Instance.AddConnectedDevice(SelectedDevice);
             ConnectedDevice = SelectedDevice;
         }
 
@@ -62,6 +68,27 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             {
                 ConnectedDevice = null;
             }
+            RefreshAvailableDevices();
+        }
+
+        private void OnDeviceConnected(DeviceViewModel device)
+        {
+            if (!AvailableDevices.Contains(device))
+            {
+                AvailableDevices.Add(device);
+            }
+        }
+
+        private void RefreshAvailableDevices()
+        {
+            var previouslySelectedDevice = SelectedDevice;
+            AvailableDevices.Clear();
+            foreach (var device in DeviceManager.Instance.GetAllDevices())
+            {
+                AvailableDevices.Add(device);
+            }
+            // Reassign SelectedDevice if it is still available
+            SelectedDevice = AvailableDevices.FirstOrDefault(d => d.Device.PortName == previouslySelectedDevice?.Device.PortName);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

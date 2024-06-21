@@ -10,8 +10,8 @@ namespace Advanced_Dynotis_Software.Services
 {
     public class DeviceManager
     {
-        private static DeviceManager _instance;
-        public static DeviceManager Instance => _instance ??= new DeviceManager();
+        private static readonly Lazy<DeviceManager> _instance = new Lazy<DeviceManager>(() => new DeviceManager());
+        public static DeviceManager Instance => _instance.Value;
 
         private readonly SerialPortsManager _serialPortsManager;
 

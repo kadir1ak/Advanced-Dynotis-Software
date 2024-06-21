@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Advanced_Dynotis_Software.Models.Dynotis;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace Advanced_Dynotis_Software.ViewModels.Device
@@ -37,365 +38,200 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
         public int Time
         {
             get => _time;
-            set
-            {
-                if (_time != value)
-                {
-                    _time = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _time, value);
         }
 
         public double SampleRate
         {
             get => _sampleRate;
-            set
-            {
-                if (_sampleRate != value)
-                {
-                    _sampleRate = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _sampleRate, value);
         }
 
         public double AmbientTemp
         {
             get => _ambientTemp;
-            set
-            {
-                if (_ambientTemp != value)
-                {
-                    _ambientTemp = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _ambientTemp, value);
         }
 
         public double MotorTemp
         {
             get => _motorTemp;
-            set
-            {
-                if (_motorTemp != value)
-                {
-                    _motorTemp = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _motorTemp, value);
         }
 
         public double MotorSpeed
         {
             get => _motorSpeed;
-            set
-            {
-                if (_motorSpeed != value)
-                {
-                    _motorSpeed = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _motorSpeed, value);
         }
 
         public double Thrust
         {
             get => _thrust;
-            set
-            {
-                if (_thrust != value)
-                {
-                    _thrust = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _thrust, value);
         }
 
         public double Torque
         {
             get => _torque;
-            set
-            {
-                if (_torque != value)
-                {
-                    _torque = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _torque, value);
         }
 
         public double Voltage
         {
             get => _voltage;
-            set
-            {
-                if (_voltage != value)
-                {
-                    _voltage = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _voltage, value);
         }
 
         public double Current
         {
             get => _current;
-            set
-            {
-                if (_current != value)
-                {
-                    _current = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _current, value);
         }
 
         public double Power
         {
             get => _power;
-            set
-            {
-                if (_power != value)
-                {
-                    _power = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _power, value);
         }
 
         public double Pressure
         {
             get => _pressure;
-            set
-            {
-                if (_pressure != value)
-                {
-                    _pressure = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _pressure, value);
         }
 
         public double VibrationX
         {
             get => _vibrationX;
-            set
-            {
-                if (_vibrationX != value)
-                {
-                    _vibrationX = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _vibrationX, value);
         }
 
         public double VibrationY
         {
             get => _vibrationY;
-            set
-            {
-                if (_vibrationY != value)
-                {
-                    _vibrationY = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _vibrationY, value);
         }
 
         public double VibrationZ
         {
             get => _vibrationZ;
-            set
-            {
-                if (_vibrationZ != value)
-                {
-                    _vibrationZ = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _vibrationZ, value);
         }
 
         public double Vibration
         {
             get => _vibration;
-            set
-            {
-                if (_vibration != value)
-                {
-                    _vibration = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _vibration, value);
         }
 
         public double WindSpeed
         {
             get => _windSpeed;
-            set
-            {
-                if (_windSpeed != value)
-                {
-                    _windSpeed = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _windSpeed, value);
         }
 
         public double WindDirection
         {
             get => _windDirection;
-            set
-            {
-                if (_windDirection != value)
-                {
-                    _windDirection = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _windDirection, value);
         }
 
         public double AirDensity
         {
             get => _airDensity;
-            set
-            {
-                if (_airDensity != value)
-                {
-                    _airDensity = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _airDensity, value);
         }
 
         public double PropellerArea
         {
             get => _propellerArea;
-            set
-            {
-                if (_propellerArea != value)
-                {
-                    _propellerArea = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _propellerArea, value);
         }
 
         public double MotorInner
         {
             get => _motorInner;
-            set
-            {
-                if (_motorInner != value)
-                {
-                    _motorInner = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _motorInner, value);
         }
 
         public double NoLoadCurrents
         {
             get => _noLoadCurrents;
-            set
-            {
-                if (_noLoadCurrents != value)
-                {
-                    _noLoadCurrents = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _noLoadCurrents, value);
         }
 
         public double MaxCurrent
         {
             get => _maxCurrent;
-            set
-            {
-                if (_maxCurrent != value)
-                {
-                    _maxCurrent = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _maxCurrent, value);
         }
 
         public double BatteryLevel
         {
             get => _batteryLevel;
-            set
-            {
-                if (_batteryLevel != value)
-                {
-                    _batteryLevel = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _batteryLevel, value);
         }
 
         public double ESCValue
         {
             get => _escValue;
-            set
-            {
-                if (_escValue != value)
-                {
-                    _escValue = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _escValue, value);
         }
 
         public string CsvFile
         {
             get => _csvFile;
-            set
-            {
-                if (_csvFile != value)
-                {
-                    _csvFile = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _csvFile, value);
         }
 
         public string CsvFileDirectory
         {
             get => _csvFileDirectory;
-            set
-            {
-                if (_csvFileDirectory != value)
-                {
-                    _csvFileDirectory = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _csvFileDirectory, value);
         }
 
         public int SaveSpeed
         {
             get => _saveSpeed;
-            set
-            {
-                if (_saveSpeed != value)
-                {
-                    _saveSpeed = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _saveSpeed, value);
         }
 
         public string TestMode
         {
             get => _testMode;
-            set
-            {
-                if (_testMode != value)
-                {
-                    _testMode = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _testMode, value);
+        }
+        public void UpdateFrom(DynotisData data)
+        {
+            Time = data.Time;
+            SampleRate = data.SampleRate;
+            AmbientTemp = data.AmbientTemp;
+            MotorTemp = data.MotorTemp;
+            MotorSpeed = data.MotorSpeed;
+            Thrust = data.Thrust;
+            Torque = data.Torque;
+            Voltage = data.Voltage;
+            Current = data.Current;
+            Power = data.Power;
+            Pressure = data.Pressure;
+            VibrationX = data.VibrationX;
+            VibrationY = data.VibrationY;
+            VibrationZ = data.VibrationZ;
+            Vibration = data.Vibration;
+            WindSpeed = data.WindSpeed;
+            WindDirection = data.WindDirection;
+            AirDensity = data.AirDensity;
+            PropellerArea = data.PropellerArea;
+            MotorInner = data.MotorInner;
+            NoLoadCurrents = data.NoLoadCurrents;
+            MaxCurrent = data.MaxCurrent;
+            BatteryLevel = data.BatteryLevel;
+            ESCValue = data.ESCValue;
+            CsvFile = data.CsvFile;
+            CsvFileDirectory = data.CsvFileDirectory;
+            SaveSpeed = data.SaveSpeed;
+            TestMode = data.TestMode;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -403,6 +239,13 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (Equals(field, value)) return false;
+            field = value;
+            OnPropertyChanged(propertyName);
+            return true;
         }
     }
 }

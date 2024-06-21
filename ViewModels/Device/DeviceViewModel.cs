@@ -1,14 +1,16 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Media;
+using System.Windows.Threading;
 using Advanced_Dynotis_Software.Models.Dynotis;
 using LiveCharts;
 using LiveCharts.Wpf;
-using System.Windows;
-using System.Windows.Threading;
-using System.Collections.Generic;
-using System.Windows.Media;
 
 namespace Advanced_Dynotis_Software.ViewModels.Device
 {
@@ -194,24 +196,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     var sensorData = _dynotisDataBuffer.Dequeue();
-                    InterfaceVariables.Time = sensorData.Time;
-                    InterfaceVariables.SampleRate = sensorData.SampleRate;
-                    InterfaceVariables.AmbientTemp = sensorData.AmbientTemp;
-                    InterfaceVariables.MotorTemp = sensorData.MotorTemp;
-                    InterfaceVariables.MotorSpeed = sensorData.MotorSpeed;
-                    InterfaceVariables.Thrust = sensorData.Thrust;
-                    InterfaceVariables.Torque = sensorData.Torque;
-                    InterfaceVariables.Current = sensorData.Current;
-                    InterfaceVariables.Voltage = sensorData.Voltage;
-                    InterfaceVariables.Power = sensorData.Power;
-                    InterfaceVariables.Pressure = sensorData.Pressure;
-                    InterfaceVariables.VibrationX = sensorData.VibrationX;
-                    InterfaceVariables.VibrationY = sensorData.VibrationY;
-                    InterfaceVariables.VibrationZ = sensorData.VibrationZ;
-                    InterfaceVariables.Vibration = sensorData.Vibration;
-                    InterfaceVariables.WindSpeed = sensorData.WindSpeed;
-                    InterfaceVariables.WindDirection = sensorData.WindDirection;
-                    InterfaceVariables.AirDensity = sensorData.AirDensity;
+                    InterfaceVariables.UpdateFrom(sensorData);
                     _isUpdatingInterfaceVariables = false;
                 });
             }
