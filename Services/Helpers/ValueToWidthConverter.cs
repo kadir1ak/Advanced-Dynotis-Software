@@ -8,8 +8,11 @@ namespace Advanced_Dynotis_Software.Services.Helpers
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            double val = (double)value;
-            return val * 3; // Adjust this multiplier as needed for your application.
+            if (value is double val)
+            {
+                return val * 3; // Adjust this multiplier as needed for your application
+            }
+            return 0;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
