@@ -4,8 +4,7 @@
 
     
  
-    <!-- Colors -->
-    <SolidColorBrush Color="White" x:Key="Backdrop"/>
+    <!-- General Colors -->
     <SolidColorBrush Color="#151F2D" x:Key="Text"/>
     <SolidColorBrush Color="White" x:Key="Page"/>
 

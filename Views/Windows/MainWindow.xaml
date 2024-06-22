@@ -10,7 +10,7 @@
         xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="MainWindow" MinHeight="870" MinWidth="1280"
+        Title="MainWindow" MinHeight="540" MinWidth="600"
         AllowsTransparency="True" Background="Transparent"
         WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" WindowStyle="None"
         d:DataContext="{d:DesignInstance Type=vmWindows:MainViewModel, IsDesignTimeCreatable=True}">
@@ -36,7 +36,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <!-- Top Menu -->
+                <!-- Top Menu -->                
                 <Border Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="0 0 0 0" BorderThickness="1" BorderBrush="Transparent">
                     <Grid VerticalAlignment="Top">
                         <Grid.ColumnDefinitions>
@@ -78,7 +78,13 @@
                 <!-- Left Menu -->
                 <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" BorderThickness="1" BorderBrush="Transparent" Margin="0">
                     <Grid>
-                        <StackPanel x:Name="LeftMenuPanel" VerticalAlignment="Top">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="3*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Row="0" VerticalAlignment="Top">
                             <!-- Themes Button -->
                             <themes:ThemesButton Checked="ThemesButton_Checked" Unchecked="ThemesButton_Unchecked" Margin="12" />
 
@@ -88,22 +94,30 @@
                                 <Ellipse Width="8" Height="8" Fill="#ffaf01" Margin="10 0"/>
                                 <Ellipse Width="8" Height="8" Fill="#009d00" />
                             </StackPanel>
-                            <!-- Menu Buttons -->
-                            <uc:MenuButton x:Name="HomeButton" Icon="Home" Text="Home" IsActive="True" Click="MenuButton_Click" />
-                            <uc:MenuButton x:Name="SingleButton" Icon="UsbPort" Text="Single Test" Click="MenuButton_Click"/>
-                            <uc:MenuButton x:Name="CoaxialButton" Icon="Usb" Text="Coaxial Test" Click="MenuButton_Click"/>
-                            <uc:MenuButton x:Name="MultiButton" Icon="Multicast" Text="Multi Test" Click="MenuButton_Click"/>
-                            <uc:MenuButton x:Name="APIButton" Icon="Network" Text="API" Click="MenuButton_Click"/>
-                            <uc:MenuButton x:Name="ScriptButton" Icon="Script" Text="Script" Click="MenuButton_Click"/>
-                            <uc:MenuButton x:Name="AutomateTestButton" Icon="Autorenew" Text="Automate Control" Click="MenuButton_Click"/>
-                            <uc:MenuButton x:Name="SettingsButton" Icon="Tools" Text="Settings" Click="MenuButton_Click"/>
                         </StackPanel>
-                        <uc:MenuButton Icon="Power" Text="Exit" VerticalAlignment="Bottom" Margin="0 0 0 15" Click="MenuButton_Click"/>
+
+                        <ScrollViewer Grid.Row="1" VerticalAlignment="Top" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
+                            <StackPanel x:Name="LeftMenuPanel" VerticalAlignment="Top">
+                                <!-- Menu Buttons -->
+                                <uc:MenuButton x:Name="HomeButton" Icon="Home" Text="Home" IsActive="True" Click="MenuButton_Click" />
+                                <uc:MenuButton x:Name="SingleButton" Icon="UsbPort" Text="Single Test" Click="MenuButton_Click"/>
+                                <uc:MenuButton x:Name="CoaxialButton" Icon="Usb" Text="Coaxial Test" Click="MenuButton_Click"/>
+                                <uc:MenuButton x:Name="MultiButton" Icon="Multicast" Text="Multi Test" Click="MenuButton_Click"/>
+                                <uc:MenuButton x:Name="APIButton" Icon="Network" Text="API" Click="MenuButton_Click"/>
+                                <uc:MenuButton x:Name="ScriptButton" Icon="Script" Text="Script" Click="MenuButton_Click"/>
+                                <uc:MenuButton x:Name="AutomateTestButton" Icon="Autorenew" Text="Automate Control" Click="MenuButton_Click"/>
+                                <uc:MenuButton x:Name="SettingsButton" Icon="Tools" Text="Settings" Click="MenuButton_Click"/>
+                            </StackPanel>
+                        </ScrollViewer>
+                        <!-- Exit Button -->
+                        <uc:MenuButton Grid.Row="3" Icon="Power" Text="Exit" VerticalAlignment="Bottom" Margin="0 0 0 15" Click="MenuButton_Click"/>
                     </Grid>
                 </Border>
                 <!-- Content Area -->
                 <Border Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" BorderThickness="1" BorderBrush="Transparent">
-                    <ContentControl x:Name="ContentArea" Foreground="{DynamicResource Text}" Background="{DynamicResource Page}"/>
+                    <Viewbox Stretch="Uniform">
+                        <ContentControl x:Name="ContentArea" Foreground="{DynamicResource Text}" Background="{DynamicResource Page}"/>
+                    </Viewbox>
                 </Border>
             </Grid>
         </Grid>

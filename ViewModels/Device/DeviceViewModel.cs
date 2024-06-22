@@ -86,7 +86,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
 
         private void InitializeDefaultChartData()
         {
-            const double defaultValue = 50;
+            const double defaultValue = 100;
             for (int i = 0; i < MaxDataPoints; i++)
             {
                 TimeLabels.Add(i.ToString());
@@ -128,7 +128,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
 
             _interfaceUpdateTimer = new DispatcherTimer
             {
-                Interval = TimeSpan.FromMilliseconds(100) // Interface update interval
+                Interval = TimeSpan.FromMilliseconds(10) // Interface update interval
             };
             _interfaceUpdateTimer.Tick += (sender, args) => UpdateInterfaceVariables();
 

@@ -8,23 +8,23 @@
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d" 
              xmlns:icon="http://schemas.fontawesome.io/icons/" 
-             d:DataContext="{d:DesignInstance Type=vmWindows:MainViewModel}"
+             d:DataContext="{d:DesignInstance Type=vmWindows:MainViewModel}" Background="{DynamicResource Page}"
              Name="Card">
     <Border BorderThickness="1" BorderBrush="#151F2D" Margin="0 0 0 0">
         <!--#151F2D-->
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="10*"/>
-                <ColumnDefinition Width="10*"/>
-                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <StackPanel x:Name="Variables_StackPanel" Grid.Row="1" Grid.RowSpan="3" Grid.Column="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Orientation="Vertical" Margin="0 0 0 0" >
+            <StackPanel Grid.Row="1" Grid.RowSpan="3" Grid.Column="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Orientation="Vertical" Margin="0 0 0 0" >
                 <!-- 1. Değişken -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0 0 0 0">
                     <!-- Değişken Rengi -->
