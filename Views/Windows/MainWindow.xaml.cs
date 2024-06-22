@@ -3,13 +3,13 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 using Advanced_Dynotis_Software.Themes;
 using MahApps.Metro.IconPacks;
 using Advanced_Dynotis_Software.Views.Pages;
 using Advanced_Dynotis_Software.Views.UserControls;
 using Advanced_Dynotis_Software.ViewModels.Pages;
-using System.Windows.Media;
 
 namespace Advanced_Dynotis_Software.Views.Windows
 {
@@ -117,9 +117,16 @@ namespace Advanced_Dynotis_Software.Views.Windows
 
         private void OnThemeChanged(object sender, EventArgs e)
         {
-            foreach (var menuButton in LeftMenuPanel.Children.OfType<MenuButton>())
+            try
             {
-                menuButton.UpdateTheme();
+                foreach (var menuButton in LeftMenuPanel.Children.OfType<MenuButton>())
+                {
+                    menuButton.UpdateTheme();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error applying theme: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

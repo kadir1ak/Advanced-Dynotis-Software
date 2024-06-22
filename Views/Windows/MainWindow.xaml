@@ -10,7 +10,7 @@
         xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="MainWindow" MinHeight="540" MinWidth="600"
+        Title="MainWindow" MinHeight="540" MinWidth="800"
         AllowsTransparency="True" Background="Transparent"
         WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" WindowStyle="None"
         d:DataContext="{d:DesignInstance Type=vmWindows:MainViewModel, IsDesignTimeCreatable=True}">
@@ -85,7 +85,7 @@
                 </Border>
 
                 <!-- Left Menu -->
-                <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" BorderThickness="1" BorderBrush="Transparent" Margin="0">
+                <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" BorderThickness="1" CornerRadius="10 0 0 10" BorderBrush="{DynamicResource PageBorder}" Margin="0">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -143,9 +143,11 @@
                     </Grid>
                 </Border>
                 <!-- Content Area -->
-                <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2">
-                    <ContentControl x:Name="ContentArea" Foreground="{DynamicResource Text}" Background="{DynamicResource Page}"/>
-                </Grid>
+                <Border Grid.Row="2" Grid.Column="1" CornerRadius="0 0 10 0"  Grid.ColumnSpan="2" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <ContentControl x:Name="ContentArea" Foreground="{DynamicResource Text}" Background="{DynamicResource Page}"/>
+                    </ScrollViewer>
+                </Border>
             </Grid>
         </Grid>
     </Border>

@@ -7,6 +7,7 @@
     <!-- General Colors -->
     <SolidColorBrush Color="#151F2D" x:Key="Text"/>
     <SolidColorBrush Color="White" x:Key="Page"/>
+    <SolidColorBrush Color="#FFF9E9E9" x:Key="PageBorder"/>
 
     <!-- Clock and Data -->
     <SolidColorBrush Color="#151F2D" x:Key="TimeText"/>
