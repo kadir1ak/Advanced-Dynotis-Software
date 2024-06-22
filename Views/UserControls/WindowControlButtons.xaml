@@ -7,9 +7,9 @@
              mc:Ignorable="d">
     <UserControl.Resources>
         <Style x:Key="RoundButton" TargetType="Button">
-            <Setter Property="Width" Value="24"/>
-            <Setter Property="Height" Value="24"/>
-            <Setter Property="Margin" Value="0,0,12,0"/>
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Margin" Value="0,0,10,0"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
@@ -46,8 +46,8 @@
             <Button Style="{StaticResource MaxButtonStyle}" Click="MaxButton_Click">
                 <Button.Content>
                     <Grid>
-                        <Rectangle Width="10" Height="10" Fill="#024D0F"/>
-                        <Rectangle Width="2" Height="16" Fill="#00CD4E" RenderTransformOrigin="0.5,0.5">
+                        <Rectangle Width="9" Height="9" Fill="#024D0F"/>
+                        <Rectangle Width="2" Height="13" Fill="#00CD4E" RenderTransformOrigin="0.5,0.5">
                             <Rectangle.RenderTransform>
                                 <RotateTransform Angle="-45"/>
                             </Rectangle.RenderTransform>
@@ -57,18 +57,18 @@
             </Button>
             <Button Style="{StaticResource MinButtonStyle}" Click="MinButton_Click">
                 <Button.Content>
-                    <Rectangle Width="14" Height="2" Fill="#460100"/>
+                    <Rectangle Width="12" Height="2" Fill="#460100"/>
                 </Button.Content>
             </Button>
             <Button Style="{StaticResource CloseButtonStyle}" Click="CloseButton_Click">
                 <Button.Content>
                     <Grid>
-                        <Rectangle Width="2" Height="14" Fill="#460100" RenderTransformOrigin="0.5,0.5">
+                        <Rectangle Width="2" Height="12" Fill="#460100" RenderTransformOrigin="0.5,0.5">
                             <Rectangle.RenderTransform>
                                 <RotateTransform Angle="45"/>
                             </Rectangle.RenderTransform>
                         </Rectangle>
-                        <Rectangle Width="2" Height="14" Fill="#460100" RenderTransformOrigin="0.5,0.5">
+                        <Rectangle Width="2" Height="12" Fill="#460100" RenderTransformOrigin="0.5,0.5">
                             <Rectangle.RenderTransform>
                                 <RotateTransform Angle="-45"/>
                             </Rectangle.RenderTransform>

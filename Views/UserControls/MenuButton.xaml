@@ -33,8 +33,8 @@
                                 <Trigger.EnterActions>
                                     <BeginStoryboard>
                                         <Storyboard>
-                                            <DoubleAnimation To="1.1" Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleX)" Duration="0:0:0.3" />
-                                            <DoubleAnimation To="1.1" Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleY)" Duration="0:0:0.3" />
+                                            <DoubleAnimation To="1.05" Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleX)" Duration="0:0:0.3" />
+                                            <DoubleAnimation To="1.05" Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleY)" Duration="0:0:0.3" />
                                             <ColorAnimation To="Transparent" Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" Duration="0:0:0.3"/>
                                         </Storyboard>
                                     </BeginStoryboard>
