@@ -31,6 +31,62 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             }
         }
 
+        private string _error;
+        public string Error
+        {
+            get => _error;
+            set
+            {
+                if (_error != value)
+                {
+                    _error = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _workingStatus;
+        public string WorkingStatus
+        {
+            get => _workingStatus;
+            set
+            {
+                if (_workingStatus != value)
+                {
+                    _workingStatus = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _connectionStatus;
+        public string ConnectionStatus
+        {
+            get => _connectionStatus;
+            set
+            {
+                if (_connectionStatus != value)
+                {
+                    _connectionStatus = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _firmware;
+        public string Firmware
+        {
+            get => _firmware;
+            set
+            {
+                if (_firmware != value)
+                {
+                    _firmware = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         private string _mode;
         public string Mode
         {

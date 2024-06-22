@@ -27,13 +27,13 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="Foreground" Value="{DynamicResource EffVariablesControlIcon}"/>
             <Setter Property="Margin" Value="5"/>
-            <Setter Property="Height" Value="25"/>
-            <Setter Property="Width" Value="25"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Width" Value="20"/>
         </Style>
 
         <Style x:Key="NameLabelStyle" TargetType="TextBlock">
-            <Setter Property="Width" Value="220"/>
-            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Width" Value="180"/>
+            <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontFamily" Value="Yu Gothic UI Semilight"/>
             <Setter Property="Foreground" Value="{DynamicResource EffVariablesControlText}"/>
             <Setter Property="Margin" Value="5 0 0 0"/>
@@ -43,7 +43,7 @@
 
         <Style x:Key="ValueLabelStyle" TargetType="TextBlock">
             <Setter Property="Width" Value="50"/>
-            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontFamily" Value="Yu Gothic UI Semilight"/>
             <Setter Property="Foreground" Value="{DynamicResource EffVariablesControlText}"/>
             <Setter Property="Margin" Value="5 0 0 0"/>
@@ -52,8 +52,8 @@
         </Style>
 
         <Style x:Key="UnitLabelStyle" TargetType="TextBlock">
-            <Setter Property="Width" Value="60"/>
-            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontFamily" Value="Yu Gothic UI Semilight"/>
             <Setter Property="Foreground" Value="{DynamicResource EffVariablesControlText}"/>
             <Setter Property="Margin" Value="5 0 0 0"/>

@@ -72,7 +72,7 @@
     <Button Click="Button_Click" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
         <Grid ClipToBounds="True">
             <icon:PackIconMaterial Kind="{Binding ElementName=menuButton, Path=Icon}" Margin="0,-30,0,0"/>
-            <TextBlock FontSize="14" Text="{Binding ElementName=menuButton, Path=Text}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,25,0,0" TextWrapping="Wrap" TextAlignment="Center" Padding="10"/>
+            <TextBlock FontSize="13" Text="{Binding ElementName=menuButton, Path=Text}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,25,0,0" TextWrapping="Wrap" TextAlignment="Center" Padding="10"/>
         </Grid>
     </Button>
 </UserControl>
