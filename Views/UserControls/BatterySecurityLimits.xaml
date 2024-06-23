@@ -23,8 +23,8 @@
                     <ColumnDefinition Width="10*"/>
                     <ColumnDefinition Width="5*"/>
                 </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" x:Name="MaxCurrentLabel" Content="Maks. Akım(A)" FontSize="16"  FontFamily="Segoe UI Semibold" FontWeight="Regular" Foreground="{DynamicResource Text}" HorizontalAlignment="Right" VerticalAlignment="Stretch"/>
-                <TextBox Grid.Row="0" Grid.Column="2" Margin="0 0 5 0"  x:Name="MaxCurrentTextBox" Style="{StaticResource NumericTextBoxStyle}" Text="0" FontSize="16" Height="25" Width="Auto" MinWidth="50" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="1.5">
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" x:Name="MaxCurrentLabel" Content="Maks. Akım(A)" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="0" Grid.Column="2" Margin="0 0 5 0"  x:Name="MaxCurrentTextBox" Style="{StaticResource NumericTextBoxStyle}" Text="0" FontSize="14" Height="Auto" Width="Auto" MinWidth="50" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1.5">
                     <TextBox.ToolTip>
                         <ToolTip>
                             <ToolTip.Resources>
@@ -41,8 +41,8 @@
                         <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
                     </CheckBox.LayoutTransform>
                 </CheckBox>
-                <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="BatteryLabel" Content="Batarya(S)" FontSize="16" FontFamily="Segoe UI Semibold" FontWeight="Regular" Foreground="{DynamicResource Text}" HorizontalAlignment="Right" VerticalAlignment="Stretch"/>
-                <TextBox Grid.Row="1" Grid.Column="2" Margin="0 0 5 0" x:Name="BatteryTextBox" Style="{StaticResource NumericTextBoxStyle}" Text="1" FontSize="16" Height="25" Width="Auto" MinWidth="50" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="1.5">
+                <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="BatteryLabel" Content="Batarya(S)" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="1" Grid.Column="2" Margin="0 0 5 0" x:Name="BatteryTextBox" Style="{StaticResource NumericTextBoxStyle}" Text="1" FontSize="14" Height="Auto" Width="Auto" MinWidth="50" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1.5">
                     <TextBox.ToolTip>
                         <ToolTip>
                             <ToolTip.Resources>

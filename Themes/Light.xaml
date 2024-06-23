@@ -28,6 +28,6 @@
 
     <!-- Rocerding -->
     <SolidColorBrush Color="#151F2D" x:Key="RocerdingText"/>
-    <SolidColorBrush Color="Orange" x:Key="RocerdingIcon"/>
+    <SolidColorBrush Color="Red" x:Key="RocerdingIcon"/>
     
 </ResourceDictionary>
