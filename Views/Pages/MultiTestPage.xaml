@@ -7,7 +7,7 @@
              xmlns:vmPages="clr-namespace:Advanced_Dynotis_Software.ViewModels.Pages"
              xmlns:uc="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance vmPages:MultiTestViewModel, IsDesignTimeCreatable=True}">
-    <Grid>
+    <Grid Background="{DynamicResource Page}">
         <Grid.RowDefinitions>
             <RowDefinition Height="100" />
             <RowDefinition Height="Auto" />

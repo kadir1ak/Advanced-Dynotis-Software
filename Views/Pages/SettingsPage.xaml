@@ -6,24 +6,31 @@
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.Pages"
              xmlns:uc="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
              mc:Ignorable="d">
-    <Grid>
+    <Grid Background="{DynamicResource Page}">
         <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="1">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0" x:Name="LeftMenuPanel" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
-                    <uc:SettingButton Icon="ContentSaveCog" Text="Save Config" Margin="10" Click="SettingButton_Click"/>
-                    <uc:SettingButton Icon="Layers" Text="Units Settings" Margin="10" Click="SettingButton_Click"/>
-                    <uc:SettingButton Icon="AlertCircleCheckOutline" Text="Alerts" Margin="10" Click="SettingButton_Click"/>
-                    <uc:SettingButton Icon="Update" Text="Software Update" Margin="10" Click="SettingButton_Click"/>
-                    <uc:SettingButton Icon="Translate" Text="Language" Margin="10" Click="SettingButton_Click"/>
-                    <uc:SettingButton Icon="Information" Text="About" Margin="10" Click="SettingButton_Click"/>
-                    <uc:SettingButton Icon="Help" Text="Help" Margin="10" Click="SettingButton_Click"/>
-                </StackPanel>
+                <Border Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Stretch" CornerRadius="0 0 0 0" BorderThickness="0" BorderBrush="{DynamicResource PageBorder}">
+                    <ScrollViewer VerticalAlignment="Top" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled">
+                        <Viewbox Stretch="Uniform" Margin="10 0 10 0">
+                            <StackPanel x:Name="MenuButtonPanel" VerticalAlignment="Top" Orientation="Horizontal">
+                                <!-- Menu Buttons -->
+                                <uc:SettingButton Icon="ContentSaveCog" Text="Save Config" Margin="10" Click="SettingButton_Click"/>
+                                <uc:SettingButton Icon="Layers" Text="Units Settings" Margin="10" Click="SettingButton_Click"/>
+                                <uc:SettingButton Icon="AlertCircleCheckOutline" Text="Alerts" Margin="10" Click="SettingButton_Click"/>
+                                <uc:SettingButton Icon="Update" Text="Software Update" Margin="10" Click="SettingButton_Click"/>
+                                <uc:SettingButton Icon="Translate" Text="Language" Margin="10" Click="SettingButton_Click"/>
+                                <uc:SettingButton Icon="Information" Text="About" Margin="10" Click="SettingButton_Click"/>
+                                <uc:SettingButton Icon="Help" Text="Help" Margin="10" Click="SettingButton_Click"/>
+                            </StackPanel>
+                        </Viewbox>
+                    </ScrollViewer>
+                </Border>
                 <!-- Content Area -->
-                <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" BorderThickness="1" BorderBrush="Black">
+                <Border Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CornerRadius="0 0 10 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
                     <ContentControl x:Name="ContentArea" />
                 </Border>
             </Grid>

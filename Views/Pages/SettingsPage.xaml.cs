@@ -35,7 +35,7 @@ namespace Advanced_Dynotis_Software.Views.Pages
                 if (!clickedButton.IsActive)
                 {
                     // Tüm menü düğmelerini pasifleştir
-                    foreach (var settingButton in LeftMenuPanel.Children.OfType<SettingButton>())
+                    foreach (var settingButton in MenuButtonPanel.Children.OfType<SettingButton>())
                     {
                         settingButton.IsActive = false;
                     }

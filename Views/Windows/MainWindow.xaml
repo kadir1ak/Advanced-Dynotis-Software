@@ -28,7 +28,8 @@
         <Grid>
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="Auto" MaxWidth="100" MinWidth="60"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
@@ -36,8 +37,8 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <!-- Top Menu -->                
-                <Border Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="0 0 0 0" BorderThickness="1" BorderBrush="Transparent">
+                <!-- Top Menu -->
+                <Border Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" CornerRadius="0 10 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                     <Grid VerticalAlignment="Top">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -85,7 +86,7 @@
                 </Border>
 
                 <!-- Left Menu -->
-                <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" BorderThickness="1" CornerRadius="10 0 0 10" BorderBrush="{DynamicResource PageBorder}" Margin="0">
+                <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="0"  CornerRadius="10 0 0 10" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -100,11 +101,11 @@
                             </Grid.RowDefinitions>
                             <!-- Themes Button -->
                             <Viewbox Grid.Row="0" Stretch="Uniform">
-                                <themes:ThemesButton Checked="ThemesButton_Checked" Unchecked="ThemesButton_Unchecked" Margin="20 10 20 10" />
+                                <themes:ThemesButton Checked="ThemesButton_Checked" Unchecked="ThemesButton_Unchecked" Margin="0 10 0 10" HorizontalAlignment="Center" />
                             </Viewbox>
                             <!-- Ellipses -->
                             <Viewbox Grid.Row="1" Stretch="Uniform">
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20 10 20 10">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0 10 0 10">
                                     <Ellipse Width="8" Height="8" Fill="#eb1700" />
                                     <Ellipse Width="8" Height="8" Fill="#ffaf01" Margin="10 0"/>
                                     <Ellipse Width="8" Height="8" Fill="#009d00" />
@@ -114,7 +115,7 @@
 
                         <Grid Grid.Row="1" VerticalAlignment="Top">
                             <ScrollViewer VerticalAlignment="Top" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
-                                <Viewbox Stretch="Uniform">
+                                <Viewbox Stretch="Uniform" Margin="10 0 10 0">
                                     <StackPanel x:Name="LeftMenuPanel" VerticalAlignment="Top">
                                         <!-- Menu Buttons -->
                                         <uc:MenuButton x:Name="HomeButton" Icon="Home" Text="Home" IsActive="True" Click="MenuButton_Click" />
@@ -133,7 +134,7 @@
                         <Grid Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center">
                             <!-- Ellipses -->
                             <Viewbox Stretch="Uniform">
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20 10 20 10">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0 10 0 10">
                                     <Ellipse Width="8" Height="8" Fill="#eb1700" />
                                     <Ellipse Width="8" Height="8" Fill="#ffaf01" Margin="10 0"/>
                                     <Ellipse Width="8" Height="8" Fill="#009d00" />
@@ -145,7 +146,7 @@
                 <!-- Content Area -->
                 <Border Grid.Row="2" Grid.Column="1" CornerRadius="0 0 10 0"  Grid.ColumnSpan="2" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                        <ContentControl x:Name="ContentArea" Foreground="{DynamicResource Text}" Background="{DynamicResource Page}"/>
+                        <ContentControl x:Name="ContentArea" Foreground="{DynamicResource Text}" Background="{DynamicResource Page}" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     </ScrollViewer>
                 </Border>
             </Grid>

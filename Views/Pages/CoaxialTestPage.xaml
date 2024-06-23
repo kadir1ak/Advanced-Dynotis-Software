@@ -11,7 +11,7 @@
     <UserControl.DataContext>
         <vmPages:CoaxialTestViewModel/>
     </UserControl.DataContext>
-    <Grid>
+    <Grid Background="{DynamicResource Page}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />

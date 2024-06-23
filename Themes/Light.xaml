@@ -26,4 +26,8 @@
     <SolidColorBrush Color="#151F2D" x:Key="EffVariablesControlText"/>
     <SolidColorBrush Color="#151F2D" x:Key="EffVariablesControlIcon"/>
 
+    <!-- Rocerding -->
+    <SolidColorBrush Color="#151F2D" x:Key="RocerdingText"/>
+    <SolidColorBrush Color="Orange" x:Key="RocerdingIcon"/>
+    
 </ResourceDictionary>
