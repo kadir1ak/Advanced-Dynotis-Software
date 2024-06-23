@@ -52,11 +52,10 @@
                 </Grid.ColumnDefinitions>
                 <Label Grid.Row="0" Grid.Column="1" Content="Rocerding " Foreground="{DynamicResource RocerdingText}" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 <icon:PackIconMaterial Grid.Row="0" Grid.Column="0" Kind="FileExcel" Foreground="Green" Margin="0,0,0,0" Height="25" Width="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <icon:PackIconMaterial Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Kind="RecordRec" Foreground="{DynamicResource RocerdingIcon}" Margin="0,0,0,0" Height="25" Width="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <uc:RocerdingButton  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,0" Height="25" Width="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
-            <TextBlock Grid.Row="1" Grid.Column="2" Text="Single Test Page" FontWeight="Bold"  FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource Text}"/>
+            <TextBlock Grid.Row="1" Grid.Column="2" Text="Single Test Page"  FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource Text}"/>
         </Grid>
-
         <!-- Device Card -->
         <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top" Margin="0">
             <ContentControl Content="{Binding ConnectedDevice}">
@@ -79,26 +78,29 @@
                                 <Grid Grid.Column="1" Grid.ColumnSpan="1" Grid.Row="0" Margin="0 0 0 0">
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                                         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            <TextBlock Text="Port: " Foreground="{DynamicResource Text}" FontWeight="Bold" FontSize="16"/>
-                                            <TextBlock Text="{Binding Device.PortName}" Foreground="{DynamicResource Text}" FontWeight="Bold" FontSize="16"/>
-                                            <TextBlock Text=" - " Foreground="{DynamicResource Text}" FontWeight="Bold" FontSize="16"/>
-                                            <TextBlock Text="{Binding Device.Model}" Foreground="{DynamicResource Text}" FontWeight="Bold" FontSize="16"/>
-                                            <TextBlock Text=" - " Foreground="{DynamicResource Text}" FontWeight="Bold" FontSize="16"/>
-                                            <TextBlock Text="{Binding Device.SeriNo}" Foreground="{DynamicResource Text}" FontWeight="Bold" FontSize="16"/>
+                                            <TextBlock Text="Port: " Foreground="{DynamicResource Text}" FontSize="16"/>
+                                            <TextBlock Text="{Binding Device.PortName}" Foreground="{DynamicResource Text}" FontSize="16"/>
+                                            <TextBlock Text=" - " Foreground="{DynamicResource Text}" FontSize="16"/>
+                                            <TextBlock Text="{Binding Device.Model}" Foreground="{DynamicResource Text}" FontSize="16"/>
+                                            <TextBlock Text=" - " Foreground="{DynamicResource Text}" FontSize="16"/>
+                                            <TextBlock Text="{Binding Device.SeriNo}" Foreground="{DynamicResource Text}" FontSize="16"/>
                                         </StackPanel>
                                     </StackPanel>
                                 </Grid>
                                 <!-- Sağ -->
                                 <Grid Grid.Column="3" Grid.Row="0" Grid.RowSpan="3" Margin="0 0 0 0">
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                        <Label Content="Sağ" FontSize="24" Margin="5" Foreground="{DynamicResource Text}"/>
+                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0">
+                                        <uc:EquipmentParameters HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10"/>
+                                        <uc:BatterySecurityLimits HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10"/>
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                            <Label Content="Sağ" FontSize="24" Margin="5" Foreground="{DynamicResource Text}"/>
+                                        </StackPanel>
                                     </StackPanel>
                                 </Grid>
                                 <!-- Orta -->
                                 <uc:DeviceCard Grid.Column="1" Grid.Row="1" DataContext="{Binding}" Margin="5 5 5 5"/>
                                 <!-- Sol -->
                                 <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Margin="0 0 0 0">
-
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                         <Label Content="Sol" FontSize="24" Margin="5" Foreground="{DynamicResource Text}"/>
                                     </StackPanel>
@@ -129,15 +131,15 @@
                                                 <ColumnDefinition Width="1*"/>
                                             </Grid.ColumnDefinitions>
 
-                                            <TextBlock Text="Connected Device Information" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="30 0 0 0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource Text}" FontWeight="Bold" FontSize="14" TextWrapping="WrapWithOverflow" />
+                                            <TextBlock Text="Connected Device Information" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="30 0 0 0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource Text}" FontSize="14" TextWrapping="WrapWithOverflow" />
 
-                                            <TextBlock Text="PortName:" Grid.Row="1" Grid.Column="0" Foreground="{DynamicResource Text}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                                            <TextBlock Text="Model:" Grid.Row="2" Grid.Column="0" Foreground="{DynamicResource Text}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                                            <TextBlock Text="SeriNo:" Grid.Row="3" Grid.Column="0" Foreground="{DynamicResource Text}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                                            <TextBlock Text="Firmware:" Grid.Row="4" Grid.Column="0" Foreground="{DynamicResource Text}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                                            <TextBlock Text="Connection Status:" Grid.Row="1" Grid.Column="2" Foreground="{DynamicResource Text}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                                            <TextBlock Text="Working Status:" Grid.Row="2" Grid.Column="2" Foreground="{DynamicResource Text}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                                            <TextBlock Text="Error:" Grid.Row="3" Grid.Column="2" Foreground="{DynamicResource Text}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
+                                            <TextBlock Text="PortName:" Grid.Row="1" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
+                                            <TextBlock Text="Model:" Grid.Row="2" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
+                                            <TextBlock Text="SeriNo:" Grid.Row="3" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
+                                            <TextBlock Text="Firmware:" Grid.Row="4" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
+                                            <TextBlock Text="Connection Status:" Grid.Row="1" Grid.Column="2" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
+                                            <TextBlock Text="Working Status:" Grid.Row="2" Grid.Column="2" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
+                                            <TextBlock Text="Error:" Grid.Row="3" Grid.Column="2" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
 
                                             <TextBlock Text="{Binding Device.PortName}" Grid.Row="1" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
                                             <TextBlock Text="{Binding Device.Model}" Grid.Row="2" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>

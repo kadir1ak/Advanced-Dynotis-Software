@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Advanced_Dynotis_Software.Views.Pages
 {
@@ -7,6 +8,7 @@ namespace Advanced_Dynotis_Software.Views.Pages
     /// </summary>
     public partial class SingleTestPage : UserControl
     {
+
         public SingleTestPage()
         {
             InitializeComponent();
