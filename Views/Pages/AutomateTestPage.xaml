@@ -7,21 +7,21 @@
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+             d:DesignHeight="650" d:DesignWidth="800">
+    <Grid Background="{DynamicResource Page}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="*" MinHeight="200"/>
+            <RowDefinition Height="*" MinHeight="250"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10">
-            <TextBox x:Name="addTimeTextBox" Width="100" VerticalAlignment="Center" Margin="5" ToolTip="Enter time in seconds"/>
-            <Button Content="Add row" Command="{Binding AddRowCommand}" CommandParameter="{Binding Text, ElementName=addTimeTextBox}" Margin="5"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="20">
+            <TextBox x:Name="addTimeTextBox" Width="100" VerticalAlignment="Center" Margin="0" ToolTip="Enter time in seconds" Foreground="{DynamicResource AutomateText}"/>
+            <Button Content="Add row" Command="{Binding AddRowCommand}" CommandParameter="{Binding Text, ElementName=addTimeTextBox}" Margin="10 0 0 0" Foreground="{DynamicResource AutomateText}"/>
         </StackPanel>
 
         <DataGrid ItemsSource="{Binding SequenceItems}" AutoGenerateColumns="False" Grid.Row="1" CanUserAddRows="False" CanUserDeleteRows="False"
-                  PreviewKeyDown="DataGrid_PreviewKeyDown">
+                  PreviewKeyDown="DataGrid_PreviewKeyDown" Foreground="{DynamicResource AutomateText}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20 0 0 0">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="CellEditEnding">
                     <i:InvokeCommandAction Command="{Binding CellEditEndingCommand}" CommandParameter="{Binding}"/>
@@ -40,13 +40,27 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <lvc:CartesianChart Series="{Binding ChartSeries}" Grid.Row="2" Margin="10">
-            <lvc:CartesianChart.AxisX>
-                <lvc:Axis Title="Time (s)"/>
-            </lvc:CartesianChart.AxisX>
-            <lvc:CartesianChart.AxisY>
-                <lvc:Axis Title="Powertrain 1 ESC throttle output (μs)"/>
-            </lvc:CartesianChart.AxisY>
-        </lvc:CartesianChart>
+        <Border Grid.Row="2" Margin="10">
+            <lvc:CartesianChart Series="{Binding ChartSeries}" Margin="0" BorderBrush="{DynamicResource PageBorder}" BorderThickness="1">
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Time (s)" Foreground="{DynamicResource AutomateText}" LabelFormatter="{Binding XFormatter}">
+                        <lvc:Axis.Separator>
+                            <lvc:Separator Stroke="{DynamicResource AutomateChartText}" StrokeThickness="0.5" />
+                        </lvc:Axis.Separator>
+                    </lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Powertrain 1 ESC throttle output (μs)" Foreground="{DynamicResource AutomateText}" LabelFormatter="{Binding YFormatter}">
+                        <lvc:Axis.Separator>
+                            <lvc:Separator Stroke="{DynamicResource AutomateChartText}" StrokeThickness="0.5" />
+                        </lvc:Axis.Separator>
+                    </lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+            </lvc:CartesianChart>
+        </Border>
+
+
+
+
     </Grid>
 </UserControl>

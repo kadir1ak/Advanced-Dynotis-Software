@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using System.Windows.Media;
 using Advanced_Dynotis_Software.Services.Helpers;
 using LiveCharts;
 using LiveCharts.Defaults;
@@ -55,7 +56,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 OnPropertyChanged();
             }
         }
-
+        public Func<double, string> XFormatter { get; set; }
+        public Func<double, string> YFormatter { get; set; }
         public ICommand AddRowCommand { get; }
         public ICommand RemoveRowCommand { get; }
         public ICommand UpdateChartCommand { get; }
@@ -75,10 +77,19 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 {
                     Values = new ChartValues<ObservablePoint>(),
                     PointGeometry = DefaultGeometries.Circle,
-                    PointGeometrySize = 15,
+                    PointGeometrySize = 10,
+                    FontSize = 12,
+                    PointForeground = new SolidColorBrush(Colors.Black),
                     LineSmoothness = 0, // This makes the line straight
+                    Stroke = new SolidColorBrush(Colors.Orange),
+                    StrokeThickness = 2,
+                    Fill = new SolidColorBrush(Color.FromArgb(10, Colors.Orange.R, Colors.Orange.G, Colors.Orange.B)),
+                    LabelPoint = point => $"ESC Throttle (μs): {point.Y}"
                 }
             };
+
+            XFormatter = value => value.ToString("0.00");
+            YFormatter = value => value.ToString("0");
 
             AddRowCommand = new RelayCommand(AddRow);
             RemoveRowCommand = new RelayCommand(RemoveRow);

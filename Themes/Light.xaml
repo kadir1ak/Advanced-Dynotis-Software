@@ -29,5 +29,10 @@
     <!-- Rocerding -->
     <SolidColorBrush Color="#151F2D" x:Key="RocerdingText"/>
     <SolidColorBrush Color="Red" x:Key="RocerdingIcon"/>
+
+    <!-- Automate -->
+    <SolidColorBrush Color="#151F2D" x:Key="AutomateText"/>
+    <SolidColorBrush Color="Orange" x:Key="AutomateChart"/>
+    <SolidColorBrush Color="#151F2D" x:Key="AutomateChartText"/>
     
 </ResourceDictionary>
