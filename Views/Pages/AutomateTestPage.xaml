@@ -1,11 +1,12 @@
 ﻿<UserControl x:Class="Advanced_Dynotis_Software.Views.Pages.AutomateTestPage"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.Pages"
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
-             mc:Ignorable="d" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
@@ -19,10 +20,16 @@
             <Button Content="Add row" Command="{Binding AddRowCommand}" CommandParameter="{Binding Text, ElementName=addTimeTextBox}" Margin="5"/>
         </StackPanel>
 
-        <DataGrid ItemsSource="{Binding SequenceItems}" AutoGenerateColumns="False" Grid.Row="1" CanUserAddRows="False" CanUserDeleteRows="False">
+        <DataGrid ItemsSource="{Binding SequenceItems}" AutoGenerateColumns="False" Grid.Row="1" CanUserAddRows="False" CanUserDeleteRows="False"
+                  PreviewKeyDown="DataGrid_PreviewKeyDown">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="CellEditEnding">
+                    <i:InvokeCommandAction Command="{Binding CellEditEndingCommand}" CommandParameter="{Binding}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Time (s)" Binding="{Binding Time, UpdateSourceTrigger=PropertyChanged}"/>
-                <DataGridTextColumn Header="Powertrain 1 ESC throttle output (μs)" Binding="{Binding ThrottleOutput, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Time (s)" Binding="{Binding Time, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+                <DataGridTextColumn Header="Powertrain 1 ESC throttle output (μs)" Binding="{Binding ThrottleOutput, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

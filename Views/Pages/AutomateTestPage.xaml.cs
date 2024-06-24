@@ -1,28 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using Advanced_Dynotis_Software.ViewModels.Pages;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Advanced_Dynotis_Software.Views.Pages
 {
-    /// <summary>
-    /// Interaction logic for AutomateTestPage.xaml
-    /// </summary>
     public partial class AutomateTestPage : UserControl
     {
         public AutomateTestPage()
         {
             InitializeComponent();
+            DataContext = new AutomateTestViewModel();
+        }
+
+        private void DataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            if (DataContext is AutomateTestViewModel viewModel)
+            {
+                // Hücre düzenlemesi tamamlandığında verileri sıralayıp güncelle
+                viewModel.SortAndRefreshSequenceItems();
+                viewModel.UpdateChartCommand.Execute(null);
+            }
+        }
+
+        private void DataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                var grid = (DataGrid)sender;
+
+                if (grid.CurrentColumn is DataGridTextColumn)
+                {
+                    var cellContent = grid.CurrentColumn.GetCellContent(grid.CurrentItem);
+
+                    if (cellContent is TextBox textBox)
+                    {
+                        var bindingExpression = textBox.GetBindingExpression(TextBox.TextProperty);
+                        bindingExpression.UpdateSource();
+                    }
+                }
+
+                e.Handled = true;
+
+                if (DataContext is AutomateTestViewModel viewModel)
+                {
+                    viewModel.SortAndRefreshSequenceItems();
+                    viewModel.UpdateChartCommand.Execute(null);
+                }
+            }
         }
     }
 }

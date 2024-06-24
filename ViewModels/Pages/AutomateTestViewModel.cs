@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Advanced_Dynotis_Software.Services.Helpers;
@@ -58,22 +59,32 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         public ICommand AddRowCommand { get; }
         public ICommand RemoveRowCommand { get; }
         public ICommand UpdateChartCommand { get; }
+        public ICommand CellEditEndingCommand { get; }
+        public ICommand KeyDownCommand { get; }
 
         public AutomateTestViewModel()
         {
-            SequenceItems = new ObservableCollection<SequenceItem>();
+            SequenceItems = new ObservableCollection<SequenceItem>
+            {
+                new SequenceItem { Time = 0, ThrottleOutput = 0 }
+            };
+
             ChartSeries = new SeriesCollection
             {
                 new LineSeries
                 {
                     Values = new ChartValues<ObservablePoint>(),
-                    PointGeometry = null
+                    PointGeometry = DefaultGeometries.Circle,
+                    PointGeometrySize = 15,
+                    LineSmoothness = 0, // This makes the line straight
                 }
             };
 
             AddRowCommand = new RelayCommand(AddRow);
             RemoveRowCommand = new RelayCommand(RemoveRow);
             UpdateChartCommand = new RelayCommand(_ => UpdateChart());
+            CellEditEndingCommand = new RelayCommand(OnCellEditEnding);
+            KeyDownCommand = new RelayCommand(OnKeyDown);
 
             SequenceItems.CollectionChanged += (sender, args) =>
             {
@@ -93,6 +104,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                     }
                 }
 
+                SortAndRefreshSequenceItems();
                 UpdateChart();
             };
         }
@@ -103,18 +115,17 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             {
                 if (double.TryParse(parameter as string, out double time))
                 {
-                    SequenceItems.Add(new SequenceItem { Time = time, ThrottleOutput = 0 }); // Default throttle output to 0
+                    SequenceItems.Add(new SequenceItem { Time = time, ThrottleOutput = 0 });
+                    SortAndRefreshSequenceItems();
                     UpdateChart();
                 }
                 else
                 {
-                    // Handle invalid input case, if needed.
                     throw new ArgumentException("Invalid time value.");
                 }
             }
             catch (Exception ex)
             {
-                // Log or display error
                 System.Diagnostics.Debug.WriteLine($"Error adding row: {ex.Message}");
             }
         }
@@ -131,7 +142,6 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             }
             catch (Exception ex)
             {
-                // Log or display error
                 System.Diagnostics.Debug.WriteLine($"Error removing row: {ex.Message}");
             }
         }
@@ -140,15 +150,47 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         {
             var lineSeries = ChartSeries[0] as LineSeries;
             lineSeries.Values.Clear();
-            foreach (var item in SequenceItems)
+
+            for (int i = 0; i < SequenceItems.Count - 1; i++)
             {
-                lineSeries.Values.Add(new ObservablePoint(item.Time, item.ThrottleOutput));
+                var current = SequenceItems[i];
+                var next = SequenceItems[i + 1];
+
+                lineSeries.Values.Add(new ObservablePoint(current.Time, current.ThrottleOutput));
+                lineSeries.Values.Add(new ObservablePoint(next.Time, current.ThrottleOutput));
+            }
+
+            if (SequenceItems.Count > 0)
+            {
+                var last = SequenceItems[^1];
+                lineSeries.Values.Add(new ObservablePoint(last.Time, last.ThrottleOutput));
             }
         }
 
         private void OnSequenceItemPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            SortAndRefreshSequenceItems();
             UpdateChart();
+        }
+
+        private void OnCellEditEnding(object parameter)
+        {
+            SortAndRefreshSequenceItems();
+            UpdateChart();
+        }
+
+        private void OnKeyDown(object parameter)
+        {
+            if (parameter is KeyEventArgs e && e.Key == Key.Enter)
+            {
+                SortAndRefreshSequenceItems();
+                UpdateChart();
+            }
+        }
+
+        public void SortAndRefreshSequenceItems()
+        {
+            SequenceItems = new ObservableCollection<SequenceItem>(SequenceItems.OrderBy(item => item.Time));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
