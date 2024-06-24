@@ -32,7 +32,7 @@
                 <!-- Değişken Değeri -->
                 <TextBlock x:Name="MotorSpeedValueLabel" Text="{Binding  InterfaceVariables.MotorSpeed, Mode=OneWay, StringFormat={}{0:0}}"  Width="80" Height="16"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                 <!-- Değişken Birimi -->
-                <TextBlock x:Name="MotorSpeedUnitLabel" Text="RPM"  Width="40" Height="16"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
+                <TextBlock x:Name="MotorSpeedUnitLabel" Text="RPM"  Width="40" Height="20"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
             </StackPanel>
 
             <!-- 2. Değişken -->
@@ -44,7 +44,7 @@
                 <!-- Değişken Değeri -->
                 <TextBlock x:Name="ThrustValueLabel"  Text="{Binding  InterfaceVariables.Thrust, Mode=OneWay, StringFormat={}{0:0.00}}"  Width="80" Height="16"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                 <!-- Değişken Birimi -->
-                <TextBlock x:Name="ThrustUnitLabel" Text="gr.F"  Width="40" Height="16"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
+                <TextBlock x:Name="ThrustUnitLabel" Text="gr.F"  Width="40" Height="20"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
             </StackPanel>
 
             <!-- 3. Değişken -->
@@ -56,7 +56,7 @@
                 <!-- Değişken Değeri -->
                 <TextBlock x:Name="TorqueValueLabel"  Text="{Binding  InterfaceVariables.Torque, Mode=OneWay, StringFormat={}{0:0.00}}"  Width="80" Height="16"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                 <!-- Değişken Birimi -->
-                <TextBlock x:Name="TorqueUnitLabel" Text="N.mm"  Width="40" Height="16"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
+                <TextBlock x:Name="TorqueUnitLabel" Text="N.mm"  Width="40" Height="20"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
             </StackPanel>
 
             <!-- 4. Değişken -->
@@ -68,7 +68,7 @@
                 <!-- Değişken Değeri -->
                 <TextBlock x:Name="VoltageValueLabel"  Text="{Binding  InterfaceVariables.Voltage, Mode=OneWay, StringFormat={}{0:0.00}}"  Width="80" Height="16"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                 <!-- Değişken Birimi -->
-                <TextBlock x:Name="VoltageUnitLabel" Text="V"  Width="40" Height="16"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
+                <TextBlock x:Name="VoltageUnitLabel" Text="V"  Width="40" Height="20"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
             </StackPanel>
 
             <!-- 5. Değişken -->
@@ -80,7 +80,7 @@
                 <!-- Değişken Değeri -->
                 <TextBlock x:Name="CurrentValueLabel"  Text="{Binding  InterfaceVariables.Current, Mode=OneWay, StringFormat={}{0:0.00}}"  Width="80" Height="16"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                 <!-- Değişken Birimi -->
-                <TextBlock x:Name="CurrentUnitLabel" Text="A"  Width="40" Height="16"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
+                <TextBlock x:Name="CurrentUnitLabel" Text="A"  Width="40" Height="20"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
             </StackPanel>
 
             <!-- 6. Değişken -->
@@ -92,7 +92,7 @@
                 <!-- Değişken Değeri -->
                 <TextBlock x:Name="VibrationValueLabel"  Text="{Binding  InterfaceVariables.Vibration, Mode=OneWay, StringFormat={}{0:0.00}}"  Width="80" Height="16"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                 <!-- Değişken Birimi -->
-                <TextBlock x:Name="VibrationUnitLabel" Text="g"  Width="40" Height="16"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
+                <TextBlock x:Name="VibrationUnitLabel" Text="g"  Width="40" Height="20"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
             </StackPanel>
 
             <!-- 7a. Değişken -->
@@ -104,7 +104,7 @@
                 <!-- Değişken Değeri -->
                 <TextBlock x:Name="PressureValueLabel"  Text="{Binding  InterfaceVariables.Pressure, Mode=OneWay, StringFormat={}{0:0.00}}"  Width="80" Height="16"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                 <!-- Değişken Birimi -->
-                <TextBlock x:Name="PressureUnitLabel" Text="kPa"  Width="40" Height="16"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
+                <TextBlock x:Name="PressureUnitLabel" Text="kPa"  Width="40" Height="20"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
             </StackPanel>
 
             <!-- 7b. Değişken -->
@@ -116,7 +116,7 @@
                 <!-- Değişken Değeri -->
                 <TextBlock x:Name="AirDensityValueLabel"  Text="{Binding  InterfaceVariables.AirDensity, Mode=OneWay, StringFormat={}{0:0.00}}"  Width="80" Height="16"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                 <!-- Değişken Birimi -->
-                <TextBlock x:Name="AirDensityUnitLabel" Text="kg/m³"  Width="40" Height="16"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
+                <TextBlock x:Name="AirDensityUnitLabel" Text="kg/m³"  Width="40" Height="20"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
             </StackPanel>
 
             <!-- 8. Değişken -->
@@ -128,7 +128,7 @@
                 <!-- Değişken Değeri -->
                 <TextBlock x:Name="MotorTemperatureValueLabel"  Text="{Binding  InterfaceVariables.MotorTemp, Mode=OneWay, StringFormat={}{0:0.00}}"  Width="80" Height="16"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                 <!-- Değişken Birimi -->
-                <TextBlock x:Name="MotorTemperatureUnitLabel" Text="°C"  Width="40" Height="16"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
+                <TextBlock x:Name="MotorTemperatureUnitLabel" Text="°C"  Width="40" Height="20"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
             </StackPanel>
 
 
@@ -141,7 +141,7 @@
                 <!-- Değişken Değeri -->
                 <TextBlock x:Name="AmbientTemperatureValueLabel"  Text="{Binding  InterfaceVariables.AmbientTemp, Mode=OneWay, StringFormat={}{0:0.00}}"  Width="80" Height="16"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                 <!-- Değişken Birimi -->
-                <TextBlock x:Name="AmbientTemperatureUnitLabel" Text="°C"  Width="40" Height="16"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
+                <TextBlock x:Name="AmbientTemperatureUnitLabel" Text="°C"  Width="40" Height="20"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
             </StackPanel>
 
             <!-- 9. Değişken -->
@@ -153,7 +153,7 @@
                 <!-- Değişken Değeri -->
                 <TextBlock x:Name="PowerValueLabel"  Text="{Binding  InterfaceVariables.Power, Mode=OneWay, StringFormat={}{0:0.00}}"  Width="80" Height="16"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                 <!-- Değişken Birimi -->
-                <TextBlock x:Name="PowerUnitLabel" Text="Watt"  Width="40" Height="16"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
+                <TextBlock x:Name="PowerUnitLabel" Text="Watt"  Width="40" Height="20"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
             </StackPanel>
             <!-- 10. Değişken -->
             <StackPanel Orientation="Horizontal" Margin="0 14 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -164,7 +164,7 @@
                 <!-- Değişken Değeri -->
                 <TextBlock x:Name="WindSpeedValueLabel"  Text="{Binding  InterfaceVariables.WindSpeed, Mode=OneWay, StringFormat={}{0:0.0}}"  Width="80" Height="16"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                 <!-- Değişken Birimi -->
-                <TextBlock x:Name="WindSpeedUnitLabel" Text="m/s"  Width="80" Height="16"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
+                <TextBlock x:Name="WindSpeedUnitLabel" Text="m/s"  Width="40" Height="20"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
             </StackPanel>
 
             <!-- 11. Değişken -->
@@ -176,7 +176,7 @@
                 <!-- Değişken Değeri -->
                 <TextBlock x:Name="WindDirectionValueLabel"  Text="{Binding  InterfaceVariables.WindDirection, Mode=OneWay, StringFormat={}{0:0.0}}"  Width="80" Height="16"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                 <!-- Değişken Birimi -->
-                <TextBlock x:Name="WindDirectionUnitLabel" Text="°"  Width="80" Height="16"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
+                <TextBlock x:Name="WindDirectionUnitLabel" Text="°"  Width="40" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
             </StackPanel>
         </StackPanel>
 

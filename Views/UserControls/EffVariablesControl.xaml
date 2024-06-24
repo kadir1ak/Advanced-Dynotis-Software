@@ -36,7 +36,7 @@
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontFamily" Value="Yu Gothic UI Semilight"/>
             <Setter Property="Foreground" Value="{DynamicResource EffVariablesControlText}"/>
-            <Setter Property="Margin" Value="5 0 0 0"/>
+            <Setter Property="Margin" Value="0 0 0 0"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
         </Style>
@@ -116,7 +116,7 @@
 
         <!-- 1. Değişken -->
         <StackPanel Style="{StaticResource StackPanelStyle}" Grid.Row="0">
-            <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="Abacus" ToolTipService.InitialShowDelay="2">
+            <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="PlaylistMinus" ToolTipService.InitialShowDelay="2">
                 <icon:PackIconMaterial.ToolTip>
                     <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate1}"/>
                 </icon:PackIconMaterial.ToolTip>
@@ -128,7 +128,7 @@
 
         <!-- 2. Değişken -->
         <StackPanel Style="{StaticResource StackPanelStyle}" Grid.Row="1">
-            <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="BatteryCharging" ToolTipService.InitialShowDelay="2">
+            <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="PlaylistMinus" ToolTipService.InitialShowDelay="2">
                 <icon:PackIconMaterial.ToolTip>
                     <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate2}"/>
                 </icon:PackIconMaterial.ToolTip>
@@ -140,7 +140,7 @@
 
         <!-- 3. Değişken -->
         <StackPanel Style="{StaticResource StackPanelStyle}" Grid.Row="2">
-            <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="EngineOutline" ToolTipService.InitialShowDelay="2">
+            <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="PlaylistMinus" ToolTipService.InitialShowDelay="2">
                 <icon:PackIconMaterial.ToolTip>
                     <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate3}"/>
                 </icon:PackIconMaterial.ToolTip>
@@ -152,7 +152,7 @@
 
         <!-- 4. Değişken -->
         <StackPanel Style="{StaticResource StackPanelStyle}" Grid.Row="3">
-            <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="Cog" ToolTipService.InitialShowDelay ="2">
+            <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="PlaylistMinus" ToolTipService.InitialShowDelay ="2">
                 <icon:PackIconMaterial.ToolTip>
                     <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate4}"/>
                 </icon:PackIconMaterial.ToolTip>
