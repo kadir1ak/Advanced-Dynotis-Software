@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -9,6 +10,25 @@ namespace Advanced_Dynotis_Software.Views.UserControls
         public BatterySecurityLimits()
         {
             InitializeComponent();
+        }
+        public bool IsChecked
+        {
+            get { return (bool)GetValue(IsCheckedProperty); }
+            set { SetValue(IsCheckedProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsCheckedProperty =
+            DependencyProperty.Register("IsChecked", typeof(bool), typeof(BatterySecurityLimits), new PropertyMetadata(false));
+        private void ToggleButton_Checked(object sender, RoutedEventArgs e)
+        {
+            // ToggleButton Checked olduğunda çalışacak kod
+            MessageBox.Show("ToggleButton Checked");
+        }
+
+        private void ToggleButton_Unchecked(object sender, RoutedEventArgs e)
+        {
+            // ToggleButton Unchecked olduğunda çalışacak kod
+            MessageBox.Show("ToggleButton Unchecked");
         }
 
         private void NumericTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)

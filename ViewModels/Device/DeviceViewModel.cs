@@ -122,7 +122,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
         {
             _chartUpdateTimer = new DispatcherTimer
             {
-                Interval = TimeSpan.FromMilliseconds(10) // Chart update interval
+                Interval = TimeSpan.FromMilliseconds(1) // Chart update interval
             };
             _chartUpdateTimer.Tick += (sender, args) => UpdateChartData();
 

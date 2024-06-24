@@ -4,9 +4,42 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.Pages"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TextBlock Text="Automate Test Page" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#151F2D"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10">
+            <TextBox x:Name="addTimeTextBox" Width="100" VerticalAlignment="Center" Margin="5" ToolTip="Enter time in seconds"/>
+            <Button Content="Add row" Command="{Binding AddRowCommand}" CommandParameter="{Binding Text, ElementName=addTimeTextBox}" Margin="5"/>
+        </StackPanel>
+
+        <DataGrid ItemsSource="{Binding SequenceItems}" AutoGenerateColumns="False" Grid.Row="1" CanUserAddRows="False" CanUserDeleteRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Time (s)" Binding="{Binding Time, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Powertrain 1 ESC throttle output (μs)" Binding="{Binding ThrottleOutput, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Remove" Command="{Binding DataContext.RemoveRowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <lvc:CartesianChart Series="{Binding ChartSeries}" Grid.Row="2" Margin="10">
+            <lvc:CartesianChart.AxisX>
+                <lvc:Axis Title="Time (s)"/>
+            </lvc:CartesianChart.AxisX>
+            <lvc:CartesianChart.AxisY>
+                <lvc:Axis Title="Powertrain 1 ESC throttle output (μs)"/>
+            </lvc:CartesianChart.AxisY>
+        </lvc:CartesianChart>
     </Grid>
 </UserControl>
