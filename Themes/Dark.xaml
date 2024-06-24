@@ -29,6 +29,7 @@
 
     <!-- Automate -->
     <SolidColorBrush Color="White" x:Key="AutomateText"/>
+    <SolidColorBrush Color="#3A9FF3" x:Key="AutomateButton"/>
     <SolidColorBrush Color="#3A9FF3" x:Key="AutomateChart"/>
     <SolidColorBrush Color="White" x:Key="AutomateChartText"/>
 

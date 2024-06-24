@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.Pages"
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d"
              d:DesignHeight="650" d:DesignWidth="800">
     <Grid Background="{DynamicResource Page}">
@@ -14,34 +15,69 @@
             <RowDefinition Height="*" MinHeight="200"/>
             <RowDefinition Height="*" MinHeight="250"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="20">
-            <TextBox x:Name="addTimeTextBox" Width="100" VerticalAlignment="Center" Margin="0" ToolTip="Enter time in seconds" Foreground="{DynamicResource AutomateText}"/>
-            <Button Content="Add row" Command="{Binding AddRowCommand}" CommandParameter="{Binding Text, ElementName=addTimeTextBox}" Margin="10 0 0 0" Foreground="{DynamicResource AutomateText}"/>
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20">
+            <TextBlock Text="Automate Test Page"  FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource Text}"/>
         </StackPanel>
 
-        <DataGrid ItemsSource="{Binding SequenceItems}" AutoGenerateColumns="False" Grid.Row="1" CanUserAddRows="False" CanUserDeleteRows="False"
-                  PreviewKeyDown="DataGrid_PreviewKeyDown" Foreground="{DynamicResource AutomateText}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20 0 0 0">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="CellEditEnding">
-                    <i:InvokeCommandAction Command="{Binding CellEditEndingCommand}" CommandParameter="{Binding}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Time (s)" Binding="{Binding Time, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
-                <DataGridTextColumn Header="Powertrain 1 ESC throttle output (μs)" Binding="{Binding ThrottleOutput, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
-                <DataGridTemplateColumn>
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button Content="Remove" Command="{Binding DataContext.RemoveRowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-        </DataGrid>
+        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="10" BorderBrush="{DynamicResource PageBorder}" BorderThickness="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="20" VerticalAlignment="Top" HorizontalAlignment="Left">
+                    <TextBox x:Name="addTimeTextBox" Width="100" VerticalAlignment="Center" Margin="5" ToolTip="Enter time in seconds" Foreground="{DynamicResource AutomateText}">
+                        <TextBox.Style>
+                            <Style TargetType="TextBox">
+                                <Style.Triggers>
+                                    <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <VisualBrush Stretch="None" AlignmentX="Left" AlignmentY="Center">
+                                                    <VisualBrush.Visual>
+                                                        <TextBlock Text="Time (s)" Foreground="Gray" VerticalAlignment="Center" />
+                                                    </VisualBrush.Visual>
+                                                </VisualBrush>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+                    <Button Content=" Add Point " Command="{Binding AddRowCommand}" CommandParameter="{Binding Text, ElementName=addTimeTextBox}" Margin="10 0 0 0" Foreground="{DynamicResource AutomateText}" Background="{DynamicResource AutomateButton}"/>
+                </StackPanel>
 
-        <Border Grid.Row="2" Margin="10">
-            <lvc:CartesianChart Series="{Binding ChartSeries}" Margin="0" BorderBrush="{DynamicResource PageBorder}" BorderThickness="1">
+                <DataGrid Grid.Row="1" ItemsSource="{Binding SequenceItems}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
+                  PreviewKeyDown="DataGrid_PreviewKeyDown" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20 0 0 0">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="CellEditEnding">
+                            <i:InvokeCommandAction Command="{Binding CellEditEndingCommand}" CommandParameter="{Binding}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Time (s)" Binding="{Binding Time, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+                        <DataGridTextColumn Header="Powertrain 1 ESC throttle output (μs)" Binding="{Binding ThrottleOutput, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Remove" Command="{Binding DataContext.RemoveRowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="10" BorderBrush="{DynamicResource PageBorder}" BorderThickness="1">
+            <lvc:CartesianChart Series="{Binding ChartSeries}" Margin="0">
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis Title="Time (s)" Foreground="{DynamicResource AutomateText}" LabelFormatter="{Binding XFormatter}">
                         <lvc:Axis.Separator>
@@ -58,9 +94,5 @@
                 </lvc:CartesianChart.AxisY>
             </lvc:CartesianChart>
         </Border>
-
-
-
-
     </Grid>
 </UserControl>
