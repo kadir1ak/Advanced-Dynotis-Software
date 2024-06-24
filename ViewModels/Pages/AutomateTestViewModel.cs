@@ -83,7 +83,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                     LineSmoothness = 0, // This makes the line straight
                     Stroke = new SolidColorBrush(Colors.Orange),
                     StrokeThickness = 2,
-                    Fill = new SolidColorBrush(Color.FromArgb(10, Colors.Orange.R, Colors.Orange.G, Colors.Orange.B)),
+                    Fill = new SolidColorBrush(Color.FromArgb(30, Colors.Orange.R, Colors.Orange.G, Colors.Orange.B)),
                     LabelPoint = point => $"ESC Throttle (μs): {point.Y}"
                 }
             };

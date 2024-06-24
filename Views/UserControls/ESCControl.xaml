@@ -6,8 +6,7 @@
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
              xmlns:helpers="clr-namespace:Advanced_Dynotis_Software.Services.Helpers"
              xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             mc:Ignorable="d"
-             d:DesignHeight="100" d:DesignWidth="300">
+             mc:Ignorable="d">
     <UserControl.Resources>
         <helpers:ValueToWidthConverter x:Key="ValueToWidthConverter"/>
 
@@ -63,7 +62,7 @@
                 IsSnapToTickEnabled="True"
                 LargeChange="5"
                 Value="50"
-                Width="300"
+                Width="500"
                 Height="30"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center"/>

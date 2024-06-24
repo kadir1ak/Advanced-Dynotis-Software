@@ -10,7 +10,7 @@ namespace Advanced_Dynotis_Software.Services.Helpers
         {
             if (value is double val)
             {
-                return val * 3; // Adjust this multiplier as needed for your application
+                return val * 5; // Adjust this multiplier as needed for your application
             }
             return 0;
         }
