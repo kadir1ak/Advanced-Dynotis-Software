@@ -216,6 +216,10 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                         {
                             Model = keyParts[1];
                             SeriNo = keyParts[2];
+                            Error = "Null";
+                            WorkingStatus = "Unknown";
+                            Firmware = "v.5.1.2";
+                            ConnectionStatus = "True";
 
                             if (!string.IsNullOrEmpty(Model) && !string.IsNullOrEmpty(SeriNo))
                             {
