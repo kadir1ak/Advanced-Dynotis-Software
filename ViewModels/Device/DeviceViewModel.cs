@@ -27,6 +27,20 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
         public SeriesCollection TorqueSeriesCollection { get; set; }
         public ObservableCollection<string> TimeLabels { get; set; }
         public string DeviceDisplayName => $"{Device.Model} - {Device.SeriNo}";
+        public Func<double, string> XAxisFormatter { get; set; }
+        public Func<double, string> YAxisFormatter { get; set; }
+        public double CurrentXAxisStep { get; set; }
+        public double CurrentYAxisStep { get; set; }
+        public double VoltageXAxisStep { get; set; }
+        public double VoltageYAxisStep { get; set; }
+        public double VibrationXAxisStep { get; set; }
+        public double VibrationYAxisStep { get; set; }
+        public double MotorSpeedXAxisStep { get; set; }
+        public double MotorSpeedYAxisStep { get; set; }
+        public double ThrustXAxisStep { get; set; }
+        public double ThrustYAxisStep { get; set; }
+        public double TorqueXAxisStep { get; set; }
+        public double TorqueYAxisStep { get; set; }
 
         private Dynotis _device;
         private Queue<DynotisData> _dynotisDataBuffer;
@@ -82,6 +96,9 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
             Device.PropertyChanged += Device_PropertyChanged;
 
             InitializeDefaultChartData();
+
+            XAxisFormatter = value => value.ToString("0");
+            YAxisFormatter = value => value.ToString("0.00");
         }
 
         private void InitializeDefaultChartData()
@@ -97,6 +114,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
                 UpdateSeries(ThrustSeriesCollection, defaultValue);
                 UpdateSeries(TorqueSeriesCollection, defaultValue);
             }
+
+            UpdateChartSteps();
         }
 
         private static SeriesCollection CreateSeriesCollection(string title, Color color)
@@ -128,7 +147,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
 
             _interfaceUpdateTimer = new DispatcherTimer
             {
-                Interval = TimeSpan.FromMilliseconds(10) // Interface update interval
+                Interval = TimeSpan.FromMilliseconds(50) // Interface update interval
             };
             _interfaceUpdateTimer.Tick += (sender, args) => UpdateInterfaceVariables();
 
@@ -171,6 +190,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
             UpdateSeries(VoltageSeriesCollection, sensorData.Voltage);
             UpdateSeries(ThrustSeriesCollection, sensorData.Thrust);
             UpdateSeries(TorqueSeriesCollection, sensorData.Torque);
+
+            UpdateChartSteps();
         }
 
         private void Device_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -210,6 +231,54 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
                 values.RemoveAt(0);
             }
             values.Add(value);
+        }
+
+        private void UpdateChartSteps()
+        {
+            CurrentXAxisStep = CalculateXAxisStep(CurrentSeriesCollection);
+            CurrentYAxisStep = CalculateYAxisStep(CurrentSeriesCollection);
+
+            VoltageXAxisStep = CalculateXAxisStep(VoltageSeriesCollection);
+            VoltageYAxisStep = CalculateYAxisStep(VoltageSeriesCollection);
+
+            VibrationXAxisStep = CalculateXAxisStep(VibrationSeriesCollection);
+            VibrationYAxisStep = CalculateYAxisStep(VibrationSeriesCollection);
+
+            MotorSpeedXAxisStep = CalculateXAxisStep(MotorSpeedSeriesCollection);
+            MotorSpeedYAxisStep = CalculateYAxisStep(MotorSpeedSeriesCollection);
+
+            ThrustXAxisStep = CalculateXAxisStep(ThrustSeriesCollection);
+            ThrustYAxisStep = CalculateYAxisStep(ThrustSeriesCollection);
+
+            TorqueXAxisStep = CalculateXAxisStep(TorqueSeriesCollection);
+            TorqueYAxisStep = CalculateYAxisStep(TorqueSeriesCollection);
+
+            OnPropertyChanged(nameof(CurrentXAxisStep));
+            OnPropertyChanged(nameof(CurrentYAxisStep));
+            OnPropertyChanged(nameof(VoltageXAxisStep));
+            OnPropertyChanged(nameof(VoltageYAxisStep));
+            OnPropertyChanged(nameof(VibrationXAxisStep));
+            OnPropertyChanged(nameof(VibrationYAxisStep));
+            OnPropertyChanged(nameof(MotorSpeedXAxisStep));
+            OnPropertyChanged(nameof(MotorSpeedYAxisStep));
+            OnPropertyChanged(nameof(ThrustXAxisStep));
+            OnPropertyChanged(nameof(ThrustYAxisStep));
+            OnPropertyChanged(nameof(TorqueXAxisStep));
+            OnPropertyChanged(nameof(TorqueYAxisStep));
+        }
+
+        private double CalculateXAxisStep(SeriesCollection seriesCollection)
+        {
+            var values = ((LineSeries)seriesCollection[0]).Values;
+            return values.Count / 5.0; // X ekseninde 10 noktaya bölmek için
+        }
+
+        private double CalculateYAxisStep(SeriesCollection seriesCollection)
+        {
+            var values = ((LineSeries)seriesCollection[0]).Values;
+            var max = values.Cast<double>().Max();
+            var min = values.Cast<double>().Min();
+            return (max - min) / 10.0; // Y ekseninde 20 noktaya bölmek için
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

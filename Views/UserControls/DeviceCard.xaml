@@ -13,9 +13,9 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*" MinWidth="200" MaxWidth="500"/>
-            <ColumnDefinition Width="*" MinWidth="200" MaxWidth="500"/>
-            <ColumnDefinition Width="*" MinWidth="200" MaxWidth="500"/>
+            <ColumnDefinition Width="*" MinWidth="200" MaxWidth="600"/>
+            <ColumnDefinition Width="*" MinWidth="200" MaxWidth="600"/>
+            <ColumnDefinition Width="*" MinWidth="200" MaxWidth="600"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -184,61 +184,110 @@
         <!-- @@@@@@@@@@@@@@@    Current Chart    @@@@@@@@@@@@@@@ -->
         <lvc:CartesianChart Grid.Row="1" Grid.Column="1" Series="{Binding CurrentSeriesCollection}" Margin="5" DisableAnimations="True" DataTooltip="{x:Null}">
             <lvc:CartesianChart.AxisX>
-                <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="{DynamicResource Text}"></lvc:Axis>
+                <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding XAxisFormatter}">
+                    <lvc:Axis.Separator>
+                        <lvc:Separator Step="{Binding CurrentXAxisStep}"/>
+                    </lvc:Axis.Separator>
+                </lvc:Axis>
             </lvc:CartesianChart.AxisX>
             <lvc:CartesianChart.AxisY>
-                <lvc:Axis Title="Current (A)" Foreground="{DynamicResource Text}"></lvc:Axis>
+                <lvc:Axis Title="Current (A)" Foreground="{DynamicResource Text}" LabelFormatter="{Binding YAxisFormatter}">
+                    <lvc:Axis.Separator>
+                        <lvc:Separator Step="{Binding CurrentYAxisStep}"/>
+                    </lvc:Axis.Separator>
+                </lvc:Axis>
             </lvc:CartesianChart.AxisY>
         </lvc:CartesianChart>
 
         <!-- @@@@@@@@@@@@@@@    Voltage Chart    @@@@@@@@@@@@@@@ -->
         <lvc:CartesianChart Grid.Row="1" Grid.Column="2" Series="{Binding VoltageSeriesCollection}" Margin="5" DisableAnimations="True" DataTooltip="{x:Null}">
             <lvc:CartesianChart.AxisX>
-                <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="{DynamicResource Text}"></lvc:Axis>
+                <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding XAxisFormatter}">
+                    <lvc:Axis.Separator>
+                        <lvc:Separator Step="{Binding VoltageXAxisStep}"/>
+                    </lvc:Axis.Separator>
+                </lvc:Axis>
             </lvc:CartesianChart.AxisX>
             <lvc:CartesianChart.AxisY>
-                <lvc:Axis Title="Voltage (V)" Foreground="{DynamicResource Text}"></lvc:Axis>
+                <lvc:Axis Title="Voltage (V)" Foreground="{DynamicResource Text}" LabelFormatter="{Binding YAxisFormatter}">
+                    <lvc:Axis.Separator>
+                        <lvc:Separator Step="{Binding VoltageYAxisStep}"/>
+                    </lvc:Axis.Separator>
+                </lvc:Axis>
             </lvc:CartesianChart.AxisY>
         </lvc:CartesianChart>
 
         <!-- @@@@@@@@@@@@@@@    Vibration Chart    @@@@@@@@@@@@@@@ -->
         <lvc:CartesianChart Grid.Row="1" Grid.Column="3" Series="{Binding VibrationSeriesCollection}" Margin="5" DisableAnimations="True" DataTooltip="{x:Null}">
             <lvc:CartesianChart.AxisX>
-                <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="{DynamicResource Text}"></lvc:Axis>
+                <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding XAxisFormatter}">
+                    <lvc:Axis.Separator>
+                        <lvc:Separator Step="{Binding VibrationXAxisStep}"/>
+                    </lvc:Axis.Separator>
+                </lvc:Axis>
             </lvc:CartesianChart.AxisX>
             <lvc:CartesianChart.AxisY>
-                <lvc:Axis Title="Vibration (g)" Foreground="{DynamicResource Text}"></lvc:Axis>
+                <lvc:Axis Title="Vibration (g)" Foreground="{DynamicResource Text}" LabelFormatter="{Binding YAxisFormatter}">
+                    <lvc:Axis.Separator>
+                        <lvc:Separator Step="{Binding VibrationYAxisStep}"/>
+                    </lvc:Axis.Separator>
+                </lvc:Axis>
             </lvc:CartesianChart.AxisY>
         </lvc:CartesianChart>
 
         <!-- @@@@@@@@@@@@@@@    Motor Speed Chart    @@@@@@@@@@@@@@@ -->
         <lvc:CartesianChart Grid.Row="2" Grid.Column="1" Series="{Binding MotorSpeedSeriesCollection}" Margin="5" DisableAnimations="True" DataTooltip="{x:Null}">
             <lvc:CartesianChart.AxisX>
-                <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="{DynamicResource Text}"></lvc:Axis>
+                <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding XAxisFormatter}">
+                    <lvc:Axis.Separator>
+                        <lvc:Separator Step="{Binding MotorSpeedXAxisStep}"/>
+                    </lvc:Axis.Separator>
+                </lvc:Axis>
             </lvc:CartesianChart.AxisX>
             <lvc:CartesianChart.AxisY>
-                <lvc:Axis Title="Motor Speed (RPM)" Foreground="{DynamicResource Text}"></lvc:Axis>
+                <lvc:Axis Title="Motor Speed (RPM)" Foreground="{DynamicResource Text}" LabelFormatter="{Binding YAxisFormatter}">
+                    <lvc:Axis.Separator>
+                        <lvc:Separator Step="{Binding MotorSpeedYAxisStep}"/>
+                    </lvc:Axis.Separator>
+                </lvc:Axis>
             </lvc:CartesianChart.AxisY>
         </lvc:CartesianChart>
 
         <!-- @@@@@@@@@@@@@@@    Torque Chart    @@@@@@@@@@@@@@@ -->
         <lvc:CartesianChart Grid.Row="2" Grid.Column="2" Series="{Binding TorqueSeriesCollection}" Margin="5" DisableAnimations="True" DataTooltip="{x:Null}">
             <lvc:CartesianChart.AxisX>
-                <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="{DynamicResource Text}"></lvc:Axis>
+                <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding XAxisFormatter}">
+                    <lvc:Axis.Separator>
+                        <lvc:Separator Step="{Binding TorqueXAxisStep}"/>
+                    </lvc:Axis.Separator>
+                </lvc:Axis>
             </lvc:CartesianChart.AxisX>
             <lvc:CartesianChart.AxisY>
-                <lvc:Axis Title="Torque (Nmm)" Foreground="{DynamicResource Text}"></lvc:Axis>
+                <lvc:Axis Title="Torque (Nmm)" Foreground="{DynamicResource Text}" LabelFormatter="{Binding YAxisFormatter}">
+                    <lvc:Axis.Separator>
+                        <lvc:Separator Step="{Binding TorqueYAxisStep}"/>
+                    </lvc:Axis.Separator>
+                </lvc:Axis>
             </lvc:CartesianChart.AxisY>
         </lvc:CartesianChart>
 
         <!-- @@@@@@@@@@@@@@@    Thrust Chart    @@@@@@@@@@@@@@@ -->
         <lvc:CartesianChart Grid.Row="2" Grid.Column="3" Series="{Binding ThrustSeriesCollection}" Margin="5" DisableAnimations="True" DataTooltip="{x:Null}">
             <lvc:CartesianChart.AxisX>
-                <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="{DynamicResource Text}"></lvc:Axis>
+                <lvc:Axis Title="Time" Labels="{Binding TimeLabels}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding XAxisFormatter}">
+                    <lvc:Axis.Separator>
+                        <lvc:Separator Step="{Binding ThrustXAxisStep}"/>
+                    </lvc:Axis.Separator>
+                </lvc:Axis>
             </lvc:CartesianChart.AxisX>
             <lvc:CartesianChart.AxisY>
-                <lvc:Axis Title="Thrust (N)" Foreground="{DynamicResource Text}"></lvc:Axis>
+                <lvc:Axis Title="Thrust (N)" Foreground="{DynamicResource Text}" LabelFormatter="{Binding YAxisFormatter}">
+                    <lvc:Axis.Separator>
+                        <lvc:Separator Step="{Binding ThrustYAxisStep}"/>
+                    </lvc:Axis.Separator>
+                </lvc:Axis>
             </lvc:CartesianChart.AxisY>
         </lvc:CartesianChart>
+
     </Grid>
 </UserControl>

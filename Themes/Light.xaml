@@ -35,5 +35,9 @@
     <SolidColorBrush Color="Orange" x:Key="AutomateButton"/>
     <SolidColorBrush Color="Orange" x:Key="AutomateChart"/>
     <SolidColorBrush Color="#151F2D" x:Key="AutomateChartText"/>
+
+    <!-- ESC -->
+    <SolidColorBrush Color="Orange" x:Key="ESCButton"/>
+    
     
 </ResourceDictionary>

@@ -13,13 +13,8 @@
     <Grid >
         <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@               Parameter Panel           @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
         <Viewbox HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Border BorderThickness="2" CornerRadius="0" BorderBrush="{DynamicResource Page}" Margin="0 0 0 0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="{DynamicResource Page}">
-                <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="Auto" Height="Auto" Margin="5">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
+            <Border BorderThickness="1" CornerRadius="0" BorderBrush="{DynamicResource Page}" Margin="0 0 0 0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="{DynamicResource Page}">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="Auto" Height="Auto" Margin="0">
                     <StackPanel Grid.Row="0" Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5">
                         <Label x:Name="PropellerAreaLabel" Content="Propeller Diameter (Inch)" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Center"/>
                         <TextBox x:Name="PropellerAreaTextBox" Style="{StaticResource NumericTextBoxStyle}" Text="0.00" FontSize="14" Height="Auto" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1.5">
@@ -36,7 +31,7 @@
                         </TextBox>
                     </StackPanel>
                     <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5">
-                        <Label x:Name="MotorInnerLabel" Content="Motor İç Direnci (mΩ)" FontSize="14" Foreground="{DynamicResource Text}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <Label x:Name="MotorInnerLabel" Content="Internal Res. (mΩ)" FontSize="14" Foreground="{DynamicResource Text}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         <TextBox x:Name="MotorInnerTextBox" Style="{StaticResource NumericTextBoxStyle}" Text="0.00" FontSize="14" Height="Auto" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1.5">
                             <TextBox.ToolTip>
                                 <ToolTip>
@@ -65,7 +60,7 @@
                             </TextBox.ToolTip>
                         </TextBox>
                     </StackPanel>
-                </Grid>
+                </StackPanel>
             </Border>
         </Viewbox>
     </Grid>
