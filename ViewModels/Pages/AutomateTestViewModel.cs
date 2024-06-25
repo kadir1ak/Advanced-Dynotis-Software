@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -8,6 +9,7 @@ using Advanced_Dynotis_Software.Services.Helpers;
 using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
+using Newtonsoft.Json;
 
 namespace Advanced_Dynotis_Software.ViewModels.Pages
 {
@@ -60,6 +62,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         public ICommand AddRowCommand { get; }
         public ICommand RemoveRowCommand { get; }
         public ICommand ClearAllPointsCommand { get; }
+        public ICommand SaveSequenceCommand { get; }
+        public ICommand LoadSequenceCommand { get; }
         public ICommand UpdateChartCommand { get; }
         public ICommand CellEditEndingCommand { get; }
         public ICommand KeyDownCommand { get; }
@@ -94,6 +98,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             AddRowCommand = new RelayCommand(param => AddRow(param));
             RemoveRowCommand = new RelayCommand(param => RemoveRow(param));
             ClearAllPointsCommand = new RelayCommand(param => ClearAllPoints());
+            SaveSequenceCommand = new RelayCommand(param => SaveSequence(param as string));
+            LoadSequenceCommand = new RelayCommand(param => LoadSequence(param as string));
             UpdateChartCommand = new RelayCommand(param => UpdateChart());
             CellEditEndingCommand = new RelayCommand(param => OnCellEditEnding(param));
             KeyDownCommand = new RelayCommand(param => OnKeyDown(param));
@@ -163,6 +169,37 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             SequenceItems.Clear();
             SequenceItems.Add(new SequenceItem { Time = 0, ThrottleOutput = 0 });
             UpdateChart();
+        }
+
+        private void SaveSequence(string fileName)
+        {
+            try
+            {
+                var json = JsonConvert.SerializeObject(SequenceItems);
+                File.WriteAllText(fileName, json);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error saving sequence: {ex.Message}");
+            }
+        }
+
+        private void LoadSequence(string fileName)
+        {
+            try
+            {
+                var json = File.ReadAllText(fileName);
+                var items = JsonConvert.DeserializeObject<ObservableCollection<SequenceItem>>(json);
+                if (items != null)
+                {
+                    SequenceItems = items;
+                }
+                UpdateChart();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error loading sequence: {ex.Message}");
+            }
         }
 
         private void UpdateChart()
