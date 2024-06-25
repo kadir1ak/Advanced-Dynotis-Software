@@ -16,6 +16,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
     public class AutomateTestViewModel : INotifyPropertyChanged
     {
         private ObservableCollection<SequenceItem> _sequenceItems;
+        private ObservableCollection<string> _savedTests;
         private SeriesCollection _chartSeries;
 
         public ObservableCollection<SequenceItem> SequenceItems
@@ -48,6 +49,16 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             }
         }
 
+        public ObservableCollection<string> SavedTests
+        {
+            get => _savedTests;
+            set
+            {
+                _savedTests = value;
+                OnPropertyChanged();
+            }
+        }
+
         public SeriesCollection ChartSeries
         {
             get => _chartSeries;
@@ -74,6 +85,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             {
                 new SequenceItem { Time = 0, ThrottleOutput = 0 }
             };
+
+            LoadSavedTests();
 
             ChartSeries = new SeriesCollection
             {
@@ -127,6 +140,24 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             };
         }
 
+        private void LoadSavedTests()
+        {
+            try
+            {
+                if (!Directory.Exists("TestSequences"))
+                {
+                    Directory.CreateDirectory("TestSequences");
+                }
+
+                SavedTests = new ObservableCollection<string>(Directory.GetFiles("TestSequences", "*.json").Select(Path.GetFileNameWithoutExtension));
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error loading saved tests: {ex.Message}");
+                SavedTests = new ObservableCollection<string>();
+            }
+        }
+
         private void AddRow(object parameter)
         {
             try
@@ -176,7 +207,12 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             try
             {
                 var json = JsonConvert.SerializeObject(SequenceItems);
-                File.WriteAllText(fileName, json);
+                Directory.CreateDirectory("TestSequences");
+                File.WriteAllText(Path.Combine("TestSequences", fileName + ".json"), json);
+                if (!SavedTests.Contains(fileName))
+                {
+                    SavedTests.Add(fileName);
+                }
             }
             catch (Exception ex)
             {
@@ -188,7 +224,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         {
             try
             {
-                var json = File.ReadAllText(fileName);
+                var json = File.ReadAllText(Path.Combine("TestSequences", fileName + ".json"));
                 var items = JsonConvert.DeserializeObject<ObservableCollection<SequenceItem>>(json);
                 if (items != null)
                 {

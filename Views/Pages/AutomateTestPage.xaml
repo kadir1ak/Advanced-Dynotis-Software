@@ -69,11 +69,11 @@
 
                 <Border Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0 3 3 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Stretch">
-                        <Label Content="Test Kayıt sistemi" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+                        <Label Content="Test ID:" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         <TextBox x:Name="saveFileNameTextBox" Width="100" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        <Button Content="Kaydet" Command="{Binding SaveSequenceCommand}" CommandParameter="{Binding Text, ElementName=saveFileNameTextBox}" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <Button Content="Save" Command="{Binding SaveSequenceCommand}" CommandParameter="{Binding Text, ElementName=saveFileNameTextBox}" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         <TextBox x:Name="loadFileNameTextBox" Width="100" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        <Button Content="Yükle" Command="{Binding LoadSequenceCommand}" CommandParameter="{Binding Text, ElementName=loadFileNameTextBox}" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <Button Content="Load" Command="{Binding LoadSequenceCommand}" CommandParameter="{Binding Text, ElementName=loadFileNameTextBox}" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Border>
 
@@ -104,8 +104,8 @@
                 </Border>
 
                 <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0 0 3 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                    <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                        <Label VerticalAlignment="Top" Content="Kayıtlı Testler" Margin="5"/>
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Left">
+                        <Label VerticalAlignment="Top" Content="Registered Test ID" Margin="5"/>
                         <ListBox ItemsSource="{Binding SavedTests}" SelectedItem="{Binding SelectedTest}" Margin="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     </StackPanel>
                 </Border>
