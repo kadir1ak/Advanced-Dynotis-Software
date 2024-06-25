@@ -34,6 +34,8 @@
     <SolidColorBrush Color="#151F2D" x:Key="AutomateText"/>
     <SolidColorBrush Color="Orange" x:Key="AutomateAddButton"/>
     <SolidColorBrush Color="OrangeRed" x:Key="AutomateClearButton"/>
+    <SolidColorBrush Color="Orange" x:Key="AutomateSaveButton"/>
+    <SolidColorBrush Color="Orange" x:Key="AutomateLoadButton"/>
     <SolidColorBrush Color="Orange" x:Key="AutomateChart"/>
     <SolidColorBrush Color="#151F2D" x:Key="AutomateChartText"/>
 

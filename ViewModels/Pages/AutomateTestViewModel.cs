@@ -19,6 +19,17 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         private ObservableCollection<string> _savedTests;
         private SeriesCollection _chartSeries;
 
+        private string _selectedTest;
+        public string SelectedTest
+        {
+            get => _selectedTest;
+            set
+            {
+                _selectedTest = value;
+                OnPropertyChanged();
+                // LoadSequenceCommand.Execute(_selectedTest); // Bu satırı kaldırıyoruz
+            }
+        }
         public ObservableCollection<SequenceItem> SequenceItems
         {
             get => _sequenceItems;
@@ -81,6 +92,9 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
 
         public AutomateTestViewModel()
         {
+
+            LoadSequenceCommand = new RelayCommand(param => LoadSequence(param as string));
+
             SequenceItems = new ObservableCollection<SequenceItem>
             {
                 new SequenceItem { Time = 0, ThrottleOutput = 0 }
