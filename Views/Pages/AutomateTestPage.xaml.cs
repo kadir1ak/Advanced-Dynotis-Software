@@ -21,6 +21,19 @@ namespace Advanced_Dynotis_Software.Views.Pages
                 viewModel.UpdateChartCommand.Execute(null);
             }
         }
+        private void DataGridScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            ScrollViewer scv = (ScrollViewer)sender;
+            if (Keyboard.Modifiers == ModifierKeys.Shift)
+            {
+                scv.ScrollToHorizontalOffset(scv.HorizontalOffset - e.Delta);
+            }
+            else
+            {
+                scv.ScrollToVerticalOffset(scv.VerticalOffset - e.Delta);
+            }
+            e.Handled = true;
+        }
 
         private void DataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
         {

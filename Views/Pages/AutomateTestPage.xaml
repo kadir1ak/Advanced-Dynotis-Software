@@ -78,10 +78,11 @@
                 </Border>
 
                 <Border Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3 0 3 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <ScrollViewer x:Name="dataGridScrollViewer" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" PanningMode="Both" PreviewMouseWheel="DataGridScrollViewer_PreviewMouseWheel">
                         <StackPanel Orientation="Vertical" Margin="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                             <DataGrid ItemsSource="{Binding SequenceItems}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
-                                      PreviewKeyDown="DataGrid_PreviewKeyDown" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                      PreviewKeyDown="DataGrid_PreviewKeyDown" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                      ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="CellEditEnding">
                                         <i:InvokeCommandAction Command="{Binding CellEditEndingCommand}" CommandParameter="{Binding}"/>
