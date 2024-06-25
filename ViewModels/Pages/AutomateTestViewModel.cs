@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -60,6 +59,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         public Func<double, string> YFormatter { get; set; }
         public ICommand AddRowCommand { get; }
         public ICommand RemoveRowCommand { get; }
+        public ICommand ClearAllPointsCommand { get; }
         public ICommand UpdateChartCommand { get; }
         public ICommand CellEditEndingCommand { get; }
         public ICommand KeyDownCommand { get; }
@@ -91,11 +91,12 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             XFormatter = value => value.ToString("0.00");
             YFormatter = value => value.ToString("0");
 
-            AddRowCommand = new RelayCommand(AddRow);
-            RemoveRowCommand = new RelayCommand(RemoveRow);
-            UpdateChartCommand = new RelayCommand(_ => UpdateChart());
-            CellEditEndingCommand = new RelayCommand(OnCellEditEnding);
-            KeyDownCommand = new RelayCommand(OnKeyDown);
+            AddRowCommand = new RelayCommand(param => AddRow(param));
+            RemoveRowCommand = new RelayCommand(param => RemoveRow(param));
+            ClearAllPointsCommand = new RelayCommand(param => ClearAllPoints());
+            UpdateChartCommand = new RelayCommand(param => UpdateChart());
+            CellEditEndingCommand = new RelayCommand(param => OnCellEditEnding(param));
+            KeyDownCommand = new RelayCommand(param => OnKeyDown(param));
 
             SequenceItems.CollectionChanged += (sender, args) =>
             {
@@ -155,6 +156,13 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             {
                 System.Diagnostics.Debug.WriteLine($"Error removing row: {ex.Message}");
             }
+        }
+
+        private void ClearAllPoints()
+        {
+            SequenceItems.Clear();
+            SequenceItems.Add(new SequenceItem { Time = 0, ThrottleOutput = 0 });
+            UpdateChart();
         }
 
         private void UpdateChart()
