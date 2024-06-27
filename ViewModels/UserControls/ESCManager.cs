@@ -1,14 +1,16 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Input;
-using Advanced_Dynotis_Software.Services.Helpers;
 using Advanced_Dynotis_Software.Models.ESC;
+using Advanced_Dynotis_Software.Services.Helpers;
 
 namespace Advanced_Dynotis_Software.ViewModels.UserControls
 {
     public class ESCManager : INotifyPropertyChanged
     {
         private ESC _esc;
+        private double _sliderActualWidth;
+
         public ESCManager()
         {
             _esc = new ESC();
@@ -40,6 +42,20 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 {
                     _esc.IsLocked = value;
                     OnPropertyChanged(nameof(IsLocked));
+                }
+            }
+        }
+
+        public double SliderActualWidth
+        {
+            get => _sliderActualWidth;
+            set
+            {
+                if (_sliderActualWidth != value)
+                {
+                    _sliderActualWidth = value;
+                    OnPropertyChanged(nameof(SliderActualWidth));
+                    UpdateSliderAndThumb();
                 }
             }
         }
@@ -100,8 +116,11 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private void UpdateSliderAndThumb()
         {
             // Slider genişliği ve thumb pozisyonu hesaplamaları
-            SliderWidth = Value * (5); // Ölçekleme faktörünü ayarlayın
-            ThumbPosition = Value * 5;
+            if (SliderActualWidth > 0)
+            {
+                SliderWidth = (Value / 100) * SliderActualWidth; // Ölçekleme faktörünü ayarlayın
+                ThumbPosition = (Value / 100) * SliderActualWidth;
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
