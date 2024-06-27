@@ -42,7 +42,7 @@
                                         <Storyboard>
                                             <DoubleAnimation To="1.1" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)" Duration="0:0:0.3" />
                                             <DoubleAnimation To="1.1" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)" Duration="0:0:0.3" />
-                                            <ColorAnimation To="#3A9FF3" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Duration="0:0:0.3"/>
+                                            <ColorAnimation To="#151F2D" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Duration="0:0:0.3"/>
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </Trigger.EnterActions>
@@ -57,7 +57,7 @@
                                 </Trigger.ExitActions>
                             </Trigger>
                             <DataTrigger Binding="{Binding ElementName=settingButton, Path=IsActive}" Value="True">
-                                <Setter Property="Foreground" Value="#7368ff" />
+                                <Setter Property="Foreground" Value="{DynamicResource menuButtonTrigger}" />
                                 <Setter Property="Tag" Value="Visible" />
                             </DataTrigger>
                         </ControlTemplate.Triggers>

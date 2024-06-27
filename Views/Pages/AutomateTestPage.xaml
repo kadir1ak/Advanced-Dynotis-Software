@@ -75,19 +75,27 @@
                         <Button Content=" Save " Command="{Binding SaveSequenceCommand}" CommandParameter="{Binding Text, ElementName=saveFileNameTextBox}" VerticalAlignment="Center" Margin="10 0 10 0" Foreground="{DynamicResource AutomateText}" Background="{DynamicResource AutomateSaveButton}"/>
                     </StackPanel>
                 </Border>
-
+                
                 <Border Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3 0 3 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
                     <DataGrid ItemsSource="{Binding SequenceItems}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
-                              PreviewKeyDown="DataGrid_PreviewKeyDown" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                              ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                        PreviewKeyDown="DataGrid_PreviewKeyDown" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                        ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                        AlternationCount="{Binding SequenceItems.Count}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="CellEditEnding">
                                 <i:InvokeCommandAction Command="{Binding CellEditEndingCommand}" CommandParameter="{Binding}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Time (s)" Binding="{Binding Time, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
-                            <DataGridTextColumn Header="ESC throttle output (μs)" Binding="{Binding ThrottleOutput, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+                            <DataGridTemplateColumn Header="Index" Width="50">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}, Path=AlternationIndex}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Time (s)" Width="100" Binding="{Binding Time, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+                            <DataGridTextColumn Header="ESC throttle output (μs)" Width="200" Binding="{Binding ThrottleOutput, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
                             <DataGridTemplateColumn>
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
@@ -98,6 +106,7 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </Border>
+
 
                 <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0 0 3 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
                     <Grid VerticalAlignment="Stretch" HorizontalAlignment="Left" MinWidth="200" Margin="5 5 0 0">

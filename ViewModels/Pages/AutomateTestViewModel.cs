@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using Advanced_Dynotis_Software.Services.Helpers;
@@ -261,13 +262,19 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 var filePath = Path.Combine("TestSequences", fileName + ".json");
                 if (File.Exists(filePath))
                 {
-                    File.Delete(filePath);
-                    SavedTests.Remove(fileName);
+                    var result = MessageBox.Show($"Are you sure you want to delete the file \"{fileName}\"?", "Delete Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        File.Delete(filePath);
+                        SavedTests.Remove(fileName);
+                        MessageBox.Show($"File \"{fileName}\" has been deleted.", "Delete Successful", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
                 }
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error deleting sequence: {ex.Message}");
+                MessageBox.Show($"Error deleting the file: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
