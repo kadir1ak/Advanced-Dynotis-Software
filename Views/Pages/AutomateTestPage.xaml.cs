@@ -1,6 +1,7 @@
 ﻿using Advanced_Dynotis_Software.ViewModels.Pages;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows;
 
 namespace Advanced_Dynotis_Software.Views.Pages
 {
@@ -16,23 +17,9 @@ namespace Advanced_Dynotis_Software.Views.Pages
         {
             if (DataContext is AutomateTestViewModel viewModel)
             {
-                // Hücre düzenlemesi tamamlandığında verileri sıralayıp güncelle
                 viewModel.SortAndRefreshSequenceItems();
                 viewModel.UpdateChartCommand.Execute(null);
             }
-        }
-        private void DataGridScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            ScrollViewer scv = (ScrollViewer)sender;
-            if (Keyboard.Modifiers == ModifierKeys.Shift)
-            {
-                scv.ScrollToHorizontalOffset(scv.HorizontalOffset - e.Delta);
-            }
-            else
-            {
-                scv.ScrollToVerticalOffset(scv.VerticalOffset - e.Delta);
-            }
-            e.Handled = true;
         }
 
         private void DataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -59,6 +46,16 @@ namespace Advanced_Dynotis_Software.Views.Pages
                     viewModel.SortAndRefreshSequenceItems();
                     viewModel.UpdateChartCommand.Execute(null);
                 }
+            }
+        }
+
+        private void ListBox_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (Keyboard.Modifiers == ModifierKeys.Shift)
+            {
+                ScrollViewer scrollViewer = (ScrollViewer)sender;
+                scrollViewer.ScrollToHorizontalOffset(scrollViewer.HorizontalOffset - e.Delta);
+                e.Handled = true;
             }
         }
     }

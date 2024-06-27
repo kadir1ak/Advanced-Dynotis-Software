@@ -89,6 +89,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         public ICommand UpdateChartCommand { get; }
         public ICommand CellEditEndingCommand { get; }
         public ICommand KeyDownCommand { get; }
+        public ICommand DeleteSequenceCommand { get; }
 
         public AutomateTestViewModel()
         {
@@ -130,6 +131,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             UpdateChartCommand = new RelayCommand(param => UpdateChart());
             CellEditEndingCommand = new RelayCommand(param => OnCellEditEnding(param));
             KeyDownCommand = new RelayCommand(param => OnKeyDown(param));
+            DeleteSequenceCommand = new RelayCommand(param => DeleteSequence(param as string));
 
             SequenceItems.CollectionChanged += (sender, args) =>
             {
@@ -249,6 +251,23 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error loading sequence: {ex.Message}");
+            }
+        }
+
+        private void DeleteSequence(string fileName)
+        {
+            try
+            {
+                var filePath = Path.Combine("TestSequences", fileName + ".json");
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                    SavedTests.Remove(fileName);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error deleting sequence: {ex.Message}");
             }
         }
 

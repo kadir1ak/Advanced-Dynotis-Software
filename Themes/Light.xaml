@@ -14,12 +14,12 @@
 
     <!-- Menu Button -->
     <SolidColorBrush Color="#151F2D" x:Key="menuButtonStandart"/>
-    <SolidColorBrush Color="Orange" x:Key="menuButtonTrigger"/>
+    <SolidColorBrush Color="#FFFF662D" x:Key="menuButtonTrigger"/>
 
 
     <!-- Device Mini Card -->
     <SolidColorBrush Color="White" x:Key="deviceMiniForeground"/>
-    <SolidColorBrush Color="Orange" x:Key="deviceMiniBackdrop"/>
+    <SolidColorBrush Color="#FFFF662D" x:Key="deviceMiniBackdrop"/>
     <SolidColorBrush Color="#151F2D" x:Key="deviceMiniBackground"/>
 
     <!-- Eff Variables Control -->
@@ -28,19 +28,19 @@
 
     <!-- Rocerding -->
     <SolidColorBrush Color="#151F2D" x:Key="RocerdingText"/>
-    <SolidColorBrush Color="Red" x:Key="RocerdingIcon"/>
+    <SolidColorBrush Color="#FFFF662D" x:Key="RocerdingIcon"/>
 
     <!-- Automate -->
     <SolidColorBrush Color="#151F2D" x:Key="AutomateText"/>
-    <SolidColorBrush Color="Orange" x:Key="AutomateAddButton"/>
-    <SolidColorBrush Color="OrangeRed" x:Key="AutomateClearButton"/>
-    <SolidColorBrush Color="Orange" x:Key="AutomateSaveButton"/>
-    <SolidColorBrush Color="Orange" x:Key="AutomateLoadButton"/>
-    <SolidColorBrush Color="Orange" x:Key="AutomateChart"/>
+    <SolidColorBrush Color="#FFFF662D" x:Key="AutomateAddButton"/>
+    <SolidColorBrush Color="#FFFF662D" x:Key="AutomateClearButton"/>
+    <SolidColorBrush Color="#FFFF662D" x:Key="AutomateSaveButton"/>
+    <SolidColorBrush Color="#FFFF662D" x:Key="AutomateLoadButton"/>
+    <SolidColorBrush Color="#FFFF662D" x:Key="AutomateChart"/>
     <SolidColorBrush Color="#151F2D" x:Key="AutomateChartText"/>
 
     <!-- ESC -->
-    <SolidColorBrush Color="Orange" x:Key="ESCButton"/>
+    <SolidColorBrush Color="#FFFF662D" x:Key="ESCButton"/>
     
     
 </ResourceDictionary>

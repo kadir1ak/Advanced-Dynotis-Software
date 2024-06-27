@@ -25,12 +25,12 @@
 
     <!-- Rocerding -->
     <SolidColorBrush Color="White" x:Key="RocerdingText"/>
-    <SolidColorBrush Color="Red" x:Key="RocerdingIcon"/>
+    <SolidColorBrush Color="#3A9FF3" x:Key="RocerdingIcon"/>
 
     <!-- Automate -->
     <SolidColorBrush Color="#151F2D" x:Key="AutomateText"/>
     <SolidColorBrush Color="#3A9FF3" x:Key="AutomateAddButton"/>
-    <SolidColorBrush Color="#FF296CA4" x:Key="AutomateClearButton"/>
+    <SolidColorBrush Color="#3A9FF3" x:Key="AutomateClearButton"/>
     <SolidColorBrush Color="#3A9FF3" x:Key="AutomateSaveButton"/>
     <SolidColorBrush Color="#3A9FF3" x:Key="AutomateLoadButton"/>
     <SolidColorBrush Color="#3A9FF3" x:Key="AutomateChart"/>
