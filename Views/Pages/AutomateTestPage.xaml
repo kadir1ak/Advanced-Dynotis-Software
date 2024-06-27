@@ -130,7 +130,7 @@
                                     <GridViewColumn Width="30">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <icon:PackIconMaterial Kind="VectorPolyline" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                <icon:PackIconMaterial Kind="ChartLine" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>

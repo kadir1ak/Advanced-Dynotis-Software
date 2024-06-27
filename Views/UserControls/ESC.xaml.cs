@@ -1,25 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Advanced_Dynotis_Software.ViewModels.UserControls;
 
 namespace Advanced_Dynotis_Software.Views.UserControls
 {
-    /// <summary>
-    /// ESC.xaml etkileşim mantığı
-    /// </summary>
     public partial class ESC : UserControl
     {
         public ESC()
@@ -28,9 +13,8 @@ namespace Advanced_Dynotis_Software.Views.UserControls
             DataContext = new ESCManager();
         }
 
-        private void Thumb_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
+        private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
         {
-            // Slider değerini güncelleyin
             var thumb = sender as Thumb;
             if (thumb != null)
             {
@@ -43,6 +27,5 @@ namespace Advanced_Dynotis_Software.Views.UserControls
                 }
             }
         }
-
     }
 }
