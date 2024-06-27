@@ -160,7 +160,7 @@
                         <Border Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Stretch">
                                 <Label Content="ESC: " FontWeight="Bold" VerticalAlignment="Center" FontSize="14" Foreground="{DynamicResource Text}"></Label>
-                                <uc:ESCControl Margin="10 10 10 10" />
+                                <uc:ESC Margin="10 10 10 10" />
                                 <icon:PackIconMaterial Kind="KeyboardCaps" Foreground="{DynamicResource ESCButton}" Margin="5 20 0 20" Height="35" Width="35" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 <icon:PackIconMaterial Kind="StopCircleOutline" Foreground="OrangeRed" Margin="10 20 0 20" Height="35" Width="35" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </StackPanel>
@@ -204,7 +204,7 @@
 
                         <Border Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="2 0 2 2" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
                             <StackPanel Grid.Row="0" Margin="5" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                <uc:EffVariablesControl />
+                                <uc:EffVariables/>
                             </StackPanel>
                         </Border>
 

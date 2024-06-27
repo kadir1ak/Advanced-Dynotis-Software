@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Advanced_Dynotis_Software.Views.UserControls
 {
     /// <summary>
-    /// Interaction logic for EffVariablesControl.xaml
+    /// ESC.xaml etkileşim mantığı
     /// </summary>
-    public partial class EffVariablesControl : UserControl
+    public partial class ESC : UserControl
     {
-        public EffVariablesControl()
+        public ESC()
         {
             InitializeComponent();
         }
