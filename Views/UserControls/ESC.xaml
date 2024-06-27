@@ -28,18 +28,19 @@
                             </Grid.RowDefinitions>
                             <Border Grid.Row="0" Height="6" Background="LightGray" CornerRadius="3"/>
                             <Border Grid.Row="0" Height="6" Background="{StaticResource GradientBrush}" CornerRadius="3"
-                                    HorizontalAlignment="Left"
-                                    Width="{Binding Path=Value, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ValueToWidthConverter}}"/>
+                            HorizontalAlignment="Left"
+                            Width="{Binding Path=Value, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ValueToWidthConverter}}"/>
                             <Thumb Grid.Row="0" Width="30" Height="30" Background="White"
-                                   BorderBrush="Gray" BorderThickness="1"
-                                   HorizontalAlignment="Left"
-                                   Margin="-15,0,0,0">
+                           BorderBrush="Gray" BorderThickness="1"
+                           HorizontalAlignment="Left"
+                           Margin="-15,0,0,0"
+                           DragDelta="Thumb_DragDelta">
                                 <Thumb.Template>
                                     <ControlTemplate TargetType="Thumb">
                                         <Grid>
                                             <Ellipse Fill="White" Stroke="Gray" StrokeThickness="1"/>
                                             <icon:PackIconMaterial Kind="Fire" Width="16" Height="16" Foreground="Red"
-                                                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Grid>
                                     </ControlTemplate>
                                 </Thumb.Template>
@@ -55,16 +56,27 @@
     </UserControl.Resources>
 
     <Grid>
-        <Slider Style="{StaticResource ModernSliderStyle}"
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Slider Grid.Column="0" Style="{StaticResource ModernSliderStyle}"
                 Minimum="0"
                 Maximum="100"
                 TickFrequency="5"
                 IsSnapToTickEnabled="True"
                 LargeChange="5"
-                Value="50"
+                Value="{Binding Speed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 Width="500"
                 Height="30"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center"/>
+        <Label Grid.Column="1" 
+               FontSize="16"
+               FontWeight="DemiBold"
+               Content="{Binding Speed}" 
+               VerticalAlignment="Center" 
+               HorizontalAlignment="Right" 
+               Margin="20"/>
     </Grid>
 </UserControl>
