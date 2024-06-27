@@ -33,7 +33,7 @@
     <!-- Automate -->
     <SolidColorBrush Color="#151F2D" x:Key="AutomateText"/>
     <SolidColorBrush Color="#FFFF662D" x:Key="AutomateAddButton"/>
-    <SolidColorBrush Color="#FFFF662D" x:Key="AutomateClearButton"/>
+    <SolidColorBrush Color="#FFFF7643" x:Key="AutomateClearButton"/>
     <SolidColorBrush Color="#FFFF662D" x:Key="AutomateSaveButton"/>
     <SolidColorBrush Color="#FFFF662D" x:Key="AutomateLoadButton"/>
     <SolidColorBrush Color="#FFFF662D" x:Key="AutomateChart"/>
