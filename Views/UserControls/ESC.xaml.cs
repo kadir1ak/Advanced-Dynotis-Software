@@ -39,5 +39,6 @@ namespace Advanced_Dynotis_Software.Views.UserControls
                 escManager.SliderActualWidth = slider.ActualWidth;
             }
         }
+
     }
 }

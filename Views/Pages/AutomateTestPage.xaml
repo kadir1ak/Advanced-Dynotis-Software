@@ -7,6 +7,7 @@
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:uc="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d"
              d:DesignHeight="650" d:DesignWidth="800">
@@ -24,7 +25,7 @@
 
         <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="10 10 10 0" BorderBrush="{DynamicResource PageBorder}" BorderThickness="1">
             <Grid>
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0">
                     <TextBlock Text="Automate Test Page" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource Text}"/>
                 </StackPanel>
             </Grid>
@@ -68,8 +69,8 @@
                                 </Style>
                             </TextBox.Style>
                         </TextBox>
-                        <Button Grid.Column="1" Content=" Add Point " Width="100" Command="{Binding AddRowCommand}" CommandParameter="{Binding Text, ElementName=addTimeTextBox}" Margin="2" Foreground="{DynamicResource AutomateText}" Background="{DynamicResource AutomateAddButton}"/>
-                        <Button Grid.Column="2" Content=" Clear All Points " Width="100" Command="{Binding ClearAllPointsCommand}" HorizontalAlignment="Right" Margin="2" Foreground="{DynamicResource AutomateText}" Background="{DynamicResource AutomateClearButton}"/>
+                        <Button Grid.Column="1" Content=" Add Point " VerticalAlignment="Center" Height="30" Width="100" Command="{Binding AddRowCommand}" CommandParameter="{Binding Text, ElementName=addTimeTextBox}" Margin="2" Foreground="{DynamicResource AutomateText}" Background="{DynamicResource AutomateAddButton}"/>
+                        <Button Grid.Column="2" Content=" Clear All Points " VerticalAlignment="Center" Height="30" Width="100" Command="{Binding ClearAllPointsCommand}" HorizontalAlignment="Right" Margin="2" Foreground="{DynamicResource AutomateText}" Background="{DynamicResource AutomateClearButton}"/>
                     </Grid>
                 </Border>
 
@@ -79,10 +80,14 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width= "*"/>
+                            <ColumnDefinition Width= "*"/>
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Content="Test ID:" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         <TextBox Grid.Column="1" x:Name="saveFileNameTextBox" Width="100" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                        <Button Grid.Column="2" Content=" Save " Width="100" Command="{Binding SaveSequenceCommand}" CommandParameter="{Binding Text, ElementName=saveFileNameTextBox}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10 0 10 0" Foreground="{DynamicResource AutomateText}" Background="{DynamicResource AutomateSaveButton}"/>
+                        <Button Grid.Column="2" Content=" Save " Height="30" Width="100" Command="{Binding SaveSequenceCommand}" CommandParameter="{Binding Text, ElementName=saveFileNameTextBox}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10 0 0 0" Foreground="{DynamicResource AutomateText}" Background="{DynamicResource AutomateSaveButton}"/>
+                        <Border Grid.Column="3" BorderBrush="{DynamicResource PageBorder}" BorderThickness="1" HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="3" >
+                            <uc:Record  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5"/>
+                        </Border>
                     </Grid>
                 </Border>
                 

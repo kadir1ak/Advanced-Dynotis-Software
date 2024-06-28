@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Advanced_Dynotis_Software.Views.UserControls
 {
     /// <summary>
-    /// Interaction logic for RocerdingButton.xaml
+    /// Record.xaml etkileşim mantığı
     /// </summary>
-    public partial class RocerdingButton : UserControl
+    public partial class Record : UserControl
     {
-        public RocerdingButton()
+        public Record()
         {
             InitializeComponent();
         }

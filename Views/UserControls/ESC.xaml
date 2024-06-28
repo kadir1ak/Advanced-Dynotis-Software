@@ -93,50 +93,15 @@
                HorizontalAlignment="Left" 
                Margin="5"/>
         <icon:PackIconMaterial Grid.Column="4" Margin="10" Height="30" Width="30" Kind="AlertOutline" Foreground="OrangeRed" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-        <Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Margin="10">
+        <Grid Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0"
-                    FontSize="12"
-                    FontWeight="DemiBold"
-                    VerticalAlignment="Center" 
-                    HorizontalAlignment="Left" 
-                    Margin="50 0 0 0"
-                    Command="{Binding EscLockCommand}">
-                <StackPanel Orientation="Horizontal">
-                    <icon:PackIconMaterial Kind="Lock" Width="16" Height="16" />
-                    <TextBlock Text="ESC Kilidi" Margin="5 0 0 0"/>
-                </StackPanel>
-            </Button>
-            <Button Grid.Column="1"
-                    FontSize="12"
-                    FontWeight="DemiBold"
-                    VerticalAlignment="Center" 
-                    HorizontalAlignment="Left" 
-                    Margin="10 0 0 0"
-                    Command="{Binding IncreaseByFiveCommand}">
-                <StackPanel Orientation="Horizontal">
-                    <icon:PackIconMaterial Kind="Plus" Width="16" Height="16" />
-                    <TextBlock Text="5er adım artır" Margin="5 0 0 0"/>
-                </StackPanel>
-            </Button>
-            <Button Grid.Column="2"
-                    FontSize="12"
-                    FontWeight="DemiBold"
-                    VerticalAlignment="Center" 
-                    HorizontalAlignment="Left" 
-                    Margin="10 0 0 0"
-                    Command="{Binding StopCommand}">
-                <StackPanel Orientation="Horizontal">
-                    <icon:PackIconMaterial Kind="StopCircle" Width="16" Height="16" />
-                    <TextBlock Text="Durdur (Sıfırla)" Margin="5 0 0 0"/>
-                </StackPanel>
-            </Button>
+            <local:GeneralButton VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="0" Icon="LockSolid" Text="ESC Lock" Command="{Binding EscLockCommand}"/>
+            <local:GeneralButton VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="1" Icon="PlusSolid" Text="Increase by 5" Command="{Binding IncreaseByFiveCommand}"/>
+            <local:GeneralButton VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="2" Icon="StopSolid" Text="Stop" Command="{Binding StopCommand}"/>
         </Grid>
     </Grid>
 </UserControl>

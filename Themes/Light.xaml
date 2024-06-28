@@ -26,10 +26,6 @@
     <SolidColorBrush Color="#151F2D" x:Key="EffVariablesControlText"/>
     <SolidColorBrush Color="#151F2D" x:Key="EffVariablesControlIcon"/>
 
-    <!-- Rocerding -->
-    <SolidColorBrush Color="#151F2D" x:Key="RocerdingText"/>
-    <SolidColorBrush Color="#FFFF662D" x:Key="RocerdingIcon"/>
-
     <!-- Automate -->
     <SolidColorBrush Color="#151F2D" x:Key="AutomateText"/>
     <SolidColorBrush Color="#FFFF662D" x:Key="AutomateAddButton"/>
@@ -41,6 +37,24 @@
 
     <!-- ESC -->
     <SolidColorBrush Color="#FFFF662D" x:Key="ESCButton"/>
-    
-    
+
+    <!-- GeneralButton -->
+    <SolidColorBrush Color="#FFFF7A2D" x:Key="GeneralButtonButton"/>
+    <SolidColorBrush Color="#FFFF7A2D" x:Key="GeneralButtonButtonBackdrop"/>
+    <SolidColorBrush Color="#FFF9A761" x:Key="GeneralButtonButtonTrigger"/>
+    <SolidColorBrush Color="#151F2D" x:Key="GeneralButtonText"/>
+    <SolidColorBrush Color="#FFF98B61" x:Key="GeneralButtonIconBackdrop"/>
+    <SolidColorBrush Color="#FFF9A761" x:Key="GeneralButtonIconTrigger"/>
+    <SolidColorBrush Color="#151F2D" x:Key="GeneralButtonIcon"/>
+
+    <!-- Record -->
+    <SolidColorBrush Color="#FFFF662D" x:Key="RecordButton"/>
+    <SolidColorBrush Color="#151F2D" x:Key="RecordText"/>
+    <SolidColorBrush Color="#FFDE3A2A" x:Key="RecordIcon"/>
+
+    <!-- Tare -->
+    <SolidColorBrush Color="#FFEB865B" x:Key="TareButton"/>
+    <SolidColorBrush Color="#151F2D" x:Key="TareText"/>
+    <SolidColorBrush Color="#151F2D" x:Key="TareIcon"/>
+
 </ResourceDictionary>
