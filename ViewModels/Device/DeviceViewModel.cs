@@ -125,6 +125,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
                 new LineSeries
                 {
                     Title = title,
+                    FontSize = 14,
                     Values = new ChartValues<double>(),
                     PointGeometrySize = 0,
                     LineSmoothness = 1,

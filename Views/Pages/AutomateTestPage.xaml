@@ -14,7 +14,7 @@
     <Grid Background="{DynamicResource Page}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="300"/>
+            <RowDefinition MinHeight="400"/>
             <RowDefinition Height="*" MinHeight="300"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -85,9 +85,6 @@
                         <Label Grid.Column="0" Content="Test ID:" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         <TextBox Grid.Column="1" x:Name="saveFileNameTextBox" Width="100" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                         <Button Grid.Column="2" Content=" Save " Height="30" Width="100" Command="{Binding SaveSequenceCommand}" CommandParameter="{Binding Text, ElementName=saveFileNameTextBox}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10 0 0 0" Foreground="{DynamicResource AutomateText}" Background="{DynamicResource AutomateSaveButton}"/>
-                        <Border Grid.Column="3" BorderBrush="{DynamicResource PageBorder}" BorderThickness="1" HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="3" >
-                            <uc:Record  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5"/>
-                        </Border>
                     </Grid>
                 </Border>
                 
@@ -122,14 +119,20 @@
                     </DataGrid>
                 </Border>
 
-
+     
+                
                 <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0 -2 0 0" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Left" MinWidth="200" Margin="5 5 0 0">
+                    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinWidth="200" Margin="5 5 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <ListView Grid.Row="0" ItemsSource="{Binding SavedTests}" SelectedItem="{Binding SelectedTest}" Foreground="#151F2D" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" FontSize="14" FontWeight="DemiBold" ScrollViewer.VerticalScrollBarVisibility="Auto" PreviewMouseWheel="ListBox_PreviewMouseWheel">
+                        
+                        <ListView Grid.Row="0" Grid.Column="0" ItemsSource="{Binding SavedTests}" SelectedItem="{Binding SelectedTest}" Foreground="#151F2D" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" FontSize="14" FontWeight="DemiBold" ScrollViewer.VerticalScrollBarVisibility="Auto" PreviewMouseWheel="ListBox_PreviewMouseWheel">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Width="30">
@@ -143,10 +146,14 @@
                                 </GridView>
                             </ListView.View>
                         </ListView>
-                        <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                             <Button Content=" Load " Width="100" Command="{Binding LoadSequenceCommand}" CommandParameter="{Binding SelectedTest}" Margin="10 10 10 5" Foreground="{DynamicResource AutomateText}" Background="{DynamicResource AutomateLoadButton}"/>
                             <Button Content=" Delete " Width="100" Command="{Binding DeleteSequenceCommand}" CommandParameter="{Binding SelectedTest}" Margin="10 0 10 5" Foreground="{DynamicResource AutomateText}" Background="{DynamicResource AutomateClearButton}"/>
                         </StackPanel>
+
+                        <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" BorderBrush="{DynamicResource PageBorder}" BorderThickness="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="3" >
+                            <uc:Record  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5"/>
+                        </Border>
                     </Grid>
                 </Border>
             </Grid>
