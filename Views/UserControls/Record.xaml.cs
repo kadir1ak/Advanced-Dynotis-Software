@@ -1,28 +1,48 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Advanced_Dynotis_Software.ViewModels.UserControls;
+using MahApps.Metro.IconPacks;
 
 namespace Advanced_Dynotis_Software.Views.UserControls
 {
-    /// <summary>
-    /// Record.xaml etkileşim mantığı
-    /// </summary>
     public partial class Record : UserControl
     {
+        private RecordManager _recordManager;
+
         public Record()
         {
             InitializeComponent();
+            _recordManager = new RecordManager();
+            _recordManager.TimeUpdated += RecordManager_TimeUpdated;
+        }
+
+        private void RecordManager_TimeUpdated(object sender, TimeSpan e)
+        {
+            RecordTimeTextBlock.Text = String.Format("{0:00}:{1:00}:{2:00}",
+                e.Hours, e.Minutes, e.Seconds);
+        }
+
+        private void RecordButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(_recordManager.FileName))
+            {
+                MessageBox.Show("Please enter a file name before starting the recording.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            _recordManager.ToggleRecording();
+            RecordButtonIcon.Kind = _recordManager.IsRecording
+                ? PackIconMaterialKind.StopCircleOutline
+                : PackIconMaterialKind.PlayCircleOutline;
+        }
+
+        private void FileNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                _recordManager.FileName = textBox.Text;
+            }
         }
     }
 }

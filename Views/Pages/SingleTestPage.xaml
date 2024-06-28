@@ -46,15 +46,15 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" BorderBrush="{DynamicResource PageBorder}" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="3">
-                    <Grid Margin="3">
+                    <Grid Margin="20 0 20 0" VerticalAlignment="Center">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <Label Grid.Row="0" Content="Device List" Foreground="{DynamicResource Text}" FontSize="14"/>
-                        <ComboBox Grid.Row="1" ItemsSource="{Binding AvailableDevices}" SelectedItem="{Binding SelectedDevice}" DisplayMemberPath="DeviceDisplayName"/>
-                        <Button Grid.Row="2" Content="Open" Command="{Binding ConnectCommand}" Margin="0,10,0,0"/>
+                        <Label Grid.Row="0" Content="Device List" Foreground="{DynamicResource Text}" FontSize="14" HorizontalAlignment="Center"/>
+                        <ComboBox Grid.Row="1" ItemsSource="{Binding AvailableDevices}" SelectedItem="{Binding SelectedDevice}" DisplayMemberPath="DeviceDisplayName" VerticalAlignment="Center"/>
+                        <Button Grid.Row="2" Content="Open" Command="{Binding ConnectCommand}" Margin="0,10,0,0" VerticalAlignment="Center"/>
                     </Grid>
                 </Border>
 

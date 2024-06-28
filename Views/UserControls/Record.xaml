@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
-             xmlns:ucManager="clr-namespace:Advanced_Dynotis_Software.ViewModels.UserControls"
              xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d">
     <UserControl.Resources>
@@ -20,22 +19,45 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Label Grid.Row="0" Grid.Column="1" FontSize="16" FontWeight="DemiBold" Content="Rocerding Test" Foreground="{DynamicResource RecordText}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        <icon:PackIconMaterial Grid.Row="0" Grid.Column="0" Kind="FileExcel" Foreground="Green" Margin="3" Height="35" Width="35" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3">
-            <Button Width="35" Height="35" Background="Transparent" BorderBrush="Transparent">
-                <icon:PackIconMaterial Kind="PlayCircleOutline" Width="30" Height="30" Foreground="{DynamicResource RecordButton}"/>
+        <Label Grid.Row="0" Grid.Column="1" FontSize="16" FontWeight="DemiBold" Content="Recording Test" Foreground="{DynamicResource RecordText}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+        <icon:PackIconMaterial Grid.Row="1" Grid.Column="0" Kind="FileExcel" Foreground="Green" Margin="3" Height="35" Width="35" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" FontSize="16" HorizontalAlignment="Stretch" Margin="3" ToolTip="Enter file name" Foreground="{DynamicResource AutomateText}" TextChanged="FileNameTextBox_TextChanged">
+            <TextBox.Style>
+                <Style TargetType="TextBox">
+                    <Style.Triggers>
+                        <Trigger Property="Text" Value="">
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <VisualBrush Stretch="None" AlignmentX="Left" AlignmentY="Center">
+                                        <VisualBrush.Visual>
+                                            <TextBlock Text="File Name" Foreground="Gray" VerticalAlignment="Center" />
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+
+        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3">
+            <Button Width="35" Height="35" Background="Transparent" BorderBrush="Transparent" Click="RecordButton_Click">
+                <icon:PackIconMaterial x:Name="RecordButtonIcon" Kind="PlayCircleOutline" Width="30" Height="30" Foreground="{DynamicResource RecordButton}"/>
             </Button>
-            <TextBlock Text="00:00:00" FontSize="16" Foreground="{DynamicResource RecordText}" VerticalAlignment="Center" Margin="10,0,0,0"/>
+            <TextBlock x:Name="RecordTimeTextBlock" Text="00:00:00" FontSize="16" Foreground="{DynamicResource RecordText}" VerticalAlignment="Center" Margin="10,0,0,0"/>
         </StackPanel>
-        <icon:PackIconMaterial Grid.Row="0" Grid.RowSpan="2" Grid.Column="3" 
+
+        <icon:PackIconMaterial Grid.Row="0" Grid.RowSpan="3" Grid.Column="3" 
                                Style="{StaticResource ToggleIconStyle}" 
-                               Kind="RecordRec"/>
+                               Kind="RecordRec" Margin="3 -10 3 0"/>
     </Grid>
 </UserControl>
