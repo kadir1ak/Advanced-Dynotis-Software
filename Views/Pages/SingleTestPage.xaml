@@ -53,7 +53,7 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Label Grid.Row="0" Content="Device List" Foreground="{DynamicResource Text}" FontSize="14" HorizontalAlignment="Center"/>
-                        <ComboBox Grid.Row="1" ItemsSource="{Binding AvailableDevices}" SelectedItem="{Binding SelectedDevice}" DisplayMemberPath="DeviceDisplayName" VerticalAlignment="Center"/>
+                        <ComboBox Grid.Row="1" Width="120" ItemsSource="{Binding AvailableDevices}" SelectedItem="{Binding SelectedDevice}" DisplayMemberPath="DeviceDisplayName" VerticalAlignment="Center"/>
                         <Button Grid.Row="2" Content="Open" Command="{Binding ConnectCommand}" Margin="0,10,0,0" VerticalAlignment="Center"/>
                     </Grid>
                 </Border>
@@ -61,7 +61,7 @@
                 <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="4" BorderBrush="{DynamicResource PageBorder}" BorderThickness="1" HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="3" >
                     <uc:Record  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5"/>
                 </Border>
-                
+
             </Grid>
         </Border>
 
@@ -94,55 +94,53 @@
 
 
                         <Border Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3 3 0 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                                <ContentControl Content="{Binding ConnectedDevice}">
-                                    <ContentControl.ContentTemplate>
-                                        <DataTemplate>
-                                            <Grid>
-                                                <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch">
-                                                    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                                                        <Grid.RowDefinitions>
-                                                            <RowDefinition Height="1*"/>
-                                                            <RowDefinition Height="1*"/>
-                                                            <RowDefinition Height="1*"/>
-                                                            <RowDefinition Height="1*"/>
-                                                            <RowDefinition Height="1*"/>
-                                                            <RowDefinition Height="1*"/>
-                                                            <RowDefinition Height="1*"/>
-                                                            <RowDefinition Height="1*"/>
-                                                        </Grid.RowDefinitions>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="Auto"/>
-                                                            <ColumnDefinition Width="1*"/>
-                                                        </Grid.ColumnDefinitions>
+                            <ContentControl Content="{Binding ConnectedDevice}">
+                                <ContentControl.ContentTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                                                <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="1*"/>
+                                                        <RowDefinition Height="1*"/>
+                                                        <RowDefinition Height="1*"/>
+                                                        <RowDefinition Height="1*"/>
+                                                        <RowDefinition Height="1*"/>
+                                                        <RowDefinition Height="1*"/>
+                                                        <RowDefinition Height="1*"/>
+                                                        <RowDefinition Height="1*"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="1*"/>
+                                                    </Grid.ColumnDefinitions>
 
-                                                        <TextBlock Text="Connected Device Information" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 0 0 0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="14" Foreground="{DynamicResource Text}" TextWrapping="WrapWithOverflow" />
+                                                    <TextBlock Text="Connected Device Information" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 0 0 0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="14" Foreground="{DynamicResource Text}" TextWrapping="WrapWithOverflow" />
 
-                                                        <TextBlock Text="PortName:" Grid.Row="1" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                                                        <TextBlock Text="Model:" Grid.Row="2" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                                                        <TextBlock Text="SeriNo:" Grid.Row="3" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                                                        <TextBlock Text="Firmware:" Grid.Row="4" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                                                        <TextBlock Text="Connection Status:" Grid.Row="5" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                                                        <TextBlock Text="Working Status:" Grid.Row="6" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                                                        <TextBlock Text="Error:" Grid.Row="7" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
+                                                    <TextBlock Text="PortName:" Grid.Row="1" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
+                                                    <TextBlock Text="Model:" Grid.Row="2" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
+                                                    <TextBlock Text="SeriNo:" Grid.Row="3" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
+                                                    <TextBlock Text="Firmware:" Grid.Row="4" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
+                                                    <TextBlock Text="Connection Status:" Grid.Row="5" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
+                                                    <TextBlock Text="Working Status:" Grid.Row="6" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
+                                                    <TextBlock Text="Error:" Grid.Row="7" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
 
-                                                        <TextBlock Text="{Binding Device.PortName}" Grid.Row="1" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                                                        <TextBlock Text="{Binding Device.Model}" Grid.Row="2" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                                                        <TextBlock Text="{Binding Device.SeriNo}" Grid.Row="3" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                                                        <TextBlock Text="{Binding Device.Firmware}" Grid.Row="4" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                                                        <TextBlock Text="{Binding Device.ConnectionStatus}" Grid.Row="5" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                                                        <TextBlock Text="{Binding Device.WorkingStatus}" Grid.Row="6" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                                                        <TextBlock Text="{Binding Device.Error}" Grid.Row="7" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                                                    </Grid>
-                                                </StackPanel>
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ContentControl.ContentTemplate>
-                                </ContentControl>
-                            </ScrollViewer>
+                                                    <TextBlock Text="{Binding Device.PortName}" Grid.Row="1" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
+                                                    <TextBlock Text="{Binding Device.Model}" Grid.Row="2" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
+                                                    <TextBlock Text="{Binding Device.SeriNo}" Grid.Row="3" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
+                                                    <TextBlock Text="{Binding Device.Firmware}" Grid.Row="4" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
+                                                    <TextBlock Text="{Binding Device.ConnectionStatus}" Grid.Row="5" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
+                                                    <TextBlock Text="{Binding Device.WorkingStatus}" Grid.Row="6" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
+                                                    <TextBlock Text="{Binding Device.Error}" Grid.Row="7" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
+                                                </Grid>
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ContentControl.ContentTemplate>
+                            </ContentControl>
                         </Border>
-                        
-              
+
+
 
                         <Grid Grid.Row="0" Grid.Column="1">
                             <Grid.RowDefinitions>
@@ -158,7 +156,7 @@
                                 <StackPanel>
                                     <uc:ESC/>
                                 </StackPanel>
-                            </Border>        
+                            </Border>
                         </Grid>
                         <Grid Grid.Row="0" Grid.Column="2">
                             <Grid.RowDefinitions>
@@ -176,7 +174,7 @@
                                 </StackPanel>
                             </Border>
                         </Grid>
-          
+
                     </Grid>
                 </Border>
 
@@ -206,7 +204,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                     
+
 
                         <Border Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="2 0 2 2" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
                             <StackPanel Grid.Row="0" Margin="5" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
