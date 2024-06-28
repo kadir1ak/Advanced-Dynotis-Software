@@ -69,6 +69,8 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Label Grid.Column="0" Grid.Row="0" Content="ESC: " FontWeight="Bold" VerticalAlignment="Center" FontSize="14" Foreground="{DynamicResource Text}"></Label>
+        <icon:PackIconMaterial Grid.Column="1" Grid.Row="0" Kind="LockAlert" Width="13" Height="13" Foreground="{DynamicResource AutomateClearButton}" 
+                               Visibility="{Binding IsLocked, Converter={x:Static ucManager:ESCManager.BooleanToVisibilityConverter}}"/>
         <Slider Grid.Column="1" Grid.Row="0" 
                 Style="{StaticResource ModernSliderStyle}"
                 Margin="20 0 10 0"
