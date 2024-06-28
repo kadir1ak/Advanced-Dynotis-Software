@@ -17,6 +17,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         public ESCManager()
         {
             _esc = new ESC();
+            IsLocked = true;
             EscLockCommand = new RelayCommand(_ => LockESC());
             IncreaseByFiveCommand = new RelayCommand(_ => IncreaseByFive());
             StopCommand = new RelayCommand(_ => Stop());
@@ -45,6 +46,10 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 {
                     _esc.IsLocked = value;
                     OnPropertyChanged(nameof(IsLocked));
+                    if (_esc.IsLocked)
+                    {
+                        Value = 0; // ESC değerini sıfırla
+                    }
                 }
             }
         }

@@ -37,6 +37,8 @@
 
     <!-- ESC -->
     <SolidColorBrush Color="#FFFF662D" x:Key="ESCButton"/>
+    <SolidColorBrush Color="OrangeRed" x:Key="ESCWarning"/>
+    <SolidColorBrush Color="OrangeRed" x:Key="ESCLockIcon"/>
 
     <!-- GeneralButton -->
     <SolidColorBrush Color="#FFFF7A2D" x:Key="GeneralButtonButton"/>
