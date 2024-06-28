@@ -89,7 +89,7 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="3*"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
 
@@ -167,7 +167,7 @@
                             </Grid.RowDefinitions>
                             <Border Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0 3 3 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
                                 <StackPanel Orientation="Vertical">
-                                    <uc:BatterySecurityLimits HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0"/>
+                                    <uc:BatterySecurityLimits HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10"/>
                                 </StackPanel>
                             </Border>
                             <Border Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0 3 3 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">

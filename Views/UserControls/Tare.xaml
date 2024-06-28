@@ -9,12 +9,12 @@
     <Grid Background="{DynamicResource Page}">
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
             <!-- Circle Background -->
-            <Grid Width="50" Height="50">
+            <Grid Width="35" Height="35">
                 <Ellipse Fill="{DynamicResource TareButton}" />
                 <!-- Icon -->
                 <icon:PackIconFontAwesome Kind="ScaleBalancedSolid" 
-                                          Width="30" 
-                                          Height="30" 
+                                          Width="25" 
+                                          Height="25" 
                                           HorizontalAlignment="Center" 
                                           VerticalAlignment="Center" 
                                           Foreground="{DynamicResource TareIcon}"/>
@@ -22,8 +22,8 @@
             <!-- Text -->
             <TextBlock Text="Tare" 
                        VerticalAlignment="Center" 
-                       Margin="10,0,0,0" 
-                       FontSize="24" 
+                       Margin="10,0,20,0" 
+                       FontSize="18" 
                        Foreground="{DynamicResource TareText}"/>
         </StackPanel>
     </Grid>

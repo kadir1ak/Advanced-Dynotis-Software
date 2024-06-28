@@ -53,7 +53,7 @@
     <SolidColorBrush Color="#FFDE3A2A" x:Key="RecordIcon"/>
 
     <!-- Tare -->
-    <SolidColorBrush Color="#FFEB865B" x:Key="TareButton"/>
+    <SolidColorBrush Color="#FF3AF389" x:Key="TareButton"/>
     <SolidColorBrush Color="#151F2D" x:Key="TareText"/>
     <SolidColorBrush Color="#151F2D" x:Key="TareIcon"/>
 
