@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using Advanced_Dynotis_Software.ViewModels.UserControls;
+using Advanced_Dynotis_Software.ViewModels.Managers;
 
 namespace Advanced_Dynotis_Software.Views.UserControls
 {

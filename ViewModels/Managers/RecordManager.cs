@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Windows.Threading;
 using Advanced_Dynotis_Software.Models.Record;
 
-namespace Advanced_Dynotis_Software.ViewModels.UserControls
+namespace Advanced_Dynotis_Software.ViewModels.Managers
 {
     public class RecordManager
     {

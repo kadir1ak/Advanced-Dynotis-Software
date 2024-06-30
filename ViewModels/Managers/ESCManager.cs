@@ -7,7 +7,7 @@ using System.Windows.Input;
 using Advanced_Dynotis_Software.Models.ESC;
 using Advanced_Dynotis_Software.Services.Helpers;
 
-namespace Advanced_Dynotis_Software.ViewModels.UserControls
+namespace Advanced_Dynotis_Software.ViewModels.Managers
 {
     public class ESCManager : INotifyPropertyChanged
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using Advanced_Dynotis_Software.ViewModels.UserControls;
+using Advanced_Dynotis_Software.ViewModels.Managers;
 using MahApps.Metro.IconPacks;
 
 namespace Advanced_Dynotis_Software.Views.UserControls
