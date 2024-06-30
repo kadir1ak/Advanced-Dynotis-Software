@@ -293,7 +293,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                         }
                     }
 
-                    await Task.Delay(10);
+                    await Task.Delay(1);
                 }
             }
             catch (Exception ex)
@@ -302,36 +302,30 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             }
         }
 
-        private static async Task<string> ReadLineAsync(SerialPort port, CancellationToken token)
+        private async Task<string> ReadLineAsync(SerialPort port, CancellationToken token)
         {
-            return await Task.Run(() =>
+            try
             {
-                try
-                {
-                    return port.ReadLine();
-                }
-                catch (Exception ex)
-                {
-                    Logger.Log($"ReadLine error: {ex.Message}");
-                    throw;
-                }
-            }, token);
+                return await Task.Run(() => port.ReadLine(), token);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log($"ReadLine error: {ex.Message}");
+                throw;
+            }
         }
 
-        private static async Task WriteLineAsync(SerialPort port, string message, CancellationToken token)
+        private async Task WriteLineAsync(SerialPort port, string message, CancellationToken token)
         {
-            await Task.Run(() =>
+            try
             {
-                try
-                {
-                    port.WriteLine(message);
-                }
-                catch (Exception ex)
-                {
-                    Logger.Log($"WriteLine error: {ex.Message}");
-                    throw;
-                }
-            }, token);
+                await Task.Run(() => port.WriteLine(message), token);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log($"WriteLine error: {ex.Message}");
+                throw;
+            }
         }
 
         private static double CalculateMagnitude(double x, double y, double z)

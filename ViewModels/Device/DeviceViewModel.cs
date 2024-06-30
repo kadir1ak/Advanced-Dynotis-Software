@@ -7,14 +7,13 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Threading;
 using Advanced_Dynotis_Software.Models.Dynotis;
 using LiveCharts;
 using LiveCharts.Wpf;
 
 namespace Advanced_Dynotis_Software.ViewModels.Device
 {
-    public class DeviceViewModel : INotifyPropertyChanged
+    public class DeviceViewModel : INotifyPropertyChanged, IDisposable
     {
         public InterfaceVariables InterfaceVariables { get; set; }
         private bool _isUpdatingInterfaceVariables;
@@ -48,8 +47,9 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
         private const int BufferLimit = 10;
         private const int MaxDataPoints = 100;
         private bool _isUpdatingChart;
-        private DispatcherTimer _chartUpdateTimer;
-        private DispatcherTimer _interfaceUpdateTimer;
+        private Task _chartUpdateTask;
+        private Task _interfaceUpdateTask;
+        private bool _isRunning;
 
         public Dynotis Device
         {
@@ -72,7 +72,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
                 Device = new Dynotis(portName);
                 InitializeDeviceAsync();
                 InitializeCharts();
-                InitializeTimers();
+                InitializeTasks();
             }
         }
 
@@ -128,53 +128,76 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
                     FontSize = 14,
                     Values = new ChartValues<double>(),
                     PointGeometrySize = 0,
-                    LineSmoothness = 1,
+                    LineSmoothness = 0, // Smoothing off
                     Stroke = new SolidColorBrush(color),
-                    StrokeThickness = 2,
-                    Fill = new SolidColorBrush(Color.FromArgb(10, color.R, color.G, color.B)),
-                    PointForeground = new SolidColorBrush(Colors.Black),
-                    LabelPoint = point => point.Y.ToString("N1")
+                    StrokeThickness = 1, // Reduce stroke thickness
+                    Fill = Brushes.Transparent, // No fill
+                    PointForeground = Brushes.Transparent // No points
                 }
             };
         }
 
-        private void InitializeTimers()
+        private void InitializeTasks()
         {
-            _chartUpdateTimer = new DispatcherTimer
-            {
-                Interval = TimeSpan.FromMilliseconds(1) // Chart update interval
-            };
-            _chartUpdateTimer.Tick += (sender, args) => UpdateChartData();
-
-            _interfaceUpdateTimer = new DispatcherTimer
-            {
-                Interval = TimeSpan.FromMilliseconds(50) // Interface update interval
-            };
-            _interfaceUpdateTimer.Tick += (sender, args) => UpdateInterfaceVariables();
-
-            _chartUpdateTimer.Start();
-            _interfaceUpdateTimer.Start();
+            _isRunning = true;
+            _chartUpdateTask = Task.Run(() => UpdateChartDataLoop());
+            _interfaceUpdateTask = Task.Run(() => UpdateInterfaceVariablesLoop());
         }
 
-        private void UpdateChartData()
+        private async void UpdateChartDataLoop()
         {
-            DynotisData dynotisData = null;
-            lock (_bufferLock)
+            while (_isRunning)
             {
-                if (_dynotisDataBuffer.Count > 0)
+                await Task.Delay(1); // Chart update interval
+
+                DynotisData dynotisData = null;
+                lock (_bufferLock)
                 {
-                    dynotisData = _dynotisDataBuffer.Dequeue();
+                    if (_dynotisDataBuffer.Count > 0)
+                    {
+                        dynotisData = _dynotisDataBuffer.Dequeue();
+                    }
+                }
+
+                if (dynotisData != null && !_isUpdatingChart)
+                {
+                    _isUpdatingChart = true;
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        UpdateChartData(dynotisData);
+                        _isUpdatingChart = false;
+                    });
                 }
             }
+        }
 
-            if (dynotisData != null && !_isUpdatingChart)
+        private async void UpdateInterfaceVariablesLoop()
+        {
+            while (_isRunning)
             {
-                _isUpdatingChart = true;
-                Application.Current.Dispatcher.Invoke(() =>
+                await Task.Delay(20); // Interface update interval (50Hz)
+
+                if (!_isUpdatingInterfaceVariables)
                 {
-                    UpdateChartData(dynotisData);
-                    _isUpdatingChart = false;
-                });
+                    DynotisData sensorData = null;
+                    lock (_bufferLock)
+                    {
+                        if (_dynotisDataBuffer.Count > 0)
+                        {
+                            sensorData = _dynotisDataBuffer.Dequeue();
+                        }
+                    }
+
+                    if (sensorData != null)
+                    {
+                        _isUpdatingInterfaceVariables = true;
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            InterfaceVariables.UpdateFrom(sensorData);
+                            _isUpdatingInterfaceVariables = false;
+                        });
+                    }
+                }
             }
         }
 
@@ -210,21 +233,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
             }
         }
 
-        private void UpdateInterfaceVariables()
-        {
-            if (!_isUpdatingInterfaceVariables && _dynotisDataBuffer.Count > 0)
-            {
-                _isUpdatingInterfaceVariables = true;
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    var sensorData = _dynotisDataBuffer.Dequeue();
-                    InterfaceVariables.UpdateFrom(sensorData);
-                    _isUpdatingInterfaceVariables = false;
-                });
-            }
-        }
-
-        private static void UpdateSeries(SeriesCollection seriesCollection, double value)
+        private void UpdateSeries(SeriesCollection seriesCollection, double value)
         {
             var values = ((LineSeries)seriesCollection[0]).Values;
             if (values.Count >= MaxDataPoints)
@@ -286,6 +295,11 @@ namespace Advanced_Dynotis_Software.ViewModels.Device
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void Dispose()
+        {
+            _isRunning = false;
         }
     }
 }
