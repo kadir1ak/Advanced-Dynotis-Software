@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Advanced_Dynotis_Software.Models.Dynotis;
 using Advanced_Dynotis_Software.Models.Serial;
-using Advanced_Dynotis_Software.ViewModels.Device;
+using Advanced_Dynotis_Software.ViewModels.Main;
 
 namespace Advanced_Dynotis_Software.Services
 {

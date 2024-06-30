@@ -11,7 +11,7 @@ using Advanced_Dynotis_Software.Models.Dynotis;
 using LiveCharts;
 using LiveCharts.Wpf;
 
-namespace Advanced_Dynotis_Software.ViewModels.Device
+namespace Advanced_Dynotis_Software.ViewModels.Main
 {
     public class DeviceViewModel : INotifyPropertyChanged, IDisposable
     {

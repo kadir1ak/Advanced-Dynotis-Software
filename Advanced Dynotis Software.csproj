@@ -13,7 +13,6 @@
     <Folder Include="Documents\Curser\" />
     <Folder Include="Documents\Icons\" />
     <Folder Include="Documents\Images\" />
-    <Folder Include="ViewModels\UserControls\" />
   </ItemGroup>
 
   <ItemGroup>

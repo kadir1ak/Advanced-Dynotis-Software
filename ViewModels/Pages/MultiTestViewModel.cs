@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Advanced_Dynotis_Software.ViewModels.Device;
+using Advanced_Dynotis_Software.ViewModels.Main;
 using Advanced_Dynotis_Software.Services;
 
 namespace Advanced_Dynotis_Software.ViewModels.Pages

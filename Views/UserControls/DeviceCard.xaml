@@ -4,11 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
-             xmlns:vmWindows="clr-namespace:Advanced_Dynotis_Software.ViewModels.Windows"
+             xmlns:vm="clr-namespace:Advanced_Dynotis_Software.ViewModels.Main"
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d" 
              xmlns:icon="http://schemas.fontawesome.io/icons/" 
-             d:DataContext="{d:DesignInstance Type=vmWindows:MainViewModel}" Background="{DynamicResource Page}"
+             d:DataContext="{d:DesignInstance Type=vm:MainViewModel}" Background="{DynamicResource Page}"
              Name="Card">
     <Grid>
         <Grid.ColumnDefinitions>

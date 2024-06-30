@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Advanced_Dynotis_Software"
              xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             xmlns:vmDevice="clr-namespace:Advanced_Dynotis_Software.ViewModels.Device"
+             xmlns:vm="clr-namespace:Advanced_Dynotis_Software.ViewModels.Main"
              xmlns:uc="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
              StartupUri="\Views\Windows\MainWindow.xaml">
     <Application.Resources>

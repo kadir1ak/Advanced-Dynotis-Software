@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Advanced_Dynotis_Software.Services;
 using Advanced_Dynotis_Software.Services.Helpers;
-using Advanced_Dynotis_Software.ViewModels.Device;
+using Advanced_Dynotis_Software.ViewModels.Main;
 
 namespace Advanced_Dynotis_Software.ViewModels.Pages
 {

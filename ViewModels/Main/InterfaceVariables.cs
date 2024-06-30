@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Advanced_Dynotis_Software.ViewModels.Device
+namespace Advanced_Dynotis_Software.ViewModels.Main
 {
     public class InterfaceVariables : INotifyPropertyChanged
     {
