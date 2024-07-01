@@ -283,6 +283,8 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                                 newData.PropellerArea = currentData.PropellerArea;
                                 newData.MotorInner = currentData.MotorInner;
                                 newData.NoLoadCurrents = currentData.NoLoadCurrents;
+                                newData.ESCValue = currentData.ESCValue;
+                                newData.ESCStatus = currentData.ESCStatus;
 
                                 DynotisData = newData;
 

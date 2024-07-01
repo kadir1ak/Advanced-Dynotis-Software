@@ -4,13 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
-             xmlns:ucManager="clr-namespace:Advanced_Dynotis_Software.ViewModels.Managers"
+             xmlns:conv="clr-namespace:Advanced_Dynotis_Software.Services.Helpers"
              xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d">
-    <UserControl.DataContext>
-        <ucManager:ESCManager x:Name="ESCManager"/>
-    </UserControl.DataContext>
-
     <UserControl.Resources>
         <!-- Gradient dolgu için fırça tanımı -->
         <LinearGradientBrush x:Key="GradientBrush" StartPoint="0,0.5" EndPoint="1,0.5">
@@ -31,7 +27,7 @@
                             <Border Grid.Row="0" Height="10" Background="LightGray" CornerRadius="3"/>
                             <Border Grid.Row="0" Height="10" Background="{StaticResource GradientBrush}" CornerRadius="3"
                                     HorizontalAlignment="Left"
-                                    Width="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.SliderWidth}"/>
+                                    Width="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=SliderWidth}"/>
                             <Thumb Grid.Row="0" Width="30" Height="30" Background="White"
                                    BorderBrush="Gray" BorderThickness="1"
                                    HorizontalAlignment="Left"
@@ -47,7 +43,7 @@
                                     </ControlTemplate>
                                 </Thumb.Template>
                                 <Thumb.RenderTransform>
-                                    <TranslateTransform X="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.ThumbPosition}"/>
+                                    <TranslateTransform X="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=ThumbPosition}"/>
                                 </Thumb.RenderTransform>
                             </Thumb>
                         </Grid>
@@ -55,6 +51,9 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <!-- BooleanToVisibilityConverter tanımı -->
+        <conv:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
 
     <Grid Background="{DynamicResource Page}">
@@ -69,8 +68,8 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <icon:PackIconMaterial Grid.Column="1" Grid.Row="0" Kind="LockAlert" Margin="-10 0 0 0" Width="17" Height="17" Foreground="{DynamicResource ESCLockIcon}" 
-                        Visibility="{Binding IsLocked, Converter={x:Static ucManager:ESCManager.BooleanToVisibilityConverter}}"/>
-        <Label Grid.Column="0" Grid.Row="0" Content="ESC:" Margin="0 12 0 0" FontWeight="Bold" VerticalAlignment="Center" FontSize="14" Foreground="{DynamicResource Text}"></Label>
+                        Visibility="{Binding IsLocked, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+        <Label Grid.Column="0" Grid.Row="0" Content="ESC:" Margin="0 12 0 0" FontWeight="Bold" VerticalAlignment="Center" FontSize="14" Foreground="{DynamicResource Text}"/>
         <Slider Grid.Column="1" Grid.Row="0" 
                 Style="{StaticResource ModernSliderStyle}"
                 Margin="15 15 10 0"
