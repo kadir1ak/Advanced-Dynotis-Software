@@ -39,6 +39,63 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 {
                     _connectedDevice = value;
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(UserPropellerArea));
+                    OnPropertyChanged(nameof(UserMotorInner));
+                    OnPropertyChanged(nameof(UserNoLoadCurrents));
+                }
+            }
+        }
+
+        private double _userPropellerArea;
+        public double UserPropellerArea
+        {
+            get => _userPropellerArea;
+            set
+            {
+                if (_userPropellerArea != value)
+                {
+                    _userPropellerArea = value;
+                    if (ConnectedDevice?.Device.DynotisData != null)
+                    {
+                        ConnectedDevice.Device.DynotisData.PropellerArea = value;
+                    }
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private double _userMotorInner;
+        public double UserMotorInner
+        {
+            get => _userMotorInner;
+            set
+            {
+                if (_userMotorInner != value)
+                {
+                    _userMotorInner = value;
+                    if (ConnectedDevice?.Device.DynotisData != null)
+                    {
+                        ConnectedDevice.Device.DynotisData.MotorInner = value;
+                    }
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private double _userNoLoadCurrents;
+        public double UserNoLoadCurrents
+        {
+            get => _userNoLoadCurrents;
+            set
+            {
+                if (_userNoLoadCurrents != value)
+                {
+                    _userNoLoadCurrents = value;
+                    if (ConnectedDevice?.Device.DynotisData != null)
+                    {
+                        ConnectedDevice.Device.DynotisData.NoLoadCurrents = value;
+                    }
+                    OnPropertyChanged();
                 }
             }
         }

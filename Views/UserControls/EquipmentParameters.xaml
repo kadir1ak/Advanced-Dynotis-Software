@@ -10,14 +10,13 @@
             <EventSetter Event="PreviewTextInput" Handler="NumericTextBox_PreviewTextInput"/>
         </Style>
     </UserControl.Resources>
-    <Grid >
-        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@               Parameter Panel           @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+    <Grid>
         <Viewbox HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Border BorderThickness="1" CornerRadius="0" BorderBrush="{DynamicResource Page}" Margin="0 0 0 0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="{DynamicResource Page}">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="Auto" Height="Auto" Margin="0">
                     <StackPanel Grid.Row="0" Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5">
                         <Label x:Name="PropellerAreaLabel" Content="Propeller Diameter (Inch)" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Center"/>
-                        <TextBox x:Name="PropellerAreaTextBox" Style="{StaticResource NumericTextBoxStyle}" Text="0.00" FontSize="14" Height="Auto" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1.5">
+                        <TextBox x:Name="PropellerAreaTextBox" Style="{StaticResource NumericTextBoxStyle}" Text="{Binding UserPropellerArea, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="Auto" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1.5">
                             <TextBox.ToolTip>
                                 <ToolTip>
                                     <ToolTip.Resources>
@@ -32,7 +31,7 @@
                     </StackPanel>
                     <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5">
                         <Label x:Name="MotorInnerLabel" Content="Internal Res. (mΩ)" FontSize="14" Foreground="{DynamicResource Text}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        <TextBox x:Name="MotorInnerTextBox" Style="{StaticResource NumericTextBoxStyle}" Text="0.00" FontSize="14" Height="Auto" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1.5">
+                        <TextBox x:Name="MotorInnerTextBox" Style="{StaticResource NumericTextBoxStyle}" Text="{Binding UserMotorInner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="Auto" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1.5">
                             <TextBox.ToolTip>
                                 <ToolTip>
                                     <ToolTip.Resources>
@@ -47,7 +46,7 @@
                     </StackPanel>
                     <StackPanel Grid.Row="2" Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5">
                         <Label x:Name="NoLoadCurrentsLabel" Content="No Load Current (A)" FontSize="14" Foreground="{DynamicResource Text}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        <TextBox x:Name="NoLoadCurrentsTextBox" Style="{StaticResource NumericTextBoxStyle}" Text="0.00" FontSize="14" Height="Auto" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1.5">
+                        <TextBox x:Name="NoLoadCurrentsTextBox" Style="{StaticResource NumericTextBoxStyle}" Text="{Binding UserNoLoadCurrents, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="Auto" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1.5">
                             <TextBox.ToolTip>
                                 <ToolTip>
                                     <ToolTip.Resources>

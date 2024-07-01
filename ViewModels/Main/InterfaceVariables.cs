@@ -2,251 +2,250 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Advanced_Dynotis_Software.ViewModels.Main
+public class InterfaceVariables : INotifyPropertyChanged
 {
-    public class InterfaceVariables : INotifyPropertyChanged
+    private int _time;
+    private double _sampleRate;
+    private double _ambientTemp;
+    private double _motorTemp;
+    private double _motorSpeed;
+    private double _thrust;
+    private double _torque;
+    private double _voltage;
+    private double _current;
+    private double _power;
+    private double _pressure;
+    private double _vibrationX;
+    private double _vibrationY;
+    private double _vibrationZ;
+    private double _vibration;
+    private double _windSpeed;
+    private double _windDirection;
+    private double _airDensity;
+
+    private double _propellerArea;
+    private double _motorInner;
+    private double _noLoadCurrents;
+    private double _maxCurrent;
+    private double _batteryLevel;
+    private double _escValue;
+    private bool _escStatus;
+    private string _saveFile;
+    private bool _saveStatus;
+    private string _testMode;
+
+    public int Time
     {
-        private int _time;
-        private double _sampleRate;
-        private double _ambientTemp;
-        private double _motorTemp;
-        private double _motorSpeed;
-        private double _thrust;
-        private double _torque;
-        private double _voltage;
-        private double _current;
-        private double _power;
-        private double _pressure;
-        private double _vibrationX;
-        private double _vibrationY;
-        private double _vibrationZ;
-        private double _vibration;
-        private double _windSpeed;
-        private double _windDirection;
-        private double _airDensity;
+        get => _time;
+        set => SetProperty(ref _time, value);
+    }
 
-        private double _propellerArea;
-        private double _motorInner;
-        private double _noLoadCurrents;
-        private double _maxCurrent;
-        private double _batteryLevel;
-        private double _escValue;
-        private bool   _escStatus;
-        private string _saveFile;
-        private bool   _saveStatus;
-        private string _testMode;
+    public double SampleRate
+    {
+        get => _sampleRate;
+        set => SetProperty(ref _sampleRate, value);
+    }
 
-        public int Time
-        {
-            get => _time;
-            set => SetProperty(ref _time, value);
-        }
+    public double AmbientTemp
+    {
+        get => _ambientTemp;
+        set => SetProperty(ref _ambientTemp, value);
+    }
 
-        public double SampleRate
-        {
-            get => _sampleRate;
-            set => SetProperty(ref _sampleRate, value);
-        }
+    public double MotorTemp
+    {
+        get => _motorTemp;
+        set => SetProperty(ref _motorTemp, value);
+    }
 
-        public double AmbientTemp
-        {
-            get => _ambientTemp;
-            set => SetProperty(ref _ambientTemp, value);
-        }
+    public double MotorSpeed
+    {
+        get => _motorSpeed;
+        set => SetProperty(ref _motorSpeed, value);
+    }
 
-        public double MotorTemp
-        {
-            get => _motorTemp;
-            set => SetProperty(ref _motorTemp, value);
-        }
+    public double Thrust
+    {
+        get => _thrust;
+        set => SetProperty(ref _thrust, value);
+    }
 
-        public double MotorSpeed
-        {
-            get => _motorSpeed;
-            set => SetProperty(ref _motorSpeed, value);
-        }
+    public double Torque
+    {
+        get => _torque;
+        set => SetProperty(ref _torque, value);
+    }
 
-        public double Thrust
-        {
-            get => _thrust;
-            set => SetProperty(ref _thrust, value);
-        }
+    public double Voltage
+    {
+        get => _voltage;
+        set => SetProperty(ref _voltage, value);
+    }
 
-        public double Torque
-        {
-            get => _torque;
-            set => SetProperty(ref _torque, value);
-        }
+    public double Current
+    {
+        get => _current;
+        set => SetProperty(ref _current, value);
+    }
 
-        public double Voltage
-        {
-            get => _voltage;
-            set => SetProperty(ref _voltage, value);
-        }
+    public double Power
+    {
+        get => _power;
+        set => SetProperty(ref _power, value);
+    }
 
-        public double Current
-        {
-            get => _current;
-            set => SetProperty(ref _current, value);
-        }
+    public double Pressure
+    {
+        get => _pressure;
+        set => SetProperty(ref _pressure, value);
+    }
 
-        public double Power
-        {
-            get => _power;
-            set => SetProperty(ref _power, value);
-        }
+    public double VibrationX
+    {
+        get => _vibrationX;
+        set => SetProperty(ref _vibrationX, value);
+    }
 
-        public double Pressure
-        {
-            get => _pressure;
-            set => SetProperty(ref _pressure, value);
-        }
+    public double VibrationY
+    {
+        get => _vibrationY;
+        set => SetProperty(ref _vibrationY, value);
+    }
 
-        public double VibrationX
-        {
-            get => _vibrationX;
-            set => SetProperty(ref _vibrationX, value);
-        }
+    public double VibrationZ
+    {
+        get => _vibrationZ;
+        set => SetProperty(ref _vibrationZ, value);
+    }
 
-        public double VibrationY
-        {
-            get => _vibrationY;
-            set => SetProperty(ref _vibrationY, value);
-        }
+    public double Vibration
+    {
+        get => _vibration;
+        set => SetProperty(ref _vibration, value);
+    }
 
-        public double VibrationZ
-        {
-            get => _vibrationZ;
-            set => SetProperty(ref _vibrationZ, value);
-        }
+    public double WindSpeed
+    {
+        get => _windSpeed;
+        set => SetProperty(ref _windSpeed, value);
+    }
 
-        public double Vibration
-        {
-            get => _vibration;
-            set => SetProperty(ref _vibration, value);
-        }
+    public double WindDirection
+    {
+        get => _windDirection;
+        set => SetProperty(ref _windDirection, value);
+    }
 
-        public double WindSpeed
-        {
-            get => _windSpeed;
-            set => SetProperty(ref _windSpeed, value);
-        }
+    public double AirDensity
+    {
+        get => _airDensity;
+        set => SetProperty(ref _airDensity, value);
+    }
 
-        public double WindDirection
-        {
-            get => _windDirection;
-            set => SetProperty(ref _windDirection, value);
-        }
+    public double PropellerArea
+    {
+        get => _propellerArea;
+        set => SetProperty(ref _propellerArea, value);
+    }
 
-        public double AirDensity
-        {
-            get => _airDensity;
-            set => SetProperty(ref _airDensity, value);
-        }
+    public double MotorInner
+    {
+        get => _motorInner;
+        set => SetProperty(ref _motorInner, value);
+    }
 
-        public double PropellerArea
-        {
-            get => _propellerArea;
-            set => SetProperty(ref _propellerArea, value);
-        }
+    public double NoLoadCurrents
+    {
+        get => _noLoadCurrents;
+        set => SetProperty(ref _noLoadCurrents, value);
+    }
 
-        public double MotorInner
-        {
-            get => _motorInner;
-            set => SetProperty(ref _motorInner, value);
-        }
+    public double MaxCurrent
+    {
+        get => _maxCurrent;
+        set => SetProperty(ref _maxCurrent, value);
+    }
 
-        public double NoLoadCurrents
-        {
-            get => _noLoadCurrents;
-            set => SetProperty(ref _noLoadCurrents, value);
-        }
+    public double BatteryLevel
+    {
+        get => _batteryLevel;
+        set => SetProperty(ref _batteryLevel, value);
+    }
 
-        public double MaxCurrent
-        {
-            get => _maxCurrent;
-            set => SetProperty(ref _maxCurrent, value);
-        }
+    public double ESCValue
+    {
+        get => _escValue;
+        set => SetProperty(ref _escValue, value);
+    }
 
-        public double BatteryLevel
-        {
-            get => _batteryLevel;
-            set => SetProperty(ref _batteryLevel, value);
-        }
+    public bool ESCStatus
+    {
+        get => _escStatus;
+        set => SetProperty(ref _escStatus, value);
+    }
 
-        public double ESCValue
-        {
-            get => _escValue;
-            set => SetProperty(ref _escValue, value);
-        }
+    public string SaveFile
+    {
+        get => _saveFile;
+        set => SetProperty(ref _saveFile, value);
+    }
 
-        public bool ESCStatus
-        {
-            get => _escStatus;
-            set => SetProperty(ref _escStatus, value);
-        }
+    public bool SaveStatus
+    {
+        get => _saveStatus;
+        set => SetProperty(ref _saveStatus, value);
+    }
 
-        public string SaveFile
-        {
-            get => _saveFile;
-            set => SetProperty(ref _saveFile, value);
-        }
+    public string TestMode
+    {
+        get => _testMode;
+        set => SetProperty(ref _testMode, value);
+    }
 
-        public bool SaveStatus
-        {
-            get => _saveStatus;
-            set => SetProperty(ref _saveStatus, value);
-        }
+    public void UpdateFrom(DynotisData data)
+    {
+        Time = data.Time;
+        SampleRate = data.SampleRate;
+        AmbientTemp = data.AmbientTemp;
+        MotorTemp = data.MotorTemp;
+        MotorSpeed = data.MotorSpeed;
+        Thrust = data.Thrust;
+        Torque = data.Torque;
+        Voltage = data.Voltage;
+        Current = data.Current;
+        Power = data.Power;
+        Pressure = data.Pressure;
+        VibrationX = data.VibrationX;
+        VibrationY = data.VibrationY;
+        VibrationZ = data.VibrationZ;
+        Vibration = data.Vibration;
+        WindSpeed = data.WindSpeed;
+        WindDirection = data.WindDirection;
+        AirDensity = data.AirDensity;
+        PropellerArea = data.PropellerArea;
+        MotorInner = data.MotorInner;
+        NoLoadCurrents = data.NoLoadCurrents;
+        MaxCurrent = data.MaxCurrent;
+        BatteryLevel = data.BatteryLevel;
+        ESCValue = data.ESCValue;
+        ESCStatus = data.ESCStatus;
+        SaveFile = data.SaveFile;
+        SaveStatus = data.SaveStatus;
+        TestMode = data.TestMode;
+    }
 
-        public string TestMode
-        {
-            get => _testMode;
-            set => SetProperty(ref _testMode, value);
-        }
-        public void UpdateFrom(DynotisData data)
-        {
-            Time = data.Time;
-            SampleRate = data.SampleRate;
-            AmbientTemp = data.AmbientTemp;
-            MotorTemp = data.MotorTemp;
-            MotorSpeed = data.MotorSpeed;
-            Thrust = data.Thrust;
-            Torque = data.Torque;
-            Voltage = data.Voltage;
-            Current = data.Current;
-            Power = data.Power;
-            Pressure = data.Pressure;
-            VibrationX = data.VibrationX;
-            VibrationY = data.VibrationY;
-            VibrationZ = data.VibrationZ;
-            Vibration = data.Vibration;
-            WindSpeed = data.WindSpeed;
-            WindDirection = data.WindDirection;
-            AirDensity = data.AirDensity;
-            PropellerArea = data.PropellerArea;
-            MotorInner = data.MotorInner;
-            NoLoadCurrents = data.NoLoadCurrents;
-            MaxCurrent = data.MaxCurrent;
-            BatteryLevel = data.BatteryLevel;
-            ESCValue = data.ESCValue;
-            ESCStatus = data.ESCStatus;
-            SaveFile = data.SaveFile;
-            SaveStatus = data.SaveStatus;
-            TestMode = data.TestMode;
-        }
+    public event PropertyChangedEventHandler PropertyChanged;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+    protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
 
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
-        {
-            if (Equals(field, value)) return false;
-            field = value;
-            OnPropertyChanged(propertyName);
-            return true;
-        }
+    protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+    {
+        if (Equals(field, value)) return false;
+        field = value;
+        OnPropertyChanged(propertyName);
+        return true;
     }
 }

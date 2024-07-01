@@ -279,6 +279,11 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
                             await Application.Current.Dispatcher.InvokeAsync(() =>
                             {
+                                var currentData = DynotisData;
+                                newData.PropellerArea = currentData.PropellerArea;
+                                newData.MotorInner = currentData.MotorInner;
+                                newData.NoLoadCurrents = currentData.NoLoadCurrents;
+
                                 DynotisData = newData;
 
                                 DynotisData.Vibration = CalculateMagnitude(newData.VibrationX, newData.VibrationY, newData.VibrationZ);
