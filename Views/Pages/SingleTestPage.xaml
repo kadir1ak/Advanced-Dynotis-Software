@@ -204,8 +204,6 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-
-
                         <Border Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="2 0 2 2" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
                             <StackPanel Grid.Row="0" Margin="5" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <uc:EffVariables/>
