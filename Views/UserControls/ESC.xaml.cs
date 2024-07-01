@@ -138,6 +138,7 @@ namespace Advanced_Dynotis_Software.Views.UserControls
                 if (!IsLocked)
                 {
                     double newValue = slider.Value + e.HorizontalChange / slider.ActualWidth * (slider.Maximum - slider.Minimum);
+                    newValue = Math.Round(newValue, 0);
                     slider.Value = Math.Max(slider.Minimum, Math.Min(slider.Maximum, newValue));
                 }
             }
