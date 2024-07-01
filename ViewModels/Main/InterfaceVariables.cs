@@ -24,15 +24,16 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         private double _windSpeed;
         private double _windDirection;
         private double _airDensity;
+
         private double _propellerArea;
         private double _motorInner;
         private double _noLoadCurrents;
         private double _maxCurrent;
         private double _batteryLevel;
         private double _escValue;
-        private string _csvFile;
-        private string _csvFileDirectory;
-        private int _saveSpeed;
+        private bool   _escStatus;
+        private string _saveFile;
+        private bool   _saveStatus;
         private string _testMode;
 
         public int Time
@@ -179,22 +180,22 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             set => SetProperty(ref _escValue, value);
         }
 
-        public string CsvFile
+        public bool ESCStatus
         {
-            get => _csvFile;
-            set => SetProperty(ref _csvFile, value);
+            get => _escStatus;
+            set => SetProperty(ref _escStatus, value);
         }
 
-        public string CsvFileDirectory
+        public string SaveFile
         {
-            get => _csvFileDirectory;
-            set => SetProperty(ref _csvFileDirectory, value);
+            get => _saveFile;
+            set => SetProperty(ref _saveFile, value);
         }
 
-        public int SaveSpeed
+        public bool SaveStatus
         {
-            get => _saveSpeed;
-            set => SetProperty(ref _saveSpeed, value);
+            get => _saveStatus;
+            set => SetProperty(ref _saveStatus, value);
         }
 
         public string TestMode
@@ -228,9 +229,9 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             MaxCurrent = data.MaxCurrent;
             BatteryLevel = data.BatteryLevel;
             ESCValue = data.ESCValue;
-            CsvFile = data.CsvFile;
-            CsvFileDirectory = data.CsvFileDirectory;
-            SaveSpeed = data.SaveSpeed;
+            ESCStatus = data.ESCStatus;
+            SaveFile = data.SaveFile;
+            SaveStatus = data.SaveStatus;
             TestMode = data.TestMode;
         }
 

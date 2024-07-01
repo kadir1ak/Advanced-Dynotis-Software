@@ -30,11 +30,49 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         private double _maxCurrent;
         private double _batteryLevel;
         private double _escValue;
-        private string _csvFile;
-        private string _csvFileDirectory;
-        private int _saveSpeed;
+        private bool   _escStatus;
+        private string _saveFile;
+        private bool   _saveStatus;
         private string _testMode;
 
+        public string SaveFile
+        {
+            get => _saveFile;
+            set
+            {
+                if (_saveFile != value)
+                {
+                    _saveFile = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool SaveStatus
+        {
+            get => _saveStatus;
+            set
+            {
+                if (_saveStatus != value)
+                {
+                    _saveStatus = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string TestMode
+        {
+            get => _testMode;
+            set
+            {
+                if (_testMode != value)
+                {
+                    _testMode = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public double PropellerArea
         {
             get => _propellerArea;
@@ -113,53 +151,14 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             }
         }
 
-        public string CsvFile
+        public bool ESCStatus
         {
-            get => _csvFile;
+            get => _escStatus;
             set
             {
-                if (_csvFile != value)
+                if (_escStatus != value)
                 {
-                    _csvFile = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public string CsvFileDirectory
-        {
-            get => _csvFileDirectory;
-            set
-            {
-                if (_csvFileDirectory != value)
-                {
-                    _csvFileDirectory = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public int SaveSpeed
-        {
-            get => _saveSpeed;
-            set
-            {
-                if (_saveSpeed != value)
-                {
-                    _saveSpeed = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public string TestMode
-        {
-            get => _testMode;
-            set
-            {
-                if (_testMode != value)
-                {
-                    _testMode = value;
+                    _escStatus = value;
                     OnPropertyChanged();
                 }
             }
