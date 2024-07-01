@@ -87,8 +87,9 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                     LineSmoothness = 0,
                     Stroke = new SolidColorBrush(color),
                     StrokeThickness = 1,
-                    Fill = Brushes.Transparent,
-                    PointForeground = Brushes.Transparent
+                    Fill = new SolidColorBrush(Color.FromArgb(10, color.R, color.G, color.B)),
+                    PointForeground = Brushes.Transparent,
+                    LabelPoint = point => point.Y.ToString("N1")
                 }
             };
         }

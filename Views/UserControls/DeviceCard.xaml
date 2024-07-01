@@ -188,14 +188,14 @@
             <lvc:CartesianChart.AxisX>
                 <lvc:Axis Title="Time" Labels="{Binding ChartViewModel.TimeLabels}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.XAxisFormatter}">
                     <lvc:Axis.Separator>
-                        <lvc:Separator Step="{Binding ChartViewModel.CurrentXAxisStep}"/>
+                        <lvc:Separator Step="{Binding ChartViewModel.CurrentXAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
                     </lvc:Axis.Separator>
                 </lvc:Axis>
             </lvc:CartesianChart.AxisX>
             <lvc:CartesianChart.AxisY>
                 <lvc:Axis Title="Current (A)" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.YAxisFormatter}">
                     <lvc:Axis.Separator>
-                        <lvc:Separator Step="{Binding ChartViewModel.CurrentYAxisStep}"/>
+                        <lvc:Separator Step="{Binding ChartViewModel.CurrentYAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
                     </lvc:Axis.Separator>
                 </lvc:Axis>
             </lvc:CartesianChart.AxisY>
@@ -206,14 +206,14 @@
             <lvc:CartesianChart.AxisX>
                 <lvc:Axis Title="Time" Labels="{Binding ChartViewModel.TimeLabels}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.XAxisFormatter}">
                     <lvc:Axis.Separator>
-                        <lvc:Separator Step="{Binding ChartViewModel.VoltageXAxisStep}"/>
+                        <lvc:Separator Step="{Binding ChartViewModel.VoltageXAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
                     </lvc:Axis.Separator>
                 </lvc:Axis>
             </lvc:CartesianChart.AxisX>
             <lvc:CartesianChart.AxisY>
                 <lvc:Axis Title="Voltage (V)" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.YAxisFormatter}">
                     <lvc:Axis.Separator>
-                        <lvc:Separator Step="{Binding ChartViewModel.VoltageYAxisStep}"/>
+                        <lvc:Separator Step="{Binding ChartViewModel.VoltageYAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
                     </lvc:Axis.Separator>
                 </lvc:Axis>
             </lvc:CartesianChart.AxisY>
@@ -224,14 +224,14 @@
             <lvc:CartesianChart.AxisX>
                 <lvc:Axis Title="Time" Labels="{Binding ChartViewModel.TimeLabels}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.XAxisFormatter}">
                     <lvc:Axis.Separator>
-                        <lvc:Separator Step="{Binding ChartViewModel.VibrationXAxisStep}"/>
+                        <lvc:Separator Step="{Binding ChartViewModel.VibrationXAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
                     </lvc:Axis.Separator>
                 </lvc:Axis>
             </lvc:CartesianChart.AxisX>
             <lvc:CartesianChart.AxisY>
                 <lvc:Axis Title="Vibration (g)" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.YAxisFormatter}">
                     <lvc:Axis.Separator>
-                        <lvc:Separator Step="{Binding ChartViewModel.VibrationYAxisStep}"/>
+                        <lvc:Separator Step="{Binding ChartViewModel.VibrationYAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
                     </lvc:Axis.Separator>
                 </lvc:Axis>
             </lvc:CartesianChart.AxisY>
@@ -242,14 +242,14 @@
             <lvc:CartesianChart.AxisX>
                 <lvc:Axis Title="Time" Labels="{Binding ChartViewModel.TimeLabels}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.XAxisFormatter}">
                     <lvc:Axis.Separator>
-                        <lvc:Separator Step="{Binding ChartViewModel.MotorSpeedXAxisStep}"/>
+                        <lvc:Separator Step="{Binding ChartViewModel.MotorSpeedXAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
                     </lvc:Axis.Separator>
                 </lvc:Axis>
             </lvc:CartesianChart.AxisX>
             <lvc:CartesianChart.AxisY>
                 <lvc:Axis Title="Motor Speed (RPM)" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.YAxisFormatter}">
                     <lvc:Axis.Separator>
-                        <lvc:Separator Step="{Binding ChartViewModel.MotorSpeedYAxisStep}"/>
+                        <lvc:Separator Step="{Binding ChartViewModel.MotorSpeedYAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
                     </lvc:Axis.Separator>
                 </lvc:Axis>
             </lvc:CartesianChart.AxisY>
@@ -260,14 +260,14 @@
             <lvc:CartesianChart.AxisX>
                 <lvc:Axis Title="Time" Labels="{Binding ChartViewModel.TimeLabels}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.XAxisFormatter}">
                     <lvc:Axis.Separator>
-                        <lvc:Separator Step="{Binding ChartViewModel.TorqueXAxisStep}"/>
+                        <lvc:Separator Step="{Binding ChartViewModel.TorqueXAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
                     </lvc:Axis.Separator>
                 </lvc:Axis>
             </lvc:CartesianChart.AxisX>
             <lvc:CartesianChart.AxisY>
                 <lvc:Axis Title="Torque (Nmm)" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.YAxisFormatter}">
                     <lvc:Axis.Separator>
-                        <lvc:Separator Step="{Binding ChartViewModel.TorqueYAxisStep}"/>
+                        <lvc:Separator Step="{Binding ChartViewModel.TorqueYAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
                     </lvc:Axis.Separator>
                 </lvc:Axis>
             </lvc:CartesianChart.AxisY>
@@ -278,14 +278,14 @@
             <lvc:CartesianChart.AxisX>
                 <lvc:Axis Title="Time" Labels="{Binding ChartViewModel.TimeLabels}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.XAxisFormatter}">
                     <lvc:Axis.Separator>
-                        <lvc:Separator Step="{Binding ChartViewModel.ThrustXAxisStep}"/>
+                        <lvc:Separator Step="{Binding ChartViewModel.ThrustXAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
                     </lvc:Axis.Separator>
                 </lvc:Axis>
             </lvc:CartesianChart.AxisX>
             <lvc:CartesianChart.AxisY>
                 <lvc:Axis Title="Thrust (N)" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.YAxisFormatter}">
                     <lvc:Axis.Separator>
-                        <lvc:Separator Step="{Binding ChartViewModel.ThrustYAxisStep}"/>
+                        <lvc:Separator Step="{Binding ChartViewModel.ThrustYAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
                     </lvc:Axis.Separator>
                 </lvc:Axis>
             </lvc:CartesianChart.AxisY>

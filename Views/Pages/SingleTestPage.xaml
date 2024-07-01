@@ -144,7 +144,7 @@
 
                         <Grid Grid.Row="0" Grid.Column="1">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <Border Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">

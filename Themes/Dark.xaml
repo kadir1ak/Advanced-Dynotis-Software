@@ -51,6 +51,9 @@
     <SolidColorBrush Color="White" x:Key="RecordText"/>
     <SolidColorBrush Color="#FF3A78F3" x:Key="RecordIcon"/>
 
+    <!-- Chart -->
+    <SolidColorBrush Color="LightGray" x:Key="ChartSeparator"/>
+    
     <!-- Tare -->
     <SolidColorBrush Color="#FF3A78F3" x:Key="TareButton"/>
     <SolidColorBrush Color="White" x:Key="TareText"/>
