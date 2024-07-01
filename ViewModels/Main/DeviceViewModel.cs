@@ -20,9 +20,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         public string DeviceDisplayName => $"{Device.Model} - {Device.SeriNo}";
 
         private Dynotis _device;
-        private Queue<DynotisData> _dynotisDataBuffer;
-        private readonly object _bufferLock = new();
-        private const int BufferLimit = 10;
+        private DynotisData _latestDynotisData;
+        private readonly object _dataLock = new();
         private CancellationTokenSource _cancellationTokenSource;
 
         public Dynotis Device
@@ -45,7 +44,6 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                 InterfaceVariables = new InterfaceVariables();
                 Device = new Dynotis(portName);
                 ChartViewModel = new ChartViewModel();
-                _dynotisDataBuffer = new Queue<DynotisData>();
                 _cancellationTokenSource = new CancellationTokenSource();
 
                 Device.PropertyChanged += Device_PropertyChanged;
@@ -70,23 +68,21 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         {
             while (!token.IsCancellationRequested)
             {
-                await Task.Delay(1);
+                await Task.Delay(1); // 1000Hz
 
-                DynotisData dynotisData = null;
-                lock (_bufferLock)
+                DynotisData latestData;
+                lock (_dataLock)
                 {
-                    if (_dynotisDataBuffer.Count > 0)
-                    {
-                        dynotisData = _dynotisDataBuffer.Dequeue();
-                    }
+                    latestData = _latestDynotisData;
+                    _latestDynotisData = null;
                 }
 
-                if (dynotisData != null)
+                if (latestData != null)
                 {
-                    Application.Current.Dispatcher.Invoke(() =>
+                    Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        ChartViewModel.UpdateChartData(dynotisData);
-                    });
+                        ChartViewModel.UpdateChartData(latestData);
+                    }));
                 }
             }
         }
@@ -95,23 +91,20 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         {
             while (!token.IsCancellationRequested)
             {
-                await Task.Delay(20); // Interface update interval (50Hz)
+                await Task.Delay(20); // 50Hz
 
-                DynotisData sensorData = null;
-                lock (_bufferLock)
+                DynotisData latestData;
+                lock (_dataLock)
                 {
-                    if (_dynotisDataBuffer.Count > 0)
-                    {
-                        sensorData = _dynotisDataBuffer.Dequeue();
-                    }
+                    latestData = _latestDynotisData;
                 }
 
-                if (sensorData != null)
+                if (latestData != null)
                 {
-                    Application.Current.Dispatcher.Invoke(() =>
+                    Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        InterfaceVariables.UpdateFrom(sensorData);
-                    });
+                        InterfaceVariables.UpdateFrom(latestData);
+                    }));
                 }
             }
         }
@@ -120,13 +113,9 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         {
             if (e.PropertyName == nameof(Dynotis.DynotisData))
             {
-                lock (_bufferLock)
+                lock (_dataLock)
                 {
-                    if (_dynotisDataBuffer.Count >= BufferLimit)
-                    {
-                        _dynotisDataBuffer.Dequeue();
-                    }
-                    _dynotisDataBuffer.Enqueue(Device.DynotisData);
+                    _latestDynotisData = Device.DynotisData;
                 }
             }
         }
