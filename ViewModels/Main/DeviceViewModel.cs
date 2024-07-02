@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Advanced_Dynotis_Software.Models.Dynotis;
+using Advanced_Dynotis_Software.ViewModels.UserControls;
 
 namespace Advanced_Dynotis_Software.ViewModels.Main
 {
@@ -32,6 +31,21 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                 if (_device != value)
                 {
                     _device = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(Device.DynotisData)); // Notify when the device changes
+                }
+            }
+        }
+
+        private EquipmentParametersViewModel _equipmentParametersViewModel;
+        public EquipmentParametersViewModel EquipmentParametersViewModel
+        {
+            get => _equipmentParametersViewModel;
+            set
+            {
+                if (_equipmentParametersViewModel != value)
+                {
+                    _equipmentParametersViewModel = value;
                     OnPropertyChanged();
                 }
             }
@@ -116,6 +130,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                 lock (_dataLock)
                 {
                     _latestDynotisData = Device.DynotisData;
+                    OnPropertyChanged(nameof(Device.DynotisData)); // Notify when DynotisData changes
                 }
             }
         }

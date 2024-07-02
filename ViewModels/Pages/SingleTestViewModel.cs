@@ -1,12 +1,14 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
+﻿using Advanced_Dynotis_Software.ViewModels.Managers;
+using Advanced_Dynotis_Software.ViewModels.UserControls;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Advanced_Dynotis_Software.Services;
 using Advanced_Dynotis_Software.Services.Helpers;
 using Advanced_Dynotis_Software.ViewModels.Main;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using Advanced_Dynotis_Software.Models.Dynotis;
 
 namespace Advanced_Dynotis_Software.ViewModels.Pages
 {
@@ -14,25 +16,15 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
     {
         private DeviceViewModel _selectedDevice;
         private DeviceViewModel _connectedDevice;
-        private double _userPropellerArea;
-        private double _userMotorInner;
-        private double _userNoLoadCurrents;
-        private double _userESCValue;
-        private string _userESCStatus;
+        private EquipmentParametersManager _equipmentParametersManager;
+        private EquipmentParametersViewModel _currentEquipmentParameters;
 
         public ObservableCollection<DeviceViewModel> AvailableDevices { get; }
 
         public DeviceViewModel SelectedDevice
         {
             get => _selectedDevice;
-            set
-            {
-                if (_selectedDevice != value)
-                {
-                    _selectedDevice = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _selectedDevice, value);
         }
 
         public DeviceViewModel ConnectedDevice
@@ -40,99 +32,43 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             get => _connectedDevice;
             set
             {
-                if (_connectedDevice != value)
+                if (SetProperty(ref _connectedDevice, value))
                 {
-                    _connectedDevice = value;
-                    OnPropertyChanged();
-                    OnPropertyChanged(nameof(UserPropellerArea));
-                    OnPropertyChanged(nameof(UserMotorInner));
-                    OnPropertyChanged(nameof(UserNoLoadCurrents));
-                    OnPropertyChanged(nameof(UserESCStatus));
-                    OnPropertyChanged(nameof(UserESCValue));
+                    if (_connectedDevice != null)
+                    {
+                        _connectedDevice.Device.PropertyChanged += (sender, e) =>
+                        {
+                            if (e.PropertyName == nameof(Dynotis.DynotisData))
+                            {
+                                OnPropertyChanged(nameof(ConnectedDevice.Device.DynotisData));
+                            }
+                        };
+                    }
                 }
             }
         }
 
-        public double UserPropellerArea
+        public EquipmentParametersViewModel CurrentEquipmentParameters
         {
-            get => _userPropellerArea;
+            get => _currentEquipmentParameters;
             set
             {
-                if (_userPropellerArea != value)
+                if (SetProperty(ref _currentEquipmentParameters, value))
                 {
-                    _userPropellerArea = value;
-                    if (ConnectedDevice?.Device.DynotisData != null)
+                    // Ensure the data is updated when the EquipmentParametersViewModel changes
+                    CurrentEquipmentParameters.PropertyChanged += (sender, e) =>
                     {
-                        ConnectedDevice.Device.DynotisData.PropellerArea = value;
-                    }
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public double UserMotorInner
-        {
-            get => _userMotorInner;
-            set
-            {
-                if (_userMotorInner != value)
-                {
-                    _userMotorInner = value;
-                    if (ConnectedDevice?.Device.DynotisData != null)
-                    {
-                        ConnectedDevice.Device.DynotisData.MotorInner = value;
-                    }
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public double UserNoLoadCurrents
-        {
-            get => _userNoLoadCurrents;
-            set
-            {
-                if (_userNoLoadCurrents != value)
-                {
-                    _userNoLoadCurrents = value;
-                    if (ConnectedDevice?.Device.DynotisData != null)
-                    {
-                        ConnectedDevice.Device.DynotisData.NoLoadCurrents = value;
-                    }
-                    OnPropertyChanged();
-                }
-            }
-        }
-        public double UserESCValue
-        {
-            get => _userESCValue;
-            set
-            {
-                if (_userESCValue != value)
-                {
-                    _userESCValue = value;
-                    if (ConnectedDevice?.Device.DynotisData != null)
-                    {
-                        ConnectedDevice.Device.DynotisData.ESCValue = value;
-                    }
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public string UserESCStatus
-        {
-            get => _userESCStatus;
-            set
-            {
-                if (_userESCStatus != value)
-                {
-                    _userESCStatus = value;
-                    if (ConnectedDevice?.Device.DynotisData != null)
-                    {
-                        ConnectedDevice.Device.DynotisData.ESCStatus = value;
-                    }
-                    OnPropertyChanged();
+                        if (e.PropertyName == nameof(EquipmentParametersViewModel.UserPropellerArea) ||
+                            e.PropertyName == nameof(EquipmentParametersViewModel.UserMotorInner) ||
+                            e.PropertyName == nameof(EquipmentParametersViewModel.UserNoLoadCurrents))
+                        {
+                            ConnectedDevice.Device.DynotisData.PropellerArea = CurrentEquipmentParameters.UserPropellerArea;
+                            ConnectedDevice.Device.DynotisData.MotorInner = CurrentEquipmentParameters.UserMotorInner;
+                            ConnectedDevice.Device.DynotisData.NoLoadCurrents = CurrentEquipmentParameters.UserNoLoadCurrents;
+                            // Trigger PropertyChanged event for the entire DynotisData object
+                            ConnectedDevice.Device.OnPropertyChanged(nameof(DynotisData));
+                        }
+                    };
                 }
             }
         }
@@ -143,6 +79,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         {
             AvailableDevices = new ObservableCollection<DeviceViewModel>(DeviceManager.Instance.GetAllDevices());
             ConnectCommand = new RelayCommand(async _ => await ConnectToDeviceAsync());
+            _equipmentParametersManager = new EquipmentParametersManager();
 
             DeviceManager.Instance.DeviceDisconnected += OnDeviceDisconnected;
             DeviceManager.Instance.DeviceConnected += OnDeviceConnected;
@@ -154,6 +91,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
 
             await DeviceManager.Instance.ConnectToDeviceAsync(SelectedDevice.Device.PortName);
             ConnectedDevice = SelectedDevice;
+
+            CurrentEquipmentParameters = _equipmentParametersManager.GetEquipmentParametersViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData);
         }
 
         private void OnDeviceDisconnected(DeviceViewModel device)
@@ -161,6 +100,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             if (ConnectedDevice == device)
             {
                 ConnectedDevice = null;
+                CurrentEquipmentParameters = null;
             }
             RefreshAvailableDevices();
         }
@@ -186,9 +126,18 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (Equals(storage, value)) return false;
+            storage = value;
+            OnPropertyChanged(propertyName);
+            return true;
         }
     }
 }

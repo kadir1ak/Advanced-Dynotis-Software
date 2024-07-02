@@ -157,10 +157,15 @@
                                                 <RowDefinition Height="Auto"/>
                                             </Grid.RowDefinitions>
                                             <Border Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                                                <StackPanel>
-                                                    <uc:EquipmentParameters/>
-                                                </StackPanel>
+                                                <ContentControl Content="{Binding CurrentEquipmentParameters}">
+                                                    <ContentControl.ContentTemplate>
+                                                        <DataTemplate>
+                                                            <uc:EquipmentParameters HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"/>
+                                                        </DataTemplate>
+                                                    </ContentControl.ContentTemplate>
+                                                </ContentControl>
                                             </Border>
+
                                             <Border Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
                                                 <StackPanel>
                                                     <uc:ESC/>
@@ -267,9 +272,13 @@
                                                 <RowDefinition Height="Auto"/>
                                             </Grid.RowDefinitions>
                                             <Border Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                                                <StackPanel>
-                                                    <uc:EquipmentParameters/>
-                                                </StackPanel>
+                                                <ContentControl Content="{Binding CurrentEquipmentParameters}">
+                                                    <ContentControl.ContentTemplate>
+                                                        <DataTemplate>
+                                                            <uc:EquipmentParameters HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"/>
+                                                        </DataTemplate>
+                                                    </ContentControl.ContentTemplate>
+                                                </ContentControl>
                                             </Border>
                                             <Border Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
                                                 <StackPanel>

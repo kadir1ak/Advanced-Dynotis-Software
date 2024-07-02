@@ -279,7 +279,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
                             await Application.Current.Dispatcher.InvokeAsync(() =>
                             {
-                                var currentData = DynotisData;
+                                var currentData = DynotisData; 
                                 newData.PropellerArea = currentData.PropellerArea;
                                 newData.MotorInner = currentData.MotorInner;
                                 newData.NoLoadCurrents = currentData.NoLoadCurrents;
@@ -340,7 +340,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             return Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2) + Math.Pow(z, 2));
         }
 
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        public void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

@@ -8,6 +8,8 @@ using System.Windows.Input;
 using Advanced_Dynotis_Software.Services;
 using Advanced_Dynotis_Software.Services.Helpers;
 using Advanced_Dynotis_Software.ViewModels.Main;
+using Advanced_Dynotis_Software.ViewModels.Managers;
+using Advanced_Dynotis_Software.ViewModels.UserControls;
 
 namespace Advanced_Dynotis_Software.ViewModels.Pages
 {
@@ -17,6 +19,11 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         private DeviceViewModel _selectedDeviceTwo;
         private DeviceViewModel _connectedOneDevice;
         private DeviceViewModel _connectedTwoDevice;
+
+        private EquipmentParametersManager _equipmentParametersManagerOne;
+        private EquipmentParametersManager _equipmentParametersManagerTwo;
+        private EquipmentParametersViewModel _currentEquipmentParametersOne;
+        private EquipmentParametersViewModel _currentEquipmentParametersTwo;
 
         public ObservableCollection<DeviceViewModel> AvailableDevicesOne { get; private set; }
         public ObservableCollection<DeviceViewModel> AvailableDevicesTwo { get; private set; }
@@ -81,6 +88,18 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             }
         }
 
+        public EquipmentParametersViewModel CurrentEquipmentParametersOne
+        {
+            get => _currentEquipmentParametersOne;
+            set => SetProperty(ref _currentEquipmentParametersOne, value);
+        }
+
+        public EquipmentParametersViewModel CurrentEquipmentParametersTwo
+        {
+            get => _currentEquipmentParametersTwo;
+            set => SetProperty(ref _currentEquipmentParametersTwo, value);
+        }
+
         public ICommand ConnectCommand { get; }
 
         public CoaxialTestViewModel()
@@ -88,6 +107,9 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             AvailableDevicesOne = new ObservableCollection<DeviceViewModel>(DeviceManager.Instance.GetAllDevices());
             AvailableDevicesTwo = new ObservableCollection<DeviceViewModel>(DeviceManager.Instance.GetAllDevices());
             ConnectCommand = new RelayCommand(ConnectToDevice);
+
+            _equipmentParametersManagerOne = new EquipmentParametersManager();
+            _equipmentParametersManagerTwo = new EquipmentParametersManager();
 
             DeviceManager.Instance.DeviceDisconnected += OnDeviceDisconnected;
             DeviceManager.Instance.DeviceConnected += OnDeviceConnected;
@@ -122,10 +144,12 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             if (deviceViewModel == SelectedDeviceOne)
             {
                 ConnectedOneDevice = SelectedDeviceOne;
+                CurrentEquipmentParametersOne = _equipmentParametersManagerOne.GetEquipmentParametersViewModel(SelectedDeviceOne.Device.PortName, SelectedDeviceOne.Device.DynotisData);
             }
             else if (deviceViewModel == SelectedDeviceTwo)
             {
                 ConnectedTwoDevice = SelectedDeviceTwo;
+                CurrentEquipmentParametersTwo = _equipmentParametersManagerTwo.GetEquipmentParametersViewModel(SelectedDeviceTwo.Device.PortName, SelectedDeviceTwo.Device.DynotisData);
             }
         }
 
@@ -157,10 +181,12 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             if (ConnectedOneDevice == device)
             {
                 ConnectedOneDevice = null;
+                CurrentEquipmentParametersOne = null;
             }
             if (ConnectedTwoDevice == device)
             {
                 ConnectedTwoDevice = null;
+                CurrentEquipmentParametersTwo = null;
             }
 
             if (SelectedDeviceOne == device)
@@ -185,6 +211,14 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (Equals(storage, value)) return false;
+            storage = value;
+            OnPropertyChanged(propertyName);
+            return true;
         }
     }
 }
