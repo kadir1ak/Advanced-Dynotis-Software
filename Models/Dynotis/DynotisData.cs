@@ -30,9 +30,9 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         private double _maxCurrent;
         private double _batteryLevel;
         private double _escValue;
-        private bool _escStatus;
+        private string _escStatus;
         private string _saveFile;
-        private bool _saveStatus;
+        private string _saveStatus;
         private string _testMode;
 
         public int Time
@@ -179,7 +179,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             set => SetProperty(ref _escValue, value);
         }
 
-        public bool ESCStatus
+        public string ESCStatus
         {
             get => _escStatus;
             set => SetProperty(ref _escStatus, value);
@@ -191,7 +191,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             set => SetProperty(ref _saveFile, value);
         }
 
-        public bool SaveStatus
+        public string SaveStatus
         {
             get => _saveStatus;
             set => SetProperty(ref _saveStatus, value);

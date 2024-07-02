@@ -14,6 +14,11 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
     {
         private DeviceViewModel _selectedDevice;
         private DeviceViewModel _connectedDevice;
+        private double _userPropellerArea;
+        private double _userMotorInner;
+        private double _userNoLoadCurrents;
+        private double _userESCValue;
+        private string _userESCStatus;
 
         public ObservableCollection<DeviceViewModel> AvailableDevices { get; }
 
@@ -42,11 +47,12 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                     OnPropertyChanged(nameof(UserPropellerArea));
                     OnPropertyChanged(nameof(UserMotorInner));
                     OnPropertyChanged(nameof(UserNoLoadCurrents));
+                    OnPropertyChanged(nameof(UserESCStatus));
+                    OnPropertyChanged(nameof(UserESCValue));
                 }
             }
         }
 
-        private double _userPropellerArea;
         public double UserPropellerArea
         {
             get => _userPropellerArea;
@@ -64,7 +70,6 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             }
         }
 
-        private double _userMotorInner;
         public double UserMotorInner
         {
             get => _userMotorInner;
@@ -82,7 +87,6 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             }
         }
 
-        private double _userNoLoadCurrents;
         public double UserNoLoadCurrents
         {
             get => _userNoLoadCurrents;
@@ -94,6 +98,39 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                     if (ConnectedDevice?.Device.DynotisData != null)
                     {
                         ConnectedDevice.Device.DynotisData.NoLoadCurrents = value;
+                    }
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double UserESCValue
+        {
+            get => _userESCValue;
+            set
+            {
+                if (_userESCValue != value)
+                {
+                    _userESCValue = value;
+                    if (ConnectedDevice?.Device.DynotisData != null)
+                    {
+                        ConnectedDevice.Device.DynotisData.ESCValue = value;
+                    }
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string UserESCStatus
+        {
+            get => _userESCStatus;
+            set
+            {
+                if (_userESCStatus != value)
+                {
+                    _userESCStatus = value;
+                    if (ConnectedDevice?.Device.DynotisData != null)
+                    {
+                        ConnectedDevice.Device.DynotisData.ESCStatus = value;
                     }
                     OnPropertyChanged();
                 }

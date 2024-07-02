@@ -4,6 +4,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using Advanced_Dynotis_Software.Services.Helpers;
+using Advanced_Dynotis_Software.ViewModels.Pages;
 
 namespace Advanced_Dynotis_Software.Views.UserControls
 {
@@ -138,6 +140,7 @@ namespace Advanced_Dynotis_Software.Views.UserControls
                 if (!IsLocked)
                 {
                     double newValue = slider.Value + e.HorizontalChange / slider.ActualWidth * (slider.Maximum - slider.Minimum);
+                    newValue = Math.Round(newValue, 0);
                     slider.Value = Math.Max(slider.Minimum, Math.Min(slider.Maximum, newValue));
                 }
             }
@@ -156,25 +159,6 @@ namespace Advanced_Dynotis_Software.Views.UserControls
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public class RelayCommand : ICommand
-        {
-            private readonly Action<object> _execute;
-
-            public RelayCommand(Action<object> execute)
-            {
-                _execute = execute;
-            }
-
-            public event EventHandler CanExecuteChanged;
-
-            public bool CanExecute(object parameter) => true;
-
-            public void Execute(object parameter)
-            {
-                _execute(parameter);
-            }
         }
     }
 }
