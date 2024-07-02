@@ -7,14 +7,14 @@
              mc:Ignorable="d">
     <Grid Background="{DynamicResource Page}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  Text="Device Information" Margin="0 0 0 0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="14" Foreground="{DynamicResource Text}" TextWrapping="WrapWithOverflow" />
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  Text="Device Information" Margin="0 0 0 0" HorizontalAlignment="Center" VerticalAlignment="Stretch" FontWeight="Bold" FontSize="14" Foreground="{DynamicResource Text}" TextWrapping="WrapWithOverflow" />
         <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch">
             <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                 <Grid.RowDefinitions>

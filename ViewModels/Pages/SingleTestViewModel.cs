@@ -18,6 +18,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         private DeviceViewModel _connectedDevice;
         private EquipmentParametersManager _equipmentParametersManager;
         private EquipmentParametersViewModel _currentEquipmentParameters;
+        private ESCParametersManager _escParametersManager;
+        private ESCParametersViewModel _currentESCParameters;
 
         public ObservableCollection<DeviceViewModel> AvailableDevices { get; }
 
@@ -55,7 +57,6 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             {
                 if (SetProperty(ref _currentEquipmentParameters, value))
                 {
-                    // Ensure the data is updated when the EquipmentParametersViewModel changes
                     CurrentEquipmentParameters.PropertyChanged += (sender, e) =>
                     {
                         if (e.PropertyName == nameof(EquipmentParametersViewModel.UserPropellerArea) ||
@@ -65,8 +66,28 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                             ConnectedDevice.Device.DynotisData.PropellerArea = CurrentEquipmentParameters.UserPropellerArea;
                             ConnectedDevice.Device.DynotisData.MotorInner = CurrentEquipmentParameters.UserMotorInner;
                             ConnectedDevice.Device.DynotisData.NoLoadCurrents = CurrentEquipmentParameters.UserNoLoadCurrents;
-                            // Trigger PropertyChanged event for the entire DynotisData object
-                            ConnectedDevice.Device.OnPropertyChanged(nameof(DynotisData));
+                            ConnectedDevice.Device.OnPropertyChanged(nameof(Dynotis.DynotisData));
+                        }
+                    };
+                }
+            }
+        }
+
+        public ESCParametersViewModel CurrentESCParameters
+        {
+            get => _currentESCParameters;
+            set
+            {
+                if (SetProperty(ref _currentESCParameters, value))
+                {
+                    CurrentESCParameters.PropertyChanged += (sender, e) =>
+                    {
+                        if (e.PropertyName == nameof(ESCParametersViewModel.ESCValue) ||
+                            e.PropertyName == nameof(ESCParametersViewModel.ESCStatus))
+                        {
+                            ConnectedDevice.Device.DynotisData.ESCValue = CurrentESCParameters.ESCValue;
+                            ConnectedDevice.Device.DynotisData.ESCStatus = CurrentESCParameters.ESCStatus ? "Locked" : "unLocked";
+                            ConnectedDevice.Device.OnPropertyChanged(nameof(Dynotis.DynotisData));
                         }
                     };
                 }
@@ -80,6 +101,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             AvailableDevices = new ObservableCollection<DeviceViewModel>(DeviceManager.Instance.GetAllDevices());
             ConnectCommand = new RelayCommand(async _ => await ConnectToDeviceAsync());
             _equipmentParametersManager = new EquipmentParametersManager();
+            _escParametersManager = new ESCParametersManager();
 
             DeviceManager.Instance.DeviceDisconnected += OnDeviceDisconnected;
             DeviceManager.Instance.DeviceConnected += OnDeviceConnected;
@@ -93,6 +115,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             ConnectedDevice = SelectedDevice;
 
             CurrentEquipmentParameters = _equipmentParametersManager.GetEquipmentParametersViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData);
+            CurrentESCParameters = _escParametersManager.GetESCParametersViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData);
         }
 
         private void OnDeviceDisconnected(DeviceViewModel device)
@@ -101,6 +124,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             {
                 ConnectedDevice = null;
                 CurrentEquipmentParameters = null;
+                CurrentESCParameters = null;
             }
             RefreshAvailableDevices();
         }
@@ -121,7 +145,6 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             {
                 AvailableDevices.Add(device);
             }
-            // Reassign SelectedDevice if it is still available
             SelectedDevice = AvailableDevices.FirstOrDefault(d => d.Device.PortName == previouslySelectedDevice?.Device.PortName);
         }
 

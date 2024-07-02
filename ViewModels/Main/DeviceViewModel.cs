@@ -32,10 +32,12 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                 {
                     _device = value;
                     OnPropertyChanged();
-                    OnPropertyChanged(nameof(Device.DynotisData)); // Notify when the device changes
+                    OnPropertyChanged(nameof(DynotisData)); // Notify when the device changes
                 }
             }
         }
+
+        public DynotisData DynotisData => _device?.DynotisData;
 
         private EquipmentParametersViewModel _equipmentParametersViewModel;
         public EquipmentParametersViewModel EquipmentParametersViewModel
@@ -46,6 +48,20 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                 if (_equipmentParametersViewModel != value)
                 {
                     _equipmentParametersViewModel = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private ESCParametersViewModel _escParametersViewModel;
+        public ESCParametersViewModel ESCParametersViewModel
+        {
+            get => _escParametersViewModel;
+            set
+            {
+                if (_escParametersViewModel != value)
+                {
+                    _escParametersViewModel = value;
                     OnPropertyChanged();
                 }
             }
@@ -130,7 +146,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                 lock (_dataLock)
                 {
                     _latestDynotisData = Device.DynotisData;
-                    OnPropertyChanged(nameof(Device.DynotisData)); // Notify when DynotisData changes
+                    OnPropertyChanged(nameof(DynotisData)); // Notify when DynotisData changes
                 }
             }
         }

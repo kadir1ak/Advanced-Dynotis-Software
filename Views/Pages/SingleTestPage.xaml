@@ -94,7 +94,7 @@
                                 <ContentControl.ContentTemplate>
                                     <DataTemplate>
                                         <StackPanel>
-                                            <uc:DeviceInformation />
+                                            <uc:DeviceInformation VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
                                         </StackPanel>                                      
                                     </DataTemplate>
                                 </ContentControl.ContentTemplate>
@@ -118,7 +118,7 @@
                             </Border>
 
                             <Border Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                                <ContentControl Content="{Binding}">
+                                <ContentControl Content="{Binding CurrentESCParameters}">
                                     <ContentControl.ContentTemplate>
                                         <DataTemplate>
                                             <uc:ESC HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0"/>

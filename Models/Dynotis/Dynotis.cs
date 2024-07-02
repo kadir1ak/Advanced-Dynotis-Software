@@ -221,6 +221,10 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                             Firmware = "v.5.1.2";
                             ConnectionStatus = "True";
 
+                            DynotisData.ESCStatus = "Locked";
+                            DynotisData.ESCValue = 0;
+
+
                             if (!string.IsNullOrEmpty(Model) && !string.IsNullOrEmpty(SeriNo))
                             {
                                 deviceInfoReceived = true;
@@ -285,6 +289,9 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                                 newData.NoLoadCurrents = currentData.NoLoadCurrents;
                                 newData.ESCValue = currentData.ESCValue;
                                 newData.ESCStatus = currentData.ESCStatus;
+                                newData.TestMode = currentData.TestMode;
+                                newData.SaveFile = currentData.SaveFile;
+                                newData.SaveStatus = currentData.SaveStatus;
 
                                 DynotisData = newData;
 
