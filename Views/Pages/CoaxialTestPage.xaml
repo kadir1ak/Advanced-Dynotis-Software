@@ -157,7 +157,7 @@
                                                 <RowDefinition Height="Auto"/>
                                             </Grid.RowDefinitions>
                                             <Border Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                                                <ContentControl Content="{Binding CurrentEquipmentParameters}">
+                                                <ContentControl Content="{Binding CurrentEquipmentParameters, Mode=TwoWay}">
                                                     <ContentControl.ContentTemplate>
                                                         <DataTemplate>
                                                             <uc:EquipmentParameters HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0"/>
@@ -167,7 +167,7 @@
                                             </Border>
 
                                             <Border Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                                                <ContentControl Content="{Binding CurrentESCParameters}">
+                                                <ContentControl Content="{Binding CurrentESCParameters, Mode=TwoWay}">
                                                     <ContentControl.ContentTemplate>
                                                         <DataTemplate>
                                                             <uc:ESC HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0"/>
@@ -276,7 +276,7 @@
                                                 <RowDefinition Height="Auto"/>
                                             </Grid.RowDefinitions>
                                             <Border Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                                                <ContentControl Content="{Binding CurrentEquipmentParameters}">
+                                                <ContentControl Content="{Binding CurrentEquipmentParameters, Mode=TwoWay}">
                                                     <ContentControl.ContentTemplate>
                                                         <DataTemplate>
                                                             <uc:EquipmentParameters HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"/>
@@ -285,7 +285,7 @@
                                                 </ContentControl>
                                             </Border>
                                             <Border Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                                                <ContentControl Content="{Binding CurrentESCParameters}">
+                                                <ContentControl Content="{Binding CurrentESCParameters, Mode=TwoWay}">
                                                     <ContentControl.ContentTemplate>
                                                         <DataTemplate>
                                                             <uc:ESC HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0"/>

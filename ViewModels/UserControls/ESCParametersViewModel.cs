@@ -80,7 +80,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         public double ThumbPosition
         {
             get => _thumbPosition;
-            private set => SetProperty(ref _thumbPosition, value);
+            set => SetProperty(ref _thumbPosition, value);  // Changed to public setter
         }
 
         public ICommand EscLockCommand { get; }
