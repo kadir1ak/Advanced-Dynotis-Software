@@ -21,6 +21,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             _dynotisData = dynotisData;
             ESCValue = dynotisData.ESCValue;
             ESCStatus = dynotisData.ESCStatus == "Locked";
+            UpdateSliderAndThumb();
 
             EscLockCommand = new RelayCommand(_ => LockESC());
             IncreaseByFiveCommand = new RelayCommand(_ => IncreaseByFive());
@@ -34,10 +35,10 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 if (SetProperty(ref _escValue, value))
                 {
-                    _dynotisData.ESCValue = value;
-                    OnPropertyChanged(nameof(ESCValue));
-                    UpdateSliderAndThumb();
+                    _dynotisData.ESCValue = value;                    
                 }
+                OnPropertyChanged(nameof(ESCValue));
+                UpdateSliderAndThumb();
             }
         }
 
@@ -48,13 +49,13 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 if (SetProperty(ref _escStatus, value))
                 {
-                    _escStatus = value;
-                    OnPropertyChanged(nameof(ESCStatus));
                     _dynotisData.ESCStatus = value ? "Locked" : "Unlocked";
                     if (_escStatus)
                     {
                         ESCValue = 0;
                     }
+                    OnPropertyChanged(nameof(ESCStatus));
+                    UpdateSliderAndThumb();
                 }
             }
         }
@@ -80,7 +81,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         public double ThumbPosition
         {
             get => _thumbPosition;
-            set => SetProperty(ref _thumbPosition, value);  // Changed to public setter
+            set => SetProperty(ref _thumbPosition, value);
         }
 
         public ICommand EscLockCommand { get; }
