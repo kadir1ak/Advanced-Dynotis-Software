@@ -24,10 +24,15 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         private EquipmentParametersManager _equipmentParametersManagerTwo;
         private ESCParametersManager _escParametersManagerOne;
         private ESCParametersManager _escParametersManagerTwo;
+        private BatterySecurityLimitsManager _batterySecurityLimitsManagerOne;
+        private BatterySecurityLimitsManager _batterySecurityLimitsManagerTwo;
+
         private EquipmentParametersViewModel _currentEquipmentParametersOne;
         private EquipmentParametersViewModel _currentEquipmentParametersTwo;
         private ESCParametersViewModel _currentESCParametersOne;
         private ESCParametersViewModel _currentESCParametersTwo;
+        private BatterySecurityLimitsViewModel _currentBatterySecurityLimitsOne;
+        private BatterySecurityLimitsViewModel _currentBatterySecurityLimitsTwo;
 
         public ObservableCollection<DeviceViewModel> AvailableDevicesOne { get; private set; }
         public ObservableCollection<DeviceViewModel> AvailableDevicesTwo { get; private set; }
@@ -116,6 +121,18 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             set => SetProperty(ref _currentESCParametersTwo, value);
         }
 
+        public BatterySecurityLimitsViewModel CurrentBatterySecurityLimitsOne
+        {
+            get => _currentBatterySecurityLimitsOne;
+            set => SetProperty(ref _currentBatterySecurityLimitsOne, value);
+        }
+
+        public BatterySecurityLimitsViewModel CurrentBatterySecurityLimitsTwo
+        {
+            get => _currentBatterySecurityLimitsTwo;
+            set => SetProperty(ref _currentBatterySecurityLimitsTwo, value);
+        }
+
         public ICommand ConnectCommand { get; }
 
         public CoaxialTestViewModel()
@@ -128,6 +145,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             _equipmentParametersManagerTwo = new EquipmentParametersManager();
             _escParametersManagerOne = new ESCParametersManager();
             _escParametersManagerTwo = new ESCParametersManager();
+            _batterySecurityLimitsManagerOne = new BatterySecurityLimitsManager();
+            _batterySecurityLimitsManagerTwo = new BatterySecurityLimitsManager();
 
             DeviceManager.Instance.DeviceDisconnected += OnDeviceDisconnected;
             DeviceManager.Instance.DeviceConnected += OnDeviceConnected;
@@ -164,12 +183,14 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 ConnectedOneDevice = SelectedDeviceOne;
                 CurrentEquipmentParametersOne = _equipmentParametersManagerOne.GetEquipmentParametersViewModel(SelectedDeviceOne.Device.PortName, SelectedDeviceOne.Device.DynotisData);
                 CurrentESCParametersOne = _escParametersManagerOne.GetESCParametersViewModel(SelectedDeviceOne.Device.PortName, SelectedDeviceOne.Device.DynotisData);
+                CurrentBatterySecurityLimitsOne = _batterySecurityLimitsManagerOne.GetBatterySecurityLimitsViewModel(SelectedDeviceOne.Device.PortName, SelectedDeviceOne.Device.DynotisData);
             }
             else if (deviceViewModel == SelectedDeviceTwo)
             {
                 ConnectedTwoDevice = SelectedDeviceTwo;
                 CurrentEquipmentParametersTwo = _equipmentParametersManagerTwo.GetEquipmentParametersViewModel(SelectedDeviceTwo.Device.PortName, SelectedDeviceTwo.Device.DynotisData);
                 CurrentESCParametersTwo = _escParametersManagerTwo.GetESCParametersViewModel(SelectedDeviceTwo.Device.PortName, SelectedDeviceTwo.Device.DynotisData);
+                CurrentBatterySecurityLimitsTwo = _batterySecurityLimitsManagerTwo.GetBatterySecurityLimitsViewModel(SelectedDeviceTwo.Device.PortName, SelectedDeviceTwo.Device.DynotisData);
             }
         }
 
@@ -203,12 +224,14 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 ConnectedOneDevice = null;
                 CurrentEquipmentParametersOne = null;
                 CurrentESCParametersOne = null;
+                CurrentBatterySecurityLimitsOne = null;
             }
             if (ConnectedTwoDevice == device)
             {
                 ConnectedTwoDevice = null;
                 CurrentEquipmentParametersTwo = null;
                 CurrentESCParametersTwo = null;
+                CurrentBatterySecurityLimitsTwo = null;
             }
 
             if (SelectedDeviceOne == device)
