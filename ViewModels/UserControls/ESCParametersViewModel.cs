@@ -11,9 +11,6 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
     {
         private double _escValue;
         private bool _escStatus;
-        private double _sliderActualWidth;
-        private double _sliderWidth;
-        private double _thumbPosition;
         private DynotisData _dynotisData;
 
         public ESCParametersViewModel(DynotisData dynotisData)
@@ -21,7 +18,6 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             _dynotisData = dynotisData;
             ESCValue = dynotisData.ESCValue;
             ESCStatus = dynotisData.ESCStatus == "Locked";
-            UpdateSliderAndThumb();
 
             EscLockCommand = new RelayCommand(_ => LockESC());
             IncreaseByFiveCommand = new RelayCommand(_ => IncreaseByFive());
@@ -35,10 +31,9 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 if (SetProperty(ref _escValue, value))
                 {
-                    _dynotisData.ESCValue = value;                    
+                    _dynotisData.ESCValue = value;
                 }
                 OnPropertyChanged(nameof(ESCValue));
-                UpdateSliderAndThumb();
             }
         }
 
@@ -55,33 +50,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                         ESCValue = 0;
                     }
                     OnPropertyChanged(nameof(ESCStatus));
-                    UpdateSliderAndThumb();
                 }
             }
-        }
-
-        public double SliderActualWidth
-        {
-            get => _sliderActualWidth;
-            set
-            {
-                if (SetProperty(ref _sliderActualWidth, value))
-                {
-                    UpdateSliderAndThumb();
-                }
-            }
-        }
-
-        public double SliderWidth
-        {
-            get => _sliderWidth;
-            private set => SetProperty(ref _sliderWidth, value);
-        }
-
-        public double ThumbPosition
-        {
-            get => _thumbPosition;
-            set => SetProperty(ref _thumbPosition, value);
         }
 
         public ICommand EscLockCommand { get; }
@@ -106,15 +76,6 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             if (!ESCStatus)
             {
                 ESCValue = 0;
-            }
-        }
-
-        private void UpdateSliderAndThumb()
-        {
-            if (SliderActualWidth > 0)
-            {
-                SliderWidth = (ESCValue / 100) * SliderActualWidth;
-                ThumbPosition = (ESCValue / 100) * SliderActualWidth;
             }
         }
 
