@@ -10,7 +10,7 @@
             <EventSetter Event="PreviewTextInput" Handler="NumericTextBox_PreviewTextInput"/>
         </Style>
     </UserControl.Resources>
-        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@       Security Settings Panel     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+    <!-- Security Settings Panel -->
     <Viewbox HorizontalAlignment="Center" VerticalAlignment="Center">
         <Border BorderThickness="2" CornerRadius="15" BorderBrush="{DynamicResource Page}" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center" Background="{DynamicResource Page}">
             <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="Auto" Height="Auto" Margin="10 5 5 10">
@@ -24,7 +24,7 @@
                     <ColumnDefinition Width="5*"/>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" x:Name="MaxCurrentLabel" Content="Max. Current (A)" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                <TextBox Grid.Row="0" Grid.Column="2" Margin="0 0 5 0"  x:Name="MaxCurrentTextBox" Style="{StaticResource NumericTextBoxStyle}" Text="0" FontSize="14" Height="Auto" Width="Auto" MinWidth="50" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1.5">
+                <TextBox Grid.Row="0" Grid.Column="2" Margin="0 0 5 0"  x:Name="MaxCurrentTextBox" Style="{StaticResource NumericTextBoxStyle}" Text="{Binding MaxCurrent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="Auto" Width="Auto" MinWidth="50" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1.5">
                     <TextBox.ToolTip>
                         <ToolTip>
                             <ToolTip.Resources>
@@ -36,13 +36,8 @@
                         </ToolTip>
                     </TextBox.ToolTip>
                 </TextBox>
-                <CheckBox Grid.Column="0" Grid.Row="2" x:Name="SecuritySettingsCheckBox" Background="White" Foreground="{DynamicResource Text}" Margin="5,0,0,0" IsChecked="False" VerticalAlignment="Center" HorizontalAlignment="Left">
-                    <CheckBox.LayoutTransform>
-                        <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
-                    </CheckBox.LayoutTransform>
-                </CheckBox>
-                <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="BatteryLabel" Content="Batarya (S)" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                <TextBox Grid.Row="1" Grid.Column="2" Margin="0 0 5 0" x:Name="BatteryTextBox" Style="{StaticResource NumericTextBoxStyle}" Text="1" FontSize="14" Height="Auto" Width="Auto" MinWidth="50" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1.5">
+                <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="BatteryLabel" Content="Battery (S)" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="1" Grid.Column="2" Margin="0 0 5 0" x:Name="BatteryTextBox" Style="{StaticResource NumericTextBoxStyle}" Text="{Binding BatteryLevel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="Auto" Width="Auto" MinWidth="50" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1.5">
                     <TextBox.ToolTip>
                         <ToolTip>
                             <ToolTip.Resources>
@@ -50,10 +45,15 @@
                                     <Setter Property="CornerRadius" Value="12"/>
                                 </Style>
                             </ToolTip.Resources>
-                            <TextBlock x:Name="BatteryToolTip" Text="Enter the S number of your battery" FontStyle="Normal" TextWrapping="WrapWithOverflow" FontSize="14" Margin="5 5" Cursor=""/>
+                            <TextBlock x:Name="BatteryToolTip" Text="Enter the battery level" FontStyle="Normal" TextWrapping="WrapWithOverflow" FontSize="14" Margin="5 5" Cursor=""/>
                         </ToolTip>
                     </TextBox.ToolTip>
                 </TextBox>
+                <CheckBox Grid.Column="0" Grid.Row="2" x:Name="SecuritySettingsCheckBox" Background="White" Foreground="{DynamicResource Text}" Margin="5,0,0,0" IsChecked="{Binding SecurityStatus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Left">
+                    <CheckBox.LayoutTransform>
+                        <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                    </CheckBox.LayoutTransform>
+                </CheckBox>
             </Grid>
         </Border>
     </Viewbox>

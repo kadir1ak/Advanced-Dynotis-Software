@@ -60,6 +60,7 @@
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -73,6 +74,7 @@
                 <TextBlock Text="ESC Value:" Grid.Row="5" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
                 <TextBlock Text="Battery Level:" Grid.Row="6" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
                 <TextBlock Text="Max Current:" Grid.Row="7" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
+                <TextBlock Text="Security Status:" Grid.Row="8" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
 
                 <TextBlock Text="{Binding Device.DynotisData.TestMode}" Grid.Row="1" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
                 <TextBlock Text="{Binding Device.DynotisData.SaveStatus}" Grid.Row="2" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
@@ -81,6 +83,7 @@
                 <TextBlock Text="{Binding Device.DynotisData.ESCValue}" Grid.Row="5" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
                 <TextBlock Text="{Binding Device.DynotisData.BatteryLevel}" Grid.Row="6" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
                 <TextBlock Text="{Binding Device.DynotisData.MaxCurrent}" Grid.Row="7" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
+                <TextBlock Text="{Binding Device.DynotisData.SecurityStatus}" Grid.Row="8" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
             </Grid>
         </StackPanel>
     </Grid>

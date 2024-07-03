@@ -29,6 +29,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         private double _noLoadCurrents;
         private double _maxCurrent;
         private double _batteryLevel;
+        private string _securityStatus;
         private double _escValue;
         private string _escStatus;
         private string _saveFile;
@@ -171,6 +172,12 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         {
             get => _batteryLevel;
             set => SetProperty(ref _batteryLevel, value);
+        }
+
+        public string SecurityStatus
+        {
+            get => _securityStatus;
+            set => SetProperty(ref _securityStatus, value);
         }
 
         public double ESCValue

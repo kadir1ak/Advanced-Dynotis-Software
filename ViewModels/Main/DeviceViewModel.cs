@@ -91,6 +91,35 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             }
         }
 
+        private BatterySecurityLimitsViewModel _currentBatterySecurityLimits;
+        public BatterySecurityLimitsViewModel CurrentBatterySecurityLimits
+        {
+            get => _currentBatterySecurityLimits;
+            set
+            {
+                if (SetProperty(ref _currentBatterySecurityLimits, value))
+                {
+                    // Ensure the data is updated when the BatterySecurityLimitsViewModel changes
+                    if (_currentBatterySecurityLimits != null)
+                    {
+                        _currentBatterySecurityLimits.PropertyChanged += (sender, e) =>
+                        {
+                            if (e.PropertyName == nameof(BatterySecurityLimitsViewModel.MaxCurrent) ||
+                                e.PropertyName == nameof(BatterySecurityLimitsViewModel.BatteryLevel) ||
+                                e.PropertyName == nameof(BatterySecurityLimitsViewModel.SecurityStatus))
+                            {
+                                Device.DynotisData.MaxCurrent = _currentBatterySecurityLimits.MaxCurrent;
+                                Device.DynotisData.BatteryLevel = _currentBatterySecurityLimits.BatteryLevel;
+                                Device.DynotisData.SecurityStatus = _currentBatterySecurityLimits.SecurityStatus;
+                                OnPropertyChanged(nameof(Device.DynotisData)); // Trigger PropertyChanged event for the entire DynotisData object
+                            }
+                        };
+                    }
+                }
+            }
+        }
+
+
         public DeviceViewModel(string portName)
         {
             if (!DesignerProperties.GetIsInDesignMode(new DependencyObject()))

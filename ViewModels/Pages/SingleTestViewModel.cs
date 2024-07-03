@@ -1,6 +1,6 @@
 ﻿using Advanced_Dynotis_Software.Models.Dynotis;
-using Advanced_Dynotis_Software.Services;
 using Advanced_Dynotis_Software.Services.Helpers;
+using Advanced_Dynotis_Software.Services;
 using Advanced_Dynotis_Software.ViewModels.Main;
 using Advanced_Dynotis_Software.ViewModels.Managers;
 using Advanced_Dynotis_Software.ViewModels.UserControls;
@@ -18,8 +18,11 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         private DeviceViewModel _connectedDevice;
         private EquipmentParametersManager _equipmentParametersManager;
         private ESCParametersManager _escParametersManager;
+        private BatterySecurityLimitsManager _batterySecurityLimitsManager;
+
         private EquipmentParametersViewModel _currentEquipmentParameters;
         private ESCParametersViewModel _currentESCParameters;
+        private BatterySecurityLimitsViewModel _currentBatterySecurityLimits;
 
         public ObservableCollection<DeviceViewModel> AvailableDevices { get; }
 
@@ -94,6 +97,29 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             }
         }
 
+        public BatterySecurityLimitsViewModel CurrentBatterySecurityLimits
+        {
+            get => _currentBatterySecurityLimits;
+            set
+            {
+                if (SetProperty(ref _currentBatterySecurityLimits, value))
+                {
+                    CurrentBatterySecurityLimits.PropertyChanged += (sender, e) =>
+                    {
+                        if (e.PropertyName == nameof(BatterySecurityLimitsViewModel.MaxCurrent) ||
+                            e.PropertyName == nameof(BatterySecurityLimitsViewModel.BatteryLevel) ||
+                            e.PropertyName == nameof(BatterySecurityLimitsViewModel.SecurityStatus))
+                        {
+                            ConnectedDevice.Device.DynotisData.MaxCurrent = CurrentBatterySecurityLimits.MaxCurrent;
+                            ConnectedDevice.Device.DynotisData.BatteryLevel = CurrentBatterySecurityLimits.BatteryLevel;
+                            ConnectedDevice.Device.DynotisData.SecurityStatus = CurrentBatterySecurityLimits.SecurityStatus;
+                            ConnectedDevice.Device.OnPropertyChanged(nameof(Dynotis.DynotisData));
+                        }
+                    };
+                }
+            }
+        }
+
         public ICommand ConnectCommand { get; }
 
         public SingleTestViewModel()
@@ -102,6 +128,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             ConnectCommand = new RelayCommand(async _ => await ConnectToDeviceAsync());
             _equipmentParametersManager = new EquipmentParametersManager();
             _escParametersManager = new ESCParametersManager();
+            _batterySecurityLimitsManager = new BatterySecurityLimitsManager();
 
             DeviceManager.Instance.DeviceDisconnected += OnDeviceDisconnected;
             DeviceManager.Instance.DeviceConnected += OnDeviceConnected;
@@ -116,6 +143,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
 
             CurrentEquipmentParameters = _equipmentParametersManager.GetEquipmentParametersViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData);
             CurrentESCParameters = _escParametersManager.GetESCParametersViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData);
+            CurrentBatterySecurityLimits = _batterySecurityLimitsManager.GetBatterySecurityLimitsViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData);
         }
 
         private void OnDeviceDisconnected(DeviceViewModel device)
@@ -125,6 +153,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 ConnectedDevice = null;
                 CurrentEquipmentParameters = null;
                 CurrentESCParameters = null;
+                CurrentBatterySecurityLimits = null;
             }
             RefreshAvailableDevices();
         }

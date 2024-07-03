@@ -1,4 +1,5 @@
 ﻿using Advanced_Dynotis_Software.Services.Logger;
+using LiveCharts.Wpf;
 using System;
 using System.ComponentModel;
 using System.IO.Ports;
@@ -226,6 +227,9 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
                             DynotisData.ESCStatus = "Locked";
                             DynotisData.ESCValue = 0;
+                            DynotisData.BatteryLevel = 1;
+                            DynotisData.MaxCurrent = 0;
+                            DynotisData.SecurityStatus = "unLocked";
 
 
                             if (!string.IsNullOrEmpty(Model) && !string.IsNullOrEmpty(SeriNo))
@@ -295,6 +299,9 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                                 newData.TestMode = currentData.TestMode;
                                 newData.SaveFile = currentData.SaveFile;
                                 newData.SaveStatus = currentData.SaveStatus;
+                                newData.BatteryLevel = currentData.BatteryLevel;
+                                newData.MaxCurrent = currentData.MaxCurrent;
+                                newData.SecurityStatus = currentData.SecurityStatus;
 
                                 DynotisData = newData;
 
