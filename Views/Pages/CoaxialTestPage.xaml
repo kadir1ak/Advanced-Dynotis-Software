@@ -146,7 +146,7 @@
                                         <!-- Device Information -->
                                         <Border Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3 3 0 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
                                             <Grid>
-                                                <uc:DeviceInformation DataContext="{Binding}"></uc:DeviceInformation>
+                                                <uc:DeviceInformation DataContext="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
                                             </Grid>
                                         </Border>
 
@@ -160,7 +160,7 @@
                                                 <ContentControl Content="{Binding CurrentEquipmentParameters}">
                                                     <ContentControl.ContentTemplate>
                                                         <DataTemplate>
-                                                            <uc:EquipmentParameters HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"/>
+                                                            <uc:EquipmentParameters HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0"/>
                                                         </DataTemplate>
                                                     </ContentControl.ContentTemplate>
                                                 </ContentControl>

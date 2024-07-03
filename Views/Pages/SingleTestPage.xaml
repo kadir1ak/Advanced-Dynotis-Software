@@ -111,7 +111,7 @@
                                 <ContentControl Content="{Binding CurrentEquipmentParameters}">
                                     <ContentControl.ContentTemplate>
                                         <DataTemplate>
-                                            <uc:EquipmentParameters HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"/>
+                                            <uc:EquipmentParameters HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0"/>
                                         </DataTemplate>
                                     </ContentControl.ContentTemplate>
                                 </ContentControl>
