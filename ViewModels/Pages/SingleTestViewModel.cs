@@ -1,14 +1,14 @@
-﻿using Advanced_Dynotis_Software.ViewModels.Managers;
-using Advanced_Dynotis_Software.ViewModels.UserControls;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using Advanced_Dynotis_Software.Models.Dynotis;
 using Advanced_Dynotis_Software.Services;
 using Advanced_Dynotis_Software.Services.Helpers;
 using Advanced_Dynotis_Software.ViewModels.Main;
+using Advanced_Dynotis_Software.ViewModels.Managers;
+using Advanced_Dynotis_Software.ViewModels.UserControls;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Advanced_Dynotis_Software.Models.Dynotis;
+using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Advanced_Dynotis_Software.ViewModels.Pages
 {
@@ -17,8 +17,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         private DeviceViewModel _selectedDevice;
         private DeviceViewModel _connectedDevice;
         private EquipmentParametersManager _equipmentParametersManager;
-        private EquipmentParametersViewModel _currentEquipmentParameters;
         private ESCParametersManager _escParametersManager;
+        private EquipmentParametersViewModel _currentEquipmentParameters;
         private ESCParametersViewModel _currentESCParameters;
 
         public ObservableCollection<DeviceViewModel> AvailableDevices { get; }
@@ -86,7 +86,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                             e.PropertyName == nameof(ESCParametersViewModel.ESCStatus))
                         {
                             ConnectedDevice.Device.DynotisData.ESCValue = CurrentESCParameters.ESCValue;
-                            ConnectedDevice.Device.DynotisData.ESCStatus = CurrentESCParameters.ESCStatus ? "Locked" : "unLocked";
+                            ConnectedDevice.Device.DynotisData.ESCStatus = CurrentESCParameters.ESCStatus ? "Locked" : "Unlocked";
                             ConnectedDevice.Device.OnPropertyChanged(nameof(Dynotis.DynotisData));
                         }
                     };

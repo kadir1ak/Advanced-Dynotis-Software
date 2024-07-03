@@ -1,15 +1,15 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
+﻿using Advanced_Dynotis_Software.Models.Dynotis;
 using Advanced_Dynotis_Software.Services;
 using Advanced_Dynotis_Software.Services.Helpers;
 using Advanced_Dynotis_Software.ViewModels.Main;
 using Advanced_Dynotis_Software.ViewModels.Managers;
 using Advanced_Dynotis_Software.ViewModels.UserControls;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
 namespace Advanced_Dynotis_Software.ViewModels.Pages
 {
@@ -22,8 +22,12 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
 
         private EquipmentParametersManager _equipmentParametersManagerOne;
         private EquipmentParametersManager _equipmentParametersManagerTwo;
+        private ESCParametersManager _escParametersManagerOne;
+        private ESCParametersManager _escParametersManagerTwo;
         private EquipmentParametersViewModel _currentEquipmentParametersOne;
         private EquipmentParametersViewModel _currentEquipmentParametersTwo;
+        private ESCParametersViewModel _currentESCParametersOne;
+        private ESCParametersViewModel _currentESCParametersTwo;
 
         public ObservableCollection<DeviceViewModel> AvailableDevicesOne { get; private set; }
         public ObservableCollection<DeviceViewModel> AvailableDevicesTwo { get; private set; }
@@ -100,6 +104,18 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             set => SetProperty(ref _currentEquipmentParametersTwo, value);
         }
 
+        public ESCParametersViewModel CurrentESCParametersOne
+        {
+            get => _currentESCParametersOne;
+            set => SetProperty(ref _currentESCParametersOne, value);
+        }
+
+        public ESCParametersViewModel CurrentESCParametersTwo
+        {
+            get => _currentESCParametersTwo;
+            set => SetProperty(ref _currentESCParametersTwo, value);
+        }
+
         public ICommand ConnectCommand { get; }
 
         public CoaxialTestViewModel()
@@ -110,6 +126,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
 
             _equipmentParametersManagerOne = new EquipmentParametersManager();
             _equipmentParametersManagerTwo = new EquipmentParametersManager();
+            _escParametersManagerOne = new ESCParametersManager();
+            _escParametersManagerTwo = new ESCParametersManager();
 
             DeviceManager.Instance.DeviceDisconnected += OnDeviceDisconnected;
             DeviceManager.Instance.DeviceConnected += OnDeviceConnected;
@@ -145,11 +163,13 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             {
                 ConnectedOneDevice = SelectedDeviceOne;
                 CurrentEquipmentParametersOne = _equipmentParametersManagerOne.GetEquipmentParametersViewModel(SelectedDeviceOne.Device.PortName, SelectedDeviceOne.Device.DynotisData);
+                CurrentESCParametersOne = _escParametersManagerOne.GetESCParametersViewModel(SelectedDeviceOne.Device.PortName, SelectedDeviceOne.Device.DynotisData);
             }
             else if (deviceViewModel == SelectedDeviceTwo)
             {
                 ConnectedTwoDevice = SelectedDeviceTwo;
                 CurrentEquipmentParametersTwo = _equipmentParametersManagerTwo.GetEquipmentParametersViewModel(SelectedDeviceTwo.Device.PortName, SelectedDeviceTwo.Device.DynotisData);
+                CurrentESCParametersTwo = _escParametersManagerTwo.GetESCParametersViewModel(SelectedDeviceTwo.Device.PortName, SelectedDeviceTwo.Device.DynotisData);
             }
         }
 
@@ -182,11 +202,13 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             {
                 ConnectedOneDevice = null;
                 CurrentEquipmentParametersOne = null;
+                CurrentESCParametersOne = null;
             }
             if (ConnectedTwoDevice == device)
             {
                 ConnectedTwoDevice = null;
                 CurrentEquipmentParametersTwo = null;
+                CurrentESCParametersTwo = null;
             }
 
             if (SelectedDeviceOne == device)

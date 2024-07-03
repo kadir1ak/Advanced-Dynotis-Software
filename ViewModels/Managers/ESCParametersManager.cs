@@ -36,4 +36,3 @@ namespace Advanced_Dynotis_Software.ViewModels.Managers
         }
     }
 }
- 

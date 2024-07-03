@@ -1,8 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Advanced_Dynotis_Software.ViewModels.Main;
 using Advanced_Dynotis_Software.Services;
+using Advanced_Dynotis_Software.ViewModels.Managers;
 
 namespace Advanced_Dynotis_Software.ViewModels.Main
 {
@@ -10,9 +10,14 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
     {
         public ObservableCollection<DeviceViewModel> DevicesViewModel { get; }
 
+        private EquipmentParametersManager _equipmentParametersManager;
+        private ESCParametersManager _escParametersManager;
+
         public MainViewModel()
         {
             DevicesViewModel = new ObservableCollection<DeviceViewModel>(DeviceManager.Instance.GetAllDevices());
+            _equipmentParametersManager = new EquipmentParametersManager();
+            _escParametersManager = new ESCParametersManager();
 
             DeviceManager.Instance.DeviceConnected += OnDeviceConnected;
             DeviceManager.Instance.DeviceDisconnected += OnDeviceDisconnected;
@@ -23,7 +28,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             if (!DevicesViewModel.Contains(device))
             {
                 DevicesViewModel.Add(device);
-                OnPropertyChanged(nameof(DevicesViewModel));
+                device.CurrentEquipmentParameters = _equipmentParametersManager.GetEquipmentParametersViewModel(device.Device.PortName, device.Device.DynotisData);
+                device.CurrentESCParameters = _escParametersManager.GetESCParametersViewModel(device.Device.PortName, device.Device.DynotisData);
             }
         }
 
@@ -32,7 +38,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             if (DevicesViewModel.Contains(device))
             {
                 DevicesViewModel.Remove(device);
-                OnPropertyChanged(nameof(DevicesViewModel));
+                _equipmentParametersManager.RemoveEquipmentParametersViewModel(device.Device.PortName);
+                _escParametersManager.RemoveESCParametersViewModel(device.Device.PortName);
             }
         }
 

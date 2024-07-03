@@ -32,37 +32,61 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                 {
                     _device = value;
                     OnPropertyChanged();
-                    OnPropertyChanged(nameof(DynotisData)); // Notify when the device changes
+                    OnPropertyChanged(nameof(Device.DynotisData)); // Notify when the device changes
                 }
             }
         }
 
-        public DynotisData DynotisData => _device?.DynotisData;
-
-        private EquipmentParametersViewModel _equipmentParametersViewModel;
-        public EquipmentParametersViewModel EquipmentParametersViewModel
+        private EquipmentParametersViewModel _currentEquipmentParameters;
+        public EquipmentParametersViewModel CurrentEquipmentParameters
         {
-            get => _equipmentParametersViewModel;
+            get => _currentEquipmentParameters;
             set
             {
-                if (_equipmentParametersViewModel != value)
+                if (SetProperty(ref _currentEquipmentParameters, value))
                 {
-                    _equipmentParametersViewModel = value;
-                    OnPropertyChanged();
+                    // Ensure the data is updated when the EquipmentParametersViewModel changes
+                    if (_currentEquipmentParameters != null)
+                    {
+                        _currentEquipmentParameters.PropertyChanged += (sender, e) =>
+                        {
+                            if (e.PropertyName == nameof(EquipmentParametersViewModel.UserPropellerArea) ||
+                                e.PropertyName == nameof(EquipmentParametersViewModel.UserMotorInner) ||
+                                e.PropertyName == nameof(EquipmentParametersViewModel.UserNoLoadCurrents))
+                            {
+                                Device.DynotisData.PropellerArea = _currentEquipmentParameters.UserPropellerArea;
+                                Device.DynotisData.MotorInner = _currentEquipmentParameters.UserMotorInner;
+                                Device.DynotisData.NoLoadCurrents = _currentEquipmentParameters.UserNoLoadCurrents;
+                                OnPropertyChanged(nameof(Device.DynotisData)); // Trigger PropertyChanged event for the entire DynotisData object
+                            }
+                        };
+                    }
                 }
             }
         }
 
-        private ESCParametersViewModel _escParametersViewModel;
-        public ESCParametersViewModel ESCParametersViewModel
+        private ESCParametersViewModel _currentESCParameters;
+        public ESCParametersViewModel CurrentESCParameters
         {
-            get => _escParametersViewModel;
+            get => _currentESCParameters;
             set
             {
-                if (_escParametersViewModel != value)
+                if (SetProperty(ref _currentESCParameters, value))
                 {
-                    _escParametersViewModel = value;
-                    OnPropertyChanged();
+                    // Ensure the data is updated when the ESCParametersViewModel changes
+                    if (_currentESCParameters != null)
+                    {
+                        _currentESCParameters.PropertyChanged += (sender, e) =>
+                        {
+                            if (e.PropertyName == nameof(ESCParametersViewModel.ESCValue) ||
+                                e.PropertyName == nameof(ESCParametersViewModel.ESCStatus))
+                            {
+                                Device.DynotisData.ESCValue = _currentESCParameters.ESCValue;
+                                Device.DynotisData.ESCStatus = _currentESCParameters.ESCStatus ? "Locked" : "Unlocked";
+                                OnPropertyChanged(nameof(Device.DynotisData)); // Trigger PropertyChanged event for the entire DynotisData object
+                            }
+                        };
+                    }
                 }
             }
         }
@@ -146,7 +170,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                 lock (_dataLock)
                 {
                     _latestDynotisData = Device.DynotisData;
-                    OnPropertyChanged(nameof(DynotisData)); // Notify when DynotisData changes
+                    OnPropertyChanged(nameof(Device.DynotisData)); // Notify when DynotisData changes
                 }
             }
         }
@@ -155,6 +179,14 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (Equals(field, value)) return false;
+            field = value;
+            OnPropertyChanged(propertyName);
+            return true;
         }
 
         public void Dispose()

@@ -170,6 +170,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 catch (Exception ex)
                 {
                     Logger.Log($"Failed to open port: {ex.Message}");
+                    Error = $"Failed to open port: {ex.Message}"; // Kullanıcıya hata mesajı gösterme
                 }
             }
         }
@@ -186,9 +187,11 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 catch (Exception ex)
                 {
                     Logger.Log($"Failed to close port: {ex.Message}");
+                    Error = $"Failed to close port: {ex.Message}"; // Kullanıcıya hata mesajı gösterme
                 }
             }
         }
+
 
         private async Task StartReceivingDataAsync()
         {

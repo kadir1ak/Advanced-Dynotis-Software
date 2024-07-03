@@ -1,16 +1,19 @@
-﻿using System.Collections.ObjectModel;
+﻿using Advanced_Dynotis_Software.Models.Dynotis;
+using Advanced_Dynotis_Software.Services;
+using Advanced_Dynotis_Software.ViewModels.Main;
+using Advanced_Dynotis_Software.ViewModels.Managers;
+using Advanced_Dynotis_Software.ViewModels.UserControls;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Advanced_Dynotis_Software.ViewModels.Main;
-using Advanced_Dynotis_Software.Services;
-using Advanced_Dynotis_Software.ViewModels.Managers;
 
 namespace Advanced_Dynotis_Software.ViewModels.Pages
 {
     public class MultiTestViewModel : INotifyPropertyChanged
     {
         private ObservableCollection<DeviceViewModel> _devicesViewModel;
-        private readonly EquipmentParametersManager _equipmentParametersManager;
+        private EquipmentParametersManager _equipmentParametersManager;
+        private ESCParametersManager _escParametersManager;
 
         public ObservableCollection<DeviceViewModel> DevicesViewModel
         {
@@ -28,13 +31,15 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         public MultiTestViewModel()
         {
             _equipmentParametersManager = new EquipmentParametersManager();
+            _escParametersManager = new ESCParametersManager();
             DevicesViewModel = new ObservableCollection<DeviceViewModel>(DeviceManager.Instance.GetAllDevices());
             DeviceManager.Instance.DeviceConnected += OnDeviceConnected;
             DeviceManager.Instance.DeviceDisconnected += OnDeviceDisconnected;
 
             foreach (var device in DevicesViewModel)
             {
-                device.EquipmentParametersViewModel = _equipmentParametersManager.GetEquipmentParametersViewModel(device.Device.PortName, device.Device.DynotisData);
+                device.CurrentEquipmentParameters = _equipmentParametersManager.GetEquipmentParametersViewModel(device.Device.PortName, device.Device.DynotisData);
+                device.CurrentESCParameters = _escParametersManager.GetESCParametersViewModel(device.Device.PortName, device.Device.DynotisData);
             }
         }
 
@@ -43,8 +48,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             if (!DevicesViewModel.Contains(device))
             {
                 DevicesViewModel.Add(device);
-                // Add EquipmentParametersViewModel for the new device
-                device.EquipmentParametersViewModel = _equipmentParametersManager.GetEquipmentParametersViewModel(device.Device.PortName, device.Device.DynotisData);
+                device.CurrentEquipmentParameters = _equipmentParametersManager.GetEquipmentParametersViewModel(device.Device.PortName, device.Device.DynotisData);
+                device.CurrentESCParameters = _escParametersManager.GetESCParametersViewModel(device.Device.PortName, device.Device.DynotisData);
             }
         }
 
@@ -53,8 +58,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             if (DevicesViewModel.Contains(device))
             {
                 DevicesViewModel.Remove(device);
-                // Optionally remove the EquipmentParametersViewModel for the disconnected device
                 _equipmentParametersManager.RemoveEquipmentParametersViewModel(device.Device.PortName);
+                _escParametersManager.RemoveESCParametersViewModel(device.Device.PortName);
             }
         }
 
