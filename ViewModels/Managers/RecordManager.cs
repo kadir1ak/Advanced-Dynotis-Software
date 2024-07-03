@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows.Threading;
-using Advanced_Dynotis_Software.Models.Record;
 
 namespace Advanced_Dynotis_Software.ViewModels.Managers
 {
@@ -64,6 +63,19 @@ namespace Advanced_Dynotis_Software.ViewModels.Managers
         {
             get => _record.FileName;
             set => _record.FileName = value;
+        }
+    }
+    public class Record
+    {
+        public bool IsRecording { get; set; }
+        public TimeSpan Duration { get; set; }
+        public string FileName { get; set; }
+
+        public Record()
+        {
+            IsRecording = false;
+            Duration = TimeSpan.Zero;
+            FileName = string.Empty;
         }
     }
 }
