@@ -23,7 +23,6 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         private double _windSpeed;
         private double _windDirection;
         private double _airDensity;
-
         private double _propellerArea;
         private double _motorInner;
         private double _noLoadCurrents;
@@ -212,17 +211,17 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {
             if (Equals(field, value)) return false;
             field = value;
             OnPropertyChanged(propertyName);
             return true;
-        }
-
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

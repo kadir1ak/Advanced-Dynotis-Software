@@ -113,7 +113,7 @@
                 </Grid.RowDefinitions>
 
                 <!-- 1. Device Card -->
-                <ContentControl Grid.Row="0" Content="{Binding ConnectedOneDevice}">
+                <ContentControl Grid.Row="0" Content="{Binding ConnectedOneDevice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <ContentControl.ContentTemplate>
                         <DataTemplate>
                             <Grid>
@@ -157,7 +157,7 @@
                                                 <RowDefinition Height="Auto"/>
                                             </Grid.RowDefinitions>
                                             <Border Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                                                <ContentControl Content="{Binding CurrentEquipmentParameters, Mode=TwoWay}">
+                                                <ContentControl Content="{Binding CurrentEquipmentParameters, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                                     <ContentControl.ContentTemplate>
                                                         <DataTemplate>
                                                             <uc:EquipmentParameters HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0"/>
@@ -167,7 +167,7 @@
                                             </Border>
 
                                             <Border Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                                                <ContentControl Content="{Binding CurrentESCParameters, Mode=TwoWay}">
+                                                <ContentControl Content="{Binding CurrentESCParameters, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                                     <ContentControl.ContentTemplate>
                                                         <DataTemplate>
                                                             <uc:ESC HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0"/>
@@ -184,7 +184,7 @@
                                                 <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
                                             <Border Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0 3 3 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                                                <ContentControl Content="{Binding CurrentBatterySecurityLimits, Mode=TwoWay}">
+                                                <ContentControl Content="{Binding CurrentBatterySecurityLimits, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                                     <ContentControl.ContentTemplate>
                                                         <DataTemplate>
                                                             <uc:BatterySecurityLimits HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0"/>
@@ -236,7 +236,7 @@
                 </ContentControl>
 
                 <!-- 2. Device Card -->
-                <ContentControl Grid.Row="1" Content="{Binding ConnectedTwoDevice}">
+                <ContentControl Grid.Row="1" Content="{Binding ConnectedTwoDevice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <ContentControl.ContentTemplate>
                         <DataTemplate>
                             <Grid>
@@ -280,7 +280,7 @@
                                                 <RowDefinition Height="Auto"/>
                                             </Grid.RowDefinitions>
                                             <Border Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                                                <ContentControl Content="{Binding CurrentEquipmentParameters, Mode=TwoWay}">
+                                                <ContentControl Content="{Binding CurrentEquipmentParameters, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                                     <ContentControl.ContentTemplate>
                                                         <DataTemplate>
                                                             <uc:EquipmentParameters HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"/>
@@ -289,7 +289,7 @@
                                                 </ContentControl>
                                             </Border>
                                             <Border Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                                                <ContentControl Content="{Binding CurrentESCParameters, Mode=TwoWay}">
+                                                <ContentControl Content="{Binding CurrentESCParameters, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                                     <ContentControl.ContentTemplate>
                                                         <DataTemplate>
                                                             <uc:ESC HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0"/>
@@ -306,7 +306,7 @@
                                                 <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
                                             <Border Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0 3 3 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                                                <ContentControl Content="{Binding CurrentBatterySecurityLimits, Mode=TwoWay}">
+                                                <ContentControl Content="{Binding CurrentBatterySecurityLimits, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                                     <ContentControl.ContentTemplate>
                                                         <DataTemplate>
                                                             <uc:BatterySecurityLimits HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0"/>

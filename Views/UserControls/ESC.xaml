@@ -74,7 +74,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <icon:PackIconMaterial Grid.Column="1" Grid.Row="0" Kind="LockAlert" Margin="-10 0 0 0" Width="17" Height="17" Foreground="{DynamicResource ESCLockIcon}" 
-                               Visibility="{Binding ESCStatus, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                               Visibility="{Binding ESCStatus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}"/>
         <Label Grid.Column="0" Grid.Row="0" Content="ESC:" Margin="0 12 0 0" FontWeight="Bold" VerticalAlignment="Center" FontSize="14" Foreground="{DynamicResource Text}"/>
         <Slider Grid.Column="1" Grid.Row="0" 
                 Style="{StaticResource ModernSliderStyle}"
@@ -101,7 +101,7 @@
                Width="40"
                FontWeight="DemiBold"
                Foreground="{DynamicResource Text}"
-               Content="{Binding ESCValue, StringFormat={}{0:0.00}}" 
+               Content="{Binding ESCValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.00}}" 
                VerticalAlignment="Center" 
                HorizontalAlignment="Left" 
                Margin="18 12 0 0"/>
