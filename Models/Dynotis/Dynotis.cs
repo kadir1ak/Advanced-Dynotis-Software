@@ -1,5 +1,4 @@
 ﻿using Advanced_Dynotis_Software.Services.Logger;
-using LiveCharts.Wpf;
 using System;
 using System.ComponentModel;
 using System.IO.Ports;
@@ -193,7 +192,6 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             }
         }
 
-
         private async Task StartReceivingDataAsync()
         {
             await Task.Run(async () =>
@@ -213,38 +211,31 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                     string indata = await ReadLineAsync(Port, token);
                     Logger.Log($"Received data: {indata}");
 
-                    if (indata.Trim().StartsWith("KEY:"))
+                    if (indata.Contains("Semai Aviation Ltd."))
                     {
-                        string[] keyParts = indata.Trim().Split(':');
-                        if (keyParts.Length == 3)
+                        string[] parts = indata.Split(';');
+                        if (parts.Length >= 2)
                         {
-                            Model = keyParts[1];
-                            SeriNo = keyParts[2];
+                            Model = parts[1];
+                            SeriNo = parts[2];
+                            Firmware = parts[4];
                             Error = "Null";
                             WorkingStatus = "Unknown";
-                            Firmware = "v.5.1.2";
                             ConnectionStatus = "True";
-
                             DynotisData.ESCStatus = true;
                             DynotisData.ESCValue = 0;
                             DynotisData.BatteryLevel = 1;
                             DynotisData.MaxCurrent = 0;
                             DynotisData.SecurityStatus = false;
 
-
                             if (!string.IsNullOrEmpty(Model) && !string.IsNullOrEmpty(SeriNo))
                             {
                                 deviceInfoReceived = true;
-                                await WriteLineAsync(Port, "SENSOR_DATA", token);
-                                Mode = "SENSOR_DATA";
+                                Mode = "2";
+                                await WriteLineAsync(Port, $"Device_Status:{Mode};ESC:{DynotisData.ESCValue};", token);
                                 await DeviceDataReceivedAsync(token);
                             }
                         }
-                    }
-
-                    if (!deviceInfoReceived)
-                    {
-                        await WriteLineAsync(Port, "DEVICE_INFO", token);
                     }
 
                     await Task.Delay(100);
@@ -265,56 +256,57 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                     string indata = await ReadLineAsync(Port, token);
                     Logger.Log($"Received data: {indata}");
 
-                    if (!indata.Trim().StartsWith("KEY:"))
+                    string[] dataParts = indata.Split(',');
+
+                    if (dataParts.Length == 15)
                     {
-                        string[] dataParts = indata.Split(',');
-
-                        if (dataParts.Length == 13)
+                        var newData = new DynotisData
                         {
-                            var newData = new DynotisData
-                            {
-                                Time = double.Parse(dataParts[0]),
-                                Current = double.Parse(dataParts[1]),
-                                Voltage = double.Parse(dataParts[2]),
-                                Thrust = double.Parse(dataParts[3]),
-                                Torque = double.Parse(dataParts[4]),
-                                MotorSpeed = double.Parse(dataParts[5]),
-                                VibrationX = double.Parse(dataParts[6]),
-                                VibrationY = double.Parse(dataParts[7]),
-                                VibrationZ = double.Parse(dataParts[8]),
-                                AmbientTemp = double.Parse(dataParts[9]),
-                                MotorTemp = double.Parse(dataParts[10]),
-                                Pressure = double.Parse(dataParts[11]),
-                                WindSpeed = double.Parse(dataParts[12])
-                            };
+                            Time = ParseDouble(dataParts[0]),
+                            Current = ParseDouble(dataParts[1]),
+                            Voltage = ParseDouble(dataParts[2]),
+                            Thrust = ParseDouble(dataParts[3]),
+                            Torque = ParseDouble(dataParts[4]),
+                            MotorSpeed = ParseDouble(dataParts[5]),
+                            WindSpeed = ParseDouble(dataParts[6]),
+                            VibrationX = ParseDouble(dataParts[7]),
+                            VibrationY = ParseDouble(dataParts[8]),
+                            VibrationZ = ParseDouble(dataParts[9]),
+                            AmbientTemp = ParseDouble(dataParts[10]),
+                            MotorTemp = ParseDouble(dataParts[11]),
+                            Temperature = ParseDouble(dataParts[12]),
+                            Pressure = ParseDouble(dataParts[13]),
+                            Humidity = ParseDouble(dataParts[14])
+                        };
 
-                            await Application.Current.Dispatcher.InvokeAsync(() =>
-                            {
-                                var currentData = DynotisData; 
-                                newData.PropellerArea = currentData.PropellerArea;
-                                newData.MotorInner = currentData.MotorInner;
-                                newData.NoLoadCurrents = currentData.NoLoadCurrents;
-                                newData.ESCValue = currentData.ESCValue;
-                                newData.ESCStatus = currentData.ESCStatus;
-                                newData.TestMode = currentData.TestMode;
-                                newData.SaveFile = currentData.SaveFile;
-                                newData.SaveStatus = currentData.SaveStatus;
-                                newData.BatteryLevel = currentData.BatteryLevel;
-                                newData.MaxCurrent = currentData.MaxCurrent;
-                                newData.SecurityStatus = currentData.SecurityStatus;
-
-                                DynotisData = newData;
-
-                                DynotisData.Vibration = CalculateMagnitude(newData.VibrationX, newData.VibrationY, newData.VibrationZ);
-                                DynotisData.Power = newData.Current * newData.Voltage;
-                                DynotisData.WindDirection = 275 * newData.Voltage;
-                                DynotisData.AirDensity = 10.0 * newData.Voltage;
-                            });
-                        }
-                        else
+                        await Application.Current.Dispatcher.InvokeAsync(() =>
                         {
-                            Logger.Log($"Unexpected data format: {indata}");
-                        }
+                            var currentData = DynotisData;
+                            newData.PropellerArea = currentData.PropellerArea;
+                            newData.MotorInner = currentData.MotorInner;
+                            newData.NoLoadCurrents = currentData.NoLoadCurrents;
+                            newData.ESCValue = currentData.ESCValue;
+                            newData.ESCStatus = currentData.ESCStatus;
+                            newData.TestMode = currentData.TestMode;
+                            newData.SaveFile = currentData.SaveFile;
+                            newData.SaveStatus = currentData.SaveStatus;
+                            newData.BatteryLevel = currentData.BatteryLevel;
+                            newData.MaxCurrent = currentData.MaxCurrent;
+                            newData.SecurityStatus = currentData.SecurityStatus;
+
+                            DynotisData = newData;
+
+                            DynotisData.Vibration = CalculateMagnitude(newData.VibrationX, newData.VibrationY, newData.VibrationZ);
+                            DynotisData.Power = newData.Current * newData.Voltage;
+                            DynotisData.WindDirection = 275 * newData.Voltage;
+                            DynotisData.AirDensity = 10.0 * newData.Voltage;
+                        });
+
+                        await WriteLineAsync(Port, $"Device_Status:{Mode};ESC:{DynotisData.ESCValue};", token);
+                    }
+                    else
+                    {
+                        Logger.Log($"Unexpected data format: {indata}");
                     }
 
                     await Task.Delay(1);
@@ -344,6 +336,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             try
             {
                 await Task.Run(() => port.WriteLine(message), token);
+                Logger.Log($"Transmit data: {message}");
             }
             catch (Exception ex)
             {
@@ -355,6 +348,15 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         private static double CalculateMagnitude(double x, double y, double z)
         {
             return Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2) + Math.Pow(z, 2));
+        }
+
+        private static double ParseDouble(string value)
+        {
+            if (double.TryParse(value, out double result))
+            {
+                return result;
+            }
+            return double.NaN;
         }
 
         public void OnPropertyChanged([CallerMemberName] string propertyName = null)
