@@ -5,7 +5,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 {
     public class DynotisData : INotifyPropertyChanged
     {
-        private int _time;
+        private double _time;
         private double _sampleRate;
         private double _ambientTemp;
         private double _motorTemp;
@@ -15,7 +15,9 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         private double _voltage;
         private double _current;
         private double _power;
+        private double _temperature;
         private double _pressure;
+        private double _humidity;
         private double _vibrationX;
         private double _vibrationY;
         private double _vibrationZ;
@@ -35,7 +37,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         private string _saveStatus;
         private string _testMode;
 
-        public int Time
+        public double Time
         {
             get => _time;
             set => SetProperty(ref _time, value);
@@ -94,13 +96,21 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             get => _power;
             set => SetProperty(ref _power, value);
         }
-
+        public double Temperature
+        {
+            get => _temperature;
+            set => SetProperty(ref _temperature, value);
+        }
         public double Pressure
         {
             get => _pressure;
             set => SetProperty(ref _pressure, value);
         }
-
+        public double Humidity
+        {
+            get => _humidity;
+            set => SetProperty(ref _humidity, value);
+        }
         public double VibrationX
         {
             get => _vibrationX;

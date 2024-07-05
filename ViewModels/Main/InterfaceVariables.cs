@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 public class InterfaceVariables : INotifyPropertyChanged
 {
-    private int _time;
+    private double _time;
     private double _sampleRate;
     private double _ambientTemp;
     private double _motorTemp;
@@ -34,7 +34,7 @@ public class InterfaceVariables : INotifyPropertyChanged
     private string _saveStatus;
     private string _testMode;
 
-    public int Time
+    public double Time
     {
         get => _time;
         set => SetProperty(ref _time, value);
