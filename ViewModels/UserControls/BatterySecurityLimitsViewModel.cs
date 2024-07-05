@@ -8,7 +8,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
     {
         private double _maxCurrent;
         private double _batteryLevel;
-        private string _securityStatus;
+        private bool _securityStatus;
         private DynotisData _dynotisData;
 
         public double MaxCurrent
@@ -37,7 +37,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             }
         }
 
-        public string SecurityStatus
+        public bool SecurityStatus
         {
             get => _securityStatus;
             set

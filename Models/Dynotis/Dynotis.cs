@@ -225,11 +225,11 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                             Firmware = "v.5.1.2";
                             ConnectionStatus = "True";
 
-                            DynotisData.ESCStatus = "Locked";
+                            DynotisData.ESCStatus = true;
                             DynotisData.ESCValue = 0;
                             DynotisData.BatteryLevel = 1;
                             DynotisData.MaxCurrent = 0;
-                            DynotisData.SecurityStatus = "unLocked";
+                            DynotisData.SecurityStatus = false;
 
 
                             if (!string.IsNullOrEmpty(Model) && !string.IsNullOrEmpty(SeriNo))
@@ -273,7 +273,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                         {
                             var newData = new DynotisData
                             {
-                                Time = int.Parse(dataParts[0]),
+                                Time = double.Parse(dataParts[0]),
                                 Current = double.Parse(dataParts[1]),
                                 Voltage = double.Parse(dataParts[2]),
                                 Thrust = double.Parse(dataParts[3]),

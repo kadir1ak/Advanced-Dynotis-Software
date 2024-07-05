@@ -89,7 +89,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                             e.PropertyName == nameof(ESCParametersViewModel.ESCStatus))
                         {
                             ConnectedDevice.Device.DynotisData.ESCValue = CurrentESCParameters.ESCValue;
-                            ConnectedDevice.Device.DynotisData.ESCStatus = CurrentESCParameters.ESCStatus ? "Locked" : "Unlocked";
+                            ConnectedDevice.Device.DynotisData.ESCStatus = CurrentESCParameters.ESCStatus ? true : false;
                             ConnectedDevice.Device.OnPropertyChanged(nameof(Dynotis.DynotisData));
                         }
                     };

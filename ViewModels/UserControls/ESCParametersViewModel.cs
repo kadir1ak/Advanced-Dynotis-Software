@@ -17,7 +17,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         {
             _dynotisData = dynotisData;
             ESCValue = dynotisData.ESCValue;
-            ESCStatus = dynotisData.ESCStatus == "Locked";
+            ESCStatus = dynotisData.ESCStatus == true;
 
             EscLockCommand = new RelayCommand(_ => LockESC());
             IncreaseByFiveCommand = new RelayCommand(_ => IncreaseByFive());
@@ -44,7 +44,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 if (SetProperty(ref _escStatus, value))
                 {
-                    _dynotisData.ESCStatus = value ? "Locked" : "Unlocked";
+                    _dynotisData.ESCStatus = value ? true : false;
                     if (_escStatus)
                     {
                         ESCValue = 0;

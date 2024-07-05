@@ -28,10 +28,11 @@ public class InterfaceVariables : INotifyPropertyChanged
     private double _noLoadCurrents;
     private double _maxCurrent;
     private double _batteryLevel;
+    private bool _securityStatus;
     private double _escValue;
-    private string _escStatus;
+    private bool _escStatus;
     private string _saveFile;
-    private string _saveStatus;
+    private bool _saveStatus;
     private string _testMode;
 
     public double Time
@@ -172,13 +173,19 @@ public class InterfaceVariables : INotifyPropertyChanged
         set => SetProperty(ref _batteryLevel, value);
     }
 
+    public bool SecurityStatus
+    {
+        get => _securityStatus;
+        set => SetProperty(ref _securityStatus, value);
+    }
+
     public double ESCValue
     {
         get => _escValue;
         set => SetProperty(ref _escValue, value);
     }
 
-    public string ESCStatus
+    public bool ESCStatus
     {
         get => _escStatus;
         set => SetProperty(ref _escStatus, value);
@@ -190,7 +197,7 @@ public class InterfaceVariables : INotifyPropertyChanged
         set => SetProperty(ref _saveFile, value);
     }
 
-    public string SaveStatus
+    public bool SaveStatus
     {
         get => _saveStatus;
         set => SetProperty(ref _saveStatus, value);
@@ -227,6 +234,7 @@ public class InterfaceVariables : INotifyPropertyChanged
         NoLoadCurrents = data.NoLoadCurrents;
         MaxCurrent = data.MaxCurrent;
         BatteryLevel = data.BatteryLevel;
+        SecurityStatus = data.SecurityStatus;
         ESCValue = data.ESCValue;
         ESCStatus = data.ESCStatus;
         SaveFile = data.SaveFile;
