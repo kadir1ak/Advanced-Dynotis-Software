@@ -322,7 +322,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         {
             try
             {
-                return await Task.Run(() => port.ReadLine(), token);
+                return await Task.Run(() => port.ReadExisting(), token);
             }
             catch (Exception ex)
             {
