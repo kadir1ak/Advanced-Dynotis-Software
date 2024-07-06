@@ -6,9 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Media;
 using Advanced_Dynotis_Software.Models.Dynotis;
 using LiveCharts;
-using LiveCharts.Defaults;
 using LiveCharts.Wpf;
-
 
 namespace Advanced_Dynotis_Software.ViewModels.Main
 {
@@ -20,11 +18,22 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         public SeriesCollection CurrentSeriesCollection { get; private set; }
         public SeriesCollection ThrustSeriesCollection { get; private set; }
         public SeriesCollection TorqueSeriesCollection { get; private set; }
-
         public ObservableCollection<string> TimeLabels { get; private set; }
-
         public Func<double, string> XAxisFormatter { get; private set; }
         public Func<double, string> YAxisFormatter { get; private set; }
+
+        public double CurrentXAxisStep { get; private set; }
+        public double CurrentYAxisStep { get; private set; }
+        public double VoltageXAxisStep { get; private set; }
+        public double VoltageYAxisStep { get; private set; }
+        public double VibrationXAxisStep { get; private set; }
+        public double VibrationYAxisStep { get; private set; }
+        public double MotorSpeedXAxisStep { get; private set; }
+        public double MotorSpeedYAxisStep { get; private set; }
+        public double ThrustXAxisStep { get; private set; }
+        public double ThrustYAxisStep { get; private set; }
+        public double TorqueXAxisStep { get; private set; }
+        public double TorqueYAxisStep { get; private set; }
 
         public ChartViewModel()
         {
@@ -44,17 +53,16 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
 
             InitializeDefaultChartData();
 
-            XAxisFormatter = value => DateTime.FromOADate(value).ToString("HH:mm:ss");
+            XAxisFormatter = value => value.ToString("0");
             YAxisFormatter = value => value.ToString("0.00");
         }
 
         private void InitializeDefaultChartData()
         {
             const double defaultValue = 100;
-            DateTime now = DateTime.Now;
             for (int i = 0; i < 100; i++)
             {
-                TimeLabels.Add(now.AddSeconds(i).ToString("HH:mm:ss"));
+                TimeLabels.Add(i.ToString());
                 UpdateSeries(VibrationSeriesCollection, defaultValue);
                 UpdateSeries(CurrentSeriesCollection, defaultValue);
                 UpdateSeries(MotorSpeedSeriesCollection, defaultValue);
@@ -62,44 +70,45 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                 UpdateSeries(ThrustSeriesCollection, defaultValue);
                 UpdateSeries(TorqueSeriesCollection, defaultValue);
             }
+
+            UpdateChartSteps();
         }
 
         private static SeriesCollection CreateSeriesCollection(string title, Color color)
         {
             return new SeriesCollection
-        {
-            new LineSeries
             {
-                Title = title,
-                FontSize = 14,
-                Values = new ChartValues<double>(),
-                PointGeometrySize = 0,
-                LineSmoothness = 0,
-                Stroke = new SolidColorBrush(color),
-                StrokeThickness = 1,
-                Fill = new SolidColorBrush(Color.FromArgb(10, color.R, color.G, color.B)),
-                PointForeground = Brushes.Transparent,
-                LabelPoint = point => point.Y.ToString("N1")
-            }
-        };
+                new LineSeries
+                {
+                    Title = title,
+                    FontSize = 14,
+                    Values = new ChartValues<double>(),
+                    PointGeometrySize = 0,
+                    LineSmoothness = 0,
+                    Stroke = new SolidColorBrush(color),
+                    StrokeThickness = 1,
+                    Fill = new SolidColorBrush(Color.FromArgb(10, color.R, color.G, color.B)),
+                    PointForeground = Brushes.Transparent,
+                    LabelPoint = point => point.Y.ToString("N1")
+                }
+            };
         }
 
         public void UpdateChartData(DynotisData sensorData)
         {
-            DateTime now = DateTime.Now;
-
             if (TimeLabels.Count >= 100)
             {
                 TimeLabels.RemoveAt(0);
             }
-            TimeLabels.Add(now.ToString("HH:mm:ss"));
-
+            TimeLabels.Add(sensorData.Time.ToString());
             UpdateSeries(VibrationSeriesCollection, sensorData.Vibration);
             UpdateSeries(CurrentSeriesCollection, sensorData.Current);
             UpdateSeries(MotorSpeedSeriesCollection, sensorData.MotorSpeed);
             UpdateSeries(VoltageSeriesCollection, sensorData.Voltage);
             UpdateSeries(ThrustSeriesCollection, sensorData.Thrust);
             UpdateSeries(TorqueSeriesCollection, sensorData.Torque);
+
+            UpdateChartSteps();
         }
 
         private void UpdateSeries(SeriesCollection seriesCollection, double value)
@@ -112,12 +121,58 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             values.Add(value);
         }
 
+        private void UpdateChartSteps()
+        {
+            CurrentXAxisStep = CalculateXAxisStep(CurrentSeriesCollection);
+            CurrentYAxisStep = CalculateYAxisStep(CurrentSeriesCollection);
+
+            VoltageXAxisStep = CalculateXAxisStep(VoltageSeriesCollection);
+            VoltageYAxisStep = CalculateYAxisStep(VoltageSeriesCollection);
+
+            VibrationXAxisStep = CalculateXAxisStep(VibrationSeriesCollection);
+            VibrationYAxisStep = CalculateYAxisStep(VibrationSeriesCollection);
+
+            MotorSpeedXAxisStep = CalculateXAxisStep(MotorSpeedSeriesCollection);
+            MotorSpeedYAxisStep = CalculateYAxisStep(MotorSpeedSeriesCollection);
+
+            ThrustXAxisStep = CalculateXAxisStep(ThrustSeriesCollection);
+            ThrustYAxisStep = CalculateYAxisStep(ThrustSeriesCollection);
+
+            TorqueXAxisStep = CalculateXAxisStep(TorqueSeriesCollection);
+            TorqueYAxisStep = CalculateYAxisStep(TorqueSeriesCollection);
+
+            OnPropertyChanged(nameof(CurrentXAxisStep));
+            OnPropertyChanged(nameof(CurrentYAxisStep));
+            OnPropertyChanged(nameof(VoltageXAxisStep));
+            OnPropertyChanged(nameof(VoltageYAxisStep));
+            OnPropertyChanged(nameof(VibrationXAxisStep));
+            OnPropertyChanged(nameof(VibrationYAxisStep));
+            OnPropertyChanged(nameof(MotorSpeedXAxisStep));
+            OnPropertyChanged(nameof(MotorSpeedYAxisStep));
+            OnPropertyChanged(nameof(ThrustXAxisStep));
+            OnPropertyChanged(nameof(ThrustYAxisStep));
+            OnPropertyChanged(nameof(TorqueXAxisStep));
+            OnPropertyChanged(nameof(TorqueYAxisStep));
+        }
+
+        private double CalculateXAxisStep(SeriesCollection seriesCollection)
+        {
+            var values = ((LineSeries)seriesCollection[0]).Values;
+            return values.Count / 5.0; // X ekseninde 5 noktaya bölmek için
+        }
+
+        private double CalculateYAxisStep(SeriesCollection seriesCollection)
+        {
+            var values = ((LineSeries)seriesCollection[0]).Values;
+            var max = values.Cast<double>().Max();
+            var min = values.Cast<double>().Min();
+            return (max - min) / 10.0; // Y ekseninde 10 noktaya bölmek için
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
-
-
 }
