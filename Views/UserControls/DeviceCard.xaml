@@ -106,7 +106,7 @@
                     <!-- Değişken Değeri -->
                     <TextBlock x:Name="PressureValueLabel"  Text="{Binding  InterfaceVariables.Pressure, Mode=OneWay, StringFormat={}{0:0.00}}"  Width="80" Height="16"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <!-- Değişken Birimi -->
-                    <TextBlock x:Name="PressureUnitLabel" Text="kPa"  Width="40" Height="20"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
+                    <TextBlock x:Name="PressureUnitLabel" Text="Pa"  Width="40" Height="20"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
 
                 <!-- 7b. Değişken -->

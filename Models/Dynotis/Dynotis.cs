@@ -1,6 +1,7 @@
 ﻿using Advanced_Dynotis_Software.Services.Logger;
 using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO.Ports;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -262,21 +263,21 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                     {
                         var newData = new DynotisData
                         {
-                            Time = ParseDouble(dataParts[0]),
-                            Current = ParseDouble(dataParts[1]),
-                            Voltage = ParseDouble(dataParts[2]),
-                            Thrust = ParseDouble(dataParts[3]),
-                            Torque = ParseDouble(dataParts[4]),
-                            MotorSpeed = ParseDouble(dataParts[5]),
-                            WindSpeed = ParseDouble(dataParts[6]),
-                            VibrationX = ParseDouble(dataParts[7]),
-                            VibrationY = ParseDouble(dataParts[8]),
-                            VibrationZ = ParseDouble(dataParts[9]),
-                            AmbientTemp = ParseDouble(dataParts[10]),
-                            MotorTemp = ParseDouble(dataParts[11]),
-                            Temperature = ParseDouble(dataParts[12]),
-                            Pressure = ParseDouble(dataParts[13]),
-                            Humidity = ParseDouble(dataParts[14])
+                            Time = TryParseDouble(dataParts[0], out double time) ? time : double.NaN,
+                            Current = TryParseDouble(dataParts[1], out double current) ? current : double.NaN,
+                            Voltage = TryParseDouble(dataParts[2], out double voltage) ? voltage : double.NaN,
+                            Thrust = TryParseDouble(dataParts[3], out double thrust) ? thrust : double.NaN,
+                            Torque = TryParseDouble(dataParts[4], out double torque) ? torque : double.NaN,
+                            MotorSpeed = TryParseDouble(dataParts[5], out double motorSpeed) ? motorSpeed : double.NaN,
+                            WindSpeed = TryParseDouble(dataParts[6], out double windSpeed) ? windSpeed : double.NaN,
+                            VibrationX = TryParseDouble(dataParts[7], out double vibrationX) ? vibrationX : double.NaN,
+                            VibrationY = TryParseDouble(dataParts[8], out double vibrationY) ? vibrationY : double.NaN,
+                            VibrationZ = TryParseDouble(dataParts[9], out double vibrationZ) ? vibrationZ : double.NaN,
+                            AmbientTemp = TryParseDouble(dataParts[10], out double ambientTemp) ? ambientTemp : double.NaN,
+                            MotorTemp = TryParseDouble(dataParts[11], out double motorTemp) ? motorTemp : double.NaN,
+                            Temperature = TryParseDouble(dataParts[12], out double temperature) ? temperature : double.NaN,
+                            Pressure = TryParseDouble(dataParts[13], out double pressure) ? pressure : double.NaN,
+                            Humidity = TryParseDouble(dataParts[14], out double humidity) ? humidity : double.NaN
                         };
 
                         await Application.Current.Dispatcher.InvokeAsync(() =>
@@ -350,13 +351,16 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             return Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2) + Math.Pow(z, 2));
         }
 
-        private static double ParseDouble(string value)
+        public static bool TryParseDouble(string value, out double result)
         {
-            if (double.TryParse(value, out double result))
+            // İlk olarak, '.' karakteri için deneme yapıyoruz.
+            if (double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out result))
             {
-                return result;
+                return true;
             }
-            return double.NaN;
+
+            // Eğer '.' karakteri başarısız olursa, ',' karakteri ile deneme yapıyoruz.
+            return double.TryParse(value.Replace('.', ','), out result);
         }
 
         public void OnPropertyChanged([CallerMemberName] string propertyName = null)

@@ -159,7 +159,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         private double CalculateXAxisStep(SeriesCollection seriesCollection)
         {
             var values = ((LineSeries)seriesCollection[0]).Values;
-            return values.Count / 5.0; // X ekseninde 5 noktaya bölmek için
+            return values.Count / 4.0; // X ekseninde 4 noktaya bölmek için
         }
 
         private double CalculateYAxisStep(SeriesCollection seriesCollection)
@@ -167,7 +167,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             var values = ((LineSeries)seriesCollection[0]).Values;
             var max = values.Cast<double>().Max();
             var min = values.Cast<double>().Min();
-            return (max == min) ? 1 : (max - min) / 10.0; // Y ekseninde 10 noktaya bölmek için
+            return (max == min) ? 1 : (max - min) / 4.0; // Y ekseninde 4 noktaya bölmek için
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
