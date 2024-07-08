@@ -97,19 +97,19 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             };
         }
 
-        public void UpdateChartData(DynotisData sensorData)
+        public void UpdateChartData(InterfaceVariables data)
         {
             if (TimeLabels.Count >= seriesBufferSize)
             {
                 TimeLabels.RemoveAt(0);
             }
-            TimeLabels.Add(sensorData.Time.ToString());
-            UpdateSeries(VibrationSeriesCollection, sensorData.Vibration);
-            UpdateSeries(CurrentSeriesCollection, sensorData.Current);
-            UpdateSeries(MotorSpeedSeriesCollection, sensorData.MotorSpeed);
-            UpdateSeries(VoltageSeriesCollection, sensorData.Voltage);
-            UpdateSeries(ThrustSeriesCollection, sensorData.Thrust);
-            UpdateSeries(TorqueSeriesCollection, sensorData.Torque);
+            TimeLabels.Add(data.Time.ToString());
+            UpdateSeries(VibrationSeriesCollection, data.Vibration);
+            UpdateSeries(CurrentSeriesCollection, data.Current);
+            UpdateSeries(MotorSpeedSeriesCollection, data.MotorSpeed.BaseValue);
+            UpdateSeries(VoltageSeriesCollection, data.Voltage);
+            UpdateSeries(ThrustSeriesCollection, data.Thrust.BaseValue);
+            UpdateSeries(TorqueSeriesCollection, data.Torque.BaseValue);
 
             UpdateChartSteps();
         }

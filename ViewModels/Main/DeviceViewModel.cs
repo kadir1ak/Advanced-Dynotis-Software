@@ -154,8 +154,9 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                 {
                     await Application.Current.Dispatcher.InvokeAsync(() =>
                     {
-                        ChartViewModel.UpdateChartData(latestData);
                         InterfaceVariables.UpdateFrom(latestData);
+                        ChartViewModel.UpdateChartData(InterfaceVariables); // InterfaceVariables'den güncellemeleri ChartViewModel'e iletme
+
                     });
                 }
             }

@@ -4,22 +4,42 @@ using System.Runtime.CompilerServices;
 
 public class InterfaceVariables : INotifyPropertyChanged
 {
+    public struct Unit
+    {
+        public double Value { get; set; }
+        public string UnitName { get; set; }
+        public string UnitSymbol { get; set; }
+        public double BaseValue { get; set; }
+        public string BaseUnitName { get; set; }
+        public string BaseUnitSymbol { get; set; }
+
+        public Unit(double value, string unitName, string unitSymbol, double baseValue, string baseUnitName, string baseUnitSymbol)
+        {
+            Value = value;
+            UnitName = unitName;
+            UnitSymbol = unitSymbol;
+            BaseValue = baseValue;
+            BaseUnitName = baseUnitName;
+            BaseUnitSymbol = baseUnitSymbol;
+        }
+    }
+
     private double _time;
     private double _sampleRate;
-    private double _ambientTemp;
-    private double _motorTemp;
-    private double _motorSpeed;
-    private double _thrust;
-    private double _torque;
+    private Unit _ambientTemp;
+    private Unit _motorTemp;
+    private Unit _motorSpeed;
+    private Unit _thrust;
+    private Unit _torque;
     private double _voltage;
     private double _current;
     private double _power;
-    private double _pressure;
+    private Unit _pressure;
     private double _vibrationX;
     private double _vibrationY;
     private double _vibrationZ;
     private double _vibration;
-    private double _windSpeed;
+    private Unit _windSpeed;
     private double _windDirection;
     private double _airDensity;
 
@@ -47,31 +67,31 @@ public class InterfaceVariables : INotifyPropertyChanged
         set => SetProperty(ref _sampleRate, value);
     }
 
-    public double AmbientTemp
+    public Unit AmbientTemp
     {
         get => _ambientTemp;
         set => SetProperty(ref _ambientTemp, value);
     }
 
-    public double MotorTemp
+    public Unit MotorTemp
     {
         get => _motorTemp;
         set => SetProperty(ref _motorTemp, value);
     }
 
-    public double MotorSpeed
+    public Unit MotorSpeed
     {
         get => _motorSpeed;
         set => SetProperty(ref _motorSpeed, value);
     }
 
-    public double Thrust
+    public Unit Thrust
     {
         get => _thrust;
         set => SetProperty(ref _thrust, value);
     }
 
-    public double Torque
+    public Unit Torque
     {
         get => _torque;
         set => SetProperty(ref _torque, value);
@@ -95,7 +115,7 @@ public class InterfaceVariables : INotifyPropertyChanged
         set => SetProperty(ref _power, value);
     }
 
-    public double Pressure
+    public Unit Pressure
     {
         get => _pressure;
         set => SetProperty(ref _pressure, value);
@@ -125,7 +145,7 @@ public class InterfaceVariables : INotifyPropertyChanged
         set => SetProperty(ref _vibration, value);
     }
 
-    public double WindSpeed
+    public Unit WindSpeed
     {
         get => _windSpeed;
         set => SetProperty(ref _windSpeed, value);
@@ -213,20 +233,20 @@ public class InterfaceVariables : INotifyPropertyChanged
     {
         Time = data.Time;
         SampleRate = data.SampleRate;
-        AmbientTemp = data.AmbientTemp;
-        MotorTemp = data.MotorTemp;
-        MotorSpeed = data.MotorSpeed;
-        Thrust = data.Thrust;
-        Torque = data.Torque;
+        AmbientTemp = new Unit(AmbientTemp.Value, AmbientTemp.UnitName, AmbientTemp.UnitSymbol, data.AmbientTemp.Value, data.AmbientTemp.UnitName, data.AmbientTemp.UnitSymbol);
+        MotorTemp = new Unit(MotorTemp.Value, MotorTemp.UnitName, MotorTemp.UnitSymbol, data.MotorTemp.Value, data.MotorTemp.UnitName, data.MotorTemp.UnitSymbol);
+        MotorSpeed = new Unit(MotorSpeed.Value, MotorSpeed.UnitName, MotorSpeed.UnitSymbol, data.MotorSpeed.Value, data.MotorSpeed.UnitName, data.MotorSpeed.UnitSymbol);
+        Thrust = new Unit(Thrust.Value, Thrust.UnitName, Thrust.UnitSymbol, data.Thrust.Value, data.Thrust.UnitName, data.Thrust.UnitSymbol);
+        Torque = new Unit(Torque.Value, Torque.UnitName, Torque.UnitSymbol, data.Torque.Value, data.Torque.UnitName, data.Torque.UnitSymbol);
         Voltage = data.Voltage;
         Current = data.Current;
         Power = data.Power;
-        Pressure = data.Pressure;
+        Pressure = new Unit(Pressure.Value, Pressure.UnitName, Pressure.UnitSymbol, data.Pressure.Value, data.Pressure.UnitName, data.Pressure.UnitSymbol);
         VibrationX = data.VibrationX;
         VibrationY = data.VibrationY;
         VibrationZ = data.VibrationZ;
         Vibration = data.Vibration;
-        WindSpeed = data.WindSpeed;
+        WindSpeed = new Unit(WindSpeed.Value, WindSpeed.UnitName, WindSpeed.UnitSymbol, data.WindSpeed.Value, data.WindSpeed.UnitName, data.WindSpeed.UnitSymbol);
         WindDirection = data.WindDirection;
         AirDensity = data.AirDensity;
         PropellerArea = data.PropellerArea;
@@ -241,6 +261,7 @@ public class InterfaceVariables : INotifyPropertyChanged
         SaveStatus = data.SaveStatus;
         TestMode = data.TestMode;
     }
+
 
     public event PropertyChangedEventHandler PropertyChanged;
 

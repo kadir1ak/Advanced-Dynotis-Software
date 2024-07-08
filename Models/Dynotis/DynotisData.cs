@@ -5,24 +5,38 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 {
     public class DynotisData : INotifyPropertyChanged
     {
+        public struct Unit
+        {
+            public double Value { get; set; }
+            public string UnitName { get; set; }
+            public string UnitSymbol { get; set; }
+
+            public Unit(double value, string unitName, string unitSymbol)
+            {
+                Value = value;
+                UnitName = unitName;
+                UnitSymbol = unitSymbol;
+            }
+        }
+
         private double _time;
         private double _sampleRate;
-        private double _ambientTemp;
-        private double _motorTemp;
-        private double _motorSpeed;
-        private double _thrust;
-        private double _torque;
+        private Unit _ambientTemp;
+        private Unit _motorTemp;
+        private Unit _motorSpeed;
+        private Unit _thrust;
+        private Unit _torque;
         private double _voltage;
         private double _current;
         private double _power;
-        private double _temperature;
-        private double _pressure;
+        private Unit _temperature;
+        private Unit _pressure;
         private double _humidity;
         private double _vibrationX;
         private double _vibrationY;
         private double _vibrationZ;
         private double _vibration;
-        private double _windSpeed;
+        private Unit _windSpeed;
         private double _windDirection;
         private double _airDensity;
         private double _propellerArea;
@@ -49,31 +63,31 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             set => SetProperty(ref _sampleRate, value);
         }
 
-        public double AmbientTemp
+        public Unit AmbientTemp
         {
             get => _ambientTemp;
             set => SetProperty(ref _ambientTemp, value);
         }
 
-        public double MotorTemp
+        public Unit MotorTemp
         {
             get => _motorTemp;
             set => SetProperty(ref _motorTemp, value);
         }
 
-        public double MotorSpeed
+        public Unit MotorSpeed
         {
             get => _motorSpeed;
             set => SetProperty(ref _motorSpeed, value);
         }
 
-        public double Thrust
+        public Unit Thrust
         {
             get => _thrust;
             set => SetProperty(ref _thrust, value);
         }
 
-        public double Torque
+        public Unit Torque
         {
             get => _torque;
             set => SetProperty(ref _torque, value);
@@ -96,12 +110,12 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             get => _power;
             set => SetProperty(ref _power, value);
         }
-        public double Temperature
+        public Unit Temperature
         {
             get => _temperature;
             set => SetProperty(ref _temperature, value);
         }
-        public double Pressure
+        public Unit Pressure
         {
             get => _pressure;
             set => SetProperty(ref _pressure, value);
@@ -135,7 +149,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             set => SetProperty(ref _vibration, value);
         }
 
-        public double WindSpeed
+        public Unit WindSpeed
         {
             get => _windSpeed;
             set => SetProperty(ref _windSpeed, value);
