@@ -21,6 +21,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         private DynotisData _latestDynotisData;
         private readonly object _dataLock = new();
         private CancellationTokenSource _cancellationTokenSource;
+        private int UpdateTimeMillisecond = 50;
 
         public Dynotis Device
         {
@@ -140,7 +141,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         {
             while (!token.IsCancellationRequested)
             {
-                await Task.Delay(100); // Adjust this delay as necessary
+                await Task.Delay(UpdateTimeMillisecond); 
 
                 DynotisData latestData;
                 lock (_dataLock)

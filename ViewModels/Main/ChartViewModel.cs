@@ -22,6 +22,10 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         public Func<double, string> XAxisFormatter { get; private set; }
         public Func<double, string> YAxisFormatter { get; private set; }
 
+        private int seriesBufferSize = 100;
+
+        const double defaultValue = 100;
+
         public double CurrentXAxisStep { get; private set; }
         public double CurrentYAxisStep { get; private set; }
         public double VoltageXAxisStep { get; private set; }
@@ -59,8 +63,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
 
         private void InitializeDefaultChartData()
         {
-            const double defaultValue = 100;
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < seriesBufferSize; i++)
             {
                 TimeLabels.Add(i.ToString());
                 UpdateSeries(VibrationSeriesCollection, defaultValue);
@@ -96,7 +99,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
 
         public void UpdateChartData(DynotisData sensorData)
         {
-            if (TimeLabels.Count >= 100)
+            if (TimeLabels.Count >= seriesBufferSize)
             {
                 TimeLabels.RemoveAt(0);
             }
@@ -115,7 +118,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         private void UpdateSeries(SeriesCollection seriesCollection, double value)
         {
             var values = ((LineSeries)seriesCollection[0]).Values;
-            if (values.Count >= 100)
+            if (values.Count >= seriesBufferSize)
             {
                 values.RemoveAt(0);
             }
