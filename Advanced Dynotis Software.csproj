@@ -10,9 +10,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Documents\Images\Dynotis.png" />
+    <None Remove="Documents\Images\EN.png" />
+    <None Remove="Documents\Images\Semai_Urban_Air_Mobility.png" />
+    <None Remove="Documents\Images\TR.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Documents\Curser\" />
     <Folder Include="Documents\Icons\" />
-    <Folder Include="Documents\Images\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,6 +31,13 @@
     <PackageReference Include="System.IO.Ports" Version="8.0.0" />
     <PackageReference Include="System.Management" Version="8.0.0" />
     <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Documents\Images\Dynotis.png" />
+    <Resource Include="Documents\Images\EN.png" />
+    <Resource Include="Documents\Images\Semai_Urban_Air_Mobility.png" />
+    <Resource Include="Documents\Images\TR.png" />
   </ItemGroup>
 
   <ItemGroup>

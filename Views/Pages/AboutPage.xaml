@@ -6,7 +6,32 @@
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.Pages"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <TextBlock Text="About Page" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#151F2D"/>
+    <Grid Background="{DynamicResource Page}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Background Image -->
+        <Image Source="C:\Users\kadir\source\repos\kadir1ak\Advanced-Dynotis-Software\Documents\Images\Semai_Urban_Air_Mobility.png"
+               Stretch="Uniform"
+               Opacity="0.4"
+               RenderOptions.BitmapScalingMode="HighQuality"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               Grid.RowSpan="3"
+               Grid.ColumnSpan="2"/>
+
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="20">
+            <TextBlock Text="About Us" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20" Foreground="{DynamicResource Text}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  Margin="20" Width="720">
+            <TextBlock  TextWrapping="Wrap" FontSize="16" FontWeight="Regular" Foreground="{DynamicResource Text}" Text="At the heart of our endeavors lies the vision to be ranked among the top 25 Urban Air Mobility companies worldwide. With Semai, we are paving the way towards safer and cleaner urban air travel. Our mission extends to harnessing Turkey's high potential human resources, adding value and fostering employment within this burgeoning sector. Built for its unparalleled accuracy, our product enables customers to depend on the precision of the data they gather. This meticulous precision stems from our steadfast commitment to exact measurements, thorough calibration processes, and intelligent design. Serving an ever-growing international clientele, Semai Aviation's products and software are not just tools but catalysts for a smarter, greener future, supporting the most cutting-edge companies and research institutions worldwide." />
+        </StackPanel>
     </Grid>
 </UserControl>
