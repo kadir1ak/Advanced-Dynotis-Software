@@ -55,6 +55,14 @@ public class InterfaceVariables : INotifyPropertyChanged
     private bool _saveStatus;
     private string _testMode;
 
+    private string _selectedTorqueUnit;
+    private string _selectedThrustUnit;
+    private string _selectedMotorSpeedUnit;
+    private string _selectedAmbientTempUnit;
+    private string _selectedMotorTempUnit;
+    private string _selectedWindSpeedUnit;
+    private string _selectedPressureUnit;
+
     public double Time
     {
         get => _time;
@@ -228,25 +236,67 @@ public class InterfaceVariables : INotifyPropertyChanged
         get => _testMode;
         set => SetProperty(ref _testMode, value);
     }
+    public string SelectedTorqueUnit
+    {
+        get => _selectedTorqueUnit;
+        set => SetProperty(ref _selectedTorqueUnit, value);
+    }
+
+    public string SelectedThrustUnit
+    {
+        get => _selectedThrustUnit;
+        set => SetProperty(ref _selectedThrustUnit, value);
+    }
+
+    public string SelectedMotorSpeedUnit
+    {
+        get => _selectedMotorSpeedUnit;
+        set => SetProperty(ref _selectedMotorSpeedUnit, value);
+    }
+
+    public string SelectedAmbientTempUnit
+    {
+        get => _selectedAmbientTempUnit;
+        set => SetProperty(ref _selectedAmbientTempUnit, value);
+    }
+
+    public string SelectedMotorTempUnit
+    {
+        get => _selectedMotorTempUnit;
+        set => SetProperty(ref _selectedMotorTempUnit, value);
+    }
+
+    public string SelectedWindSpeedUnit
+    {
+        get => _selectedWindSpeedUnit;
+        set => SetProperty(ref _selectedWindSpeedUnit, value);
+    }
+
+    public string SelectedPressureUnit
+    {
+        get => _selectedPressureUnit;
+        set => SetProperty(ref _selectedPressureUnit, value);
+    }
+
 
     public void UpdateFrom(DynotisData data)
     {
         Time = data.Time;
         SampleRate = data.SampleRate;
-        AmbientTemp = new Unit(AmbientTemp.Value, AmbientTemp.UnitName, AmbientTemp.UnitSymbol, data.AmbientTemp.Value, data.AmbientTemp.UnitName, data.AmbientTemp.UnitSymbol);
-        MotorTemp = new Unit(MotorTemp.Value, MotorTemp.UnitName, MotorTemp.UnitSymbol, data.MotorTemp.Value, data.MotorTemp.UnitName, data.MotorTemp.UnitSymbol);
-        MotorSpeed = new Unit(MotorSpeed.Value, MotorSpeed.UnitName, MotorSpeed.UnitSymbol, data.MotorSpeed.Value, data.MotorSpeed.UnitName, data.MotorSpeed.UnitSymbol);
-        Thrust = new Unit(Thrust.Value, Thrust.UnitName, Thrust.UnitSymbol, data.Thrust.Value, data.Thrust.UnitName, data.Thrust.UnitSymbol);
-        Torque = new Unit(Torque.Value, Torque.UnitName, Torque.UnitSymbol, data.Torque.Value, data.Torque.UnitName, data.Torque.UnitSymbol);
+        AmbientTemp = new Unit(AmbientTemp.Value, SelectedAmbientTempUnit, AmbientTemp.UnitSymbol, data.AmbientTemp.Value, data.AmbientTemp.UnitName, data.AmbientTemp.UnitSymbol);
+        MotorTemp = new Unit(MotorTemp.Value, SelectedMotorSpeedUnit, MotorTemp.UnitSymbol, data.MotorTemp.Value, data.MotorTemp.UnitName, data.MotorTemp.UnitSymbol);
+        MotorSpeed = new Unit(MotorSpeed.Value, SelectedMotorSpeedUnit, MotorSpeed.UnitSymbol, data.MotorSpeed.Value, data.MotorSpeed.UnitName, data.MotorSpeed.UnitSymbol);
+        Thrust = new Unit(Thrust.Value, SelectedThrustUnit, Thrust.UnitSymbol, data.Thrust.Value, data.Thrust.UnitName, data.Thrust.UnitSymbol);
+        Torque = new Unit(Torque.Value, SelectedTorqueUnit, Torque.UnitSymbol, data.Torque.Value, data.Torque.UnitName, data.Torque.UnitSymbol);
         Voltage = data.Voltage;
         Current = data.Current;
         Power = data.Power;
-        Pressure = new Unit(Pressure.Value, Pressure.UnitName, Pressure.UnitSymbol, data.Pressure.Value, data.Pressure.UnitName, data.Pressure.UnitSymbol);
+        Pressure = new Unit(Pressure.Value, SelectedPressureUnit, Pressure.UnitSymbol, data.Pressure.Value, data.Pressure.UnitName, data.Pressure.UnitSymbol);
         VibrationX = data.VibrationX;
         VibrationY = data.VibrationY;
         VibrationZ = data.VibrationZ;
         Vibration = data.Vibration;
-        WindSpeed = new Unit(WindSpeed.Value, WindSpeed.UnitName, WindSpeed.UnitSymbol, data.WindSpeed.Value, data.WindSpeed.UnitName, data.WindSpeed.UnitSymbol);
+        WindSpeed = new Unit(WindSpeed.Value, SelectedWindSpeedUnit, WindSpeed.UnitSymbol, data.WindSpeed.Value, data.WindSpeed.UnitName, data.WindSpeed.UnitSymbol);
         WindDirection = data.WindDirection;
         AirDensity = data.AirDensity;
         PropellerArea = data.PropellerArea;

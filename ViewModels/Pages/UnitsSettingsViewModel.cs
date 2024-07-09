@@ -1,5 +1,5 @@
-﻿using Advanced_Dynotis_Software.Services.Helpers;
-using System;
+﻿using Advanced_Dynotis_Software.Models.Dynotis;
+using Advanced_Dynotis_Software.Services.Helpers;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -8,6 +8,94 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
 {
     public class UnitsSettingsViewModel : INotifyPropertyChanged
     {
+        InterfaceVariables _interfaceVariables;
+
+        private string _torqueUnit;
+        private string _thrustUnit;
+        private string _motorSpeedUnit;
+        private string _temperatureUnit;
+        private string _windSpeedUnit;
+        private string _pressureUnit;
+
+        public string TorqueUnit
+        {
+            get => _torqueUnit;
+            set
+            {
+                if (SetProperty(ref _torqueUnit, value))
+                {
+                    _interfaceVariables.SelectedTorqueUnit = value;
+                    OnPropertyChanged(nameof(_interfaceVariables));
+                }
+            }
+        }
+
+        public string ThrustUnit
+        {
+            get => _thrustUnit;
+            set
+            {
+                if (SetProperty(ref _thrustUnit, value))
+                {
+                    _interfaceVariables.SelectedThrustUnit = value;
+                    OnPropertyChanged(nameof(_interfaceVariables));
+                }
+            }
+        }
+
+        public string MotorSpeedUnit
+        {
+            get => _motorSpeedUnit;
+            set
+            {
+                if (SetProperty(ref _motorSpeedUnit, value))
+                {
+                    _interfaceVariables.SelectedMotorSpeedUnit = value;
+                    OnPropertyChanged(nameof(_interfaceVariables));
+                }
+            }
+        }
+
+        public string TemperatureUnit
+        {
+            get => _temperatureUnit;
+            set
+            {
+                if (SetProperty(ref _temperatureUnit, value))
+                {
+                    _interfaceVariables.SelectedMotorTempUnit = value;
+                    _interfaceVariables.SelectedAmbientTempUnit = value;
+                    OnPropertyChanged(nameof(_interfaceVariables));
+                }
+            }
+        }
+
+        public string WindSpeedUnit
+        {
+            get => _windSpeedUnit;
+            set
+            {
+                if (SetProperty(ref _windSpeedUnit, value))
+                {
+                    _interfaceVariables.SelectedWindSpeedUnit = value;
+                    OnPropertyChanged(nameof(_interfaceVariables));
+                }
+            }
+        }
+
+        public string PressureUnit
+        {
+            get => _pressureUnit;
+            set
+            {
+                if (SetProperty(ref _pressureUnit, value))
+                {
+                    _interfaceVariables.SelectedPressureUnit = value;
+                    OnPropertyChanged(nameof(_interfaceVariables));
+                }
+            }
+        }
+
         public ICommand TorqueUnitChangedCommand { get; }
         public ICommand ThrustUnitChangedCommand { get; }
         public ICommand MotorSpeedUnitChangedCommand { get; }
@@ -27,39 +115,53 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
 
         private void OnTorqueUnitChanged(object parameter)
         {
-            // Handle Torque unit change
+            if (parameter != null)
+            {
+                TorqueUnit = parameter.ToString();
+            }
         }
 
         private void OnThrustUnitChanged(object parameter)
         {
-            // Handle Thrust unit change
+            if (parameter != null)
+            {
+                ThrustUnit = parameter.ToString();
+            }
         }
 
         private void OnMotorSpeedUnitChanged(object parameter)
         {
-            // Handle Motor Speed unit change
+            if (parameter != null)
+            {
+                MotorSpeedUnit = parameter.ToString();
+            }
         }
 
         private void OnTemperatureUnitChanged(object parameter)
         {
-            // Handle Temperature unit change
+            if (parameter != null)
+            {
+                TemperatureUnit = parameter.ToString();
+            }
         }
 
         private void OnWindSpeedUnitChanged(object parameter)
         {
-            // Handle Wind Speed unit change
+            if (parameter != null)
+            {
+                WindSpeedUnit = parameter.ToString();
+            }
         }
 
         private void OnPressureUnitChanged(object parameter)
         {
-            // Handle Pressure unit change
+            if (parameter != null)
+            {
+                PressureUnit = parameter.ToString();
+            }
         }
-        public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        public event PropertyChangedEventHandler PropertyChanged;
 
         protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
@@ -67,6 +169,11 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             storage = value;
             OnPropertyChanged(propertyName);
             return true;
+        }
+
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
