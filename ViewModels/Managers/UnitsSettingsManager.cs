@@ -1,5 +1,7 @@
 ﻿using Advanced_Dynotis_Software.Models.Dynotis;
 using Advanced_Dynotis_Software.ViewModels.Pages;
+using Advanced_Dynotis_Software.ViewModels.UserControls;
+using Advanced_Dynotis_Software.Views.UserControls;
 using System.Collections.Generic;
 
 namespace Advanced_Dynotis_Software.ViewModels.Managers
@@ -12,55 +14,26 @@ namespace Advanced_Dynotis_Software.ViewModels.Managers
         {
             _unitsSettings = new Dictionary<string, UnitsSettingsViewModel>();
         }
-
-        public UnitsSettingsViewModel GetUnitsSettingsViewModel(string unitType)
+        public UnitsSettingsViewModel GetUnitsSettingsViewModel(string devicePortName, InterfaceVariables interfaceVariables)
         {
-            if (_unitsSettings.ContainsKey(unitType))
+
+            if (_unitsSettings.ContainsKey(devicePortName))
             {
-                return _unitsSettings[unitType];
+                return _unitsSettings[devicePortName];
             }
             else
             {
-                var viewModel = new UnitsSettingsViewModel(); 
-                _unitsSettings[unitType] = viewModel;
+                var viewModel = new UnitsSettingsViewModel(interfaceVariables);
+                _unitsSettings[devicePortName] = viewModel;
                 return viewModel;
             }
         }
 
-        public void RemoveUnitsSettingsViewModel(string unitType)
+        public void RemoveUnitsSettingsViewModel(string devicePortName)
         {
-            if (_unitsSettings.ContainsKey(unitType))
+            if (_unitsSettings.ContainsKey(devicePortName))
             {
-                _unitsSettings.Remove(unitType);
-            }
-        }
-
-        public void UpdateUnitsSettingsViewModel(string unitType, string unitValue)
-        {
-            if (_unitsSettings.ContainsKey(unitType))
-            {
-                var viewModel = _unitsSettings[unitType];
-                switch (unitType)
-                {
-                    case nameof(viewModel.TorqueUnit):
-                        viewModel.TorqueUnit = unitValue;
-                        break;
-                    case nameof(viewModel.ThrustUnit):
-                        viewModel.ThrustUnit = unitValue;
-                        break;
-                    case nameof(viewModel.MotorSpeedUnit):
-                        viewModel.MotorSpeedUnit = unitValue;
-                        break;
-                    case nameof(viewModel.TemperatureUnit):
-                        viewModel.TemperatureUnit = unitValue;
-                        break;
-                    case nameof(viewModel.WindSpeedUnit):
-                        viewModel.WindSpeedUnit = unitValue;
-                        break;
-                    case nameof(viewModel.PressureUnit):
-                        viewModel.PressureUnit = unitValue;
-                        break;
-                }
+                _unitsSettings.Remove(devicePortName);
             }
         }
     }

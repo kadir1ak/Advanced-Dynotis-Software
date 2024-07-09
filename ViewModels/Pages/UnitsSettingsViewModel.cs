@@ -2,6 +2,7 @@
 using Advanced_Dynotis_Software.Services.Helpers;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Security;
 using System.Windows.Input;
 
 namespace Advanced_Dynotis_Software.ViewModels.Pages
@@ -29,7 +30,6 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 }
             }
         }
-
         public string ThrustUnit
         {
             get => _thrustUnit;
@@ -42,7 +42,6 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 }
             }
         }
-
         public string MotorSpeedUnit
         {
             get => _motorSpeedUnit;
@@ -55,7 +54,6 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 }
             }
         }
-
         public string TemperatureUnit
         {
             get => _temperatureUnit;
@@ -69,7 +67,6 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 }
             }
         }
-
         public string WindSpeedUnit
         {
             get => _windSpeedUnit;
@@ -82,7 +79,6 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 }
             }
         }
-
         public string PressureUnit
         {
             get => _pressureUnit;
@@ -95,70 +91,10 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 }
             }
         }
-
-        public ICommand TorqueUnitChangedCommand { get; }
-        public ICommand ThrustUnitChangedCommand { get; }
-        public ICommand MotorSpeedUnitChangedCommand { get; }
-        public ICommand TemperatureUnitChangedCommand { get; }
-        public ICommand WindSpeedUnitChangedCommand { get; }
-        public ICommand PressureUnitChangedCommand { get; }
-
-        public UnitsSettingsViewModel()
+        public UnitsSettingsViewModel(InterfaceVariables interfaceVariables)
         {
-            TorqueUnitChangedCommand = new RelayCommand(OnTorqueUnitChanged);
-            ThrustUnitChangedCommand = new RelayCommand(OnThrustUnitChanged);
-            MotorSpeedUnitChangedCommand = new RelayCommand(OnMotorSpeedUnitChanged);
-            TemperatureUnitChangedCommand = new RelayCommand(OnTemperatureUnitChanged);
-            WindSpeedUnitChangedCommand = new RelayCommand(OnWindSpeedUnitChanged);
-            PressureUnitChangedCommand = new RelayCommand(OnPressureUnitChanged);
-        }
-
-        private void OnTorqueUnitChanged(object parameter)
-        {
-            if (parameter != null)
-            {
-                TorqueUnit = parameter.ToString();
-            }
-        }
-
-        private void OnThrustUnitChanged(object parameter)
-        {
-            if (parameter != null)
-            {
-                ThrustUnit = parameter.ToString();
-            }
-        }
-
-        private void OnMotorSpeedUnitChanged(object parameter)
-        {
-            if (parameter != null)
-            {
-                MotorSpeedUnit = parameter.ToString();
-            }
-        }
-
-        private void OnTemperatureUnitChanged(object parameter)
-        {
-            if (parameter != null)
-            {
-                TemperatureUnit = parameter.ToString();
-            }
-        }
-
-        private void OnWindSpeedUnitChanged(object parameter)
-        {
-            if (parameter != null)
-            {
-                WindSpeedUnit = parameter.ToString();
-            }
-        }
-
-        private void OnPressureUnitChanged(object parameter)
-        {
-            if (parameter != null)
-            {
-                PressureUnit = parameter.ToString();
-            }
+            _interfaceVariables = interfaceVariables;
+            TorqueUnit = interfaceVariables.SelectedTorqueUnit;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -2,6 +2,7 @@
 using DocumentFormat.OpenXml;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 
 public class InterfaceVariables : INotifyPropertyChanged
 {
