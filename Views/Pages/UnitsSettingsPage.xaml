@@ -7,9 +7,6 @@
              xmlns:vmPage="clr-namespace:Advanced_Dynotis_Software.ViewModels.Pages"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d">
-    <UserControl.DataContext>
-        <vmPage:UnitsSettingsViewModel/>
-    </UserControl.DataContext>
     <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Background="{DynamicResource Page}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>

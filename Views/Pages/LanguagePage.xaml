@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.Pages"
              xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d">
-    <Grid>
+    <Grid Background="{DynamicResource Page}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -19,17 +19,28 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Image Grid.Row="0" Grid.Column="0" Margin="30" Height="100" Width="175" Source="pack://application:,,,/Documents/Images/TR.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            
+            <Image Grid.Row="0" Grid.Column="0" Margin="10" Height="100" Width="175" Source="pack://application:,,,/Documents/Images/TR.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <TextBlock Grid.Row="1" Grid.Column="0" Text="Türkçe" FontSize="24" Foreground="{DynamicResource Text}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0"/>
+            <CheckBox Grid.Row="2" Grid.Column="0" Margin="10" Foreground="{DynamicResource Text}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
 
-            <Image Grid.Row="0" Grid.Column="1" Margin="30" Height="100" Width="150" Source="pack://application:,,,/Documents/Images/EN.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Image Grid.Row="0" Grid.Column="1" Margin="10" Height="100" Width="150" Source="pack://application:,,,/Documents/Images/EN.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <TextBlock Grid.Row="1" Grid.Column="1" Text="English" FontSize="24" Foreground="{DynamicResource Text}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0"/>
-
-          </Grid>
+            <CheckBox Grid.Row="2" Grid.Column="1" Margin="10" Foreground="{DynamicResource Text}" IsChecked="True" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+        </Grid>
     </Grid>
 </UserControl>

@@ -14,6 +14,9 @@
     <SolidColorBrush Color="White" x:Key="menuButtonStandart"/>
     <SolidColorBrush Color="#3A9FF3" x:Key="menuButtonTrigger"/>
 
+    <!-- Device Card -->
+    <SolidColorBrush Color="White" x:Key="deviceCardIcon"/>
+    
     <!-- Device Mini Card -->
     <SolidColorBrush Color="White" x:Key="deviceMiniForeground"/>
     <SolidColorBrush Color="#3A9FF3" x:Key="deviceMiniBackdrop"/>

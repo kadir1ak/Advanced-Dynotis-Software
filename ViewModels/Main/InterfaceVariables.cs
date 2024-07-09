@@ -57,6 +57,11 @@ public class InterfaceVariables : INotifyPropertyChanged
     private bool _saveStatus;
     private string _testMode;
 
+    private double _tareTorqueValue;
+    private double _tareThrustValue;
+    private double _tareCurrentValue;
+    private double _tareMotorSpeedValue;
+
     private string _selectedTorqueUnit;
     private string _selectedThrustUnit;
     private string _selectedMotorSpeedUnit;
@@ -238,6 +243,31 @@ public class InterfaceVariables : INotifyPropertyChanged
         get => _testMode;
         set => SetProperty(ref _testMode, value);
     }
+
+    public double TareTorqueValue
+    {
+        get => _tareTorqueValue;
+        set => SetProperty(ref _tareTorqueValue, value);
+    }
+
+    public double TareThrustValue
+    {
+        get => _tareThrustValue;
+        set => SetProperty(ref _tareThrustValue, value);
+    }
+
+    public double TareCurrentValue
+    {
+        get => _tareCurrentValue;
+        set => SetProperty(ref _tareCurrentValue, value);
+    }
+
+    public double TareMotorSpeedValue
+    {
+        get => _tareMotorSpeedValue;
+        set => SetProperty(ref _tareMotorSpeedValue, value);
+    }
+
     public string SelectedTorqueUnit
     {
         get => _selectedTorqueUnit;
