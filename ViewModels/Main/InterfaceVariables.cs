@@ -283,11 +283,11 @@ public class InterfaceVariables : INotifyPropertyChanged
     {
         Time = data.Time;
         SampleRate = data.SampleRate;
-        AmbientTemp = new Unit(AmbientTemp.Value, SelectedAmbientTempUnit, AmbientTemp.UnitSymbol, data.AmbientTemp.Value, data.AmbientTemp.UnitName, data.AmbientTemp.UnitSymbol);
-        MotorTemp = new Unit(MotorTemp.Value, SelectedMotorSpeedUnit, MotorTemp.UnitSymbol, data.MotorTemp.Value, data.MotorTemp.UnitName, data.MotorTemp.UnitSymbol);
-        MotorSpeed = new Unit(MotorSpeed.Value, SelectedMotorSpeedUnit, MotorSpeed.UnitSymbol, data.MotorSpeed.Value, data.MotorSpeed.UnitName, data.MotorSpeed.UnitSymbol);
-        Thrust = new Unit(Thrust.Value, SelectedThrustUnit, Thrust.UnitSymbol, data.Thrust.Value, data.Thrust.UnitName, data.Thrust.UnitSymbol);
-        Torque = new Unit(Torque.Value, SelectedTorqueUnit, Torque.UnitSymbol, data.Torque.Value, data.Torque.UnitName, data.Torque.UnitSymbol);
+        AmbientTemp = new Unit(AmbientTemp.Value, SelectedAmbientTempUnit, data.AmbientTemp.UnitSymbol, data.AmbientTemp.Value, data.AmbientTemp.UnitName, data.AmbientTemp.UnitSymbol);
+        MotorTemp = new Unit(data.MotorTemp.Value, SelectedMotorSpeedUnit, data.MotorTemp.UnitSymbol, data.MotorTemp.Value, data.MotorTemp.UnitName, data.MotorTemp.UnitSymbol);
+        MotorSpeed = new Unit(data.MotorSpeed.Value, SelectedMotorSpeedUnit, data.MotorSpeed.UnitSymbol, data.MotorSpeed.Value, data.MotorSpeed.UnitName, data.MotorSpeed.UnitSymbol);
+        Thrust = new Unit(data.Thrust.Value, SelectedThrustUnit, data.Thrust.UnitSymbol, data.Thrust.Value, data.Thrust.UnitName, data.Thrust.UnitSymbol);
+        Torque = new Unit(data.Torque.Value, SelectedTorqueUnit, data.Torque.UnitSymbol, data.Torque.Value, data.Torque.UnitName, data.Torque.UnitSymbol);
         Voltage = data.Voltage;
         Current = data.Current;
         Power = data.Power;
