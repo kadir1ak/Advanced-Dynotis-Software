@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.Pages"
              xmlns:uc="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
+             xmlns:vmPages="clr-namespace:Advanced_Dynotis_Software.ViewModels.Pages"
              mc:Ignorable="d">
     <Grid Background="{DynamicResource Page}">
         <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="1">

@@ -1,11 +1,12 @@
-﻿using Advanced_Dynotis_Software.ViewModels.Pages;
+﻿using Advanced_Dynotis_Software.Models.Dynotis;
+using Advanced_Dynotis_Software.ViewModels.Pages;
 using System.Collections.Generic;
 
 namespace Advanced_Dynotis_Software.ViewModels.Managers
 {
     public class UnitsSettingsManager
     {
-        private readonly Dictionary<string, UnitsSettingsViewModel> _unitsSettings;      
+        private readonly Dictionary<string, UnitsSettingsViewModel> _unitsSettings;
 
         public UnitsSettingsManager()
         {
@@ -20,7 +21,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Managers
             }
             else
             {
-                var viewModel = new UnitsSettingsViewModel();
+                var viewModel = new UnitsSettingsViewModel(); 
                 _unitsSettings[unitType] = viewModel;
                 return viewModel;
             }
