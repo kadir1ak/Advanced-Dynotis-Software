@@ -33,26 +33,34 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="Port Name:" Grid.Row="1" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                <TextBlock Text="Model:" Grid.Row="2" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                <TextBlock Text="Seri No:" Grid.Row="3" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                <TextBlock Text="Firmware:" Grid.Row="4" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                <TextBlock Text="Mode:" Grid.Row="5" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                <TextBlock Text="Propeller Area:" Grid.Row="6" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                <TextBlock Text="Motor Inner:" Grid.Row="7" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                <TextBlock Text="No Load Currents:" Grid.Row="8" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
+                <TextBlock Text="Port Name" Grid.Row="1" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                <TextBlock Text=":" Grid.Row="1" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
+                <TextBlock Text="Model" Grid.Row="2" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                <TextBlock Text=":" Grid.Row="2" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
+                <TextBlock Text="Seri No" Grid.Row="3" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                <TextBlock Text=":" Grid.Row="3" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
+                <TextBlock Text="Firmware" Grid.Row="4" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                <TextBlock Text=":" Grid.Row="4" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
+                <TextBlock Text="Mode" Grid.Row="5" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                <TextBlock Text=":" Grid.Row="5" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
+                <TextBlock Text="Propeller Diameter (Inch)" Grid.Row="6" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                <TextBlock Text=":" Grid.Row="6" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
+                <TextBlock Text="Internal Res. (mΩ)" Grid.Row="7" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                <TextBlock Text=":" Grid.Row="7" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
+                <TextBlock Text="No Load Current (A)" Grid.Row="8" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                <TextBlock Text=":" Grid.Row="8" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
 
-                <TextBlock Text="{Binding Device.PortName}" Grid.Row="1" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                <TextBlock Text="{Binding Device.Model}" Grid.Row="2" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                <TextBlock Text="{Binding Device.SeriNo}" Grid.Row="3" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                <TextBlock Text="{Binding Device.Firmware}" Grid.Row="4" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                <TextBlock Text="{Binding Device.Mode}" Grid.Row="5" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                <TextBlock Text="{Binding Device.DynotisData.PropellerArea}" Grid.Row="6" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                <TextBlock Text="{Binding Device.DynotisData.MotorInner}" Grid.Row="7" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                <TextBlock Text="{Binding Device.DynotisData.NoLoadCurrents}" Grid.Row="8" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
+                <TextBlock Text="{Binding Device.PortName}" Grid.Row="1" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                <TextBlock Text="{Binding Device.Model}" Grid.Row="2" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                <TextBlock Text="{Binding Device.SeriNo}" Grid.Row="3" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                <TextBlock Text="{Binding Device.Firmware}" Grid.Row="4" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                <TextBlock Text="{Binding Device.Mode}" Grid.Row="5" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                <TextBlock Text="{Binding Device.DynotisData.PropellerArea}" Grid.Row="6" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                <TextBlock Text="{Binding Device.DynotisData.MotorInner}" Grid.Row="7" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                <TextBlock Text="{Binding Device.DynotisData.NoLoadCurrents}" Grid.Row="8" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
             </Grid>
         </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="10 0 0 0" Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch">
             <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
@@ -70,23 +78,31 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="Test Mode:" Grid.Row="1" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                <TextBlock Text="Save Status:" Grid.Row="2" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                <TextBlock Text="Save File:" Grid.Row="3" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                <TextBlock Text="ESC Status:" Grid.Row="4" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                <TextBlock Text="ESC Value:" Grid.Row="5" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                <TextBlock Text="Battery Level:" Grid.Row="6" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                <TextBlock Text="Max Current:" Grid.Row="7" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                <TextBlock Text="Security Status:" Grid.Row="8" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
+                <TextBlock Text="Test Mode" Grid.Row="1" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                <TextBlock Text=":" Grid.Row="1" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
+                <TextBlock Text="Save Status" Grid.Row="2" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                <TextBlock Text=":" Grid.Row="2" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
+                <TextBlock Text="Save File" Grid.Row="3" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                <TextBlock Text=":" Grid.Row="3" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
+                <TextBlock Text="ESC Status" Grid.Row="4" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                <TextBlock Text=":" Grid.Row="4" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
+                <TextBlock Text="ESC Value(%)" Grid.Row="5" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                <TextBlock Text=":" Grid.Row="5" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
+                <TextBlock Text="Battery (S)" Grid.Row="6" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                <TextBlock Text=":" Grid.Row="6" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
+                <TextBlock Text="Max Current (A)" Grid.Row="7" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                <TextBlock Text=":" Grid.Row="7" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
+                <TextBlock Text="Security Status" Grid.Row="8" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                <TextBlock Text=":" Grid.Row="8" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
 
-                <TextBlock Text="{Binding Device.DynotisData.TestMode}" Grid.Row="1" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                <TextBlock Text="{Binding Device.DynotisData.SaveStatus}" Grid.Row="2" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                <TextBlock Text="{Binding Device.DynotisData.SaveFile}" Grid.Row="3" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                <TextBlock Text="{Binding Device.DynotisData.ESCStatus}" Grid.Row="4" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                <TextBlock Text="{Binding Device.DynotisData.ESCValue}" Grid.Row="5" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                <TextBlock Text="{Binding Device.DynotisData.BatteryLevel}" Grid.Row="6" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                <TextBlock Text="{Binding Device.DynotisData.MaxCurrent}" Grid.Row="7" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
-                <TextBlock Text="{Binding Device.DynotisData.SecurityStatus}" Grid.Row="8" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
+                <TextBlock Text="{Binding Device.DynotisData.TestMode}" Grid.Row="1" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                <TextBlock Text="{Binding Device.DynotisData.SaveStatus}" Grid.Row="2" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                <TextBlock Text="{Binding Device.DynotisData.SaveFile}" Grid.Row="3" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                <TextBlock Text="{Binding Device.DynotisData.ESCStatus}" Grid.Row="4" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                <TextBlock Text="{Binding Device.DynotisData.ESCValue}" Grid.Row="5" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                <TextBlock Text="{Binding Device.DynotisData.BatteryLevel}" Grid.Row="6" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                <TextBlock Text="{Binding Device.DynotisData.MaxCurrent}" Grid.Row="7" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                <TextBlock Text="{Binding Device.DynotisData.SecurityStatus}" Grid.Row="8" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
             </Grid>
         </StackPanel>
     </Grid>
