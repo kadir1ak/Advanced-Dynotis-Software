@@ -15,7 +15,7 @@
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="20">
             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource Text}">
                 <Hyperlink NavigateUri="https://dynotis.semai.com.tr/" RequestNavigate="Hyperlink_RequestNavigate" Cursor="Hand" Foreground="Transparent">
-                    <Run x:Name="HelpHyperlink"  Text="Help Page" FontSize="24" FontWeight="Bold" Foreground="{DynamicResource Text}"/>
+                    <Run x:Name="HelpHyperlink"  Text="Help" FontSize="24" FontWeight="Bold" Foreground="{DynamicResource Text}"/>
                 </Hyperlink>
             </TextBlock>
         </StackPanel>

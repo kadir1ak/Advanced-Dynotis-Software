@@ -9,10 +9,10 @@
     <Grid Background="{DynamicResource Page}">
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
             <!-- Circle Background -->
-            <Grid Width="35" Height="35">
-                <Ellipse Fill="{DynamicResource TareButton}" />
+            <Grid>
+                <Ellipse x:Name="ellipse" Fill="{DynamicResource TareButton}" Width="35" Height="35"/>
                 <!-- Icon -->
-                <icon:PackIconFontAwesome Kind="ScaleBalancedSolid" 
+                <icon:PackIconFontAwesome x:Name="icon" Kind="ScaleBalancedSolid" 
                                           Width="25" 
                                           Height="25" 
                                           HorizontalAlignment="Center" 
@@ -27,4 +27,51 @@
                        Foreground="{DynamicResource TareText}"/>
         </StackPanel>
     </Grid>
+
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="MouseEnter">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="ellipse" 
+                                     Storyboard.TargetProperty="Width" 
+                                     To="40" 
+                                     Duration="0:0:0.2"/>
+                    <DoubleAnimation Storyboard.TargetName="ellipse" 
+                                     Storyboard.TargetProperty="Height" 
+                                     To="40" 
+                                     Duration="0:0:0.2"/>
+                    <DoubleAnimation Storyboard.TargetName="icon" 
+                                     Storyboard.TargetProperty="Width" 
+                                     To="30" 
+                                     Duration="0:0:0.2"/>
+                    <DoubleAnimation Storyboard.TargetName="icon" 
+                                     Storyboard.TargetProperty="Height" 
+                                     To="30" 
+                                     Duration="0:0:0.2"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="MouseLeave">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="ellipse" 
+                                     Storyboard.TargetProperty="Width" 
+                                     To="35" 
+                                     Duration="0:0:0.2"/>
+                    <DoubleAnimation Storyboard.TargetName="ellipse" 
+                                     Storyboard.TargetProperty="Height" 
+                                     To="35" 
+                                     Duration="0:0:0.2"/>
+                    <DoubleAnimation Storyboard.TargetName="icon" 
+                                     Storyboard.TargetProperty="Width" 
+                                     To="25" 
+                                     Duration="0:0:0.2"/>
+                    <DoubleAnimation Storyboard.TargetName="icon" 
+                                     Storyboard.TargetProperty="Height" 
+                                     To="25" 
+                                     Duration="0:0:0.2"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </UserControl.Triggers>
 </UserControl>

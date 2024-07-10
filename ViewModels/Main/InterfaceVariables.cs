@@ -18,7 +18,7 @@ public class InterfaceVariables : INotifyPropertyChanged
         _selectedMotorSpeedUnitIndex = 0;
         _selectedTemperatureUnitIndex = 0;
         _selectedWindSpeedUnitIndex = 0;
-        _selectedPressureUnitIndex = 0;
+        _selectedPressureUnitIndex = 1;
     }
     public struct Unit
     {
@@ -402,6 +402,7 @@ public class InterfaceVariables : INotifyPropertyChanged
     }
     public void UpdateFrom(DynotisData data)
     {
+        // Synchronization of updated values
         Time = data.Time;
         SampleRate = data.SampleRate;
         AmbientTemp = AmbientTempUnitSet(AmbientTemp.Value, AmbientTemp.UnitName, AmbientTemp.UnitSymbol, data.AmbientTemp.Value, data.AmbientTemp.UnitName, data.AmbientTemp.UnitSymbol);
