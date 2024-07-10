@@ -38,40 +38,6 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             }
         }
 
-        private UnitsSettingsViewModel _currentUnitsSettings;
-        public UnitsSettingsViewModel CurrentUnitsSettings
-        {
-            get => _currentUnitsSettings;
-            set
-            {
-                if (SetProperty(ref _currentUnitsSettings, value))
-                {
-                    if (_currentUnitsSettings != null)
-                    {
-                        _currentUnitsSettings.PropertyChanged += (sender, e) =>
-                        {
-                            if (e.PropertyName == nameof(UnitsSettingsViewModel.TorqueUnit) ||
-                                e.PropertyName == nameof(UnitsSettingsViewModel.ThrustUnit) ||
-                                e.PropertyName == nameof(UnitsSettingsViewModel.MotorSpeedUnit) ||
-                                e.PropertyName == nameof(UnitsSettingsViewModel.TemperatureUnit) ||
-                                e.PropertyName == nameof(UnitsSettingsViewModel.WindSpeedUnit) ||
-                                e.PropertyName == nameof(UnitsSettingsViewModel.PressureUnit))
-                            {
-                                InterfaceVariables.SelectedTorqueUnit = _currentUnitsSettings.TorqueUnit;
-                                InterfaceVariables.SelectedThrustUnit = _currentUnitsSettings.ThrustUnit;
-                                InterfaceVariables.SelectedMotorSpeedUnit = _currentUnitsSettings.MotorSpeedUnit;
-                                InterfaceVariables.SelectedAmbientTempUnit = _currentUnitsSettings.TemperatureUnit;
-                                InterfaceVariables.SelectedMotorTempUnit = _currentUnitsSettings.TemperatureUnit;
-                                InterfaceVariables.SelectedWindSpeedUnit = _currentUnitsSettings.WindSpeedUnit;
-                                InterfaceVariables.SelectedPressureUnit = _currentUnitsSettings.PressureUnit;
-                                OnPropertyChanged(nameof(InterfaceVariables));
-                            }
-                        };
-                    }
-                }
-            }
-        }
-
         private EquipmentParametersViewModel _currentEquipmentParameters;
         public EquipmentParametersViewModel CurrentEquipmentParameters
         {

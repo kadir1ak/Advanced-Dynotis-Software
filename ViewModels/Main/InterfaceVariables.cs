@@ -13,6 +13,12 @@ public class InterfaceVariables : INotifyPropertyChanged
         // Default system values
         _selectedIsEnglishChecked = true;
         _selectedIsTurkishChecked = false;
+        _selectedTorqueUnitIndex = 0;
+        _selectedThrustUnitIndex = 0;
+        _selectedMotorSpeedUnitIndex = 0;
+        _selectedTemperatureUnitIndex = 0;
+        _selectedWindSpeedUnitIndex = 0;
+        _selectedPressureUnitIndex = 0;
     }
     public struct Unit
     {
@@ -70,13 +76,12 @@ public class InterfaceVariables : INotifyPropertyChanged
     private double _tareCurrentValue;
     private double _tareMotorSpeedValue;
 
-    private string _selectedTorqueUnit;
-    private string _selectedThrustUnit;
-    private string _selectedMotorSpeedUnit;
-    private string _selectedAmbientTempUnit;
-    private string _selectedMotorTempUnit;
-    private string _selectedWindSpeedUnit;
-    private string _selectedPressureUnit;
+    private int _selectedTorqueUnitIndex;
+    private int _selectedThrustUnitIndex;
+    private int _selectedMotorSpeedUnitIndex;
+    private int _selectedTemperatureUnitIndex;
+    private int _selectedWindSpeedUnitIndex;
+    private int _selectedPressureUnitIndex;
 
     private bool _selectedIsTurkishChecked;
     private bool _selectedIsEnglishChecked;
@@ -279,53 +284,117 @@ public class InterfaceVariables : INotifyPropertyChanged
         set => SetProperty(ref _tareMotorSpeedValue, value);
     }
 
-    public string SelectedTorqueUnit
+    public int SelectedTorqueUnitIndex
     {
-        get => _selectedTorqueUnit;
-        set => SetProperty(ref _selectedTorqueUnit, value);
+        get => _selectedTorqueUnitIndex;
+        set
+        {
+            if (SetProperty(ref _selectedTorqueUnitIndex, value))
+            {
+                UpdateTorqueUnit();
+            }
+        }
     }
 
-    public string SelectedThrustUnit
+    public int SelectedThrustUnitIndex
     {
-        get => _selectedThrustUnit;
-        set => SetProperty(ref _selectedThrustUnit, value);
+        get => _selectedThrustUnitIndex;
+        set
+        {
+            if (SetProperty(ref _selectedThrustUnitIndex, value))
+            {
+                UpdateThrustUnit();
+            }
+        }
     }
 
-    public string SelectedMotorSpeedUnit
+    public int SelectedMotorSpeedUnitIndex
     {
-        get => _selectedMotorSpeedUnit;
-        set => SetProperty(ref _selectedMotorSpeedUnit, value);
+        get => _selectedMotorSpeedUnitIndex;
+        set
+        {
+            if (SetProperty(ref _selectedMotorSpeedUnitIndex, value))
+            {
+                UpdateMotorSpeedUnit();
+            }
+        }
     }
 
-    public string SelectedAmbientTempUnit
+    public int SelectedTemperatureUnitIndex
     {
-        get => _selectedAmbientTempUnit;
-        set => SetProperty(ref _selectedAmbientTempUnit, value);
+        get => _selectedTemperatureUnitIndex;
+        set
+        {
+            if (SetProperty(ref _selectedTemperatureUnitIndex, value))
+            {
+                UpdateTemperatureUnit();
+            }
+        }
     }
 
-    public string SelectedMotorTempUnit
+    public int SelectedWindSpeedUnitIndex
     {
-        get => _selectedMotorTempUnit;
-        set => SetProperty(ref _selectedMotorTempUnit, value);
+        get => _selectedWindSpeedUnitIndex;
+        set
+        {
+            if (SetProperty(ref _selectedWindSpeedUnitIndex, value))
+            {
+                UpdateWindSpeedUnit();
+            }
+        }
     }
 
-    public string SelectedWindSpeedUnit
+    public int SelectedPressureUnitIndex
     {
-        get => _selectedWindSpeedUnit;
-        set => SetProperty(ref _selectedWindSpeedUnit, value);
+        get => _selectedPressureUnitIndex;
+        set
+        {
+            if (SetProperty(ref _selectedPressureUnitIndex, value))
+            {
+                UpdatePressureUnit();
+            }
+        }
     }
 
-    public string SelectedPressureUnit
+    private void UpdateTorqueUnit()
     {
-        get => _selectedPressureUnit;
-        set => SetProperty(ref _selectedPressureUnit, value);
+        Torque = TorqueUnitSet(Torque.Value, Torque.UnitName, Torque.UnitSymbol, Torque.BaseValue, Torque.BaseUnitName, Torque.BaseUnitSymbol);
+      
     }
+
+    private void UpdateThrustUnit()
+    {
+        Thrust = ThrustUnitSet(Thrust.Value, Thrust.UnitName, Thrust.UnitSymbol, Thrust.BaseValue, Thrust.BaseUnitName, Thrust.BaseUnitSymbol);
+    }
+
+    private void UpdateMotorSpeedUnit()
+    {
+        MotorSpeed = MotorSpeedUnitSet(MotorSpeed.Value, MotorSpeed.UnitName, MotorSpeed.UnitSymbol, MotorSpeed.BaseValue, MotorSpeed.BaseUnitName, MotorSpeed.BaseUnitSymbol);
+    }
+
+    private void UpdateTemperatureUnit()
+    {
+        AmbientTemp = AmbientTempUnitSet(AmbientTemp.Value, AmbientTemp.UnitName, AmbientTemp.UnitSymbol, AmbientTemp.BaseValue, AmbientTemp.BaseUnitName, AmbientTemp.BaseUnitSymbol);
+        MotorTemp = MotorTempUnitSet(MotorTemp.Value, MotorTemp.UnitName, MotorTemp.UnitSymbol, MotorTemp.BaseValue, MotorTemp.BaseUnitName, MotorTemp.BaseUnitSymbol);
+    }
+
+    private void UpdateWindSpeedUnit()
+    {
+        WindSpeed = WindSpeedUnitSet(WindSpeed.Value, WindSpeed.UnitName, WindSpeed.UnitSymbol, WindSpeed.BaseValue, WindSpeed.BaseUnitName, WindSpeed.BaseUnitSymbol);
+    }
+
+    private void UpdatePressureUnit()
+    {
+        Pressure = PressureUnitSet(Pressure.Value, Pressure.UnitName, Pressure.UnitSymbol, Pressure.BaseValue, Pressure.BaseUnitName, Pressure.BaseUnitSymbol);
+    }
+
 
     public bool SelectedIsTurkishChecked
     {
         get => _selectedIsTurkishChecked;
         set => SetProperty(ref _selectedIsTurkishChecked, value);
     }
+
     public bool SelectedIsEnglishChecked
     {
         get => _selectedIsEnglishChecked;
@@ -362,6 +431,17 @@ public class InterfaceVariables : INotifyPropertyChanged
         SaveFile = data.SaveFile;
         SaveStatus = data.SaveStatus;
         TestMode = data.TestMode;
+
+        // Ensure your values ​​are protected
+        SelectedIsTurkishChecked = InterfaceVariables.Instance.SelectedIsTurkishChecked;
+        SelectedIsEnglishChecked = InterfaceVariables.Instance.SelectedIsEnglishChecked;
+        SelectedTorqueUnitIndex = InterfaceVariables.Instance.SelectedTorqueUnitIndex;
+        SelectedThrustUnitIndex = InterfaceVariables.Instance.SelectedThrustUnitIndex;
+        SelectedMotorSpeedUnitIndex = InterfaceVariables.Instance.SelectedMotorSpeedUnitIndex;
+        SelectedTemperatureUnitIndex = InterfaceVariables.Instance.SelectedTemperatureUnitIndex;
+        SelectedWindSpeedUnitIndex = InterfaceVariables.Instance.SelectedWindSpeedUnitIndex;
+        SelectedPressureUnitIndex = InterfaceVariables.Instance.SelectedPressureUnitIndex;
+
     }
 
     public Unit AmbientTempUnitSet(double value, string unitName, string unitSymbol, double baseValue, string baseUnitName, string baseUnitSymbol)
@@ -371,31 +451,31 @@ public class InterfaceVariables : INotifyPropertyChanged
             1 Fahrenheit [°F]                   1 °C = (°C * 9/5) + 32 °F
             2 Kelvin [K]                        1 °C = °C + 273.15 K
         */
-        if (SelectedAmbientTempUnit == baseUnitName)
+        if (SelectedTemperatureUnitIndex == 0) // 0 Celsius [°C]
         {
             value = baseValue;
             unitName = baseUnitName;
             unitSymbol = baseUnitSymbol;
         }
-        else if (SelectedAmbientTempUnit == "Fahrenheit [°F]")
+        else if (SelectedTemperatureUnitIndex == 1) // 1 Fahrenheit [°F]
         {
             value = (baseValue * 9 / 5) + 32;
             unitName = "Fahrenheit";
-            unitSymbol = "[°F]";
+            unitSymbol = "°F";
         }
-        else if (SelectedAmbientTempUnit == "Kelvin [K]")
+        else if (SelectedTemperatureUnitIndex == 2) // 2 Kelvin [K]
         {
             value = baseValue + 273.15;
             unitName = "Kelvin";
-            unitSymbol = "[K]";
+            unitSymbol = "K";
         }
-        else
+        else // 0 Celsius [°C]
         {
             value = baseValue;
             unitName = baseUnitName;
             unitSymbol = baseUnitSymbol;
         }
-
+       
         return new Unit(value, unitName, unitSymbol, baseValue, baseUnitName, baseUnitSymbol);
     }
 
@@ -406,25 +486,25 @@ public class InterfaceVariables : INotifyPropertyChanged
             1 Fahrenheit [°F]                   1 °C = (°C * 9/5) + 32 °F
             2 Kelvin [K]                        1 °C = °C + 273.15 K
         */
-        if (SelectedMotorTempUnit == baseUnitName)
+        if (SelectedTemperatureUnitIndex == 0) // 0 Celsius [°C]
         {
             value = baseValue;
             unitName = baseUnitName;
             unitSymbol = baseUnitSymbol;
         }
-        else if (SelectedMotorTempUnit == "Fahrenheit [°F]")
+        else if (SelectedTemperatureUnitIndex == 1) // 1 Fahrenheit [°F]
         {
             value = (baseValue * 9 / 5) + 32;
             unitName = "Fahrenheit";
-            unitSymbol = "[°F]";
+            unitSymbol = "°F";
         }
-        else if (SelectedMotorTempUnit == "Kelvin [K]")
+        else if (SelectedTemperatureUnitIndex == 2) // 2 Kelvin [K]
         {
             value = baseValue + 273.15;
             unitName = "Kelvin";
-            unitSymbol = "[K]";
+            unitSymbol = "K";
         }
-        else
+        else // 0 Celsius [°C]
         {
             value = baseValue;
             unitName = baseUnitName;
@@ -441,25 +521,25 @@ public class InterfaceVariables : INotifyPropertyChanged
             1 Hertz [Hz]                        1 RPM = 0.016667 Hz
             2 Radian per second [rad/s]         1 RPM = 0.104719755 rad/s
         */
-        if (SelectedMotorSpeedUnit == baseUnitName)
+        if (SelectedMotorSpeedUnitIndex == 0) // 0 Revolutions per minute [RPM]
         {
             value = baseValue;
             unitName = baseUnitName;
             unitSymbol = baseUnitSymbol;
         }
-        else if (SelectedMotorSpeedUnit == "Hertz [Hz]")
+        else if (SelectedMotorSpeedUnitIndex == 1) // 1 Hertz [Hz]   
         {
             value = baseValue * 0.016667;
             unitName = "Hertz";
-            unitSymbol = "[Hz]";
+            unitSymbol = "Hz";
         }
-        else if (SelectedMotorSpeedUnit == "Radian per second [rad/s]")
+        else if (SelectedMotorSpeedUnitIndex == 2) //   2 Radian per second [rad/s]   
         {
             value = baseValue * 0.104719755;
             unitName = "Radian per second";
-            unitSymbol = "[rad/s]";
+            unitSymbol = "rad/s";
         }
-        else
+        else // 0 Revolutions per minute [RPM]
         {
             value = baseValue;
             unitName = baseUnitName;
@@ -478,37 +558,37 @@ public class InterfaceVariables : INotifyPropertyChanged
             3 Pound-force [lbf]                 1 gf = 0.0022046226 lbf
             4 Newton [N]                        1 gf = 0.00980665 N
         */
-        if (SelectedThrustUnit == baseUnitName)
+        if (SelectedThrustUnitIndex == 0) // 0 Gram-force [gf]    
         {
             value = baseValue;
             unitName = baseUnitName;
             unitSymbol = baseUnitSymbol;
         }
-        else if (SelectedThrustUnit == "Kilogram-force [kgf]")
+        else if (SelectedThrustUnitIndex == 1) // 1 Kilogram-force [kgf] 
         {
             value = baseValue * 0.001;
             unitName = "Kilogram-force";
-            unitSymbol = "[kgf]";
+            unitSymbol = "kgf";
         }
-        else if (SelectedThrustUnit == "Ounce-force [ozf]")
+        else if (SelectedThrustUnitIndex == 2) // 2 Ounce-force [ozf]  
         {
             value = baseValue * 0.0352739619;
             unitName = "Ounce-force";
-            unitSymbol = "[ozf]";
+            unitSymbol = "ozf";
         }
-        else if (SelectedThrustUnit == "Pound-force [lbf]")
+        else if (SelectedThrustUnitIndex == 3) // 3 Pound-force [lbf]     
         {
             value = baseValue * 0.0022046226;
             unitName = "Pound-force";
-            unitSymbol = "[lbf]";
+            unitSymbol = "lbf";
         }
-        else if (SelectedThrustUnit == "Newton [N]")
+        else if (SelectedThrustUnitIndex == 4) // 4 Newton [N]       
         {
             value = baseValue * 0.00980665;
             unitName = "Newton";
-            unitSymbol = "[N]";
+            unitSymbol = "N";
         }
-        else
+        else // 0 Gram-force [gf]
         {
             value = baseValue;
             unitName = baseUnitName;
@@ -530,55 +610,55 @@ public class InterfaceVariables : INotifyPropertyChanged
             6 Kilogram-force meter [kgf.m]      1 N.mm = 0.0001019716212978 kgf.m
             7 Gram-force meter [gf.m]           1 N.mm = 0.1019716212978 gf.m
         */
-        if (SelectedTorqueUnit == baseUnitName)
+        if (SelectedTorqueUnitIndex == 0) // 0 Newton millimeter [N.mm] 
         {
             value = baseValue;
             unitName = baseUnitName;
             unitSymbol = baseUnitSymbol;
         }
-        else if (SelectedTorqueUnit == "Newton meter [N.m]")
+        else if (SelectedTorqueUnitIndex == 1) // 1 Newton meter [N.m]  
         {
             value = baseValue * 0.001;
             unitName = "Newton meter";
-            unitSymbol = "[N.m]";
+            unitSymbol = "N.m";
         }
-        else if (SelectedTorqueUnit == "Ounce-force inch [ozf.in]")
+        else if (SelectedTorqueUnitIndex == 2) // 2 Ounce-force inch [ozf.in]  
         {
             value = baseValue * 0.1416119289357;
             unitName = "Ounce-force inch";
-            unitSymbol = "[ozf.in]";
+            unitSymbol = "ozf.in";
         }
-        else if (SelectedTorqueUnit == "Ounce-force foot [ozf.ft]")
+        else if (SelectedTorqueUnitIndex == 3) // 3 Ounce-force foot [ozf.ft]   
         {
             value = baseValue * 0.01180099407797;
             unitName = "Ounce-force foot";
-            unitSymbol = "[ozf.ft]";
+            unitSymbol = "ozf.ft";
         }
-        else if (SelectedTorqueUnit == "Pound-force inch [lbf.in]")
+        else if (SelectedTorqueUnitIndex == 4) // 4 Pound-force inch [lbf.in] 
         {
             value = baseValue * 0.008850745454036;
             unitName = "Pound-force inch";
-            unitSymbol = "[lbf.in]";
+            unitSymbol = "lbf.in";
         }
-        else if (SelectedTorqueUnit == "Pound-force foot [lbf.ft]")
+        else if (SelectedTorqueUnitIndex == 5) // 5 Pound-force foot [lbf.ft]   
         {
             value = baseValue * 0.0007375621211697;
             unitName = "Pound-force foot";
-            unitSymbol = "[lbf.ft]";
+            unitSymbol = "lbf.ft";
         }
-        else if (SelectedTorqueUnit == "Kilogram-force meter [kgf.m]")
+        else if (SelectedTorqueUnitIndex == 6) // 6 Kilogram-force meter [kgf.m]   
         {
             value = baseValue * 0.0001019716212978;
             unitName = "Kilogram-force meter";
-            unitSymbol = "[kgf.m]";
+            unitSymbol = "kgf.m";
         }
-        else if (SelectedTorqueUnit == "Gram-force meter [gf.m]")
+        else if (SelectedTorqueUnitIndex == 7) // 7 Gram-force meter [gf.m]     
         {
             value = baseValue * 0.1019716212978;
             unitName = "Gram-force meter";
-            unitSymbol = "[gf.m]";
+            unitSymbol = "gf.m";
         }
-        else
+        else // 0 Newton millimeter [N.mm] 
         {
             value = baseValue;
             unitName = baseUnitName;
@@ -596,29 +676,29 @@ public class InterfaceVariables : INotifyPropertyChanged
             2 Inches of water [in H2O]           1 Pa = 0.004014742133 in H2O (4°C)
             3 Millimeters of water [mm H2O]      1 Pa = 0.101974429 mm H2O (4°C)
         */
-        if (SelectedPressureUnit == baseUnitName)
+        if (SelectedPressureUnitIndex == 0) // 0 Pascal [Pa] 
         {
             value = baseValue;
             unitName = baseUnitName;
             unitSymbol = baseUnitSymbol;
         }
-        else if (SelectedPressureUnit == "Hectopascals [hPa]")
+        else if (SelectedPressureUnitIndex == 1) // 1 Hectopascals [hPa]   
         {
             value = baseValue * 0.01;
             unitName = "Hectopascals";
-            unitSymbol = "[hPa]";
+            unitSymbol = "hPa";
         }
-        else if (SelectedPressureUnit == "Inches of water [in H2O]")
+        else if (SelectedPressureUnitIndex == 2) // 2 Inches of water [in H2O]     
         {
             value = baseValue * 0.004014742133;
             unitName = "Inches of water";
-            unitSymbol = "[in H2O]";
+            unitSymbol = "in H2O";
         }
-        else if (SelectedPressureUnit == "Millimeters of water [mm H2O]")
+        else if (SelectedPressureUnitIndex == 3) // 3 Millimeters of water [mm H2O] 
         {
             value = baseValue * 0.101974429;
             unitName = "Millimeters of water";
-            unitSymbol = "[mm H2O]";
+            unitSymbol = "mm H2O";
         }
         else
         {
@@ -638,29 +718,29 @@ public class InterfaceVariables : INotifyPropertyChanged
             2 Kilometers per hour [km/h]        1 m/s = 3.6 km/h
             3 Miles per hour [mph]              1 m/s = 2.2369362920544025 mph
         */
-        if (SelectedWindSpeedUnit == baseUnitName)
+        if (SelectedWindSpeedUnitIndex == 0) //  0 Meters per second [m/s] 
         {
             value = baseValue;
             unitName = baseUnitName;
             unitSymbol = baseUnitSymbol;
         }
-        else if (SelectedWindSpeedUnit == "Feet per second [ft/s]")
+        else if (SelectedWindSpeedUnitIndex == 1) // 1 Feet per second [ft/s]  
         {
             value = baseValue * 3.280839895013123;
             unitName = "Feet per second";
-            unitSymbol = "[ft/s]";
+            unitSymbol = "ft/s";
         }
-        else if (SelectedWindSpeedUnit == "Kilometers per hour [km/h]")
+        else if (SelectedWindSpeedUnitIndex == 2) // 2 Kilometers per hour [km/h]
         {
             value = baseValue * 3.6;
             unitName = "Kilometers per hour";
-            unitSymbol = "[km/h]";
+            unitSymbol = "km/h";
         }
-        else if (SelectedWindSpeedUnit == "Miles per hour [mph]")
+        else if (SelectedWindSpeedUnitIndex == 3) //  3 Miles per hour [mph]  
         {
             value = baseValue * 2.2369362920544025;
             unitName = "Miles per hour";
-            unitSymbol = "[mph]";
+            unitSymbol = "mph";
         }
         else
         {

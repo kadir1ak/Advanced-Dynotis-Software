@@ -20,7 +20,7 @@ namespace Advanced_Dynotis_Software.Views.Pages
         public SettingsPage()
         {
             InitializeComponent();
-            _unitsSettingsViewModel = new UnitsSettingsViewModel(new InterfaceVariables());
+            _unitsSettingsViewModel = new UnitsSettingsViewModel();
             _alertsViewModel = new AlertsViewModel();
             _softwareUpdateViewModel = new SoftwareUpdateViewModel();
             _languageViewModel = new LanguageViewModel();

@@ -1,117 +1,95 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-public class UnitsSettingsViewModel : INotifyPropertyChanged
+namespace Advanced_Dynotis_Software.ViewModels.Pages
 {
-    private InterfaceVariables _interfaceVariables;
-    public InterfaceVariables InterfaceVariables => InterfaceVariables.Instance;
-    public UnitsSettingsViewModel(InterfaceVariables interfaceVariables)
+    public class UnitsSettingsViewModel : INotifyPropertyChanged
     {
-        _interfaceVariables = interfaceVariables;
-        TorqueUnit = interfaceVariables.SelectedTorqueUnit;
-        ThrustUnit = interfaceVariables.SelectedThrustUnit;
-        MotorSpeedUnit = interfaceVariables.SelectedMotorSpeedUnit;
-        TemperatureUnit = interfaceVariables.SelectedMotorTempUnit;
-        WindSpeedUnit = interfaceVariables.SelectedWindSpeedUnit;
-        PressureUnit = interfaceVariables.SelectedPressureUnit;
-    }
+        public InterfaceVariables InterfaceVariables => InterfaceVariables.Instance;
 
-    private string _torqueUnit;
-    public string TorqueUnit
-    {
-        get => _torqueUnit;
-        set
+        public int SelectedTorqueUnitIndex
         {
-            if (SetProperty(ref _torqueUnit, value))
+            get => InterfaceVariables.SelectedTorqueUnitIndex;
+            set
             {
-                _interfaceVariables.SelectedTorqueUnit = value;
-                OnPropertyChanged(nameof(_interfaceVariables));
+                if (InterfaceVariables.SelectedTorqueUnitIndex != value)
+                {
+                    InterfaceVariables.SelectedTorqueUnitIndex = value;
+                    OnPropertyChanged();
+                }
             }
+        }
+
+        public int SelectedThrustUnitIndex
+        {
+            get => InterfaceVariables.SelectedThrustUnitIndex;
+            set
+            {
+                if (InterfaceVariables.SelectedThrustUnitIndex != value)
+                {
+                    InterfaceVariables.SelectedThrustUnitIndex = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public int SelectedMotorSpeedUnitIndex
+        {
+            get => InterfaceVariables.SelectedMotorSpeedUnitIndex;
+            set
+            {
+                if (InterfaceVariables.SelectedMotorSpeedUnitIndex != value)
+                {
+                    InterfaceVariables.SelectedMotorSpeedUnitIndex = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public int SelectedTemperatureUnitIndex
+        {
+            get => InterfaceVariables.SelectedTemperatureUnitIndex;
+            set
+            {
+                if (InterfaceVariables.SelectedTemperatureUnitIndex != value)
+                {
+                    InterfaceVariables.SelectedTemperatureUnitIndex = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public int SelectedWindSpeedUnitIndex
+        {
+            get => InterfaceVariables.SelectedWindSpeedUnitIndex;
+            set
+            {
+                if (InterfaceVariables.SelectedWindSpeedUnitIndex != value)
+                {
+                    InterfaceVariables.SelectedWindSpeedUnitIndex = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public int SelectedPressureUnitIndex
+        {
+            get => InterfaceVariables.SelectedPressureUnitIndex;
+            set
+            {
+                if (InterfaceVariables.SelectedPressureUnitIndex != value)
+                {
+                    InterfaceVariables.SelectedPressureUnitIndex = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 
-    private string _thrustUnit;
-    public string ThrustUnit
-    {
-        get => _thrustUnit;
-        set
-        {
-            if (SetProperty(ref _thrustUnit, value))
-            {
-                _interfaceVariables.SelectedThrustUnit = value;
-                OnPropertyChanged(nameof(_interfaceVariables));
-            }
-        }
-    }
-
-    private string _motorSpeedUnit;
-    public string MotorSpeedUnit
-    {
-        get => _motorSpeedUnit;
-        set
-        {
-            if (SetProperty(ref _motorSpeedUnit, value))
-            {
-                _interfaceVariables.SelectedMotorSpeedUnit = value;
-                OnPropertyChanged(nameof(_interfaceVariables));
-            }
-        }
-    }
-
-    private string _temperatureUnit;
-    public string TemperatureUnit
-    {
-        get => _temperatureUnit;
-        set
-        {
-            if (SetProperty(ref _temperatureUnit, value))
-            {
-                _interfaceVariables.SelectedMotorTempUnit = value;
-                _interfaceVariables.SelectedAmbientTempUnit = value;
-                OnPropertyChanged(nameof(_interfaceVariables));
-            }
-        }
-    }
-
-    private string _windSpeedUnit;
-    public string WindSpeedUnit
-    {
-        get => _windSpeedUnit;
-        set
-        {
-            if (SetProperty(ref _windSpeedUnit, value))
-            {
-                _interfaceVariables.SelectedWindSpeedUnit = value;
-                OnPropertyChanged(nameof(_interfaceVariables));
-            }
-        }
-    }
-
-    private string _pressureUnit;
-    public string PressureUnit
-    {
-        get => _pressureUnit;
-        set
-        {
-            if (SetProperty(ref _pressureUnit, value))
-            {
-                _interfaceVariables.SelectedPressureUnit = value;
-                OnPropertyChanged(nameof(_interfaceVariables));
-            }
-        }
-    }
-
-    public event PropertyChangedEventHandler PropertyChanged;
-    protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
-    {
-        if (Equals(storage, value)) return false;
-        storage = value;
-        OnPropertyChanged(propertyName);
-        return true;
-    }
-
-    protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
 }

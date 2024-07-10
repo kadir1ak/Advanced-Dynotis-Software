@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.Pages"
              xmlns:vmPage="clr-namespace:Advanced_Dynotis_Software.ViewModels.Pages"
-             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d">
     <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Background="{DynamicResource Page}">
         <Grid.ColumnDefinitions>
@@ -35,14 +34,9 @@
             <Label Grid.Row="3" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="16" Content="Temperature:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Label Grid.Row="4" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="16" Content="Wind Speed:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Label Grid.Row="5" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="16" Content="Pressure:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <ComboBox x:Name="TorqueComboBox" SelectedIndex="0" Grid.Row="0" Grid.Column="1" SelectedItem="{Binding InterfaceVariables.SelectedTorqueUnit, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding TorqueUnitChangedCommand}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-                <ComboBoxItem Content="Newton meter [N.mm]"/>
-                <ComboBoxItem Content="Newton meter [N.m]" />
+            <ComboBox x:Name="TorqueComboBox" SelectedIndex="{Binding SelectedTorqueUnitIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200">
+                <ComboBoxItem Content="Newton millimeter [N.mm]"/>
+                <ComboBoxItem Content="Newton meter [N.m]"/>
                 <ComboBoxItem Content="Ounce-force inch [ozf.in]"/>
                 <ComboBoxItem Content="Ounce-force foot [ozf.ft]"/>
                 <ComboBoxItem Content="Pound-force inch [lbf.in]"/>
@@ -50,56 +44,31 @@
                 <ComboBoxItem Content="Kilogram-force meter [kgf.m]"/>
                 <ComboBoxItem Content="Gram-force meter [gf.m]"/>
             </ComboBox>
-            <ComboBox x:Name="ThrustComboBox" SelectedIndex="0" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding ThrustUnitChangedCommand}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-                <ComboBoxItem Content="Gram-force [gf]" IsSelected="True"/>
+            <ComboBox x:Name="ThrustComboBox" SelectedIndex="{Binding SelectedThrustUnitIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200">
+                <ComboBoxItem Content="Gram-force [gf]"/>
                 <ComboBoxItem Content="Kilogram-force [kgf]"/>
                 <ComboBoxItem Content="Ounce-force [ozf]"/>
                 <ComboBoxItem Content="Pound-force [lbf]"/>
                 <ComboBoxItem Content="Newton [N]"/>
             </ComboBox>
-            <ComboBox x:Name="MotorSpeedComboBox" SelectedIndex="0" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding MotorSpeedUnitChangedCommand}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-                <ComboBoxItem Content="Revolutions per minute [RPM]" IsSelected="True"/>
+            <ComboBox x:Name="MotorSpeedComboBox" SelectedIndex="{Binding SelectedMotorSpeedUnitIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200">
+                <ComboBoxItem Content="Revolutions per minute [RPM]"/>
                 <ComboBoxItem Content="Hertz [Hz]"/>
                 <ComboBoxItem Content="Radian per second [rad/s]"/>
             </ComboBox>
-            <ComboBox x:Name="TemperatureComboBox" SelectedIndex="0" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding TemperatureUnitChangedCommand}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-                <ComboBoxItem Content="Celsius [°C]" IsSelected="True"/>
+            <ComboBox x:Name="TemperatureComboBox" SelectedIndex="{Binding SelectedTemperatureUnitIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200">
+                <ComboBoxItem Content="Celsius [°C]"/>
                 <ComboBoxItem Content="Fahrenheit [°F]"/>
                 <ComboBoxItem Content="Kelvin [K]"/>
             </ComboBox>
-            <ComboBox x:Name="WindSpeedComboBox" SelectedIndex="0" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding WindSpeedUnitChangedCommand}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-                <ComboBoxItem Content="Meters per second [m/s]" IsSelected="True"/>
+            <ComboBox x:Name="WindSpeedComboBox" SelectedIndex="{Binding SelectedWindSpeedUnitIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200">
+                <ComboBoxItem Content="Meters per second [m/s]"/>
                 <ComboBoxItem Content="Feet per second [ft/s]"/>
                 <ComboBoxItem Content="Kilometers per hour [km/h]"/>
                 <ComboBoxItem Content="Miles per hour [mph]"/>
             </ComboBox>
-            <ComboBox x:Name="PressureComboBox" SelectedIndex="0" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding PressureUnitChangedCommand}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-                <ComboBoxItem Content="Pascal [Pa]" IsSelected="True"/>
+            <ComboBox x:Name="PressureComboBox" SelectedIndex="{Binding SelectedPressureUnitIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200">
+                <ComboBoxItem Content="Pascal [Pa]"/>
                 <ComboBoxItem Content="Hectopascal [hPa]"/>
                 <ComboBoxItem Content="Inches of water [in H2O]"/>
                 <ComboBoxItem Content="Millimeters of water [mm H2O]"/>
