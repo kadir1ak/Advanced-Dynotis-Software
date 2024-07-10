@@ -6,6 +6,14 @@ using System.Windows;
 
 public class InterfaceVariables : INotifyPropertyChanged
 {
+    private static InterfaceVariables _instance;
+    public static InterfaceVariables Instance => _instance ??= new InterfaceVariables();
+    public InterfaceVariables() 
+    {
+        // Default system values
+        _selectedIsEnglishChecked = true;
+        _selectedIsTurkishChecked = false;
+    }
     public struct Unit
     {
         public double Value { get; set; }
@@ -69,6 +77,9 @@ public class InterfaceVariables : INotifyPropertyChanged
     private string _selectedMotorTempUnit;
     private string _selectedWindSpeedUnit;
     private string _selectedPressureUnit;
+
+    private bool _selectedIsTurkishChecked;
+    private bool _selectedIsEnglishChecked;
 
     public double Time
     {
@@ -310,6 +321,16 @@ public class InterfaceVariables : INotifyPropertyChanged
         set => SetProperty(ref _selectedPressureUnit, value);
     }
 
+    public bool SelectedIsTurkishChecked
+    {
+        get => _selectedIsTurkishChecked;
+        set => SetProperty(ref _selectedIsTurkishChecked, value);
+    }
+    public bool SelectedIsEnglishChecked
+    {
+        get => _selectedIsEnglishChecked;
+        set => SetProperty(ref _selectedIsEnglishChecked, value);
+    }
     public void UpdateFrom(DynotisData data)
     {
         Time = data.Time;

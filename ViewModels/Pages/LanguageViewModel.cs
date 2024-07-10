@@ -1,16 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Advanced_Dynotis_Software.ViewModels.Pages
 {
     public class LanguageViewModel : INotifyPropertyChanged
     {
-        // Add properties and methods as needed
+        public InterfaceVariables InterfaceVariables => InterfaceVariables.Instance;
+
+        public bool IsTurkishChecked
+        {
+            get => InterfaceVariables.SelectedIsTurkishChecked;
+            set
+            {
+                if (InterfaceVariables.SelectedIsTurkishChecked != value)
+                {
+                    InterfaceVariables.SelectedIsTurkishChecked = value;
+                    OnPropertyChanged();
+                    if (value)
+                    {
+                        IsEnglishChecked = false;
+                    }
+                }
+            }
+        }
+
+        public bool IsEnglishChecked
+        {
+            get => InterfaceVariables.SelectedIsEnglishChecked;
+            set
+            {
+                if (InterfaceVariables.SelectedIsEnglishChecked != value)
+                {
+                    InterfaceVariables.SelectedIsEnglishChecked = value;
+                    OnPropertyChanged();
+                    if (value)
+                    {
+                        IsTurkishChecked = false;
+                    }
+                }
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)

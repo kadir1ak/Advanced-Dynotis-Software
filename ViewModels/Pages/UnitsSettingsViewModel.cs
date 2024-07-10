@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 public class UnitsSettingsViewModel : INotifyPropertyChanged
 {
     private InterfaceVariables _interfaceVariables;
-
+    public InterfaceVariables InterfaceVariables => InterfaceVariables.Instance;
     public UnitsSettingsViewModel(InterfaceVariables interfaceVariables)
     {
         _interfaceVariables = interfaceVariables;

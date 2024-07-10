@@ -35,13 +35,13 @@
             <Label Grid.Row="3" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="16" Content="Temperature:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Label Grid.Row="4" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="16" Content="Wind Speed:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Label Grid.Row="5" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="16" Content="Pressure:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <ComboBox x:Name="TorqueComboBox" SelectedIndex="0" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200">
+            <ComboBox x:Name="TorqueComboBox" SelectedIndex="0" Grid.Row="0" Grid.Column="1" SelectedItem="{Binding InterfaceVariables.SelectedTorqueUnit, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
                         <i:InvokeCommandAction Command="{Binding TorqueUnitChangedCommand}" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-                <ComboBoxItem Content="Newton meter [N.mm]" IsSelected="True"/>
+                <ComboBoxItem Content="Newton meter [N.mm]"/>
                 <ComboBoxItem Content="Newton meter [N.m]" />
                 <ComboBoxItem Content="Ounce-force inch [ozf.in]"/>
                 <ComboBoxItem Content="Ounce-force foot [ozf.ft]"/>
