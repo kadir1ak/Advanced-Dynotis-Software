@@ -27,7 +27,7 @@
                Grid.ColumnSpan="2"/>
 
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="20">
-            <TextBlock Text="About Us" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20" Foreground="{DynamicResource Text}"/>
+            <TextBlock Text="About Us" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Foreground="{DynamicResource Text}"/>
         </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  Margin="20" Width="720">

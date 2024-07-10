@@ -1,28 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows.Controls;
 
 namespace Advanced_Dynotis_Software.Views.Pages
 {
-    /// <summary>
-    /// Interaction logic for LanguagePage.xaml
-    /// </summary>
     public partial class LanguagePage : UserControl
     {
         public LanguagePage()
         {
             InitializeComponent();
+        }
+
+        private void CheckBox_Checked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (sender == TurkishCheckBox)
+            {
+                EnglishCheckBox.IsChecked = false;
+            }
+            else if (sender == EnglishCheckBox)
+            {
+                TurkishCheckBox.IsChecked = false;
+            }
+        }
+
+        private void CheckBox_Unchecked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            // Boş bırakıldı, ileride gerekirse ek işlevler için kullanılabilir.
         }
     }
 }

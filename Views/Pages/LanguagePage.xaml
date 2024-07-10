@@ -11,10 +11,11 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
-        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="Languages" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource Text}"/>
+        
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="20">
+            <TextBlock Text="Languages" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Foreground="{DynamicResource Text}"/>
         </StackPanel>
+        
         <Grid Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -25,10 +26,10 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            
+
             <Image Grid.Row="0" Grid.Column="0" Margin="10" Height="100" Width="175" Source="pack://application:,,,/Documents/Images/TR.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <TextBlock Grid.Row="1" Grid.Column="0" Text="Türkçe" FontSize="24" Foreground="{DynamicResource Text}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0"/>
-            <CheckBox Grid.Row="2" Grid.Column="0" Margin="10" Foreground="{DynamicResource Text}" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <CheckBox x:Name="TurkishCheckBox" Grid.Row="2" Grid.Column="0" Margin="10" Foreground="{DynamicResource Text}" VerticalAlignment="Center" HorizontalAlignment="Center" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked">
                 <CheckBox.LayoutTransform>
                     <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
                 </CheckBox.LayoutTransform>
@@ -36,7 +37,7 @@
 
             <Image Grid.Row="0" Grid.Column="1" Margin="10" Height="100" Width="150" Source="pack://application:,,,/Documents/Images/EN.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <TextBlock Grid.Row="1" Grid.Column="1" Text="English" FontSize="24" Foreground="{DynamicResource Text}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0"/>
-            <CheckBox Grid.Row="2" Grid.Column="1" Margin="10" Foreground="{DynamicResource Text}" IsChecked="True" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <CheckBox x:Name="EnglishCheckBox" Grid.Row="2" Grid.Column="1" Margin="10" Foreground="{DynamicResource Text}" IsChecked="True" VerticalAlignment="Center" HorizontalAlignment="Center" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked">
                 <CheckBox.LayoutTransform>
                     <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
                 </CheckBox.LayoutTransform>

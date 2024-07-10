@@ -4,11 +4,60 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.Pages"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+             xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             mc:Ignorable="d">
+    <Grid Background="{DynamicResource Page}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#151F2D"><Hyperlink NavigateUri="https://dynotis.semai.com.tr/" RequestNavigate="Hyperlink_RequestNavigate" Cursor="Hand" Foreground="Transparent"><Run x:Name="HelpHyperlink"  Text="Help Page" FontSize="24" Foreground="White"/></Hyperlink></TextBlock>
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="20">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource Text}">
+                <Hyperlink NavigateUri="https://dynotis.semai.com.tr/" RequestNavigate="Hyperlink_RequestNavigate" Cursor="Hand" Foreground="Transparent">
+                    <Run x:Name="HelpHyperlink"  Text="Help Page" FontSize="24" FontWeight="Bold" Foreground="{DynamicResource Text}"/>
+                </Hyperlink>
+            </TextBlock>
+        </StackPanel>
 
+        <Grid Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Row="0" Grid.Column="0"  Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock>
+                    <Hyperlink NavigateUri="https://www.linkedin.com/company/semai/" RequestNavigate="Hyperlink_RequestNavigate" Cursor="Hand" Foreground="Transparent">
+                        <icon:PackIconMaterial Kind="Linkedin" Width="48" Height="48" Foreground="#0077B5"/>
+                    </Hyperlink>
+                </TextBlock>
+            </StackPanel>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Linkedin" FontSize="24" Foreground="{DynamicResource Text}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,20,0"/>
+
+            <StackPanel Grid.Row="0" Grid.Column="1"  Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock>
+                    <Hyperlink NavigateUri="https://youtube.com/@dynotis8148?si=XMQtLZG_F6msrcum" RequestNavigate="Hyperlink_RequestNavigate" Cursor="Hand" Foreground="Transparent">
+                        <icon:PackIconMaterial Kind="Youtube" Width="48" Height="48" Foreground="Red"/>
+                    </Hyperlink>
+                </TextBlock>
+            </StackPanel>
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="Youtube" FontSize="24" Foreground="{DynamicResource Text}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,20,0"/>
+
+            <StackPanel Grid.Row="0" Grid.Column="2"  Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock>
+                    <Hyperlink NavigateUri="https://dynotis.semai.com.tr/" RequestNavigate="Hyperlink_RequestNavigate" Cursor="Hand" Foreground="Transparent">
+                        <icon:PackIconMaterial Kind="Web" Width="48" Height="48" Foreground="#0077B5"/>
+                    </Hyperlink>
+                </TextBlock>
+            </StackPanel>
+            <TextBlock Grid.Row="1" Grid.Column="2" Text="Dynotis" FontSize="24" Foreground="{DynamicResource Text}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,20,0"/>
+        </Grid>
     </Grid>
 </UserControl>
