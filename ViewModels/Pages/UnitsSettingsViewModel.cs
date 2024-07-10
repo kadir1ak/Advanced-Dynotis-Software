@@ -5,13 +5,18 @@ public class UnitsSettingsViewModel : INotifyPropertyChanged
 {
     private InterfaceVariables _interfaceVariables;
 
-    private string _torqueUnit;
-    private string _thrustUnit;
-    private string _motorSpeedUnit;
-    private string _temperatureUnit;
-    private string _windSpeedUnit;
-    private string _pressureUnit;
+    public UnitsSettingsViewModel(InterfaceVariables interfaceVariables)
+    {
+        _interfaceVariables = interfaceVariables;
+        TorqueUnit = interfaceVariables.SelectedTorqueUnit;
+        ThrustUnit = interfaceVariables.SelectedThrustUnit;
+        MotorSpeedUnit = interfaceVariables.SelectedMotorSpeedUnit;
+        TemperatureUnit = interfaceVariables.SelectedMotorTempUnit;
+        WindSpeedUnit = interfaceVariables.SelectedWindSpeedUnit;
+        PressureUnit = interfaceVariables.SelectedPressureUnit;
+    }
 
+    private string _torqueUnit;
     public string TorqueUnit
     {
         get => _torqueUnit;
@@ -25,6 +30,7 @@ public class UnitsSettingsViewModel : INotifyPropertyChanged
         }
     }
 
+    private string _thrustUnit;
     public string ThrustUnit
     {
         get => _thrustUnit;
@@ -38,6 +44,7 @@ public class UnitsSettingsViewModel : INotifyPropertyChanged
         }
     }
 
+    private string _motorSpeedUnit;
     public string MotorSpeedUnit
     {
         get => _motorSpeedUnit;
@@ -51,6 +58,7 @@ public class UnitsSettingsViewModel : INotifyPropertyChanged
         }
     }
 
+    private string _temperatureUnit;
     public string TemperatureUnit
     {
         get => _temperatureUnit;
@@ -65,6 +73,7 @@ public class UnitsSettingsViewModel : INotifyPropertyChanged
         }
     }
 
+    private string _windSpeedUnit;
     public string WindSpeedUnit
     {
         get => _windSpeedUnit;
@@ -78,6 +87,7 @@ public class UnitsSettingsViewModel : INotifyPropertyChanged
         }
     }
 
+    private string _pressureUnit;
     public string PressureUnit
     {
         get => _pressureUnit;
@@ -89,17 +99,6 @@ public class UnitsSettingsViewModel : INotifyPropertyChanged
                 OnPropertyChanged(nameof(_interfaceVariables));
             }
         }
-    }
-
-    public UnitsSettingsViewModel(InterfaceVariables interfaceVariables)
-    {
-        _interfaceVariables = interfaceVariables;
-        TorqueUnit = interfaceVariables.SelectedTorqueUnit;
-        ThrustUnit = interfaceVariables.SelectedThrustUnit;
-        MotorSpeedUnit = interfaceVariables.SelectedMotorSpeedUnit;
-        TemperatureUnit = interfaceVariables.SelectedMotorTempUnit;
-        WindSpeedUnit = interfaceVariables.SelectedWindSpeedUnit;
-        PressureUnit = interfaceVariables.SelectedPressureUnit;
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
