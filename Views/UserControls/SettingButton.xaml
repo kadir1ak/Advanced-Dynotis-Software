@@ -12,10 +12,10 @@
         <Style TargetType="Button" x:Key="settingButton">
             <Setter Property="Background" Value="#151F2D" />
             <Setter Property="Foreground" Value="White" />
-            <Setter Property="Height" Value="150" />
+            <Setter Property="Height" Value="125" />
             <Setter Property="Width" Value="100" />
             <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-            <Setter Property="Margin" Value="10" />
+            <Setter Property="Margin" Value="5" />
             <Setter Property="Tag" Value="Hidden" />
             <Setter Property="RenderTransform">
                 <Setter.Value>
@@ -30,10 +30,10 @@
                             <Border.RenderTransform>
                                 <ScaleTransform ScaleX="1" ScaleY="1"/>
                             </Border.RenderTransform>
-                            <Grid>
-                                <icon:PackIconMaterial Kind="{Binding ElementName=settingButton, Path=Icon}" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                <TextBlock Text="{Binding ElementName=settingButton, Path=Text}" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,10"/>
-                            </Grid>
+                            <StackPanel>
+                                <icon:PackIconMaterial Kind="{Binding ElementName=settingButton, Path=Icon}" Width="40" Height="40" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 30 0 0"/>
+                                <TextBlock Text="{Binding ElementName=settingButton, Path=Text}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,25,0,0"/>
+                            </StackPanel>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
@@ -70,7 +70,7 @@
     <Button Style="{StaticResource settingButton}" Click="Button_Click" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
         <Grid ClipToBounds="True">
             <icon:PackIconMaterial Kind="{Binding ElementName=settingButton, Path=Icon}" Width="40" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBlock Text="{Binding ElementName=settingButton, Path=Text}" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+            <TextBlock Text="{Binding ElementName=settingButton, Path=Text}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,25,0,10"/>
         </Grid>
     </Button>
 </UserControl>

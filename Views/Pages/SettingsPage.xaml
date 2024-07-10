@@ -22,6 +22,7 @@
                                 <uc:SettingButton Icon="ContentSaveCog" Text="Save Config" Margin="10" Click="SettingButton_Click"/>
                                 <uc:SettingButton Icon="Layers" Text="Units Settings" Margin="10" Click="SettingButton_Click"/>
                                 <uc:SettingButton Icon="AlertCircleCheckOutline" Text="Alerts" Margin="10" Click="SettingButton_Click"/>
+                                <uc:SettingButton Icon="Quadcopter" Text="ESC Calibration" Margin="10" Click="SettingButton_Click"/>
                                 <uc:SettingButton Icon="Update" Text="Software Update" Margin="10" Click="SettingButton_Click"/>
                                 <uc:SettingButton Icon="Translate" Text="Language" Margin="10" Click="SettingButton_Click"/>
                                 <uc:SettingButton Icon="Information" Text="About" Margin="10" Click="SettingButton_Click"/>

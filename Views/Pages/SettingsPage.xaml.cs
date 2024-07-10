@@ -11,6 +11,7 @@ namespace Advanced_Dynotis_Software.Views.Pages
     {
         private UnitsSettingsViewModel _unitsSettingsViewModel;
         private AlertsViewModel _alertsViewModel;
+        private ESCCalibrationViewModel _escCalibrationViewModel;
         private SoftwareUpdateViewModel _softwareUpdateViewModel;
         private LanguageViewModel _languageViewModel;
         private AboutViewModel _aboutViewModel;
@@ -53,6 +54,9 @@ namespace Advanced_Dynotis_Software.Views.Pages
                         break;
                     case PackIconMaterialKind.AlertCircleCheckOutline:
                         ContentArea.Content = new AlertsPage { DataContext = _alertsViewModel };
+                        break;
+                    case PackIconMaterialKind.Quadcopter:
+                        ContentArea.Content = new ESCCalibrationPage { DataContext = _escCalibrationViewModel };
                         break;
                     case PackIconMaterialKind.Update:
                         ContentArea.Content = new SoftwareUpdatePage { DataContext = _softwareUpdateViewModel };
