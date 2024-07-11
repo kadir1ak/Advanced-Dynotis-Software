@@ -5,7 +5,7 @@
              xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:vm="clr-namespace:Advanced_Dynotis_Software.ViewModels.Main"
              xmlns:uc="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
-             StartupUri="\Views\Windows\MainWindow.xaml">
+             Startup="Application_Startup">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

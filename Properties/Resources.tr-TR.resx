@@ -118,72 +118,72 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AirDensity" xml:space="preserve">
-    <value>Air Density</value>
+    <value>Hava Yoğunluğu</value>
   </data>
   <data name="AmbientTemp" xml:space="preserve">
-    <value>Ambient Temp</value>
+    <value>Ortam Sıcaklığı</value>
   </data>
   <data name="ChartCurrent" xml:space="preserve">
-    <value>Current (A)</value>
+    <value>Akım (A)</value>
   </data>
   <data name="ChartMotorSpeed" xml:space="preserve">
-    <value>Motor Speed (RPM)</value>
+    <value>Motor Hızı (RPM)</value>
   </data>
   <data name="ChartThrust" xml:space="preserve">
-    <value>Thrust (gf)</value>
+    <value>İtki (gf)</value>
   </data>
   <data name="ChartTorque" xml:space="preserve">
-    <value>Torque (Nmm)</value>
+    <value>Tork (Nmm)</value>
   </data>
   <data name="ChartVibration" xml:space="preserve">
-    <value>Vibration (g)</value>
+    <value>Titreşim (g)</value>
   </data>
   <data name="ChartVoltage" xml:space="preserve">
-    <value>Voltage (V)</value>
+    <value>Gerilim (V)</value>
   </data>
   <data name="Current" xml:space="preserve">
-    <value>Current</value>
+    <value>Akım</value>
   </data>
   <data name="English" xml:space="preserve">
-    <value>English</value>
+    <value>İngilizce</value>
   </data>
   <data name="Home" xml:space="preserve">
-    <value>Home</value>
+    <value>Ana</value>
   </data>
   <data name="Languages" xml:space="preserve">
-    <value>Languages</value>
+    <value>Diller</value>
   </data>
   <data name="MotorSpeed" xml:space="preserve">
-    <value>Motor Speed</value>
+    <value>Motor Hızı</value>
   </data>
   <data name="MotorTemp" xml:space="preserve">
-    <value>Motor Temp</value>
+    <value>Motor Sıcaklığı</value>
   </data>
   <data name="Power" xml:space="preserve">
-    <value>Power</value>
+    <value>Güç</value>
   </data>
   <data name="Pressure" xml:space="preserve">
-    <value>Pressure</value>
+    <value>Basınç</value>
   </data>
   <data name="Thrust" xml:space="preserve">
-    <value>Thrust</value>
+    <value>İtki</value>
   </data>
   <data name="Torque" xml:space="preserve">
-    <value>Torque</value>
+    <value>Tork</value>
   </data>
   <data name="Turkish" xml:space="preserve">
-    <value>Turkish</value>
+    <value>Türkçe</value>
   </data>
   <data name="Vibration" xml:space="preserve">
-    <value>Vibration</value>
+    <value>Titreşim</value>
   </data>
   <data name="Voltage" xml:space="preserve">
-    <value>Voltage</value>
+    <value>Gerilim</value>
   </data>
   <data name="WindDirection" xml:space="preserve">
-    <value>Wind Direction</value>
+    <value>Rüzgar Yönü</value>
   </data>
   <data name="WindSpeed" xml:space="preserve">
-    <value>Wind Speed</value>
+    <value>Rüzgar Hızı</value>
   </data>
 </root>

@@ -24,6 +24,8 @@ namespace Advanced_Dynotis_Software.Views.Windows
         private AutomateTestViewModel _automateTestViewModel;
         private SettingsViewModel _settingsViewModel;
 
+        private object _currentContent;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -41,6 +43,8 @@ namespace Advanced_Dynotis_Software.Views.Windows
             HomeButton.IsActive = true;
             AnimateButtonScale(HomeButton, 1.15);
             ContentArea.Content = new HomePage { DataContext = _homeViewModel };
+
+            this.Closing += MainWindow_Closing; // Add this line
         }
 
         private void MainBorder_MouseDown(object sender, MouseButtonEventArgs e)
@@ -128,6 +132,18 @@ namespace Advanced_Dynotis_Software.Views.Windows
             {
                 MessageBox.Show($"Error applying theme: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        public void ReloadContent()
+        {
+            // Ana pencerenin içeriğini yeniden yükleyin
+            var newContent = new MainWindow();
+            Application.Current.MainWindow.Content = newContent.Content;
+        }
+
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
 
         private void ThemesButton_Checked(object sender, RoutedEventArgs e)

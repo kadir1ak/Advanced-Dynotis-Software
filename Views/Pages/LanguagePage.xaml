@@ -1,11 +1,8 @@
 ﻿<UserControl x:Class="Advanced_Dynotis_Software.Views.Pages.LanguagePage"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.Pages"
-             xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             mc:Ignorable="d">
+             xmlns:p="clr-namespace:Advanced_Dynotis_Software.Properties">
     <Grid Background="{DynamicResource Page}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -13,7 +10,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="20">
-            <TextBlock Text="Languages" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Foreground="{DynamicResource Text}"/>
+            <TextBlock Text="{x:Static p:Resources.Languages}" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Foreground="{DynamicResource Text}"/>
         </StackPanel>
 
         <Grid Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -28,7 +25,7 @@
             </Grid.ColumnDefinitions>
 
             <Image Grid.Row="0" Grid.Column="0" Margin="10" Height="100" Width="175" Source="pack://application:,,,/Documents/Images/TR.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBlock Grid.Row="1" Grid.Column="0" Text="Türkçe" FontSize="24" Foreground="{DynamicResource Text}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="{x:Static p:Resources.Turkish}" FontSize="24" Foreground="{DynamicResource Text}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0"/>
             <CheckBox x:Name="TurkishCheckBox" Grid.Row="2" Grid.Column="0" IsChecked="{Binding IsTurkishChecked, Mode=TwoWay}" Margin="10" Foreground="{DynamicResource Text}" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <CheckBox.LayoutTransform>
                     <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
@@ -36,7 +33,7 @@
             </CheckBox>
 
             <Image Grid.Row="0" Grid.Column="1" Margin="10" Height="100" Width="150" Source="pack://application:,,,/Documents/Images/EN.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBlock Grid.Row="1" Grid.Column="1" Text="English" FontSize="24" Foreground="{DynamicResource Text}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0"/>
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Static p:Resources.English}" FontSize="24" Foreground="{DynamicResource Text}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0"/>
             <CheckBox x:Name="EnglishCheckBox" Grid.Row="2" Grid.Column="1" IsChecked="{Binding IsEnglishChecked, Mode=TwoWay}" Margin="10" Foreground="{DynamicResource Text}" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <CheckBox.LayoutTransform>
                     <ScaleTransform ScaleX="1.5" ScaleY="1.5" />

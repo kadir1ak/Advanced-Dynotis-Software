@@ -10,6 +10,7 @@
         xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
+        xmlns:p="clr-namespace:Advanced_Dynotis_Software.Properties"
         Title="MainWindow" MinHeight="600" MinWidth="800" Height="920" Width="1280"
         AllowsTransparency="True" Background="Transparent"
         WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" WindowStyle="None"
@@ -118,7 +119,7 @@
                                 <Viewbox Stretch="Uniform" Margin="10 0 10 0">
                                     <StackPanel x:Name="LeftMenuPanel" VerticalAlignment="Top">
                                         <!-- Menu Buttons -->
-                                        <uc:MenuButton x:Name="HomeButton" Icon="Home" Text="Home" IsActive="True" Click="MenuButton_Click" />
+                                        <uc:MenuButton x:Name="HomeButton" Icon="Home" Text="{x:Static p:Resources.Home}" IsActive="True" Click="MenuButton_Click" />
                                         <uc:MenuButton x:Name="SingleButton" Icon="UsbPort" Text="Single" Click="MenuButton_Click"/>
                                         <uc:MenuButton x:Name="CoaxialButton" Icon="Usb" Text="Coaxial" Click="MenuButton_Click"/>
                                         <uc:MenuButton x:Name="MultiButton" Icon="Multicast" Text="Multi" Click="MenuButton_Click"/>

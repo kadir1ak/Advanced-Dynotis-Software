@@ -1,5 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Globalization;
+using Advanced_Dynotis_Software.Properties;
+using Advanced_Dynotis_Software.Services.Helpers;
 
 namespace Advanced_Dynotis_Software.ViewModels.Pages
 {
@@ -19,6 +22,11 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                     if (value)
                     {
                         IsEnglishChecked = false;
+                        App.ChangeLanguage("tr-TR");
+                    }
+                    else
+                    {
+                        IsEnglishChecked = true;
                     }
                 }
             }
@@ -36,6 +44,11 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                     if (value)
                     {
                         IsTurkishChecked = false;
+                        App.ChangeLanguage("en-EN");
+                    }
+                    else
+                    {
+                        IsTurkishChecked = true;
                     }
                 }
             }
