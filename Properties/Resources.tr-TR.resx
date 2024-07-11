@@ -117,11 +117,62 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AboutPage_AboutUs" xml:space="preserve">
+    <value>Hıkkımızda</value>
+  </data>
+  <data name="AboutPage_AboutUsText" xml:space="preserve">
+    <value>Çabalarımızın temelinde dünya çapında en iyi 25 Kentsel Hava Hareketliliği şirketi arasında yer alma vizyonu yatıyor. Semai ile şehir içi hava yolculuğunun daha güvenli ve temiz olmasına giden yolu açıyoruz. Misyonumuz, Türkiye'nin yüksek potansiyele sahip insan kaynağından faydalanmak, gelişen bu sektöre değer katmak ve istihdamı teşvik etmektir. Benzersiz doğruluğu için tasarlanan ürünümüz, müşterilerin topladıkları verilerin doğruluğuna güvenmelerini sağlar. Bu titiz hassasiyet, kesin ölçümlere, kapsamlı kalibrasyon süreçlerine ve akıllı tasarıma olan kararlı bağlılığımızdan kaynaklanmaktadır. Sürekli büyüyen uluslararası bir müşteri kitlesine hizmet veren Semai Aviation'ın ürünleri ve yazılımları, yalnızca araçlar değil, aynı zamanda dünya çapındaki en ileri teknolojiye sahip şirketleri ve araştırma kurumlarını destekleyen, daha akıllı, daha yeşil bir gelecek için katalizörlerdir.</value>
+  </data>
   <data name="AirDensity" xml:space="preserve">
     <value>Hava Yoğunluğu</value>
   </data>
+  <data name="AlertsPage" xml:space="preserve">
+    <value>Uyarılar</value>
+  </data>
+  <data name="AlertsPage_CurrentValue" xml:space="preserve">
+    <value>Akım Değeri</value>
+  </data>
+  <data name="AlertsPage_CutoffMax" xml:space="preserve">
+    <value>Üst Kesme Sınırı</value>
+  </data>
+  <data name="AlertsPage_CutoffMin" xml:space="preserve">
+    <value>Alt Kesme Sınırı</value>
+  </data>
+  <data name="AlertsPage_Device" xml:space="preserve">
+    <value>Cihaz</value>
+  </data>
+  <data name="AlertsPage_Sensor" xml:space="preserve">
+    <value>Sensör</value>
+  </data>
+  <data name="AlertsPage_SystemLimits" xml:space="preserve">
+    <value>Sistem Sınırları</value>
+  </data>
   <data name="AmbientTemp" xml:space="preserve">
     <value>Ortam Sıcaklığı</value>
+  </data>
+  <data name="AutomateTestPage" xml:space="preserve">
+    <value>Otomatik Test</value>
+  </data>
+  <data name="AutomateTestPage_AddPoint" xml:space="preserve">
+    <value>Nokta Ekle</value>
+  </data>
+  <data name="AutomateTestPage_ClearAllPoints" xml:space="preserve">
+    <value>Tüm Noktaları Temizle</value>
+  </data>
+  <data name="AutomateTestPage_ESCOutput" xml:space="preserve">
+    <value>ESC throttle çıkışı değeri(%)</value>
+  </data>
+  <data name="AutomateTestPage_Index" xml:space="preserve">
+    <value>İndex</value>
+  </data>
+  <data name="AutomateTestPage_Save" xml:space="preserve">
+    <value>Kayıt</value>
+  </data>
+  <data name="AutomateTestPage_TestID" xml:space="preserve">
+    <value>Test ID:</value>
+  </data>
+  <data name="AutomateTestPage_Time" xml:space="preserve">
+    <value>Zaman (s)</value>
   </data>
   <data name="ChartCurrent" xml:space="preserve">
     <value>Akım (A)</value>
@@ -141,6 +192,18 @@
   <data name="ChartVoltage" xml:space="preserve">
     <value>Gerilim (V)</value>
   </data>
+  <data name="CoaxialTestPage" xml:space="preserve">
+    <value>Koaksiyel Test</value>
+  </data>
+  <data name="CoaxialTestPage_1Device" xml:space="preserve">
+    <value>1. Cihaz</value>
+  </data>
+  <data name="CoaxialTestPage_2Device" xml:space="preserve">
+    <value>2. Cihaz</value>
+  </data>
+  <data name="CoaxialTestPage_Open" xml:space="preserve">
+    <value>Aç</value>
+  </data>
   <data name="Current" xml:space="preserve">
     <value>Akım</value>
   </data>
@@ -150,8 +213,35 @@
   <data name="Home" xml:space="preserve">
     <value>Ana</value>
   </data>
+  <data name="HomePageText" xml:space="preserve">
+    <value>Gelişmiş Dynotis Yazılımına Hoş Geldiniz</value>
+  </data>
   <data name="Languages" xml:space="preserve">
     <value>Diller</value>
+  </data>
+  <data name="MainWindow_API" xml:space="preserve">
+    <value>API</value>
+  </data>
+  <data name="MainWindow_Automate" xml:space="preserve">
+    <value>Otomatik</value>
+  </data>
+  <data name="MainWindow_Coaxial" xml:space="preserve">
+    <value>Koaksiyel</value>
+  </data>
+  <data name="MainWindow_Home" xml:space="preserve">
+    <value>Ana</value>
+  </data>
+  <data name="MainWindow_Multi" xml:space="preserve">
+    <value>Çoklu</value>
+  </data>
+  <data name="MainWindow_Script" xml:space="preserve">
+    <value>Senaryo</value>
+  </data>
+  <data name="MainWindow_Settings" xml:space="preserve">
+    <value>Ayarlar</value>
+  </data>
+  <data name="MainWindow_Single" xml:space="preserve">
+    <value>Tekli</value>
   </data>
   <data name="MotorSpeed" xml:space="preserve">
     <value>Motor Hızı</value>

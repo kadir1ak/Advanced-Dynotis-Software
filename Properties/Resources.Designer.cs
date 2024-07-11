@@ -61,6 +61,24 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   About Us benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string AboutPage_AboutUs {
+            get {
+                return ResourceManager.GetString("AboutPage_AboutUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   At the heart of our endeavors lies the vision to be ranked among the top 25 Urban Air Mobility companies worldwide. With Semai, we are paving the way towards safer and cleaner urban air travel. Our mission extends to harnessing Turkey&apos;s high potential human resources, adding value and fostering employment within this burgeoning sector. Built for its unparalleled accuracy, our product enables customers to depend on the precision of the data they gather. This meticulous precision stems from our steadfast comm [dizenin kalan bölümü kesildi]&quot;; benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string AboutPage_AboutUsText {
+            get {
+                return ResourceManager.GetString("AboutPage_AboutUsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Air Density benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string AirDensity {
@@ -70,11 +88,146 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   Alerts benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string AlertsPage {
+            get {
+                return ResourceManager.GetString("AlertsPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Current Value benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string AlertsPage_CurrentValue {
+            get {
+                return ResourceManager.GetString("AlertsPage_CurrentValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cutoff Max benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string AlertsPage_CutoffMax {
+            get {
+                return ResourceManager.GetString("AlertsPage_CutoffMax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cutoff Min benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string AlertsPage_CutoffMin {
+            get {
+                return ResourceManager.GetString("AlertsPage_CutoffMin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Device benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string AlertsPage_Device {
+            get {
+                return ResourceManager.GetString("AlertsPage_Device", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sensor benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string AlertsPage_Sensor {
+            get {
+                return ResourceManager.GetString("AlertsPage_Sensor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   System Limits benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string AlertsPage_SystemLimits {
+            get {
+                return ResourceManager.GetString("AlertsPage_SystemLimits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ambient Temp benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string AmbientTemp {
             get {
                 return ResourceManager.GetString("AmbientTemp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Automate Test benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string AutomateTestPage {
+            get {
+                return ResourceManager.GetString("AutomateTestPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Add Point benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string AutomateTestPage_AddPoint {
+            get {
+                return ResourceManager.GetString("AutomateTestPage_AddPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Clear All Points benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string AutomateTestPage_ClearAllPoints {
+            get {
+                return ResourceManager.GetString("AutomateTestPage_ClearAllPoints", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ESC throttle output value(%) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string AutomateTestPage_ESCOutput {
+            get {
+                return ResourceManager.GetString("AutomateTestPage_ESCOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Index benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string AutomateTestPage_Index {
+            get {
+                return ResourceManager.GetString("AutomateTestPage_Index", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Save benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string AutomateTestPage_Save {
+            get {
+                return ResourceManager.GetString("AutomateTestPage_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Test ID: benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string AutomateTestPage_TestID {
+            get {
+                return ResourceManager.GetString("AutomateTestPage_TestID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Time (s) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string AutomateTestPage_Time {
+            get {
+                return ResourceManager.GetString("AutomateTestPage_Time", resourceCulture);
             }
         }
         
@@ -133,6 +286,42 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   Coaxial Test benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string CoaxialTestPage {
+            get {
+                return ResourceManager.GetString("CoaxialTestPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   1. Device benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string CoaxialTestPage_1Device {
+            get {
+                return ResourceManager.GetString("CoaxialTestPage_1Device", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   2. Device benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string CoaxialTestPage_2Device {
+            get {
+                return ResourceManager.GetString("CoaxialTestPage_2Device", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Open benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string CoaxialTestPage_Open {
+            get {
+                return ResourceManager.GetString("CoaxialTestPage_Open", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Current benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string Current {
@@ -160,11 +349,92 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   Welcome to Advanced Dynotis Software benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string HomePageText {
+            get {
+                return ResourceManager.GetString("HomePageText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Languages benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string Languages {
             get {
                 return ResourceManager.GetString("Languages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   API benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string MainWindow_API {
+            get {
+                return ResourceManager.GetString("MainWindow_API", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Automate benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string MainWindow_Automate {
+            get {
+                return ResourceManager.GetString("MainWindow_Automate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Coaxial benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string MainWindow_Coaxial {
+            get {
+                return ResourceManager.GetString("MainWindow_Coaxial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Home benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string MainWindow_Home {
+            get {
+                return ResourceManager.GetString("MainWindow_Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Multi benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string MainWindow_Multi {
+            get {
+                return ResourceManager.GetString("MainWindow_Multi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Script benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string MainWindow_Script {
+            get {
+                return ResourceManager.GetString("MainWindow_Script", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Settings benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string MainWindow_Settings {
+            get {
+                return ResourceManager.GetString("MainWindow_Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Single benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string MainWindow_Single {
+            get {
+                return ResourceManager.GetString("MainWindow_Single", resourceCulture);
             }
         }
         

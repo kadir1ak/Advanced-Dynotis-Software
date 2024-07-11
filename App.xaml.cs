@@ -18,6 +18,7 @@ namespace Advanced_Dynotis_Software
             var languageCode = Advanced_Dynotis_Software.Properties.Settings.Default.languageCode;
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(languageCode);
             Thread.CurrentThread.CurrentCulture = new CultureInfo(languageCode);
+            SelectedIsCheckedUpdate(languageCode);
         }
 
         private void Application_Startup(object sender, StartupEventArgs e)

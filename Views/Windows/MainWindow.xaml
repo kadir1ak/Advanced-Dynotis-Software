@@ -25,7 +25,7 @@
         GlassFrameThickness="0"
         ResizeBorderThickness="5"/>
     </WindowChrome.WindowChrome>
-    <Border Name="MainBorder" CornerRadius="10" Background="{DynamicResource Page}" MouseDown="MainBorder_MouseDown" BorderThickness="1" BorderBrush="#151F2D">
+    <Border x:Name="MainBorder" CornerRadius="10" Background="{DynamicResource Page}" MouseDown="MainBorder_MouseDown" BorderThickness="1" BorderBrush="#151F2D">
         <Grid>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -119,14 +119,14 @@
                                 <Viewbox Stretch="Uniform" Margin="10 0 10 0">
                                     <StackPanel x:Name="LeftMenuPanel" VerticalAlignment="Top">
                                         <!-- Menu Buttons -->
-                                        <uc:MenuButton x:Name="HomeButton" Icon="Home" Text="{x:Static p:Resources.Home}" IsActive="True" Click="MenuButton_Click" />
-                                        <uc:MenuButton x:Name="SingleButton" Icon="UsbPort" Text="Single" Click="MenuButton_Click"/>
-                                        <uc:MenuButton x:Name="CoaxialButton" Icon="Usb" Text="Coaxial" Click="MenuButton_Click"/>
-                                        <uc:MenuButton x:Name="MultiButton" Icon="Multicast" Text="Multi" Click="MenuButton_Click"/>
-                                        <uc:MenuButton x:Name="APIButton" Icon="Network" Text="API" Click="MenuButton_Click"/>
-                                        <uc:MenuButton x:Name="ScriptButton" Icon="Script" Text="Script" Click="MenuButton_Click"/>
-                                        <uc:MenuButton x:Name="AutomateTestButton" Icon="Autorenew" Text="Automate" Click="MenuButton_Click"/>
-                                        <uc:MenuButton x:Name="SettingsButton" Icon="Tools" Text="Settings" Click="MenuButton_Click"/>
+                                        <uc:MenuButton x:Name="HomeButton" Icon="Home" Text="{x:Static p:Resources.MainWindow_Home}" IsActive="True" Click="MenuButton_Click" />
+                                        <uc:MenuButton x:Name="SingleButton" Icon="UsbPort" Text="{x:Static p:Resources.MainWindow_Single}" Click="MenuButton_Click"/>
+                                        <uc:MenuButton x:Name="CoaxialButton" Icon="Usb" Text="{x:Static p:Resources.MainWindow_Coaxial}" Click="MenuButton_Click"/>
+                                        <uc:MenuButton x:Name="MultiButton" Icon="Multicast" Text="{x:Static p:Resources.MainWindow_Multi}" Click="MenuButton_Click"/>
+                                        <uc:MenuButton x:Name="APIButton" Icon="Network" Text="{x:Static p:Resources.MainWindow_API}" Click="MenuButton_Click"/>
+                                        <uc:MenuButton x:Name="ScriptButton" Icon="Script" Text="{x:Static p:Resources.MainWindow_Script}" Click="MenuButton_Click"/>
+                                        <uc:MenuButton x:Name="AutomateTestButton" Icon="Autorenew" Text="{x:Static p:Resources.MainWindow_Automate}" Click="MenuButton_Click"/>
+                                        <uc:MenuButton x:Name="SettingsButton" Icon="Tools" Text="{x:Static p:Resources.MainWindow_Settings}" Click="MenuButton_Click"/>
                                     </StackPanel>
                                 </Viewbox>
                             </ScrollViewer>
