@@ -29,7 +29,7 @@
         <!-- Header -->
         <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="10 10 10 0" BorderBrush="{DynamicResource PageBorder}" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Top">
             <Grid>
-                <TextBlock Text="{x:Static p:Resources.CoaxialTestPage}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource Text}"/>
+                <TextBlock Text="{x:Static p:Resources.CoaxialTestPage_Text}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource Text}"/>
             </Grid>
         </Border>
 

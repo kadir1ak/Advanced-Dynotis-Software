@@ -126,9 +126,6 @@
   <data name="AirDensity" xml:space="preserve">
     <value>Hava Yoğunluğu</value>
   </data>
-  <data name="AlertsPage" xml:space="preserve">
-    <value>Uyarılar</value>
-  </data>
   <data name="AlertsPage_CurrentValue" xml:space="preserve">
     <value>Akım Değeri</value>
   </data>
@@ -146,6 +143,9 @@
   </data>
   <data name="AlertsPage_SystemLimits" xml:space="preserve">
     <value>Sistem Sınırları</value>
+  </data>
+  <data name="AlertsPage_Text" xml:space="preserve">
+    <value>Uyarılar</value>
   </data>
   <data name="AmbientTemp" xml:space="preserve">
     <value>Ortam Sıcaklığı</value>
@@ -177,6 +177,18 @@
   <data name="AutomateTestPage_Time" xml:space="preserve">
     <value>Zaman (s)</value>
   </data>
+  <data name="BatterySecurityLimits_Battery" xml:space="preserve">
+    <value>Pil (S)</value>
+  </data>
+  <data name="BatterySecurityLimits_BatteryToolTip" xml:space="preserve">
+    <value>Pil seviyesini girin</value>
+  </data>
+  <data name="BatterySecurityLimits_MaxCurrent" xml:space="preserve">
+    <value>Maks. Akım (A)</value>
+  </data>
+  <data name="BatterySecurityLimits_MaxCurrenToolTip" xml:space="preserve">
+    <value>Sistem için güvenli akım sınırını girin</value>
+  </data>
   <data name="ChartCurrent" xml:space="preserve">
     <value>Akım (A)</value>
   </data>
@@ -195,9 +207,6 @@
   <data name="ChartVoltage" xml:space="preserve">
     <value>Gerilim (V)</value>
   </data>
-  <data name="CoaxialTestPage" xml:space="preserve">
-    <value>Koaksiyel Test</value>
-  </data>
   <data name="CoaxialTestPage_1Device" xml:space="preserve">
     <value>1. Cihaz</value>
   </data>
@@ -207,14 +216,197 @@
   <data name="CoaxialTestPage_Open" xml:space="preserve">
     <value>Aç</value>
   </data>
+  <data name="CoaxialTestPage_Text" xml:space="preserve">
+    <value>Koaksiyel Test</value>
+  </data>
   <data name="Current" xml:space="preserve">
     <value>Akım</value>
+  </data>
+  <data name="DeviceCard_AirDensity" xml:space="preserve">
+    <value>Hava Yoğunluğu</value>
+  </data>
+  <data name="DeviceCard_AmbientTemp" xml:space="preserve">
+    <value>Ortam Sıcaklığı</value>
+  </data>
+  <data name="DeviceCard_ChartCurrent" xml:space="preserve">
+    <value>Akım (A)</value>
+  </data>
+  <data name="DeviceCard_ChartMotorSpeed" xml:space="preserve">
+    <value>Motor Hızı (RPM)</value>
+  </data>
+  <data name="DeviceCard_ChartThrust" xml:space="preserve">
+    <value>İtki (gf)</value>
+  </data>
+  <data name="DeviceCard_ChartTime" xml:space="preserve">
+    <value>Zaman (s)</value>
+  </data>
+  <data name="DeviceCard_ChartTorque" xml:space="preserve">
+    <value>Tork (Nmm)</value>
+  </data>
+  <data name="DeviceCard_ChartVibration" xml:space="preserve">
+    <value>Titreşim (g)</value>
+  </data>
+  <data name="DeviceCard_ChartVoltage" xml:space="preserve">
+    <value>Voltaj (V)</value>
+  </data>
+  <data name="DeviceCard_Current" xml:space="preserve">
+    <value>Akım</value>
+  </data>
+  <data name="DeviceCard_MotorSpeed" xml:space="preserve">
+    <value>Motor Hızı</value>
+  </data>
+  <data name="DeviceCard_MotorTemp" xml:space="preserve">
+    <value>Motor Sıcaklığı</value>
+  </data>
+  <data name="DeviceCard_Power" xml:space="preserve">
+    <value>Güç</value>
+  </data>
+  <data name="DeviceCard_Pressure" xml:space="preserve">
+    <value>Basınç</value>
+  </data>
+  <data name="DeviceCard_Thrust" xml:space="preserve">
+    <value>İtki</value>
+  </data>
+  <data name="DeviceCard_Torque" xml:space="preserve">
+    <value>Tork</value>
+  </data>
+  <data name="DeviceCard_WindDirection" xml:space="preserve">
+    <value>Rüzgar Yönü</value>
+  </data>
+  <data name="DeviceCard_WindSpeed" xml:space="preserve">
+    <value>Rüzgar Hızı</value>
+  </data>
+  <data name="DeviceInformation_Battery" xml:space="preserve">
+    <value>Pil (S)</value>
+  </data>
+  <data name="DeviceInformation_ESCStatus" xml:space="preserve">
+    <value>ESC Durumu</value>
+  </data>
+  <data name="DeviceInformation_ESCValue" xml:space="preserve">
+    <value>ESC Değeri (%)</value>
+  </data>
+  <data name="DeviceInformation_Firmware" xml:space="preserve">
+    <value>Donanım Yazılımı</value>
+  </data>
+  <data name="DeviceInformation_InternalRes" xml:space="preserve">
+    <value>Motor İç Direnci (mΩ)</value>
+  </data>
+  <data name="DeviceInformation_MaxCurrent" xml:space="preserve">
+    <value>Maks. Akım (A)</value>
+  </data>
+  <data name="DeviceInformation_Mode" xml:space="preserve">
+    <value>Mod</value>
+  </data>
+  <data name="DeviceInformation_Model" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="DeviceInformation_NoLoadCurrent" xml:space="preserve">
+    <value>Yüksüz Akım (A)</value>
+  </data>
+  <data name="DeviceInformation_PortName" xml:space="preserve">
+    <value>Port Adı</value>
+  </data>
+  <data name="DeviceInformation_PropellerDiameter" xml:space="preserve">
+    <value>Pervane Çapı (Inch)</value>
+  </data>
+  <data name="DeviceInformation_SaveFile" xml:space="preserve">
+    <value>Kayıt Dosyası</value>
+  </data>
+  <data name="DeviceInformation_SaveStatus" xml:space="preserve">
+    <value>Kayıt Durumu</value>
+  </data>
+  <data name="DeviceInformation_SecurityStatus" xml:space="preserve">
+    <value>Güvenlik Durumu</value>
+  </data>
+  <data name="DeviceInformation_SeriNo" xml:space="preserve">
+    <value>Seri No</value>
+  </data>
+  <data name="DeviceInformation_TestMode" xml:space="preserve">
+    <value>Test Modu</value>
+  </data>
+  <data name="DeviceInformation_Text" xml:space="preserve">
+    <value>Cihaz Bilgileri</value>
+  </data>
+  <data name="DeviceMiniCard_ConnectionStatus" xml:space="preserve">
+    <value>Bağlantı Durumu:</value>
+  </data>
+  <data name="DeviceMiniCard_DeviceInformation" xml:space="preserve">
+    <value>Cihaz Bilgileri</value>
+  </data>
+  <data name="DeviceMiniCard_Error" xml:space="preserve">
+    <value>Hata:</value>
+  </data>
+  <data name="DeviceMiniCard_Firmware" xml:space="preserve">
+    <value>Donanım Yazılımı:</value>
+  </data>
+  <data name="DeviceMiniCard_Model" xml:space="preserve">
+    <value>Model:</value>
+  </data>
+  <data name="DeviceMiniCard_PortName" xml:space="preserve">
+    <value>Port Adı:</value>
+  </data>
+  <data name="DeviceMiniCard_SeriNo" xml:space="preserve">
+    <value>Seri No:</value>
+  </data>
+  <data name="DeviceMiniCard_WorkingStatus" xml:space="preserve">
+    <value>Çalışma Durumu:</value>
+  </data>
+  <data name="EffVariables_MotorEfficiency" xml:space="preserve">
+    <value>Motor Verimliliği</value>
+  </data>
+  <data name="EffVariables_MotorEfficiencyTooltip" xml:space="preserve">
+    <value>Kullanılan fırçasız motorun verimliliği. Motor parametre girişlerine göre hesaplanır. ESC verimliliğinin %95 gibi sabit kabul edildiğini unutmayın.</value>
+  </data>
+  <data name="EffVariables_PropellerEfficiency" xml:space="preserve">
+    <value>Pervane Verimliliği</value>
+  </data>
+  <data name="EffVariables_PropellerEfficiencyTooltip" xml:space="preserve">
+    <value>Liyakat Değeri olarak da bilinen bu değer, pervanenizin statik performansını verir. Hesaplamalara motor ve ESC dahil değildir. Bu hesaplamada girdi olarak pervane çapı, devir sayısı, hava yoğunluğu, tork ve itki değerleri kullanılır.</value>
+  </data>
+  <data name="EffVariables_PropulsionSystemEfficiencyI" xml:space="preserve">
+    <value>Tahrik Sistem Verimliliği I</value>
+  </data>
+  <data name="EffVariables_PropulsionSystemEfficiencyII" xml:space="preserve">
+    <value>Tahrik Sistem Verimliliği II</value>
+  </data>
+  <data name="EffVariables_PropulsionSystemEfficiencyIITooltip" xml:space="preserve">
+    <value>Watt gücü başına gram cinsinden tahrik sistemi verimliliği. Ne kadar yüksekse o kadar iyidir. Tipik aralık 6 ila 15 arasındadır. 6'nın altındaysa pervane diski yükünüz yüksek demektir. Daha düşük Kv motor ve daha büyük çaplı pervane kullanmayı deneyin.</value>
+  </data>
+  <data name="EffVariables_PropulsionSystemEfficiencyITooltip" xml:space="preserve">
+    <value>Bu, motor, ESC ve pervane dahil olmak üzere tahrik sisteminin genel verimliliğidir.</value>
   </data>
   <data name="English" xml:space="preserve">
     <value>İngilizce</value>
   </data>
+  <data name="EquipmentParameters_InternalRes" xml:space="preserve">
+    <value>Motor İç Direnci (mΩ)</value>
+  </data>
+  <data name="EquipmentParameters_InternalResToolTip" xml:space="preserve">
+    <value>Motorun iç direncini giriniz.</value>
+  </data>
+  <data name="EquipmentParameters_NoLoadCurrent" xml:space="preserve">
+    <value>Yüksüz Akım (A)</value>
+  </data>
+  <data name="EquipmentParameters_NoLoadCurrentToolTip" xml:space="preserve">
+    <value>Motor I₀(A) akımını giriniz.</value>
+  </data>
+  <data name="EquipmentParameters_PropellerDiameter" xml:space="preserve">
+    <value>Pervane Çapı (Inch)</value>
+  </data>
+  <data name="EquipmentParameters_PropellerDiameterToolTip" xml:space="preserve">
+    <value>Pervane çapını giriniz.</value>
+  </data>
   <data name="ESCCalibrationPage_Text" xml:space="preserve">
     <value>ESC Kalibrasyonu</value>
+  </data>
+  <data name="ESC_Increaseby5" xml:space="preserve">
+    <value>5 artır</value>
+  </data>
+  <data name="ESC_LockUnLockESC" xml:space="preserve">
+    <value>ESC'yi Kilitle/Kilidi Aç</value>
+  </data>
+  <data name="ESC_StopESC" xml:space="preserve">
+    <value>ESC Durdur</value>
   </data>
   <data name="HelpPage_Text" xml:space="preserve">
     <value>Yardım</value>
@@ -258,11 +450,23 @@
   <data name="MotorTemp" xml:space="preserve">
     <value>Motor Sıcaklığı</value>
   </data>
+  <data name="MultiTestPage_Text" xml:space="preserve">
+    <value>Çoklu Test</value>
+  </data>
   <data name="Power" xml:space="preserve">
     <value>Güç</value>
   </data>
   <data name="Pressure" xml:space="preserve">
     <value>Basınç</value>
+  </data>
+  <data name="Record_FileName" xml:space="preserve">
+    <value>Dosya Adı</value>
+  </data>
+  <data name="Record_FileNameToolTip" xml:space="preserve">
+    <value>Dosya adını giriniz.</value>
+  </data>
+  <data name="Record_Recording" xml:space="preserve">
+    <value>Kayıt</value>
   </data>
   <data name="SaveConfigPage_Text" xml:space="preserve">
     <value>Kayıt Ayarları</value>
@@ -305,6 +509,9 @@
   </data>
   <data name="SoftwareUpdatePage_Text" xml:space="preserve">
     <value>Yazılım Güncellemeleri</value>
+  </data>
+  <data name="Tare_Tare" xml:space="preserve">
+    <value>Dara</value>
   </data>
   <data name="Thrust" xml:space="preserve">
     <value>İtki</value>

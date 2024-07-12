@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
              xmlns:conv="clr-namespace:Advanced_Dynotis_Software.Services.Helpers"
              xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:p="clr-namespace:Advanced_Dynotis_Software.Properties"
              mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -113,9 +114,9 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <local:GeneralButton VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="0" Icon="LockSolid" Text="Lock ESC" Command="{Binding EscLockCommand}"/>
-            <local:GeneralButton VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="1" Icon="StairsSolid" Text="Increase by 5" Command="{Binding IncreaseByFiveCommand}"/>
-            <local:GeneralButton VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="2" Icon="StopSolid" Text="Stop ESC" Command="{Binding StopCommand}"/>
+            <local:GeneralButton VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="0" Icon="LockSolid" Text="{x:Static p:Resources.ESC_LockUnLockESC}" Command="{Binding EscLockCommand}"/>
+            <local:GeneralButton VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="1" Icon="StairsSolid" Text="{x:Static p:Resources.ESC_Increaseby5}" Command="{Binding IncreaseByFiveCommand}"/>
+            <local:GeneralButton VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="2" Icon="StopSolid" Text="{x:Static p:Resources.ESC_StopESC}" Command="{Binding StopCommand}"/>
         </Grid>
     </Grid>
 </UserControl>

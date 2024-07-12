@@ -88,15 +88,6 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
-        ///   Alerts benzeri yerelleştirilmiş bir dize arar.
-        /// </summary>
-        public static string AlertsPage {
-            get {
-                return ResourceManager.GetString("AlertsPage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Current Value benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string AlertsPage_CurrentValue {
@@ -147,6 +138,15 @@ namespace Advanced_Dynotis_Software.Properties {
         public static string AlertsPage_SystemLimits {
             get {
                 return ResourceManager.GetString("AlertsPage_SystemLimits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Alerts benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string AlertsPage_Text {
+            get {
+                return ResourceManager.GetString("AlertsPage_Text", resourceCulture);
             }
         }
         
@@ -241,65 +241,38 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
-        ///   Current (A) benzeri yerelleştirilmiş bir dize arar.
+        ///   Battery (S) benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
-        public static string ChartCurrent {
+        public static string BatterySecurityLimits_Battery {
             get {
-                return ResourceManager.GetString("ChartCurrent", resourceCulture);
+                return ResourceManager.GetString("BatterySecurityLimits_Battery", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Motor Speed (RPM) benzeri yerelleştirilmiş bir dize arar.
+        ///   Enter the battery level benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
-        public static string ChartMotorSpeed {
+        public static string BatterySecurityLimits_BatteryToolTip {
             get {
-                return ResourceManager.GetString("ChartMotorSpeed", resourceCulture);
+                return ResourceManager.GetString("BatterySecurityLimits_BatteryToolTip", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Thrust (gf) benzeri yerelleştirilmiş bir dize arar.
+        ///   Max. Current (A) benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
-        public static string ChartThrust {
+        public static string BatterySecurityLimits_MaxCurrent {
             get {
-                return ResourceManager.GetString("ChartThrust", resourceCulture);
+                return ResourceManager.GetString("BatterySecurityLimits_MaxCurrent", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Torque (Nmm) benzeri yerelleştirilmiş bir dize arar.
+        ///   Enter the safe current limit for the system benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
-        public static string ChartTorque {
+        public static string BatterySecurityLimits_MaxCurrenToolTip {
             get {
-                return ResourceManager.GetString("ChartTorque", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Vibration (g) benzeri yerelleştirilmiş bir dize arar.
-        /// </summary>
-        public static string ChartVibration {
-            get {
-                return ResourceManager.GetString("ChartVibration", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Voltage (V) benzeri yerelleştirilmiş bir dize arar.
-        /// </summary>
-        public static string ChartVoltage {
-            get {
-                return ResourceManager.GetString("ChartVoltage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Coaxial Test benzeri yerelleştirilmiş bir dize arar.
-        /// </summary>
-        public static string CoaxialTestPage {
-            get {
-                return ResourceManager.GetString("CoaxialTestPage", resourceCulture);
+                return ResourceManager.GetString("BatterySecurityLimits_MaxCurrenToolTip", resourceCulture);
             }
         }
         
@@ -331,6 +304,15 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   Coaxial Test benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string CoaxialTestPage_Text {
+            get {
+                return ResourceManager.GetString("CoaxialTestPage_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Current benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string Current {
@@ -340,11 +322,569 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   Air Density benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceCard_AirDensity {
+            get {
+                return ResourceManager.GetString("DeviceCard_AirDensity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ambient Temp. benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceCard_AmbientTemp {
+            get {
+                return ResourceManager.GetString("DeviceCard_AmbientTemp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Current (A) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceCard_ChartCurrent {
+            get {
+                return ResourceManager.GetString("DeviceCard_ChartCurrent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Motor Speed (RPM) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceCard_ChartMotorSpeed {
+            get {
+                return ResourceManager.GetString("DeviceCard_ChartMotorSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Thrust (gf) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceCard_ChartThrust {
+            get {
+                return ResourceManager.GetString("DeviceCard_ChartThrust", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Time (s) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceCard_ChartTime {
+            get {
+                return ResourceManager.GetString("DeviceCard_ChartTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Torque (Nmm) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceCard_ChartTorque {
+            get {
+                return ResourceManager.GetString("DeviceCard_ChartTorque", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vibration (g) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceCard_ChartVibration {
+            get {
+                return ResourceManager.GetString("DeviceCard_ChartVibration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Voltage (V) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceCard_ChartVoltage {
+            get {
+                return ResourceManager.GetString("DeviceCard_ChartVoltage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Current benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceCard_Current {
+            get {
+                return ResourceManager.GetString("DeviceCard_Current", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Motor Speed benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceCard_MotorSpeed {
+            get {
+                return ResourceManager.GetString("DeviceCard_MotorSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Motor Temp. benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceCard_MotorTemp {
+            get {
+                return ResourceManager.GetString("DeviceCard_MotorTemp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Power benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceCard_Power {
+            get {
+                return ResourceManager.GetString("DeviceCard_Power", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Pressure benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceCard_Pressure {
+            get {
+                return ResourceManager.GetString("DeviceCard_Pressure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Thrust benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceCard_Thrust {
+            get {
+                return ResourceManager.GetString("DeviceCard_Thrust", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Torque benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceCard_Torque {
+            get {
+                return ResourceManager.GetString("DeviceCard_Torque", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vibration benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceCard_Vibration {
+            get {
+                return ResourceManager.GetString("DeviceCard_Vibration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Voltage benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceCard_Voltage {
+            get {
+                return ResourceManager.GetString("DeviceCard_Voltage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Wind Direction benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceCard_WindDirection {
+            get {
+                return ResourceManager.GetString("DeviceCard_WindDirection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Wind Speed benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceCard_WindSpeed {
+            get {
+                return ResourceManager.GetString("DeviceCard_WindSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Battery (S) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceInformation_Battery {
+            get {
+                return ResourceManager.GetString("DeviceInformation_Battery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ESC Status benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceInformation_ESCStatus {
+            get {
+                return ResourceManager.GetString("DeviceInformation_ESCStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ESC Value (%) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceInformation_ESCValue {
+            get {
+                return ResourceManager.GetString("DeviceInformation_ESCValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Firmware benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceInformation_Firmware {
+            get {
+                return ResourceManager.GetString("DeviceInformation_Firmware", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Internal Res. (mΩ) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceInformation_InternalRes {
+            get {
+                return ResourceManager.GetString("DeviceInformation_InternalRes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Max Current (A) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceInformation_MaxCurrent {
+            get {
+                return ResourceManager.GetString("DeviceInformation_MaxCurrent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Mode benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceInformation_Mode {
+            get {
+                return ResourceManager.GetString("DeviceInformation_Mode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Model benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceInformation_Model {
+            get {
+                return ResourceManager.GetString("DeviceInformation_Model", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   No Load Current (A) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceInformation_NoLoadCurrent {
+            get {
+                return ResourceManager.GetString("DeviceInformation_NoLoadCurrent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Port Name benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceInformation_PortName {
+            get {
+                return ResourceManager.GetString("DeviceInformation_PortName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Propeller Diameter (Inch) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceInformation_PropellerDiameter {
+            get {
+                return ResourceManager.GetString("DeviceInformation_PropellerDiameter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Save File benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceInformation_SaveFile {
+            get {
+                return ResourceManager.GetString("DeviceInformation_SaveFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Save Status benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceInformation_SaveStatus {
+            get {
+                return ResourceManager.GetString("DeviceInformation_SaveStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Security Status benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceInformation_SecurityStatus {
+            get {
+                return ResourceManager.GetString("DeviceInformation_SecurityStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Seri No benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceInformation_SeriNo {
+            get {
+                return ResourceManager.GetString("DeviceInformation_SeriNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Test Mode benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceInformation_TestMode {
+            get {
+                return ResourceManager.GetString("DeviceInformation_TestMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Device Informations benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceInformation_Text {
+            get {
+                return ResourceManager.GetString("DeviceInformation_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Connection Status: benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceMiniCard_ConnectionStatus {
+            get {
+                return ResourceManager.GetString("DeviceMiniCard_ConnectionStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Device Informations benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceMiniCard_DeviceInformation {
+            get {
+                return ResourceManager.GetString("DeviceMiniCard_DeviceInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Error: benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceMiniCard_Error {
+            get {
+                return ResourceManager.GetString("DeviceMiniCard_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Firmware: benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceMiniCard_Firmware {
+            get {
+                return ResourceManager.GetString("DeviceMiniCard_Firmware", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Model: benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceMiniCard_Model {
+            get {
+                return ResourceManager.GetString("DeviceMiniCard_Model", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Port Name: benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceMiniCard_PortName {
+            get {
+                return ResourceManager.GetString("DeviceMiniCard_PortName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Seri No: benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceMiniCard_SeriNo {
+            get {
+                return ResourceManager.GetString("DeviceMiniCard_SeriNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Working Status: benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceMiniCard_WorkingStatus {
+            get {
+                return ResourceManager.GetString("DeviceMiniCard_WorkingStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Motor Efficiency benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string EffVariables_MotorEfficiency {
+            get {
+                return ResourceManager.GetString("EffVariables_MotorEfficiency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Efficiency of the brushless motor used. Calculated based on the motor parameter inputs. Note that ESC efficiency is considered as constant as %95. benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string EffVariables_MotorEfficiencyTooltip {
+            get {
+                return ResourceManager.GetString("EffVariables_MotorEfficiencyTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Propeller Efficiency benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string EffVariables_PropellerEfficiency {
+            get {
+                return ResourceManager.GetString("EffVariables_PropellerEfficiency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Also known as Figure of Merit, this value gives you the static performance of your propeller. Motor and ESC is not included in the calculations. Propeller diameter, RPM, air density, torque and thrust values are used as input for this calculation. benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string EffVariables_PropellerEfficiencyTooltip {
+            get {
+                return ResourceManager.GetString("EffVariables_PropellerEfficiencyTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Propulsion System Efficiency I benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string EffVariables_PropulsionSystemEfficiencyI {
+            get {
+                return ResourceManager.GetString("EffVariables_PropulsionSystemEfficiencyI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Propulsion System Efficiency II benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string EffVariables_PropulsionSystemEfficiencyII {
+            get {
+                return ResourceManager.GetString("EffVariables_PropulsionSystemEfficiencyII", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Propulsion system efficiency in terms of grams per watt power. The higher is the better. Typical range is between 6 to 15. If it is below 6, then your propeller disc loading is high. Try using lower Kv motor and bigger diameter propeller. benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string EffVariables_PropulsionSystemEfficiencyIITooltip {
+            get {
+                return ResourceManager.GetString("EffVariables_PropulsionSystemEfficiencyIITooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   This is the overall efficiency of the propulsion system including motor, ESC and the propeller. benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string EffVariables_PropulsionSystemEfficiencyITooltip {
+            get {
+                return ResourceManager.GetString("EffVariables_PropulsionSystemEfficiencyITooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   English benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string English {
             get {
                 return ResourceManager.GetString("English", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Internal Res. (mΩ) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string EquipmentParameters_InternalRes {
+            get {
+                return ResourceManager.GetString("EquipmentParameters_InternalRes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Enter the motor internal resistance. benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string EquipmentParameters_InternalResToolTip {
+            get {
+                return ResourceManager.GetString("EquipmentParameters_InternalResToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   No Load Current (A) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string EquipmentParameters_NoLoadCurrent {
+            get {
+                return ResourceManager.GetString("EquipmentParameters_NoLoadCurrent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Enter the motor I₀(A) current. benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string EquipmentParameters_NoLoadCurrentToolTip {
+            get {
+                return ResourceManager.GetString("EquipmentParameters_NoLoadCurrentToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Propeller Diameter (Inch) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string EquipmentParameters_PropellerDiameter {
+            get {
+                return ResourceManager.GetString("EquipmentParameters_PropellerDiameter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Enter the propeller diameter. benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string EquipmentParameters_PropellerDiameterToolTip {
+            get {
+                return ResourceManager.GetString("EquipmentParameters_PropellerDiameterToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Increase by 5 benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string ESC_Increaseby5 {
+            get {
+                return ResourceManager.GetString("ESC_Increaseby5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Lock/UnLock ESC benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string ESC_LockUnLockESC {
+            get {
+                return ResourceManager.GetString("ESC_LockUnLockESC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Stop ESC benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string ESC_StopESC {
+            get {
+                return ResourceManager.GetString("ESC_StopESC", resourceCulture);
             }
         }
         
@@ -484,6 +1024,15 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   Multi Test benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string MultiTestPage_Text {
+            get {
+                return ResourceManager.GetString("MultiTestPage_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Power benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string Power {
@@ -498,6 +1047,33 @@ namespace Advanced_Dynotis_Software.Properties {
         public static string Pressure {
             get {
                 return ResourceManager.GetString("Pressure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   File Name benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Record_FileName {
+            get {
+                return ResourceManager.GetString("Record_FileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Enter file name. benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Record_FileNameToolTip {
+            get {
+                return ResourceManager.GetString("Record_FileNameToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recording benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Record_Recording {
+            get {
+                return ResourceManager.GetString("Record_Recording", resourceCulture);
             }
         }
         
@@ -624,6 +1200,15 @@ namespace Advanced_Dynotis_Software.Properties {
         public static string SoftwareUpdatePage_Text {
             get {
                 return ResourceManager.GetString("SoftwareUpdatePage_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Tare benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Tare_Tare {
+            get {
+                return ResourceManager.GetString("Tare_Tare", resourceCulture);
             }
         }
         

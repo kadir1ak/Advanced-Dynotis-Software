@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
+             xmlns:p="clr-namespace:Advanced_Dynotis_Software.Properties"
              mc:Ignorable="d">
     <UserControl.Resources>
         <Style x:Key="NumericTextBoxStyle" TargetType="TextBox">
@@ -15,7 +16,7 @@
             <Border BorderThickness="1" CornerRadius="0" BorderBrush="{DynamicResource Page}" Margin="0 0 0 0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="{DynamicResource Page}">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="Auto" Height="Auto" Margin="0">
                     <StackPanel Grid.Row="0" Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5">
-                        <Label x:Name="PropellerAreaLabel" Content="Propeller Diameter (Inch)" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Center"/>
+                        <Label x:Name="PropellerAreaLabel" Content="{x:Static p:Resources.EquipmentParameters_PropellerDiameter}" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Center"/>
                         <TextBox x:Name="PropellerAreaTextBox" Style="{StaticResource NumericTextBoxStyle}" Text="{Binding UserPropellerArea, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="Auto" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1.5">
                             <TextBox.ToolTip>
                                 <ToolTip>
@@ -24,13 +25,13 @@
                                             <Setter Property="CornerRadius" Value="12"/>
                                         </Style>
                                     </ToolTip.Resources>
-                                    <TextBlock x:Name="PropellerAreaToolTip" Text="Enter the propeller diameter" FontStyle="Normal" TextWrapping="WrapWithOverflow" FontSize="14" Margin="5 5" Cursor=""/>
+                                    <TextBlock x:Name="PropellerAreaToolTip" Text="{x:Static p:Resources.EquipmentParameters_PropellerDiameterToolTip}" FontStyle="Normal" TextWrapping="WrapWithOverflow" FontSize="14" Margin="5 5" Cursor=""/>
                                 </ToolTip>
                             </TextBox.ToolTip>
                         </TextBox>
                     </StackPanel>
                     <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5">
-                        <Label x:Name="MotorInnerLabel" Content="Internal Res. (mΩ)" FontSize="14" Foreground="{DynamicResource Text}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <Label x:Name="MotorInnerLabel" Content="{x:Static p:Resources.EquipmentParameters_InternalRes}" FontSize="14" Foreground="{DynamicResource Text}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         <TextBox x:Name="MotorInnerTextBox" Style="{StaticResource NumericTextBoxStyle}" Text="{Binding UserMotorInner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="Auto" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1.5">
                             <TextBox.ToolTip>
                                 <ToolTip>
@@ -39,13 +40,13 @@
                                             <Setter Property="CornerRadius" Value="12"/>
                                         </Style>
                                     </ToolTip.Resources>
-                                    <TextBlock x:Name="MotorInnerToolTip" Text="Enter the motor internal resistance" FontStyle="Normal" TextWrapping="WrapWithOverflow" FontSize="14" Margin="5 5" Cursor=""/>
+                                    <TextBlock x:Name="MotorInnerToolTip" Text="{x:Static p:Resources.EquipmentParameters_InternalResToolTip}" FontStyle="Normal" TextWrapping="WrapWithOverflow" FontSize="14" Margin="5 5" Cursor=""/>
                                 </ToolTip>
                             </TextBox.ToolTip>
                         </TextBox>
                     </StackPanel>
                     <StackPanel Grid.Row="2" Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5">
-                        <Label x:Name="NoLoadCurrentsLabel" Content="No Load Current (A)" FontSize="14" Foreground="{DynamicResource Text}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <Label x:Name="NoLoadCurrentsLabel" Content="{x:Static p:Resources.EquipmentParameters_NoLoadCurrent}" FontSize="14" Foreground="{DynamicResource Text}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         <TextBox x:Name="NoLoadCurrentsTextBox" Style="{StaticResource NumericTextBoxStyle}" Text="{Binding UserNoLoadCurrents, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="Auto" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1.5">
                             <TextBox.ToolTip>
                                 <ToolTip>
@@ -54,7 +55,7 @@
                                             <Setter Property="CornerRadius" Value="12"/>
                                         </Style>
                                     </ToolTip.Resources>
-                                    <TextBlock x:Name="NoLoadCurrentsToolTip" Text="Enter the motor I₀(A) current" FontStyle="Normal" TextWrapping="WrapWithOverflow" FontSize="14" Margin="5 5" Cursor=""/>
+                                    <TextBlock x:Name="NoLoadCurrentsToolTip" Text="{x:Static p:Resources.EquipmentParameters_NoLoadCurrentToolTip}" FontStyle="Normal" TextWrapping="WrapWithOverflow" FontSize="14" Margin="5 5" Cursor=""/>
                                 </ToolTip>
                             </TextBox.ToolTip>
                         </TextBox>

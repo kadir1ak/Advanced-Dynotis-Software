@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:p="clr-namespace:Advanced_Dynotis_Software.Properties"
              mc:Ignorable="d" Background="{DynamicResource Page}">
     <UserControl.Resources>
         <Style x:Key="TooltipStyle" TargetType="{x:Type ToolTip}">
@@ -64,44 +65,44 @@
         <DataTemplate x:Key="TooltipTemplate1">
             <StackPanel Width="200">
                 <StackPanel Orientation="Horizontal" Background="Transparent">
-                    <icon:PackIconMaterial Width="20" Height="20" Margin="0,1,0,0" Kind="Abacus"/>
-                    <Label Content="Propulsion System Efficiency I" Margin="4,0,0,0" FontSize="12" FontWeight="Bold" Foreground="Black" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <icon:PackIconMaterial Width="20" Height="20" Margin="0,1,0,0" Kind="PlaylistMinus"/>
+                    <Label Content="{x:Static p:Resources.EffVariables_PropulsionSystemEfficiencyI}" Margin="4,0,0,0" FontSize="12" FontWeight="Bold" Foreground="Black" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </StackPanel>
                 <Line Stroke="LightGray" StrokeThickness="2" X2="200"/>
-                <TextBlock Text="This is the overall efficiency of the propulsion system including motor, ESC and the propeller." FontStyle="Italic" TextWrapping="WrapWithOverflow" FontSize="11" Margin="0,0,0,0"/>
+                <TextBlock Text="{x:Static p:Resources.EffVariables_PropulsionSystemEfficiencyITooltip}" FontStyle="Italic" TextWrapping="WrapWithOverflow" FontSize="11" Margin="0,0,0,0"/>
             </StackPanel>
         </DataTemplate>
 
         <DataTemplate x:Key="TooltipTemplate2">
             <StackPanel Width="200">
                 <StackPanel Orientation="Horizontal" Background="Transparent">
-                    <icon:PackIconMaterial Width="20" Height="20" Margin="0,1,0,0" Kind="BatteryCharging"/>
-                    <Label Content="Propulsion System Efficiency II" Margin="4,0,0,0" FontSize="12" FontWeight="Bold" Foreground="Black" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <icon:PackIconMaterial Width="20" Height="20" Margin="0,1,0,0" Kind="PlaylistMinus"/>
+                    <Label Content="{x:Static p:Resources.EffVariables_PropulsionSystemEfficiencyII}" Margin="4,0,0,0" FontSize="12" FontWeight="Bold" Foreground="Black" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </StackPanel>
                 <Line Stroke="LightGray" StrokeThickness="2" X2="200"/>
-                <TextBlock Text="Propulsion system efficiency in terms of grams per watt power. The higher is the better. Typical range is between 6 to 15. If it is below 6, then your propeller disc loading is high. Try using lower Kv motor and bigger diameter propeller." FontStyle="Italic" TextWrapping="WrapWithOverflow" FontSize="11" Margin="0,0,0,0"/>
+                <TextBlock Text="{x:Static p:Resources.EffVariables_PropulsionSystemEfficiencyIITooltip}" FontStyle="Italic" TextWrapping="WrapWithOverflow" FontSize="11" Margin="0,0,0,0"/>
             </StackPanel>
         </DataTemplate>
 
         <DataTemplate x:Key="TooltipTemplate3">
             <StackPanel Width="200">
                 <StackPanel Orientation="Horizontal" Background="Transparent">
-                    <icon:PackIconMaterial Width="20" Height="20" Margin="0,1,0,0" Kind="EngineOutline"/>
-                    <Label Content="Propeller Efficiency" Margin="4,0,0,0" FontSize="12" FontWeight="Bold" Foreground="Black" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <icon:PackIconMaterial Width="20" Height="20" Margin="0,1,0,0" Kind="PlaylistMinus"/>
+                    <Label Content="{x:Static p:Resources.EffVariables_PropellerEfficiency}" Margin="4,0,0,0" FontSize="12" FontWeight="Bold" Foreground="Black" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </StackPanel>
                 <Line Stroke="LightGray" StrokeThickness="2" X2="200"/>
-                <TextBlock Text="Also known as Figure of Merit, this value gives you the static performance of your propeller. Motor and ESC is not included in the calculations. Propeller diameter, RPM, air density, torque and thrust values are used as input for this calculation." FontStyle="Italic" TextWrapping="WrapWithOverflow" FontSize="11" Margin="0,0,0,0"/>
+                <TextBlock Text="{x:Static p:Resources.EffVariables_PropellerEfficiencyTooltip}" FontStyle="Italic" TextWrapping="WrapWithOverflow" FontSize="11" Margin="0,0,0,0"/>
             </StackPanel>
         </DataTemplate>
 
         <DataTemplate x:Key="TooltipTemplate4">
             <StackPanel Width="200">
                 <StackPanel Orientation="Horizontal" Background="Transparent">
-                    <icon:PackIconMaterial Width="20" Height="20" Margin="0,1,0,0" Kind="Cog"/>
-                    <Label Content="Motor Efficiency" Margin="4,0,0,0" FontSize="12" FontWeight="Bold" Foreground="Black" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <icon:PackIconMaterial Width="20" Height="20" Margin="0,1,0,0" Kind="PlaylistMinus"/>
+                    <Label Content="{x:Static p:Resources.EffVariables_MotorEfficiency}" Margin="4,0,0,0" FontSize="12" FontWeight="Bold" Foreground="Black" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </StackPanel>
                 <Line Stroke="LightGray" StrokeThickness="2" X2="200"/>
-                <TextBlock Text="Efficiency of the brushless motor used. Calculated based on the motor parameter inputs. Note that ESC efficiency is considered as constant as %95." FontStyle="Italic" TextWrapping="WrapWithOverflow" FontSize="11" Margin="0,0,0,0"/>
+                <TextBlock Text="{x:Static p:Resources.EffVariables_MotorEfficiencyTooltip}" FontStyle="Italic" TextWrapping="WrapWithOverflow" FontSize="11" Margin="0,0,0,0"/>
             </StackPanel>
         </DataTemplate>
     </UserControl.Resources>
@@ -121,7 +122,7 @@
                     <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate1}"/>
                 </icon:PackIconMaterial.ToolTip>
             </icon:PackIconMaterial>
-            <TextBlock Style="{StaticResource NameLabelStyle}" Text="Propulsion System Efficiency I" />
+            <TextBlock Style="{StaticResource NameLabelStyle}" Text="{x:Static p:Resources.EffVariables_PropulsionSystemEfficiencyI}" />
             <TextBlock Style="{StaticResource ValueLabelStyle}" Text="0.0" />
             <TextBlock Style="{StaticResource UnitLabelStyle}" Text="%" />
         </StackPanel>
@@ -133,7 +134,7 @@
                     <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate2}"/>
                 </icon:PackIconMaterial.ToolTip>
             </icon:PackIconMaterial>
-            <TextBlock Style="{StaticResource NameLabelStyle}" Text="Propulsion System Efficiency II" />
+            <TextBlock Style="{StaticResource NameLabelStyle}" Text="{x:Static p:Resources.EffVariables_PropulsionSystemEfficiencyII}" />
             <TextBlock Style="{StaticResource ValueLabelStyle}" Text="0.0" />
             <TextBlock Style="{StaticResource UnitLabelStyle}" Text="g/Watt" />
         </StackPanel>
@@ -145,7 +146,7 @@
                     <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate3}"/>
                 </icon:PackIconMaterial.ToolTip>
             </icon:PackIconMaterial>
-            <TextBlock Style="{StaticResource NameLabelStyle}" Text="Propeller Efficiency" />
+            <TextBlock Style="{StaticResource NameLabelStyle}" Text="{x:Static p:Resources.EffVariables_PropellerEfficiency}" />
             <TextBlock Style="{StaticResource ValueLabelStyle}" Text="0.0" />
             <TextBlock Style="{StaticResource UnitLabelStyle}" Text="%" />
         </StackPanel>
@@ -157,7 +158,7 @@
                     <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate4}"/>
                 </icon:PackIconMaterial.ToolTip>
             </icon:PackIconMaterial>
-            <TextBlock Style="{StaticResource NameLabelStyle}" Text="Motor Efficiency" />
+            <TextBlock Style="{StaticResource NameLabelStyle}" Text="{x:Static p:Resources.EffVariables_MotorEfficiency}" />
             <TextBlock Style="{StaticResource ValueLabelStyle}" Text="0.0" />
             <TextBlock Style="{StaticResource UnitLabelStyle}" Text="%" />
         </StackPanel>

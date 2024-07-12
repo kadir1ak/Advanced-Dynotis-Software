@@ -7,6 +7,7 @@
              xmlns:vm="clr-namespace:Advanced_Dynotis_Software.ViewModels.Main"
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:p="clr-namespace:Advanced_Dynotis_Software.Properties"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=vm:DeviceViewModel}" 
              Background="{DynamicResource Page}"
@@ -28,7 +29,7 @@
                 <!-- Motor Speed -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0 0 0 0">
                     <icon:PackIconMaterial Kind="Speedometer" Foreground="{DynamicResource deviceCardIcon}" Width="20" Height="20" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="MotorSpeedNameLabel" Text="Motor Speed" Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Left"/>
+                    <TextBlock x:Name="MotorSpeedNameLabel" Text="{x:Static p:Resources.DeviceCard_MotorSpeed}" Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Left"/>
                     <TextBlock x:Name="MotorSpeedValueLabel" Text="{Binding InterfaceVariables.MotorSpeed.Value, Mode=OneWay, StringFormat={}{0:0}}" Width="80" Height="20"  FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <TextBlock x:Name="MotorSpeedUnitLabel" Text="{Binding InterfaceVariables.MotorSpeed.UnitSymbol}" Width="40" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
@@ -36,7 +37,7 @@
                 <!-- Thrust -->
                 <StackPanel Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <icon:PackIconMaterial Kind="Backburger" Foreground="{DynamicResource deviceCardIcon}" Width="20" Height="20" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="ThrustNameLabel" Text="Thrust" Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Left"/>
+                    <TextBlock x:Name="ThrustNameLabel" Text="{x:Static p:Resources.DeviceCard_Thrust}" Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Left"/>
                     <TextBlock x:Name="ThrustValueLabel" Text="{Binding InterfaceVariables.Thrust.Value, Mode=OneWay, StringFormat={}{0:0.00}}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <TextBlock x:Name="ThrustUnitLabel" Text="{Binding InterfaceVariables.Thrust.UnitSymbol}" Width="40" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
@@ -44,7 +45,7 @@
                 <!-- Torque -->
                 <StackPanel Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <icon:PackIconMaterial Kind="RotateRight" Foreground="{DynamicResource deviceCardIcon}" Width="20" Height="20" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="TorqueNameLabel" Text="Torque" Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Left"/>
+                    <TextBlock x:Name="TorqueNameLabel" Text="{x:Static p:Resources.DeviceCard_Torque}" Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Left"/>
                     <TextBlock x:Name="TorqueValueLabel" Text="{Binding InterfaceVariables.Torque.Value, Mode=OneWay, StringFormat={}{0:0.00}}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <TextBlock x:Name="TorqueUnitLabel" Text="{Binding InterfaceVariables.Torque.UnitSymbol}" Width="40" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
@@ -52,7 +53,7 @@
                 <!-- Voltage -->
                 <StackPanel Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <icon:PackIconMaterial Kind="Flash" Foreground="{DynamicResource deviceCardIcon}" Width="20" Height="20" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="VoltageNameLabel" Text="Voltage" Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Left"/>
+                    <TextBlock x:Name="VoltageNameLabel" Text="{x:Static p:Resources.DeviceCard_Voltage}" Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Left"/>
                     <TextBlock x:Name="VoltageValueLabel" Text="{Binding InterfaceVariables.Voltage, Mode=OneWay, StringFormat={}{0:0.00}}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <TextBlock x:Name="VoltageUnitLabel" Text="V" Width="40" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
@@ -60,7 +61,7 @@
                 <!-- Current -->
                 <StackPanel Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <icon:PackIconMaterial Kind="CurrentDc" Foreground="{DynamicResource deviceCardIcon}" Width="20" Height="20" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="CurrentNameLabel" Text="Current" Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Left"/>
+                    <TextBlock x:Name="CurrentNameLabel" Text="{x:Static p:Resources.DeviceCard_Current}" Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Left"/>
                     <TextBlock x:Name="CurrentValueLabel" Text="{Binding InterfaceVariables.Current, Mode=OneWay, StringFormat={}{0:0.00}}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <TextBlock x:Name="CurrentUnitLabel" Text="A" Width="40" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
@@ -68,7 +69,7 @@
                 <!-- Vibration -->
                 <StackPanel Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <icon:PackIconMaterial Kind="Vibrate" Foreground="{DynamicResource deviceCardIcon}" Width="20" Height="20" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="VibrationNameLabel" Text="Vibration" Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Left"/>
+                    <TextBlock x:Name="VibrationNameLabel" Text="{x:Static p:Resources.DeviceCard_Vibration}" Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Left"/>
                     <TextBlock x:Name="VibrationValueLabel" Text="{Binding InterfaceVariables.Vibration, Mode=OneWay, StringFormat={}{0:0.00}}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <TextBlock x:Name="VibrationUnitLabel" Text="g" Width="40" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
@@ -76,7 +77,7 @@
                 <!-- Pressure -->
                 <StackPanel Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <icon:PackIconMaterial Kind="Gauge" Foreground="{DynamicResource deviceCardIcon}" Width="20" Height="20" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="PressureNameLabel" Text="Pressure" Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Left"/>
+                    <TextBlock x:Name="PressureNameLabel" Text="{x:Static p:Resources.DeviceCard_Pressure}" Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Left"/>
                     <TextBlock x:Name="PressureValueLabel" Text="{Binding InterfaceVariables.Pressure.Value, Mode=OneWay, StringFormat={}{0:0.00}}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <TextBlock x:Name="PressureUnitLabel" Text="{Binding InterfaceVariables.Pressure.UnitSymbol}" Width="40" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
@@ -84,7 +85,7 @@
                 <!-- Air Density -->
                 <StackPanel Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <icon:PackIconMaterial Kind="WeatherFog" Foreground="{DynamicResource deviceCardIcon}" Width="20" Height="20" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="AirDensityNameLabel" Text="Air Density" Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Left"/>
+                    <TextBlock x:Name="AirDensityNameLabel" Text="{x:Static p:Resources.DeviceCard_AirDensity}" Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Left"/>
                     <TextBlock x:Name="AirDensityValueLabel" Text="{Binding InterfaceVariables.AirDensity, Mode=OneWay, StringFormat={}{0:0.00}}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <TextBlock x:Name="AirDensityUnitLabel" Text="kg/m³" Width="40" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
@@ -92,7 +93,7 @@
                 <!-- Motor Temperature -->
                 <StackPanel Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <icon:PackIconMaterial Kind="Thermometer" Foreground="{DynamicResource deviceCardIcon}" Width="20" Height="20" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="MotorTemperatureNameLabel" Text="Motor Temp" Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Left"/>
+                    <TextBlock x:Name="MotorTemperatureNameLabel" Text="{x:Static p:Resources.DeviceCard_MotorTemp}" Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Left"/>
                     <TextBlock x:Name="MotorTemperatureValueLabel" Text="{Binding InterfaceVariables.MotorTemp.Value, Mode=OneWay, StringFormat={}{0:0.00}}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <TextBlock x:Name="MotorTemperatureUnitLabel" Text="{Binding InterfaceVariables.MotorTemp.UnitSymbol}" Width="40" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
@@ -100,7 +101,7 @@
                 <!-- Ambient Temperature -->
                 <StackPanel Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <icon:PackIconMaterial Kind="ThermometerLines" Foreground="{DynamicResource deviceCardIcon}" Width="20" Height="20" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="AmbientTemperatureNameLabel" Text="Ambient Temp" Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Left"/>
+                    <TextBlock x:Name="AmbientTemperatureNameLabel" Text="{x:Static p:Resources.DeviceCard_AmbientTemp}" Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Left"/>
                     <TextBlock x:Name="AmbientTemperatureValueLabel" Text="{Binding InterfaceVariables.AmbientTemp.Value, Mode=OneWay, StringFormat={}{0:0.00}}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <TextBlock x:Name="AmbientTemperatureUnitLabel" Text="{Binding InterfaceVariables.AmbientTemp.UnitSymbol}" Width="40" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
@@ -108,7 +109,7 @@
                 <!-- Power -->
                 <StackPanel Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <icon:PackIconMaterial Kind="LightningBolt" Foreground="{DynamicResource deviceCardIcon}" Width="20" Height="20" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="PowerNameLabel" Text="Power" Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Left"/>
+                    <TextBlock x:Name="PowerNameLabel" Text="{x:Static p:Resources.DeviceCard_Power}" Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Left"/>
                     <TextBlock x:Name="PowerValueLabel" Text="{Binding InterfaceVariables.Power, Mode=OneWay, StringFormat={}{0:0.00}}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <TextBlock x:Name="PowerUnitLabel" Text="Watt" Width="40" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
@@ -116,16 +117,16 @@
                 <!-- Wind Speed -->
                 <StackPanel Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <icon:PackIconMaterial Kind="WeatherWindy" Foreground="{DynamicResource deviceCardIcon}" Width="20" Height="20" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="WindSpeedNameLabel" Text="Wind Speed" Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0"/>
-                    <TextBlock x:Name="WindSpeedValueLabel" Text="{Binding InterfaceVariables.WindSpeed.Value, Mode=OneWay, StringFormat={}{0:0.0}}" Width="80" Height="16" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <TextBlock x:Name="WindSpeedNameLabel" Text="{x:Static p:Resources.DeviceCard_WindSpeed}" Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Left"/>
+                    <TextBlock x:Name="WindSpeedValueLabel" Text="{Binding InterfaceVariables.WindSpeed.Value, Mode=OneWay, StringFormat={}{0:0.0}}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <TextBlock x:Name="WindSpeedUnitLabel" Text="{Binding InterfaceVariables.WindSpeed.UnitSymbol}" Width="40" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
 
                 <!-- Wind Direction -->
                 <StackPanel Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <icon:PackIconMaterial Kind="Compass" Foreground="{DynamicResource deviceCardIcon}" Width="20" Height="20" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="WindDirectionNameLabel" Text="Wind Direction" Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Left"/>
-                    <TextBlock x:Name="WindDirectionValueLabel" Text="{Binding InterfaceVariables.WindDirection, Mode=OneWay, StringFormat={}{0:0.0}}" Width="80" Height="16" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <TextBlock x:Name="WindDirectionNameLabel" Text="{x:Static p:Resources.DeviceCard_WindDirection}" Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Left"/>
+                    <TextBlock x:Name="WindDirectionValueLabel" Text="{Binding InterfaceVariables.WindDirection, Mode=OneWay, StringFormat={}{0:0.0}}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <TextBlock x:Name="WindDirectionUnitLabel" Text="°" Width="40" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
             </StackPanel>
@@ -138,19 +139,19 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Border Grid.Row="0" Margin="0 3 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                <TextBlock FontSize="14" Text="Motor Speed" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock FontSize="14" Text="{x:Static p:Resources.DeviceCard_MotorSpeed}" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
             <Border Grid.Row="1" Margin="0 0 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
                 <lvc:CartesianChart Series="{Binding ChartViewModel.MotorSpeedSeriesCollection}" Margin="2 0 0 2" DisableAnimations="True" DataTooltip="{x:Null}">
                     <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="Time" Labels="{Binding ChartViewModel.TimeLabels}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.XAxisFormatter}">
+                        <lvc:Axis Title="{x:Static p:Resources.DeviceCard_ChartTime}" Labels="{Binding ChartViewModel.TimeLabels}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.XAxisFormatter}">
                             <lvc:Axis.Separator>
                                 <lvc:Separator Step="{Binding ChartViewModel.MotorSpeedXAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
                             </lvc:Axis.Separator>
                         </lvc:Axis>
                     </lvc:CartesianChart.AxisX>
                     <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="Motor Speed (RPM)" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.YAxisFormatter}">
+                        <lvc:Axis Title="{x:Static p:Resources.DeviceCard_ChartMotorSpeed}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.YAxisFormatter}">
                             <lvc:Axis.Separator>
                                 <lvc:Separator Step="{Binding ChartViewModel.MotorSpeedYAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
                             </lvc:Axis.Separator>
@@ -166,19 +167,19 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Border Grid.Row="0" Margin="0 3 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                <TextBlock FontSize="14" Text="Thrust" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock FontSize="14" Text="{x:Static p:Resources.DeviceCard_Thrust}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
             <Border Grid.Row="1" Margin="0 0 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
                 <lvc:CartesianChart Series="{Binding ChartViewModel.ThrustSeriesCollection}" Margin="2 0 0 2" DisableAnimations="True" DataTooltip="{x:Null}">
                     <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="Time" Labels="{Binding ChartViewModel.TimeLabels}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.XAxisFormatter}">
+                        <lvc:Axis Title="{x:Static p:Resources.DeviceCard_ChartTime}" Labels="{Binding ChartViewModel.TimeLabels}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.XAxisFormatter}">
                             <lvc:Axis.Separator>
                                 <lvc:Separator Step="{Binding ChartViewModel.ThrustXAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
                             </lvc:Axis.Separator>
                         </lvc:Axis>
                     </lvc:CartesianChart.AxisX>
                     <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="Thrust (gf)" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.YAxisFormatter}">
+                        <lvc:Axis Title="{x:Static p:Resources.DeviceCard_ChartThrust}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.YAxisFormatter}">
                             <lvc:Axis.Separator>
                                 <lvc:Separator Step="{Binding ChartViewModel.ThrustYAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
                             </lvc:Axis.Separator>
@@ -194,19 +195,19 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Border Grid.Row="0" Margin="0 3 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                <TextBlock FontSize="14" Text="Torque" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock FontSize="14" Text="{x:Static p:Resources.DeviceCard_Torque}" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
             <Border Grid.Row="1" Margin="0 0 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
                 <lvc:CartesianChart Series="{Binding ChartViewModel.TorqueSeriesCollection}" Margin="2 0 0 2" DisableAnimations="True" DataTooltip="{x:Null}">
                     <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="Time" Labels="{Binding ChartViewModel.TimeLabels}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.XAxisFormatter}">
+                        <lvc:Axis Title="{x:Static p:Resources.DeviceCard_ChartTime}" Labels="{Binding ChartViewModel.TimeLabels}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.XAxisFormatter}">
                             <lvc:Axis.Separator>
                                 <lvc:Separator Step="{Binding ChartViewModel.TorqueXAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
                             </lvc:Axis.Separator>
                         </lvc:Axis>
                     </lvc:CartesianChart.AxisX>
                     <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="Torque (Nmm)" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.YAxisFormatter}">
+                        <lvc:Axis Title="{x:Static p:Resources.DeviceCard_ChartTorque}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.YAxisFormatter}">
                             <lvc:Axis.Separator>
                                 <lvc:Separator Step="{Binding ChartViewModel.TorqueYAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
                             </lvc:Axis.Separator>
@@ -222,19 +223,19 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Border Grid.Row="0" Margin="0 3 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                <TextBlock FontSize="14" Text="Voltage" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock FontSize="14" Text="{x:Static p:Resources.DeviceCard_Voltage}" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
             <Border Grid.Row="1" Margin="0 0 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
                 <lvc:CartesianChart Series="{Binding ChartViewModel.VoltageSeriesCollection}" Margin="2 0 0 2" DisableAnimations="True" DataTooltip="{x:Null}">
                     <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="Time" Labels="{Binding ChartViewModel.TimeLabels}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.XAxisFormatter}">
+                        <lvc:Axis Title="{x:Static p:Resources.DeviceCard_ChartTime}" Labels="{Binding ChartViewModel.TimeLabels}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.XAxisFormatter}">
                             <lvc:Axis.Separator>
                                 <lvc:Separator Step="{Binding ChartViewModel.VoltageXAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
                             </lvc:Axis.Separator>
                         </lvc:Axis>
                     </lvc:CartesianChart.AxisX>
                     <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="Voltage (V)" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.YAxisFormatter}">
+                        <lvc:Axis Title="{x:Static p:Resources.DeviceCard_ChartVoltage}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.YAxisFormatter}">
                             <lvc:Axis.Separator>
                                 <lvc:Separator Step="{Binding ChartViewModel.VoltageYAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
                             </lvc:Axis.Separator>
@@ -250,19 +251,19 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Border Grid.Row="0" Margin="0 3 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                <TextBlock FontSize="14" Text="Current" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock FontSize="14" Text="{x:Static p:Resources.DeviceCard_Current}" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
             <Border Grid.Row="1" Margin="0 0 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
                 <lvc:CartesianChart Series="{Binding ChartViewModel.CurrentSeriesCollection}" Margin="2 0 0 2" DisableAnimations="True" DataTooltip="{x:Null}">
                     <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="Time" Labels="{Binding ChartViewModel.TimeLabels}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.XAxisFormatter}">
+                        <lvc:Axis Title="{x:Static p:Resources.DeviceCard_ChartTime}" Labels="{Binding ChartViewModel.TimeLabels}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.XAxisFormatter}">
                             <lvc:Axis.Separator>
                                 <lvc:Separator Step="{Binding ChartViewModel.CurrentXAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
                             </lvc:Axis.Separator>
                         </lvc:Axis>
                     </lvc:CartesianChart.AxisX>
                     <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="Current (A)" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.YAxisFormatter}">
+                        <lvc:Axis Title="{x:Static p:Resources.DeviceCard_ChartCurrent}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.YAxisFormatter}">
                             <lvc:Axis.Separator>
                                 <lvc:Separator Step="{Binding ChartViewModel.CurrentYAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
                             </lvc:Axis.Separator>
@@ -278,19 +279,19 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Border Grid.Row="0" Margin="0 3 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                <TextBlock FontSize="14" Text="Vibration" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock FontSize="14" Text="{x:Static p:Resources.DeviceCard_Vibration}" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
             <Border Grid.Row="1" Margin="0 0 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
                 <lvc:CartesianChart Series="{Binding ChartViewModel.VibrationSeriesCollection}" Margin="2 0 0 2" DisableAnimations="True" DataTooltip="{x:Null}">
                     <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="Time" Labels="{Binding ChartViewModel.TimeLabels}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.XAxisFormatter}">
+                        <lvc:Axis Title="{x:Static p:Resources.DeviceCard_ChartTime}" Labels="{Binding ChartViewModel.TimeLabels}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.XAxisFormatter}">
                             <lvc:Axis.Separator>
                                 <lvc:Separator Step="{Binding ChartViewModel.VibrationXAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
                             </lvc:Axis.Separator>
                         </lvc:Axis>
                     </lvc:CartesianChart.AxisX>
                     <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="Vibration (g)" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.YAxisFormatter}">
+                        <lvc:Axis Title="{x:Static p:Resources.DeviceCard_ChartVibration}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.YAxisFormatter}">
                             <lvc:Axis.Separator>
                                 <lvc:Separator Step="{Binding ChartViewModel.VibrationYAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
                             </lvc:Axis.Separator>

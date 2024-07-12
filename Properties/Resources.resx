@@ -126,9 +126,6 @@
   <data name="AirDensity" xml:space="preserve">
     <value>Air Density</value>
   </data>
-  <data name="AlertsPage" xml:space="preserve">
-    <value>Alerts</value>
-  </data>
   <data name="AlertsPage_CurrentValue" xml:space="preserve">
     <value>Current Value</value>
   </data>
@@ -146,6 +143,9 @@
   </data>
   <data name="AlertsPage_SystemLimits" xml:space="preserve">
     <value>System Limits</value>
+  </data>
+  <data name="AlertsPage_Text" xml:space="preserve">
+    <value>Alerts</value>
   </data>
   <data name="AmbientTemp" xml:space="preserve">
     <value>Ambient Temp</value>
@@ -177,26 +177,17 @@
   <data name="AutomateTestPage_Time" xml:space="preserve">
     <value>Time (s)</value>
   </data>
-  <data name="ChartCurrent" xml:space="preserve">
-    <value>Current (A)</value>
+  <data name="BatterySecurityLimits_Battery" xml:space="preserve">
+    <value>Battery (S)</value>
   </data>
-  <data name="ChartMotorSpeed" xml:space="preserve">
-    <value>Motor Speed (RPM)</value>
+  <data name="BatterySecurityLimits_BatteryToolTip" xml:space="preserve">
+    <value>Enter the battery level</value>
   </data>
-  <data name="ChartThrust" xml:space="preserve">
-    <value>Thrust (gf)</value>
+  <data name="BatterySecurityLimits_MaxCurrent" xml:space="preserve">
+    <value>Max. Current (A)</value>
   </data>
-  <data name="ChartTorque" xml:space="preserve">
-    <value>Torque (Nmm)</value>
-  </data>
-  <data name="ChartVibration" xml:space="preserve">
-    <value>Vibration (g)</value>
-  </data>
-  <data name="ChartVoltage" xml:space="preserve">
-    <value>Voltage (V)</value>
-  </data>
-  <data name="CoaxialTestPage" xml:space="preserve">
-    <value>Coaxial Test</value>
+  <data name="BatterySecurityLimits_MaxCurrenToolTip" xml:space="preserve">
+    <value>Enter the safe current limit for the system</value>
   </data>
   <data name="CoaxialTestPage_1Device" xml:space="preserve">
     <value>1. Device</value>
@@ -207,14 +198,203 @@
   <data name="CoaxialTestPage_Open" xml:space="preserve">
     <value>Open</value>
   </data>
+  <data name="CoaxialTestPage_Text" xml:space="preserve">
+    <value>Coaxial Test</value>
+  </data>
   <data name="Current" xml:space="preserve">
     <value>Current</value>
+  </data>
+  <data name="DeviceCard_AirDensity" xml:space="preserve">
+    <value>Air Density</value>
+  </data>
+  <data name="DeviceCard_AmbientTemp" xml:space="preserve">
+    <value>Ambient Temp.</value>
+  </data>
+  <data name="DeviceCard_ChartCurrent" xml:space="preserve">
+    <value>Current (A)</value>
+  </data>
+  <data name="DeviceCard_ChartMotorSpeed" xml:space="preserve">
+    <value>Motor Speed (RPM)</value>
+  </data>
+  <data name="DeviceCard_ChartThrust" xml:space="preserve">
+    <value>Thrust (gf)</value>
+  </data>
+  <data name="DeviceCard_ChartTime" xml:space="preserve">
+    <value>Time (s)</value>
+  </data>
+  <data name="DeviceCard_ChartTorque" xml:space="preserve">
+    <value>Torque (Nmm)</value>
+  </data>
+  <data name="DeviceCard_ChartVibration" xml:space="preserve">
+    <value>Vibration (g)</value>
+  </data>
+  <data name="DeviceCard_ChartVoltage" xml:space="preserve">
+    <value>Voltage (V)</value>
+  </data>
+  <data name="DeviceCard_Current" xml:space="preserve">
+    <value>Current</value>
+  </data>
+  <data name="DeviceCard_MotorSpeed" xml:space="preserve">
+    <value>Motor Speed</value>
+  </data>
+  <data name="DeviceCard_MotorTemp" xml:space="preserve">
+    <value>Motor Temp.</value>
+  </data>
+  <data name="DeviceCard_Power" xml:space="preserve">
+    <value>Power</value>
+  </data>
+  <data name="DeviceCard_Pressure" xml:space="preserve">
+    <value>Pressure</value>
+  </data>
+  <data name="DeviceCard_Thrust" xml:space="preserve">
+    <value>Thrust</value>
+  </data>
+  <data name="DeviceCard_Torque" xml:space="preserve">
+    <value>Torque</value>
+  </data>
+  <data name="DeviceCard_Vibration" xml:space="preserve">
+    <value>Vibration</value>
+  </data>
+  <data name="DeviceCard_Voltage" xml:space="preserve">
+    <value>Voltage</value>
+  </data>
+  <data name="DeviceCard_WindDirection" xml:space="preserve">
+    <value>Wind Direction</value>
+  </data>
+  <data name="DeviceCard_WindSpeed" xml:space="preserve">
+    <value>Wind Speed</value>
+  </data>
+  <data name="DeviceInformation_Battery" xml:space="preserve">
+    <value>Battery (S)</value>
+  </data>
+  <data name="DeviceInformation_ESCStatus" xml:space="preserve">
+    <value>ESC Status</value>
+  </data>
+  <data name="DeviceInformation_ESCValue" xml:space="preserve">
+    <value>ESC Value (%)</value>
+  </data>
+  <data name="DeviceInformation_Firmware" xml:space="preserve">
+    <value>Firmware</value>
+  </data>
+  <data name="DeviceInformation_InternalRes" xml:space="preserve">
+    <value>Internal Res. (mΩ)</value>
+  </data>
+  <data name="DeviceInformation_MaxCurrent" xml:space="preserve">
+    <value>Max Current (A)</value>
+  </data>
+  <data name="DeviceInformation_Mode" xml:space="preserve">
+    <value>Mode</value>
+  </data>
+  <data name="DeviceInformation_Model" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="DeviceInformation_NoLoadCurrent" xml:space="preserve">
+    <value>No Load Current (A)</value>
+  </data>
+  <data name="DeviceInformation_PortName" xml:space="preserve">
+    <value>Port Name</value>
+  </data>
+  <data name="DeviceInformation_PropellerDiameter" xml:space="preserve">
+    <value>Propeller Diameter (Inch)</value>
+  </data>
+  <data name="DeviceInformation_SaveFile" xml:space="preserve">
+    <value>Save File</value>
+  </data>
+  <data name="DeviceInformation_SaveStatus" xml:space="preserve">
+    <value>Save Status</value>
+  </data>
+  <data name="DeviceInformation_SecurityStatus" xml:space="preserve">
+    <value>Security Status</value>
+  </data>
+  <data name="DeviceInformation_SeriNo" xml:space="preserve">
+    <value>Seri No</value>
+  </data>
+  <data name="DeviceInformation_TestMode" xml:space="preserve">
+    <value>Test Mode</value>
+  </data>
+  <data name="DeviceInformation_Text" xml:space="preserve">
+    <value>Device Informations</value>
+  </data>
+  <data name="DeviceMiniCard_ConnectionStatus" xml:space="preserve">
+    <value>Connection Status:</value>
+  </data>
+  <data name="DeviceMiniCard_DeviceInformation" xml:space="preserve">
+    <value>Device Informations</value>
+  </data>
+  <data name="DeviceMiniCard_Error" xml:space="preserve">
+    <value>Error:</value>
+  </data>
+  <data name="DeviceMiniCard_Firmware" xml:space="preserve">
+    <value>Firmware:</value>
+  </data>
+  <data name="DeviceMiniCard_Model" xml:space="preserve">
+    <value>Model:</value>
+  </data>
+  <data name="DeviceMiniCard_PortName" xml:space="preserve">
+    <value>Port Name:</value>
+  </data>
+  <data name="DeviceMiniCard_SeriNo" xml:space="preserve">
+    <value>Seri No:</value>
+  </data>
+  <data name="DeviceMiniCard_WorkingStatus" xml:space="preserve">
+    <value>Working Status:</value>
+  </data>
+  <data name="EffVariables_MotorEfficiency" xml:space="preserve">
+    <value>Motor Efficiency</value>
+  </data>
+  <data name="EffVariables_MotorEfficiencyTooltip" xml:space="preserve">
+    <value>Efficiency of the brushless motor used. Calculated based on the motor parameter inputs. Note that ESC efficiency is considered as constant as %95.</value>
+  </data>
+  <data name="EffVariables_PropellerEfficiency" xml:space="preserve">
+    <value>Propeller Efficiency</value>
+  </data>
+  <data name="EffVariables_PropellerEfficiencyTooltip" xml:space="preserve">
+    <value>Also known as Figure of Merit, this value gives you the static performance of your propeller. Motor and ESC is not included in the calculations. Propeller diameter, RPM, air density, torque and thrust values are used as input for this calculation.</value>
+  </data>
+  <data name="EffVariables_PropulsionSystemEfficiencyI" xml:space="preserve">
+    <value>Propulsion System Efficiency I</value>
+  </data>
+  <data name="EffVariables_PropulsionSystemEfficiencyII" xml:space="preserve">
+    <value>Propulsion System Efficiency II</value>
+  </data>
+  <data name="EffVariables_PropulsionSystemEfficiencyIITooltip" xml:space="preserve">
+    <value>Propulsion system efficiency in terms of grams per watt power. The higher is the better. Typical range is between 6 to 15. If it is below 6, then your propeller disc loading is high. Try using lower Kv motor and bigger diameter propeller.</value>
+  </data>
+  <data name="EffVariables_PropulsionSystemEfficiencyITooltip" xml:space="preserve">
+    <value>This is the overall efficiency of the propulsion system including motor, ESC and the propeller.</value>
   </data>
   <data name="English" xml:space="preserve">
     <value>English</value>
   </data>
+  <data name="EquipmentParameters_InternalRes" xml:space="preserve">
+    <value>Internal Res. (mΩ)</value>
+  </data>
+  <data name="EquipmentParameters_InternalResToolTip" xml:space="preserve">
+    <value>Enter the motor internal resistance.</value>
+  </data>
+  <data name="EquipmentParameters_NoLoadCurrent" xml:space="preserve">
+    <value>No Load Current (A)</value>
+  </data>
+  <data name="EquipmentParameters_NoLoadCurrentToolTip" xml:space="preserve">
+    <value>Enter the motor I₀(A) current.</value>
+  </data>
+  <data name="EquipmentParameters_PropellerDiameter" xml:space="preserve">
+    <value>Propeller Diameter (Inch)</value>
+  </data>
+  <data name="EquipmentParameters_PropellerDiameterToolTip" xml:space="preserve">
+    <value>Enter the propeller diameter.</value>
+  </data>
   <data name="ESCCalibrationPage_Text" xml:space="preserve">
     <value>ESC Calibration</value>
+  </data>
+  <data name="ESC_Increaseby5" xml:space="preserve">
+    <value>Increase by 5</value>
+  </data>
+  <data name="ESC_LockUnLockESC" xml:space="preserve">
+    <value>Lock/UnLock ESC</value>
+  </data>
+  <data name="ESC_StopESC" xml:space="preserve">
+    <value>Stop ESC</value>
   </data>
   <data name="HelpPage_Text" xml:space="preserve">
     <value>Help</value>
@@ -258,11 +438,23 @@
   <data name="MotorTemp" xml:space="preserve">
     <value>Motor Temp</value>
   </data>
+  <data name="MultiTestPage_Text" xml:space="preserve">
+    <value>Multi Test</value>
+  </data>
   <data name="Power" xml:space="preserve">
     <value>Power</value>
   </data>
   <data name="Pressure" xml:space="preserve">
     <value>Pressure</value>
+  </data>
+  <data name="Record_FileName" xml:space="preserve">
+    <value>File Name</value>
+  </data>
+  <data name="Record_FileNameToolTip" xml:space="preserve">
+    <value>Enter file name.</value>
+  </data>
+  <data name="Record_Recording" xml:space="preserve">
+    <value>Recording</value>
   </data>
   <data name="SaveConfigPage_Text" xml:space="preserve">
     <value>Recording Settings</value>
@@ -305,6 +497,9 @@
   </data>
   <data name="SoftwareUpdatePage_Text" xml:space="preserve">
     <value>Software Updates</value>
+  </data>
+  <data name="Tare_Tare" xml:space="preserve">
+    <value>Tare</value>
   </data>
   <data name="Thrust" xml:space="preserve">
     <value>Thrust</value>

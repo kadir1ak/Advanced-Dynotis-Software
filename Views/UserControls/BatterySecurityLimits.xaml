@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
-             mc:Ignorable="d">
+             mc:Ignorable="d"
+             xmlns:p="clr-namespace:Advanced_Dynotis_Software.Properties">
     <UserControl.Resources>
         <Style x:Key="NumericTextBoxStyle" TargetType="TextBox">
             <EventSetter Event="PreviewTextInput" Handler="NumericTextBox_PreviewTextInput"/>
@@ -23,7 +24,7 @@
                     <ColumnDefinition Width="10*"/>
                     <ColumnDefinition Width="5*"/>
                 </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" x:Name="MaxCurrentLabel" Content="Max. Current (A)" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" x:Name="MaxCurrentLabel" Content="{x:Static p:Resources.BatterySecurityLimits_MaxCurrent}" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                 <TextBox Grid.Row="0" Grid.Column="2" Margin="0 0 5 0"  x:Name="MaxCurrentTextBox" Style="{StaticResource NumericTextBoxStyle}" Text="{Binding MaxCurrent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="Auto" Width="Auto" MinWidth="50" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1.5">
                     <TextBox.ToolTip>
                         <ToolTip>
@@ -32,11 +33,11 @@
                                     <Setter Property="CornerRadius" Value="12"/>
                                 </Style>
                             </ToolTip.Resources>
-                            <TextBlock x:Name="MaxCurrenToolTip" Text="Enter the safe current limit for the system" FontStyle="Normal" TextWrapping="WrapWithOverflow" FontSize="14" Margin="5 5" Cursor=""/>
+                            <TextBlock x:Name="MaxCurrenToolTip" Text="{x:Static p:Resources.BatterySecurityLimits_MaxCurrenToolTip}" FontStyle="Normal" TextWrapping="WrapWithOverflow" FontSize="14" Margin="5 5" Cursor=""/>
                         </ToolTip>
                     </TextBox.ToolTip>
                 </TextBox>
-                <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="BatteryLabel" Content="Battery (S)" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="BatteryLabel" Content="{x:Static p:Resources.BatterySecurityLimits_Battery}" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                 <TextBox Grid.Row="1" Grid.Column="2" Margin="0 0 5 0" x:Name="BatteryTextBox" Style="{StaticResource NumericTextBoxStyle}" Text="{Binding BatteryLevel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="Auto" Width="Auto" MinWidth="50" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1.5">
                     <TextBox.ToolTip>
                         <ToolTip>
@@ -45,7 +46,7 @@
                                     <Setter Property="CornerRadius" Value="12"/>
                                 </Style>
                             </ToolTip.Resources>
-                            <TextBlock x:Name="BatteryToolTip" Text="Enter the battery level" FontStyle="Normal" TextWrapping="WrapWithOverflow" FontSize="14" Margin="5 5" Cursor=""/>
+                            <TextBlock x:Name="BatteryToolTip" Text="{x:Static p:Resources.BatterySecurityLimits_BatteryToolTip}" FontStyle="Normal" TextWrapping="WrapWithOverflow" FontSize="14" Margin="5 5" Cursor=""/>
                         </ToolTip>
                     </TextBox.ToolTip>
                 </TextBox>

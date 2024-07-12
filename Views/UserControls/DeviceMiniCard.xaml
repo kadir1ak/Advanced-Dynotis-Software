@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
              xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:p="clr-namespace:Advanced_Dynotis_Software.Properties"
              mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -81,15 +82,15 @@
                                  HorizontalAlignment="Left" Width="20" Height="20"  Margin="2"/>
 
 
-                                <TextBlock Text="Device Information" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="30 0 0 0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" FontWeight="Bold" FontSize="12" TextWrapping="WrapWithOverflow" />
+                                <TextBlock Text="{x:Static p:Resources.DeviceMiniCard_DeviceInformation}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="30 0 0 0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" FontWeight="Bold" FontSize="12" TextWrapping="WrapWithOverflow" />
 
-                                <TextBlock Text="PortName:" Grid.Row="1" Grid.Column="0" Foreground="Black" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="2"/>
-                                <TextBlock Text="Model:" Grid.Row="2" Grid.Column="0" Foreground="Black" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="2"/>
-                                <TextBlock Text="SeriNo:" Grid.Row="3" Grid.Column="0" Foreground="Black" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="2"/>
-                                <TextBlock Text="Firmware:" Grid.Row="4" Grid.Column="0" Foreground="Black" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="2"/>
-                                <TextBlock Text="Connection Status:" Grid.Row="5" Grid.Column="0" Foreground="Black" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="2"/>
-                                <TextBlock Text="Working Status:" Grid.Row="6" Grid.Column="0" Foreground="Black" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="2"/>
-                                <TextBlock Text="Error:" Grid.Row="7" Grid.Column="0" Foreground="Black" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="2"/>
+                                <TextBlock Text="{x:Static p:Resources.DeviceMiniCard_PortName}" Grid.Row="1" Grid.Column="0" Foreground="Black" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="2"/>
+                                <TextBlock Text="{x:Static p:Resources.DeviceMiniCard_Model}" Grid.Row="2" Grid.Column="0" Foreground="Black" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="2"/>
+                                <TextBlock Text="{x:Static p:Resources.DeviceMiniCard_SeriNo}" Grid.Row="3" Grid.Column="0" Foreground="Black" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="2"/>
+                                <TextBlock Text="{x:Static p:Resources.DeviceMiniCard_Firmware}" Grid.Row="4" Grid.Column="0" Foreground="Black" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="2"/>
+                                <TextBlock Text="{x:Static p:Resources.DeviceMiniCard_ConnectionStatus}" Grid.Row="5" Grid.Column="0" Foreground="Black" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="2"/>
+                                <TextBlock Text="{x:Static p:Resources.DeviceMiniCard_WorkingStatus}" Grid.Row="6" Grid.Column="0" Foreground="Black" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="2"/>
+                                <TextBlock Text="{x:Static p:Resources.DeviceMiniCard_Error}" Grid.Row="7" Grid.Column="0" Foreground="Black" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="2"/>
 
                                 <TextBlock Text="{Binding Device.PortName}" Grid.Row="1" Grid.Column="1"  Foreground="Black" FontSize="10" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
                                 <TextBlock Text="{Binding Device.Model}" Grid.Row="2" Grid.Column="1"  Foreground="Black" FontSize="10" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"/>
