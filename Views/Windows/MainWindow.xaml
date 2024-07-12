@@ -14,7 +14,7 @@
         Title="MainWindow" MinHeight="600" MinWidth="800" Height="920" Width="1280"
         AllowsTransparency="True" Background="Transparent"
         WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" WindowStyle="None"
-        d:DataContext="{d:DesignInstance Type=vm:MainViewModel, IsDesignTimeCreatable=True}">
+        d:DataContext="{d:DesignInstance Type=vm:MainViewModel, IsDesignTimeCreatable=True}"  MouseDown="MainWindow_MouseDown">
     <Window.DataContext>
         <vm:MainViewModel/>
     </Window.DataContext>
@@ -25,7 +25,7 @@
         GlassFrameThickness="0"
         ResizeBorderThickness="5"/>
     </WindowChrome.WindowChrome>
-    <Border x:Name="MainBorder" CornerRadius="10" Background="{DynamicResource Page}" MouseDown="MainBorder_MouseDown" BorderThickness="1" BorderBrush="#151F2D">
+    <Border CornerRadius="10" Background="{DynamicResource Page}" BorderThickness="1" BorderBrush="#151F2D">
         <Grid>
             <Grid>
                 <Grid.ColumnDefinitions>

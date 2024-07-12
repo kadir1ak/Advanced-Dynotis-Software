@@ -24,13 +24,20 @@ namespace Advanced_Dynotis_Software.Views.Windows
         private AutomateTestViewModel _automateTestViewModel;
         private SettingsViewModel _settingsViewModel;
 
-        private object _currentContent;
-
         public MainWindow()
         {
             InitializeComponent();
             AppTheme.ThemeChanged += OnThemeChanged;
 
+            InitializeViewModels();
+
+            HomeInitialize();
+
+            this.Closing += MainWindow_Closing;
+        }
+
+        private void InitializeViewModels()
+        {
             _homeViewModel = new HomeViewModel();
             _singleTestViewModel = new SingleTestViewModel();
             _coaxialTestViewModel = new CoaxialTestViewModel();
@@ -39,15 +46,22 @@ namespace Advanced_Dynotis_Software.Views.Windows
             _scriptViewModel = new ScriptViewModel();
             _automateTestViewModel = new AutomateTestViewModel();
             _settingsViewModel = new SettingsViewModel();
+        }
+
+        private void HomeInitialize()
+        {
+            foreach (var menuButton in LeftMenuPanel.Children.OfType<MenuButton>())
+            {
+                menuButton.IsActive = false;
+                AnimateButtonScale(menuButton, 1.0);
+            }
 
             HomeButton.IsActive = true;
             AnimateButtonScale(HomeButton, 1.15);
             ContentArea.Content = new HomePage { DataContext = _homeViewModel };
-
-            this.Closing += MainWindow_Closing; // Add this line
         }
 
-        private void MainBorder_MouseDown(object sender, MouseButtonEventArgs e)
+        private void MainWindow_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
             {
