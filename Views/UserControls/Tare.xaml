@@ -5,21 +5,40 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
              xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
-              xmlns:p="clr-namespace:Advanced_Dynotis_Software.Properties"
+             xmlns:p="clr-namespace:Advanced_Dynotis_Software.Properties"
              mc:Ignorable="d">
+    <UserControl.Resources>
+        <!-- Define a custom button style with no focus border or highlight -->
+        <Style x:Key="CustomButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
     <Grid Background="{DynamicResource Page}">
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
             <!-- Circle Background -->
-            <Grid>
-                <Ellipse x:Name="ellipse" Fill="{DynamicResource TareButton}" Width="35" Height="35"/>
-                <!-- Icon -->
-                <icon:PackIconFontAwesome x:Name="icon" Kind="ScaleBalancedSolid" 
-                                          Width="25" 
-                                          Height="25" 
-                                          HorizontalAlignment="Center" 
-                                          VerticalAlignment="Center" 
-                                          Foreground="{DynamicResource TareIcon}"/>
-            </Grid>
+            <Button Command="{Binding TareCommand}" Style="{StaticResource CustomButtonStyle}">
+                <Grid>
+                    <Ellipse x:Name="ellipse" Fill="{DynamicResource TareButton}" Width="35" Height="35"/>
+                    <!-- Icon -->
+                    <icon:PackIconFontAwesome x:Name="icon" Kind="ScaleBalancedSolid" 
+                                              Width="25" 
+                                              Height="25" 
+                                              HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center" 
+                                              Foreground="{DynamicResource TareIcon}"/>
+                </Grid>
+            </Button>
             <!-- Text -->
             <TextBlock Text="{x:Static p:Resources.Tare_Tare}" 
                        VerticalAlignment="Center" 

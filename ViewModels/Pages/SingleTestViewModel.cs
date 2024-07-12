@@ -19,10 +19,12 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         private EquipmentParametersManager _equipmentParametersManager;
         private ESCParametersManager _escParametersManager;
         private BatterySecurityLimitsManager _batterySecurityLimitsManager;
+        private TareManager _tareManager;
 
         private EquipmentParametersViewModel _currentEquipmentParameters;
         private ESCParametersViewModel _currentESCParameters;
         private BatterySecurityLimitsViewModel _currentBatterySecurityLimits;
+        private TareViewModel _currentTare;
 
         public ObservableCollection<DeviceViewModel> AvailableDevices { get; }
 
@@ -46,6 +48,30 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                             if (e.PropertyName == nameof(Dynotis.DynotisData))
                             {
                                 OnPropertyChanged(nameof(ConnectedDevice.Device.DynotisData));
+                            }
+                        };
+                    }
+                }
+            }
+        }
+        public TareViewModel CurrentTare
+        {
+            get => _currentTare;
+            set
+            {
+                if (SetProperty(ref _currentTare, value))
+                {
+                    if (_currentTare != null)
+                    {
+                        _currentTare.PropertyChanged += (sender, e) =>
+                        {
+                            if (e.PropertyName == nameof(TareViewModel.TareCommand))
+                            {
+                                ConnectedDevice.InterfaceVariables.TareTorqueValue = ConnectedDevice.InterfaceVariables.Torque.Value;
+                                ConnectedDevice.InterfaceVariables.TareThrustValue = ConnectedDevice.InterfaceVariables.Thrust.Value;
+                                ConnectedDevice.InterfaceVariables.TareCurrentValue = ConnectedDevice.InterfaceVariables.Current;
+                                ConnectedDevice.InterfaceVariables.TareMotorSpeedValue = ConnectedDevice.InterfaceVariables.MotorSpeed.Value;
+                                ConnectedDevice.Device.OnPropertyChanged(nameof(Dynotis.DynotisData));
                             }
                         };
                     }
@@ -129,6 +155,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             _equipmentParametersManager = new EquipmentParametersManager();
             _escParametersManager = new ESCParametersManager();
             _batterySecurityLimitsManager = new BatterySecurityLimitsManager();
+            _tareManager = new TareManager();
 
             DeviceManager.Instance.DeviceDisconnected += OnDeviceDisconnected;
             DeviceManager.Instance.DeviceConnected += OnDeviceConnected;
@@ -144,6 +171,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             CurrentEquipmentParameters = _equipmentParametersManager.GetEquipmentParametersViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData);
             CurrentESCParameters = _escParametersManager.GetESCParametersViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData);
             CurrentBatterySecurityLimits = _batterySecurityLimitsManager.GetBatterySecurityLimitsViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData);
+            CurrentTare = _tareManager.GetTareViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData);
         }
 
         private void OnDeviceDisconnected(DeviceViewModel device)
@@ -154,6 +182,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 CurrentEquipmentParameters = null;
                 CurrentESCParameters = null;
                 CurrentBatterySecurityLimits = null;
+                CurrentTare = null;
             }
             RefreshAvailableDevices();
         }

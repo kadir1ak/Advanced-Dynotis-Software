@@ -143,7 +143,7 @@
                                         </Border>
 
                                         <Border Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0 3 3 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                                            <ContentControl Content="{Binding}">
+                                            <ContentControl Content="{Binding CurrentTare, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                                 <ContentControl.ContentTemplate>
                                                     <DataTemplate>
                                                         <uc:Tare HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"/>

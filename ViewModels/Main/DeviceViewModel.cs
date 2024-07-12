@@ -38,6 +38,31 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             }
         }
 
+        private TareViewModel _currentTare;
+        public TareViewModel CurrentTare
+        {
+            get => _currentTare;
+            set
+            {
+                if (SetProperty(ref _currentTare, value))
+                {
+                    if (_currentTare != null)
+                    {
+                        _currentTare.PropertyChanged += (sender, e) =>
+                        {
+                            if (e.PropertyName == nameof(TareViewModel.TareCommand))
+                            {
+                                InterfaceVariables.TareTorqueValue = InterfaceVariables.Torque.Value;
+                                InterfaceVariables.TareThrustValue = InterfaceVariables.Thrust.Value;
+                                InterfaceVariables.TareCurrentValue = InterfaceVariables.Current;
+                                InterfaceVariables.TareMotorSpeedValue = InterfaceVariables.MotorSpeed.Value;
+                            }
+                        };
+                    }
+                }
+            }
+        }
+
         private EquipmentParametersViewModel _currentEquipmentParameters;
         public EquipmentParametersViewModel CurrentEquipmentParameters
         {

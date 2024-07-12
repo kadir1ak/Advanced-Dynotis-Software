@@ -407,11 +407,11 @@ public class InterfaceVariables : INotifyPropertyChanged
         SampleRate = data.SampleRate;
         AmbientTemp = AmbientTempUnitSet(AmbientTemp.Value, AmbientTemp.UnitName, AmbientTemp.UnitSymbol, data.AmbientTemp.Value, data.AmbientTemp.UnitName, data.AmbientTemp.UnitSymbol);
         MotorTemp = MotorTempUnitSet(MotorTemp.Value, MotorTemp.UnitName, MotorTemp.UnitSymbol, data.MotorTemp.Value, data.MotorTemp.UnitName, data.MotorTemp.UnitSymbol);
-        MotorSpeed = MotorSpeedUnitSet(MotorSpeed.Value, MotorSpeed.UnitName, MotorSpeed.UnitSymbol, data.MotorSpeed.Value, data.MotorSpeed.UnitName, data.MotorSpeed.UnitSymbol);
-        Thrust = ThrustUnitSet(Thrust.Value, Thrust.UnitName, Thrust.UnitSymbol, data.Thrust.Value, data.Thrust.UnitName, data.Thrust.UnitSymbol);
-        Torque = TorqueUnitSet(Torque.Value, Torque.UnitName, Torque.UnitSymbol, data.Torque.Value, data.Torque.UnitName, data.Torque.UnitSymbol);
+        MotorSpeed = MotorSpeedTareSet(MotorSpeedUnitSet(MotorSpeed.Value, MotorSpeed.UnitName, MotorSpeed.UnitSymbol, data.MotorSpeed.Value, data.MotorSpeed.UnitName, data.MotorSpeed.UnitSymbol));
+        Thrust = ThrustTareSet(ThrustUnitSet(Thrust.Value, Thrust.UnitName, Thrust.UnitSymbol, data.Thrust.Value, data.Thrust.UnitName, data.Thrust.UnitSymbol));
+        Torque = TorqueTareSet(TorqueUnitSet(Torque.Value, Torque.UnitName, Torque.UnitSymbol, data.Torque.Value, data.Torque.UnitName, data.Torque.UnitSymbol));
         Voltage = data.Voltage;
-        Current = data.Current;
+        Current = CurrentTareSet(data.Current);
         Power = data.Power;
         Pressure = PressureUnitSet(Pressure.Value, Pressure.UnitName, Pressure.UnitSymbol, data.Pressure.Value, data.Pressure.UnitName, data.Pressure.UnitSymbol);
         VibrationX = data.VibrationX;
@@ -442,8 +442,37 @@ public class InterfaceVariables : INotifyPropertyChanged
         SelectedTemperatureUnitIndex = InterfaceVariables.Instance.SelectedTemperatureUnitIndex;
         SelectedWindSpeedUnitIndex = InterfaceVariables.Instance.SelectedWindSpeedUnitIndex;
         SelectedPressureUnitIndex = InterfaceVariables.Instance.SelectedPressureUnitIndex;
+        TareThrustValue = InterfaceVariables.Instance.TareThrustValue;
+        TareTorqueValue = InterfaceVariables.Instance.TareTorqueValue;
+        TareCurrentValue = InterfaceVariables.Instance.TareCurrentValue;
+        TareMotorSpeedValue = InterfaceVariables.Instance.TareMotorSpeedValue;
+
+
 
     }
+    public Unit ThrustTareSet(Unit data)
+    {
+        double newValue = data.Value - TareThrustValue;
+        return new Unit(newValue, data.UnitName, data.UnitSymbol, data.BaseValue, data.BaseUnitName, data.BaseUnitSymbol);
+    }
+
+    public Unit TorqueTareSet(Unit data)
+    {
+        double newValue = data.Value - TareTorqueValue;
+        return new Unit(newValue, data.UnitName, data.UnitSymbol, data.BaseValue, data.BaseUnitName, data.BaseUnitSymbol);
+    }
+
+    public double CurrentTareSet(double value)
+    {
+        return value - TareCurrentValue;
+    }
+
+    public Unit MotorSpeedTareSet(Unit data)
+    {
+        double newValue = data.Value - TareMotorSpeedValue;
+        return new Unit(newValue, data.UnitName, data.UnitSymbol, data.BaseValue, data.BaseUnitName, data.BaseUnitSymbol);
+    }
+
 
     public Unit AmbientTempUnitSet(double value, string unitName, string unitSymbol, double baseValue, string baseUnitName, string baseUnitSymbol)
     {
