@@ -150,6 +150,9 @@
   <data name="AmbientTemp" xml:space="preserve">
     <value>Ambient Temp</value>
   </data>
+  <data name="APIPage_Text" xml:space="preserve">
+    <value>API</value>
+  </data>
   <data name="AutomateTestPage" xml:space="preserve">
     <value>Automate Test</value>
   </data>
@@ -210,6 +213,12 @@
   <data name="English" xml:space="preserve">
     <value>English</value>
   </data>
+  <data name="ESCCalibrationPage_Text" xml:space="preserve">
+    <value>ESC Calibration</value>
+  </data>
+  <data name="HelpPage_Text" xml:space="preserve">
+    <value>Help</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
   </data>
@@ -255,6 +264,48 @@
   <data name="Pressure" xml:space="preserve">
     <value>Pressure</value>
   </data>
+  <data name="SaveConfigPage_Text" xml:space="preserve">
+    <value>Recording Settings</value>
+  </data>
+  <data name="ScriptPage_Text" xml:space="preserve">
+    <value>Script</value>
+  </data>
+  <data name="SettingsPage_About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="SettingsPage_Alerts" xml:space="preserve">
+    <value>Alerts</value>
+  </data>
+  <data name="SettingsPage_ESCCalibration" xml:space="preserve">
+    <value>ESC Calibration</value>
+  </data>
+  <data name="SettingsPage_Help" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="SettingsPage_Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="SettingsPage_RecordingSettings" xml:space="preserve">
+    <value>Recording Settings</value>
+  </data>
+  <data name="SettingsPage_SoftwareUpdates" xml:space="preserve">
+    <value>Updates</value>
+  </data>
+  <data name="SettingsPage_Text" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="SettingsPage_UnitsSettings" xml:space="preserve">
+    <value>Units Settings</value>
+  </data>
+  <data name="SingleTestPage_Text" xml:space="preserve">
+    <value>Single Test</value>
+  </data>
+  <data name="SoftwareUpdatePage_FirmwareText" xml:space="preserve">
+    <value>Firmware  Updates</value>
+  </data>
+  <data name="SoftwareUpdatePage_Text" xml:space="preserve">
+    <value>Software Updates</value>
+  </data>
   <data name="Thrust" xml:space="preserve">
     <value>Thrust</value>
   </data>
@@ -263,6 +314,27 @@
   </data>
   <data name="Turkish" xml:space="preserve">
     <value>Turkish</value>
+  </data>
+  <data name="UnitsSettingsPage_MotorSpeed" xml:space="preserve">
+    <value>Motor Speed:</value>
+  </data>
+  <data name="UnitsSettingsPage_Pressure" xml:space="preserve">
+    <value>Pressure:</value>
+  </data>
+  <data name="UnitsSettingsPage_Temperature" xml:space="preserve">
+    <value>Temperature:</value>
+  </data>
+  <data name="UnitsSettingsPage_Text" xml:space="preserve">
+    <value>Units Settings</value>
+  </data>
+  <data name="UnitsSettingsPage_Thrust" xml:space="preserve">
+    <value>Thrust:</value>
+  </data>
+  <data name="UnitsSettingsPage_Torque" xml:space="preserve">
+    <value>Torque:</value>
+  </data>
+  <data name="UnitsSettingsPage_WindSpeed" xml:space="preserve">
+    <value>Wind Speed:</value>
   </data>
   <data name="Vibration" xml:space="preserve">
     <value>Vibration</value>

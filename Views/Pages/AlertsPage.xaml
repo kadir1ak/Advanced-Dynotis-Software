@@ -5,23 +5,32 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.Pages"
              mc:Ignorable="d" 
-             xmlns:p="clr-namespace:Advanced_Dynotis_Software.Properties"
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+             xmlns:p="clr-namespace:Advanced_Dynotis_Software.Properties">
+    <Grid Background="{DynamicResource Page}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="{x:Static p:Resources.AlertsPage}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#151F2D"/>
-        <DataGrid Grid.Row="1" x:Name="dataGrid" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static p:Resources.AlertsPage_Device}" Binding="{Binding Hardware}" Width="Auto"/>
-                <DataGridTextColumn Header="{x:Static p:Resources.AlertsPage_Sensor}" Binding="{Binding Sensor}" Width="Auto"/>
-                <DataGridTextColumn Header="{x:Static p:Resources.AlertsPage_CurrentValue}" Binding="{Binding CurrentValue}" Width="Auto"/>
-                <DataGridTextColumn Header="{x:Static p:Resources.AlertsPage_CutoffMin}" Binding="{Binding CutoffMin}" Width="Auto"/>
-                <DataGridTextColumn Header="{x:Static p:Resources.AlertsPage_CutoffMax}" Binding="{Binding CutoffMax}" Width="Auto"/>
-                <DataGridTextColumn Header="{x:Static p:Resources.AlertsPage_SystemLimits}" Binding="{Binding SystemLimits}" Width="Auto"/>
-            </DataGrid.Columns>
-        </DataGrid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="20">
+            <TextBlock Text="{x:Static p:Resources.AlertsPage}" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Foreground="{DynamicResource Text}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  Margin="20" Width="720">
+            <DataGrid Grid.Row="1" x:Name="dataGrid" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="{x:Static p:Resources.AlertsPage_Device}" Binding="{Binding Hardware}" Width="Auto"/>
+                    <DataGridTextColumn Header="{x:Static p:Resources.AlertsPage_Sensor}" Binding="{Binding Sensor}" Width="Auto"/>
+                    <DataGridTextColumn Header="{x:Static p:Resources.AlertsPage_CurrentValue}" Binding="{Binding CurrentValue}" Width="Auto"/>
+                    <DataGridTextColumn Header="{x:Static p:Resources.AlertsPage_CutoffMin}" Binding="{Binding CutoffMin}" Width="Auto"/>
+                    <DataGridTextColumn Header="{x:Static p:Resources.AlertsPage_CutoffMax}" Binding="{Binding CutoffMax}" Width="Auto"/>
+                    <DataGridTextColumn Header="{x:Static p:Resources.AlertsPage_SystemLimits}" Binding="{Binding SystemLimits}" Width="Auto"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
     </Grid>
 </UserControl>

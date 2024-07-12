@@ -160,6 +160,15 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   API benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string APIPage_Text {
+            get {
+                return ResourceManager.GetString("APIPage_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Automate Test benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string AutomateTestPage {
@@ -340,6 +349,24 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   ESC Calibration benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string ESCCalibrationPage_Text {
+            get {
+                return ResourceManager.GetString("ESCCalibrationPage_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Help benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string HelpPage_Text {
+            get {
+                return ResourceManager.GetString("HelpPage_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Home benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string Home {
@@ -475,6 +502,132 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   Recording Settings benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string SaveConfigPage_Text {
+            get {
+                return ResourceManager.GetString("SaveConfigPage_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Script benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string ScriptPage_Text {
+            get {
+                return ResourceManager.GetString("ScriptPage_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   About benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string SettingsPage_About {
+            get {
+                return ResourceManager.GetString("SettingsPage_About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Alerts benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string SettingsPage_Alerts {
+            get {
+                return ResourceManager.GetString("SettingsPage_Alerts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ESC Calibration benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string SettingsPage_ESCCalibration {
+            get {
+                return ResourceManager.GetString("SettingsPage_ESCCalibration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Help benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string SettingsPage_Help {
+            get {
+                return ResourceManager.GetString("SettingsPage_Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Language benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string SettingsPage_Language {
+            get {
+                return ResourceManager.GetString("SettingsPage_Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recording Settings benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string SettingsPage_RecordingSettings {
+            get {
+                return ResourceManager.GetString("SettingsPage_RecordingSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Updates benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string SettingsPage_SoftwareUpdates {
+            get {
+                return ResourceManager.GetString("SettingsPage_SoftwareUpdates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Settings benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string SettingsPage_Text {
+            get {
+                return ResourceManager.GetString("SettingsPage_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Units Settings benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string SettingsPage_UnitsSettings {
+            get {
+                return ResourceManager.GetString("SettingsPage_UnitsSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Single Test benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string SingleTestPage_Text {
+            get {
+                return ResourceManager.GetString("SingleTestPage_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Firmware  Updates benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string SoftwareUpdatePage_FirmwareText {
+            get {
+                return ResourceManager.GetString("SoftwareUpdatePage_FirmwareText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Software Updates benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string SoftwareUpdatePage_Text {
+            get {
+                return ResourceManager.GetString("SoftwareUpdatePage_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Thrust benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string Thrust {
@@ -498,6 +651,69 @@ namespace Advanced_Dynotis_Software.Properties {
         public static string Turkish {
             get {
                 return ResourceManager.GetString("Turkish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Motor Speed: benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string UnitsSettingsPage_MotorSpeed {
+            get {
+                return ResourceManager.GetString("UnitsSettingsPage_MotorSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Pressure: benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string UnitsSettingsPage_Pressure {
+            get {
+                return ResourceManager.GetString("UnitsSettingsPage_Pressure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Temperature: benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string UnitsSettingsPage_Temperature {
+            get {
+                return ResourceManager.GetString("UnitsSettingsPage_Temperature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Units Settings benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string UnitsSettingsPage_Text {
+            get {
+                return ResourceManager.GetString("UnitsSettingsPage_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Thrust: benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string UnitsSettingsPage_Thrust {
+            get {
+                return ResourceManager.GetString("UnitsSettingsPage_Thrust", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Torque: benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string UnitsSettingsPage_Torque {
+            get {
+                return ResourceManager.GetString("UnitsSettingsPage_Torque", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Wind Speed: benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string UnitsSettingsPage_WindSpeed {
+            get {
+                return ResourceManager.GetString("UnitsSettingsPage_WindSpeed", resourceCulture);
             }
         }
         

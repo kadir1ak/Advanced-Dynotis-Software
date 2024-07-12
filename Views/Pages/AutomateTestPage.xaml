@@ -10,8 +10,7 @@
              xmlns:uc="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:p="clr-namespace:Advanced_Dynotis_Software.Properties"
-             mc:Ignorable="d"
-             d:DesignHeight="650" d:DesignWidth="800">
+             mc:Ignorable="d">
     <Grid Background="{DynamicResource Page}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

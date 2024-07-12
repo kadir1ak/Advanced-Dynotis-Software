@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.Pages"
              xmlns:uc="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
              xmlns:vmPages="clr-namespace:Advanced_Dynotis_Software.ViewModels.Pages"
-             mc:Ignorable="d">
+             mc:Ignorable="d"
+             xmlns:p="clr-namespace:Advanced_Dynotis_Software.Properties">
     <Grid Background="{DynamicResource Page}">
         <Border>
             <Grid>
@@ -19,14 +20,14 @@
                         <Viewbox Stretch="Uniform" Margin="10 0 10 0">
                             <StackPanel x:Name="MenuButtonPanel" VerticalAlignment="Top" Orientation="Horizontal">
                                 <!-- Menu Buttons -->
-                                <uc:SettingButton Icon="ContentSaveCog" Text="Save Config" Margin="10" Click="SettingButton_Click"/>
-                                <uc:SettingButton Icon="Layers" Text="Units Settings" Margin="10" Click="SettingButton_Click"/>
-                                <uc:SettingButton Icon="AlertCircleCheckOutline" Text="Alerts" Margin="10" Click="SettingButton_Click"/>
-                                <uc:SettingButton Icon="Quadcopter" Text="ESC Calibration" Margin="10" Click="SettingButton_Click"/>
-                                <uc:SettingButton Icon="Update" Text="Software Update" Margin="10" Click="SettingButton_Click"/>
-                                <uc:SettingButton Icon="Translate" Text="Language" Margin="10" Click="SettingButton_Click"/>
-                                <uc:SettingButton Icon="Information" Text="About" Margin="10" Click="SettingButton_Click"/>
-                                <uc:SettingButton Icon="Help" Text="Help" Margin="10" Click="SettingButton_Click"/>
+                                <uc:SettingButton Icon="ContentSaveCog" Text="{x:Static p:Resources.SettingsPage_RecordingSettings}" Margin="10" Click="SettingButton_Click"/>
+                                <uc:SettingButton Icon="Layers" Text="{x:Static p:Resources.SettingsPage_UnitsSettings}" Margin="10" Click="SettingButton_Click"/>
+                                <uc:SettingButton Icon="AlertCircleCheckOutline" Text="{x:Static p:Resources.SettingsPage_Alerts}" Margin="10" Click="SettingButton_Click"/>
+                                <uc:SettingButton Icon="Quadcopter" Text="{x:Static p:Resources.SettingsPage_ESCCalibration}" Margin="10" Click="SettingButton_Click"/>
+                                <uc:SettingButton Icon="Update" Text="{x:Static p:Resources.SettingsPage_SoftwareUpdates}" Margin="10" Click="SettingButton_Click"/>
+                                <uc:SettingButton Icon="Translate" Text="{x:Static p:Resources.SettingsPage_Language}" Margin="10" Click="SettingButton_Click"/>
+                                <uc:SettingButton Icon="Information" Text="{x:Static p:Resources.SettingsPage_About}" Margin="10" Click="SettingButton_Click"/>
+                                <uc:SettingButton Icon="Help" Text="{x:Static p:Resources.SettingsPage_Help}" Margin="10" Click="SettingButton_Click"/>
                             </StackPanel>
                         </Viewbox>
                     </ScrollViewer>

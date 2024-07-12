@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.Pages"
              xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:p="clr-namespace:Advanced_Dynotis_Software.Properties"
              mc:Ignorable="d">
     <Grid Background="{DynamicResource Page}">
         <Grid.RowDefinitions>
@@ -15,7 +16,7 @@
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="20">
             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource Text}">
                 <Hyperlink NavigateUri="https://dynotis.semai.com.tr/" RequestNavigate="Hyperlink_RequestNavigate" Cursor="Hand" Foreground="Transparent">
-                    <Run x:Name="HelpHyperlink"  Text="Help" FontSize="24" FontWeight="Bold" Foreground="{DynamicResource Text}"/>
+                    <Run x:Name="HelpHyperlink"  Text="{x:Static p:Resources.HelpPage_Text}" FontSize="24" FontWeight="Bold" Foreground="{DynamicResource Text}"/>
                 </Hyperlink>
             </TextBlock>
         </StackPanel>

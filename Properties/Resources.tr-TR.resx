@@ -150,6 +150,9 @@
   <data name="AmbientTemp" xml:space="preserve">
     <value>Ortam Sıcaklığı</value>
   </data>
+  <data name="APIPage_Text" xml:space="preserve">
+    <value>API</value>
+  </data>
   <data name="AutomateTestPage" xml:space="preserve">
     <value>Otomatik Test</value>
   </data>
@@ -210,6 +213,12 @@
   <data name="English" xml:space="preserve">
     <value>İngilizce</value>
   </data>
+  <data name="ESCCalibrationPage_Text" xml:space="preserve">
+    <value>ESC Kalibrasyonu</value>
+  </data>
+  <data name="HelpPage_Text" xml:space="preserve">
+    <value>Yardım</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Ana</value>
   </data>
@@ -255,6 +264,48 @@
   <data name="Pressure" xml:space="preserve">
     <value>Basınç</value>
   </data>
+  <data name="SaveConfigPage_Text" xml:space="preserve">
+    <value>Kayıt Ayarları</value>
+  </data>
+  <data name="ScriptPage_Text" xml:space="preserve">
+    <value>Script</value>
+  </data>
+  <data name="SettingsPage_About" xml:space="preserve">
+    <value>Hakkımızda </value>
+  </data>
+  <data name="SettingsPage_Alerts" xml:space="preserve">
+    <value>Uyarılar</value>
+  </data>
+  <data name="SettingsPage_ESCCalibration" xml:space="preserve">
+    <value>ESC Kalibrasyonu</value>
+  </data>
+  <data name="SettingsPage_Help" xml:space="preserve">
+    <value>Yardım</value>
+  </data>
+  <data name="SettingsPage_Language" xml:space="preserve">
+    <value>Dil</value>
+  </data>
+  <data name="SettingsPage_RecordingSettings" xml:space="preserve">
+    <value>Kayıt Ayarları</value>
+  </data>
+  <data name="SettingsPage_SoftwareUpdates" xml:space="preserve">
+    <value>Güncellemeler</value>
+  </data>
+  <data name="SettingsPage_Text" xml:space="preserve">
+    <value>Ayarlar</value>
+  </data>
+  <data name="SettingsPage_UnitsSettings" xml:space="preserve">
+    <value>Birim Ayarları</value>
+  </data>
+  <data name="SingleTestPage_Text" xml:space="preserve">
+    <value>Tekli Test</value>
+  </data>
+  <data name="SoftwareUpdatePage_FirmwareText" xml:space="preserve">
+    <value>Donanım Yazılımı Güncellemeleri</value>
+  </data>
+  <data name="SoftwareUpdatePage_Text" xml:space="preserve">
+    <value>Yazılım Güncellemeleri</value>
+  </data>
   <data name="Thrust" xml:space="preserve">
     <value>İtki</value>
   </data>
@@ -263,6 +314,27 @@
   </data>
   <data name="Turkish" xml:space="preserve">
     <value>Türkçe</value>
+  </data>
+  <data name="UnitsSettingsPage_MotorSpeed" xml:space="preserve">
+    <value>Motor Hızı:</value>
+  </data>
+  <data name="UnitsSettingsPage_Pressure" xml:space="preserve">
+    <value>Basınç:</value>
+  </data>
+  <data name="UnitsSettingsPage_Temperature" xml:space="preserve">
+    <value>Sıcaklık:</value>
+  </data>
+  <data name="UnitsSettingsPage_Text" xml:space="preserve">
+    <value>Birim Ayarları</value>
+  </data>
+  <data name="UnitsSettingsPage_Thrust" xml:space="preserve">
+    <value>İtki:</value>
+  </data>
+  <data name="UnitsSettingsPage_Torque" xml:space="preserve">
+    <value>Tork:</value>
+  </data>
+  <data name="UnitsSettingsPage_WindSpeed" xml:space="preserve">
+    <value>Rüzgar Hızı:</value>
   </data>
   <data name="Vibration" xml:space="preserve">
     <value>Titreşim</value>
