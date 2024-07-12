@@ -294,6 +294,10 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                             newData.BatteryLevel = currentData.BatteryLevel;
                             newData.MaxCurrent = currentData.MaxCurrent;
                             newData.SecurityStatus = currentData.SecurityStatus;
+                            newData.TareThrustValue = currentData.TareThrustValue;
+                            newData.TareTorqueValue = currentData.TareTorqueValue;
+                            newData.TareCurrentValue = currentData.TareCurrentValue;
+                            newData.TareMotorSpeedValue = currentData.TareMotorSpeedValue;
 
                             DynotisData = newData;
 

@@ -51,6 +51,31 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         private bool   _saveStatus;
         private string _testMode;
 
+        private double _tareTorqueValue;
+        private double _tareThrustValue;
+        private double _tareCurrentValue;
+        private double _tareMotorSpeedValue;
+        public double TareMotorSpeedValue
+        {
+            get => _tareMotorSpeedValue;
+            set => SetProperty(ref _tareMotorSpeedValue, value);
+        }
+        public double TareCurrentValue
+        {
+            get => _tareCurrentValue;
+            set => SetProperty(ref _tareCurrentValue, value);
+        }
+        public double TareThrustValue
+        {
+            get => _tareThrustValue;
+            set => SetProperty(ref _tareThrustValue, value);
+        }
+
+        public double TareTorqueValue
+        {
+            get => _tareTorqueValue;
+            set => SetProperty(ref _tareTorqueValue, value);
+        }
         public double Time
         {
             get => _time;

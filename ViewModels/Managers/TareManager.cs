@@ -21,7 +21,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Managers
             }
             else
             {
-                var viewModel = new TareViewModel();
+                var viewModel = new TareViewModel(dynotisData);
                 _tare[devicePortName] = viewModel;
                 return viewModel;
             }

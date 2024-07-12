@@ -65,20 +65,23 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                     {
                         _currentTare.PropertyChanged += (sender, e) =>
                         {
-                            if (e.PropertyName == nameof(TareViewModel.TareCommand))
+
+                            if (e.PropertyName == nameof(TareViewModel.tareThrustValue) ||
+                                e.PropertyName == nameof(TareViewModel.tareTorqueValue) ||
+                                e.PropertyName == nameof(TareViewModel.tareCurrentValue) ||
+                                e.PropertyName == nameof(TareViewModel.tareMotorSpeedValue))
                             {
-                                ConnectedDevice.InterfaceVariables.TareTorqueValue = ConnectedDevice.InterfaceVariables.Torque.Value;
-                                ConnectedDevice.InterfaceVariables.TareThrustValue = ConnectedDevice.InterfaceVariables.Thrust.Value;
-                                ConnectedDevice.InterfaceVariables.TareCurrentValue = ConnectedDevice.InterfaceVariables.Current;
-                                ConnectedDevice.InterfaceVariables.TareMotorSpeedValue = ConnectedDevice.InterfaceVariables.MotorSpeed.Value;
-                                ConnectedDevice.Device.OnPropertyChanged(nameof(Dynotis.DynotisData));
+                                ConnectedDevice.Device.DynotisData.TareThrustValue = _currentTare.tareThrustValue;
+                                ConnectedDevice.Device.DynotisData.TareTorqueValue = _currentTare.tareTorqueValue;
+                                ConnectedDevice.Device.DynotisData.TareCurrentValue = _currentTare.tareCurrentValue;
+                                ConnectedDevice.Device.DynotisData.TareMotorSpeedValue = _currentTare.tareMotorSpeedValue;
+                                OnPropertyChanged(nameof(Dynotis.DynotisData));
                             }
                         };
                     }
                 }
             }
         }
-
         public EquipmentParametersViewModel CurrentEquipmentParameters
         {
             get => _currentEquipmentParameters;
