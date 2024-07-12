@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              xmlns:p="clr-namespace:Advanced_Dynotis_Software.Properties">
     <Grid Background="{DynamicResource Page}">
-        <TextBlock Text="{x:Static p:Resources.HomePageText}" 
+        <TextBlock Text="{x:Static p:Resources.HomePage_Text}" 
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center" 
                    FontSize="24" 

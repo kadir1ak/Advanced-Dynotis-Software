@@ -123,9 +123,6 @@
   <data name="AboutPage_AboutUsText" xml:space="preserve">
     <value>At the heart of our endeavors lies the vision to be ranked among the top 25 Urban Air Mobility companies worldwide. With Semai, we are paving the way towards safer and cleaner urban air travel. Our mission extends to harnessing Turkey's high potential human resources, adding value and fostering employment within this burgeoning sector. Built for its unparalleled accuracy, our product enables customers to depend on the precision of the data they gather. This meticulous precision stems from our steadfast commitment to exact measurements, thorough calibration processes, and intelligent design. Serving an ever-growing international clientele, Semai Aviation's products and software are not just tools but catalysts for a smarter, greener future, supporting the most cutting-edge companies and research institutions worldwide.</value>
   </data>
-  <data name="AirDensity" xml:space="preserve">
-    <value>Air Density</value>
-  </data>
   <data name="AlertsPage_CurrentValue" xml:space="preserve">
     <value>Current Value</value>
   </data>
@@ -146,9 +143,6 @@
   </data>
   <data name="AlertsPage_Text" xml:space="preserve">
     <value>Alerts</value>
-  </data>
-  <data name="AmbientTemp" xml:space="preserve">
-    <value>Ambient Temp</value>
   </data>
   <data name="APIPage_Text" xml:space="preserve">
     <value>API</value>
@@ -200,9 +194,6 @@
   </data>
   <data name="CoaxialTestPage_Text" xml:space="preserve">
     <value>Coaxial Test</value>
-  </data>
-  <data name="Current" xml:space="preserve">
-    <value>Current</value>
   </data>
   <data name="DeviceCard_AirDensity" xml:space="preserve">
     <value>Air Density</value>
@@ -363,9 +354,6 @@
   <data name="EffVariables_PropulsionSystemEfficiencyITooltip" xml:space="preserve">
     <value>This is the overall efficiency of the propulsion system including motor, ESC and the propeller.</value>
   </data>
-  <data name="English" xml:space="preserve">
-    <value>English</value>
-  </data>
   <data name="EquipmentParameters_InternalRes" xml:space="preserve">
     <value>Internal Res. (mΩ)</value>
   </data>
@@ -399,14 +387,17 @@
   <data name="HelpPage_Text" xml:space="preserve">
     <value>Help</value>
   </data>
-  <data name="Home" xml:space="preserve">
-    <value>Home</value>
-  </data>
-  <data name="HomePageText" xml:space="preserve">
+  <data name="HomePage_Text" xml:space="preserve">
     <value>Welcome to Advanced Dynotis Software</value>
   </data>
-  <data name="Languages" xml:space="preserve">
+  <data name="LanguagePage_English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="LanguagePage_Languages" xml:space="preserve">
     <value>Languages</value>
+  </data>
+  <data name="LanguagePage_Turkish" xml:space="preserve">
+    <value>Turkish</value>
   </data>
   <data name="MainWindow_API" xml:space="preserve">
     <value>API</value>
@@ -432,20 +423,8 @@
   <data name="MainWindow_Single" xml:space="preserve">
     <value>Single</value>
   </data>
-  <data name="MotorSpeed" xml:space="preserve">
-    <value>Motor Speed</value>
-  </data>
-  <data name="MotorTemp" xml:space="preserve">
-    <value>Motor Temp</value>
-  </data>
   <data name="MultiTestPage_Text" xml:space="preserve">
     <value>Multi Test</value>
-  </data>
-  <data name="Power" xml:space="preserve">
-    <value>Power</value>
-  </data>
-  <data name="Pressure" xml:space="preserve">
-    <value>Pressure</value>
   </data>
   <data name="Record_FileName" xml:space="preserve">
     <value>File Name</value>
@@ -501,15 +480,6 @@
   <data name="Tare_Tare" xml:space="preserve">
     <value>Tare</value>
   </data>
-  <data name="Thrust" xml:space="preserve">
-    <value>Thrust</value>
-  </data>
-  <data name="Torque" xml:space="preserve">
-    <value>Torque</value>
-  </data>
-  <data name="Turkish" xml:space="preserve">
-    <value>Turkish</value>
-  </data>
   <data name="UnitsSettingsPage_MotorSpeed" xml:space="preserve">
     <value>Motor Speed:</value>
   </data>
@@ -530,17 +500,5 @@
   </data>
   <data name="UnitsSettingsPage_WindSpeed" xml:space="preserve">
     <value>Wind Speed:</value>
-  </data>
-  <data name="Vibration" xml:space="preserve">
-    <value>Vibration</value>
-  </data>
-  <data name="Voltage" xml:space="preserve">
-    <value>Voltage</value>
-  </data>
-  <data name="WindDirection" xml:space="preserve">
-    <value>Wind Direction</value>
-  </data>
-  <data name="WindSpeed" xml:space="preserve">
-    <value>Wind Speed</value>
   </data>
 </root>

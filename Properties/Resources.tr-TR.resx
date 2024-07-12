@@ -123,9 +123,6 @@
   <data name="AboutPage_AboutUsText" xml:space="preserve">
     <value>Çabalarımızın temelinde dünya çapında en iyi 25 Kentsel Hava Hareketliliği şirketi arasında yer alma vizyonu yatıyor. Semai ile şehir içi hava yolculuğunun daha güvenli ve temiz olmasına giden yolu açıyoruz. Misyonumuz, Türkiye'nin yüksek potansiyele sahip insan kaynağından faydalanmak, gelişen bu sektöre değer katmak ve istihdamı teşvik etmektir. Benzersiz doğruluğu için tasarlanan ürünümüz, müşterilerin topladıkları verilerin doğruluğuna güvenmelerini sağlar. Bu titiz hassasiyet, kesin ölçümlere, kapsamlı kalibrasyon süreçlerine ve akıllı tasarıma olan kararlı bağlılığımızdan kaynaklanmaktadır. Sürekli büyüyen uluslararası bir müşteri kitlesine hizmet veren Semai Aviation'ın ürünleri ve yazılımları, yalnızca araçlar değil, aynı zamanda dünya çapındaki en ileri teknolojiye sahip şirketleri ve araştırma kurumlarını destekleyen, daha akıllı, daha yeşil bir gelecek için katalizörlerdir.</value>
   </data>
-  <data name="AirDensity" xml:space="preserve">
-    <value>Hava Yoğunluğu</value>
-  </data>
   <data name="AlertsPage_CurrentValue" xml:space="preserve">
     <value>Akım Değeri</value>
   </data>
@@ -146,9 +143,6 @@
   </data>
   <data name="AlertsPage_Text" xml:space="preserve">
     <value>Uyarılar</value>
-  </data>
-  <data name="AmbientTemp" xml:space="preserve">
-    <value>Ortam Sıcaklığı</value>
   </data>
   <data name="APIPage_Text" xml:space="preserve">
     <value>API</value>
@@ -189,24 +183,6 @@
   <data name="BatterySecurityLimits_MaxCurrenToolTip" xml:space="preserve">
     <value>Sistem için güvenli akım sınırını girin</value>
   </data>
-  <data name="ChartCurrent" xml:space="preserve">
-    <value>Akım (A)</value>
-  </data>
-  <data name="ChartMotorSpeed" xml:space="preserve">
-    <value>Motor Hızı (RPM)</value>
-  </data>
-  <data name="ChartThrust" xml:space="preserve">
-    <value>İtki (gf)</value>
-  </data>
-  <data name="ChartTorque" xml:space="preserve">
-    <value>Tork (Nmm)</value>
-  </data>
-  <data name="ChartVibration" xml:space="preserve">
-    <value>Titreşim (g)</value>
-  </data>
-  <data name="ChartVoltage" xml:space="preserve">
-    <value>Gerilim (V)</value>
-  </data>
   <data name="CoaxialTestPage_1Device" xml:space="preserve">
     <value>1. Cihaz</value>
   </data>
@@ -218,9 +194,6 @@
   </data>
   <data name="CoaxialTestPage_Text" xml:space="preserve">
     <value>Koaksiyel Test</value>
-  </data>
-  <data name="Current" xml:space="preserve">
-    <value>Akım</value>
   </data>
   <data name="DeviceCard_AirDensity" xml:space="preserve">
     <value>Hava Yoğunluğu</value>
@@ -269,6 +242,12 @@
   </data>
   <data name="DeviceCard_Torque" xml:space="preserve">
     <value>Tork</value>
+  </data>
+  <data name="DeviceCard_Vibration" xml:space="preserve">
+    <value>Titreşim</value>
+  </data>
+  <data name="DeviceCard_Voltage" xml:space="preserve">
+    <value>Voltaj</value>
   </data>
   <data name="DeviceCard_WindDirection" xml:space="preserve">
     <value>Rüzgar Yönü</value>
@@ -375,9 +354,6 @@
   <data name="EffVariables_PropulsionSystemEfficiencyITooltip" xml:space="preserve">
     <value>Bu, motor, ESC ve pervane dahil olmak üzere tahrik sisteminin genel verimliliğidir.</value>
   </data>
-  <data name="English" xml:space="preserve">
-    <value>İngilizce</value>
-  </data>
   <data name="EquipmentParameters_InternalRes" xml:space="preserve">
     <value>Motor İç Direnci (mΩ)</value>
   </data>
@@ -411,14 +387,17 @@
   <data name="HelpPage_Text" xml:space="preserve">
     <value>Yardım</value>
   </data>
-  <data name="Home" xml:space="preserve">
-    <value>Ana</value>
-  </data>
-  <data name="HomePageText" xml:space="preserve">
+  <data name="HomePage_Text" xml:space="preserve">
     <value>Gelişmiş Dynotis Yazılımına Hoş Geldiniz</value>
   </data>
-  <data name="Languages" xml:space="preserve">
+  <data name="LanguagePage_English" xml:space="preserve">
+    <value>İngilizce</value>
+  </data>
+  <data name="LanguagePage_Languages" xml:space="preserve">
     <value>Diller</value>
+  </data>
+  <data name="LanguagePage_Turkish" xml:space="preserve">
+    <value>Türkçe</value>
   </data>
   <data name="MainWindow_API" xml:space="preserve">
     <value>API</value>
@@ -444,20 +423,8 @@
   <data name="MainWindow_Single" xml:space="preserve">
     <value>Tekli</value>
   </data>
-  <data name="MotorSpeed" xml:space="preserve">
-    <value>Motor Hızı</value>
-  </data>
-  <data name="MotorTemp" xml:space="preserve">
-    <value>Motor Sıcaklığı</value>
-  </data>
   <data name="MultiTestPage_Text" xml:space="preserve">
     <value>Çoklu Test</value>
-  </data>
-  <data name="Power" xml:space="preserve">
-    <value>Güç</value>
-  </data>
-  <data name="Pressure" xml:space="preserve">
-    <value>Basınç</value>
   </data>
   <data name="Record_FileName" xml:space="preserve">
     <value>Dosya Adı</value>
@@ -513,15 +480,6 @@
   <data name="Tare_Tare" xml:space="preserve">
     <value>Dara</value>
   </data>
-  <data name="Thrust" xml:space="preserve">
-    <value>İtki</value>
-  </data>
-  <data name="Torque" xml:space="preserve">
-    <value>Tork</value>
-  </data>
-  <data name="Turkish" xml:space="preserve">
-    <value>Türkçe</value>
-  </data>
   <data name="UnitsSettingsPage_MotorSpeed" xml:space="preserve">
     <value>Motor Hızı:</value>
   </data>
@@ -542,17 +500,5 @@
   </data>
   <data name="UnitsSettingsPage_WindSpeed" xml:space="preserve">
     <value>Rüzgar Hızı:</value>
-  </data>
-  <data name="Vibration" xml:space="preserve">
-    <value>Titreşim</value>
-  </data>
-  <data name="Voltage" xml:space="preserve">
-    <value>Gerilim</value>
-  </data>
-  <data name="WindDirection" xml:space="preserve">
-    <value>Rüzgar Yönü</value>
-  </data>
-  <data name="WindSpeed" xml:space="preserve">
-    <value>Rüzgar Hızı</value>
   </data>
 </root>

@@ -79,15 +79,6 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
-        ///   Air Density benzeri yerelleştirilmiş bir dize arar.
-        /// </summary>
-        public static string AirDensity {
-            get {
-                return ResourceManager.GetString("AirDensity", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Current Value benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string AlertsPage_CurrentValue {
@@ -147,15 +138,6 @@ namespace Advanced_Dynotis_Software.Properties {
         public static string AlertsPage_Text {
             get {
                 return ResourceManager.GetString("AlertsPage_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ambient Temp benzeri yerelleştirilmiş bir dize arar.
-        /// </summary>
-        public static string AmbientTemp {
-            get {
-                return ResourceManager.GetString("AmbientTemp", resourceCulture);
             }
         }
         
@@ -309,15 +291,6 @@ namespace Advanced_Dynotis_Software.Properties {
         public static string CoaxialTestPage_Text {
             get {
                 return ResourceManager.GetString("CoaxialTestPage_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Current benzeri yerelleştirilmiş bir dize arar.
-        /// </summary>
-        public static string Current {
-            get {
-                return ResourceManager.GetString("Current", resourceCulture);
             }
         }
         
@@ -799,15 +772,6 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
-        ///   English benzeri yerelleştirilmiş bir dize arar.
-        /// </summary>
-        public static string English {
-            get {
-                return ResourceManager.GetString("English", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Internal Res. (mΩ) benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string EquipmentParameters_InternalRes {
@@ -907,29 +871,38 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
-        ///   Home benzeri yerelleştirilmiş bir dize arar.
+        ///   Welcome to Advanced Dynotis Software benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
-        public static string Home {
+        public static string HomePage_Text {
             get {
-                return ResourceManager.GetString("Home", resourceCulture);
+                return ResourceManager.GetString("HomePage_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Welcome to Advanced Dynotis Software benzeri yerelleştirilmiş bir dize arar.
+        ///   English benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
-        public static string HomePageText {
+        public static string LanguagePage_English {
             get {
-                return ResourceManager.GetString("HomePageText", resourceCulture);
+                return ResourceManager.GetString("LanguagePage_English", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Languages benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
-        public static string Languages {
+        public static string LanguagePage_Languages {
             get {
-                return ResourceManager.GetString("Languages", resourceCulture);
+                return ResourceManager.GetString("LanguagePage_Languages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Turkish benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string LanguagePage_Turkish {
+            get {
+                return ResourceManager.GetString("LanguagePage_Turkish", resourceCulture);
             }
         }
         
@@ -1006,47 +979,11 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
-        ///   Motor Speed benzeri yerelleştirilmiş bir dize arar.
-        /// </summary>
-        public static string MotorSpeed {
-            get {
-                return ResourceManager.GetString("MotorSpeed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Motor Temp benzeri yerelleştirilmiş bir dize arar.
-        /// </summary>
-        public static string MotorTemp {
-            get {
-                return ResourceManager.GetString("MotorTemp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Multi Test benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string MultiTestPage_Text {
             get {
                 return ResourceManager.GetString("MultiTestPage_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Power benzeri yerelleştirilmiş bir dize arar.
-        /// </summary>
-        public static string Power {
-            get {
-                return ResourceManager.GetString("Power", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Pressure benzeri yerelleştirilmiş bir dize arar.
-        /// </summary>
-        public static string Pressure {
-            get {
-                return ResourceManager.GetString("Pressure", resourceCulture);
             }
         }
         
@@ -1213,33 +1150,6 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
-        ///   Thrust benzeri yerelleştirilmiş bir dize arar.
-        /// </summary>
-        public static string Thrust {
-            get {
-                return ResourceManager.GetString("Thrust", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Torque benzeri yerelleştirilmiş bir dize arar.
-        /// </summary>
-        public static string Torque {
-            get {
-                return ResourceManager.GetString("Torque", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Turkish benzeri yerelleştirilmiş bir dize arar.
-        /// </summary>
-        public static string Turkish {
-            get {
-                return ResourceManager.GetString("Turkish", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Motor Speed: benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string UnitsSettingsPage_MotorSpeed {
@@ -1299,42 +1209,6 @@ namespace Advanced_Dynotis_Software.Properties {
         public static string UnitsSettingsPage_WindSpeed {
             get {
                 return ResourceManager.GetString("UnitsSettingsPage_WindSpeed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Vibration benzeri yerelleştirilmiş bir dize arar.
-        /// </summary>
-        public static string Vibration {
-            get {
-                return ResourceManager.GetString("Vibration", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Voltage benzeri yerelleştirilmiş bir dize arar.
-        /// </summary>
-        public static string Voltage {
-            get {
-                return ResourceManager.GetString("Voltage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Wind Direction benzeri yerelleştirilmiş bir dize arar.
-        /// </summary>
-        public static string WindDirection {
-            get {
-                return ResourceManager.GetString("WindDirection", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Wind Speed benzeri yerelleştirilmiş bir dize arar.
-        /// </summary>
-        public static string WindSpeed {
-            get {
-                return ResourceManager.GetString("WindSpeed", resourceCulture);
             }
         }
     }
