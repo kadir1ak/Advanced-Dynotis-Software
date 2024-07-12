@@ -1114,6 +1114,15 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   Open benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string SingleTestPage_Open {
+            get {
+                return ResourceManager.GetString("SingleTestPage_Open", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Single Test benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string SingleTestPage_Text {

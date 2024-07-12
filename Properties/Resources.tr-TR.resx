@@ -468,6 +468,9 @@
   <data name="SettingsPage_UnitsSettings" xml:space="preserve">
     <value>Birim Ayarları</value>
   </data>
+  <data name="SingleTestPage_Open" xml:space="preserve">
+    <value>Aç</value>
+  </data>
   <data name="SingleTestPage_Text" xml:space="preserve">
     <value>Tekli Test</value>
   </data>
