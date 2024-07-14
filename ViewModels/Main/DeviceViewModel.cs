@@ -50,15 +50,15 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                     {
                         _currentTare.PropertyChanged += (sender, e) =>
                         {
-                            if (e.PropertyName == nameof(TareViewModel.TareThrustValue) ||
-                                e.PropertyName == nameof(TareViewModel.TareTorqueValue) ||
-                                e.PropertyName == nameof(TareViewModel.TareCurrentValue) ||
-                                e.PropertyName == nameof(TareViewModel.TareMotorSpeedValue))
+                            if (e.PropertyName == nameof(TareViewModel.TareThrustBaseValue) ||
+                                e.PropertyName == nameof(TareViewModel.TareTorqueBaseValue) ||
+                                e.PropertyName == nameof(TareViewModel.TareCurrentBaseValue) ||
+                                e.PropertyName == nameof(TareViewModel.TareMotorSpeedBaseValue))
                             {
-                                DeviceInterfaceVariables.TareThrustValue = _currentTare.TareThrustValue;
-                                DeviceInterfaceVariables.TareTorqueValue = _currentTare.TareTorqueValue;
-                                DeviceInterfaceVariables.TareCurrentValue = _currentTare.TareCurrentValue;
-                                DeviceInterfaceVariables.TareMotorSpeedValue = _currentTare.TareMotorSpeedValue;
+                                DeviceInterfaceVariables.TareThrustBaseValue = _currentTare.TareThrustBaseValue;
+                                DeviceInterfaceVariables.TareTorqueBaseValue = _currentTare.TareTorqueBaseValue;
+                                DeviceInterfaceVariables.TareCurrentBaseValue = _currentTare.TareCurrentBaseValue;
+                                DeviceInterfaceVariables.TareMotorSpeedBaseValue = _currentTare.TareMotorSpeedBaseValue;
                                 OnPropertyChanged(nameof(DeviceInterfaceVariables));
                             }
                         };

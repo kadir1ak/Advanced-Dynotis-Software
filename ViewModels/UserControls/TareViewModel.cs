@@ -9,10 +9,10 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 {
     public class TareViewModel : INotifyPropertyChanged
     {
-        private double _tareTorqueValue;
-        private double _tareThrustValue;
-        private double _tareCurrentValue;
-        private double _tareMotorSpeedValue;
+        private double _tareTorqueBaseValue;
+        private double _tareThrustBaseValue;
+        private double _tareCurrentBaseValue;
+        private double _tareMotorSpeedBaseValue;
         private InterfaceVariables _interfaceVariables;
 
         public TareViewModel(InterfaceVariables interfaceVariables)
@@ -23,54 +23,54 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
         public ICommand TareCommand { get; }
 
-        public double TareTorqueValue
+        public double TareTorqueBaseValue
         {
-            get => _tareTorqueValue;
+            get => _tareTorqueBaseValue;
             set
             {
-                if (SetProperty(ref _tareTorqueValue, value))
+                if (SetProperty(ref _tareTorqueBaseValue, value))
                 {
-                    _interfaceVariables.TareTorqueValue = value;
-                    OnPropertyChanged(nameof(TareTorqueValue));
+                    _interfaceVariables.TareTorqueBaseValue = value;
+                    OnPropertyChanged(nameof(TareTorqueBaseValue));
                 }
             }
         }
 
-        public double TareThrustValue
+        public double TareThrustBaseValue
         {
-            get => _tareThrustValue;
+            get => _tareThrustBaseValue;
             set
             {
-                if (SetProperty(ref _tareThrustValue, value))
+                if (SetProperty(ref _tareThrustBaseValue, value))
                 {
-                    _interfaceVariables.TareThrustValue = value;
-                    OnPropertyChanged(nameof(TareThrustValue));
+                    _interfaceVariables.TareThrustBaseValue = value;
+                    OnPropertyChanged(nameof(TareThrustBaseValue));
                 }
             }
         }
 
-        public double TareCurrentValue
+        public double TareCurrentBaseValue
         {
-            get => _tareCurrentValue;
+            get => _tareCurrentBaseValue;
             set
             {
-                if (SetProperty(ref _tareCurrentValue, value))
+                if (SetProperty(ref _tareCurrentBaseValue, value))
                 {
-                    _interfaceVariables.TareCurrentValue = value;
-                    OnPropertyChanged(nameof(TareCurrentValue));
+                    _interfaceVariables.TareCurrentBaseValue = value;
+                    OnPropertyChanged(nameof(TareCurrentBaseValue));
                 }
             }
         }
 
-        public double TareMotorSpeedValue
+        public double TareMotorSpeedBaseValue
         {
-            get => _tareMotorSpeedValue;
+            get => _tareMotorSpeedBaseValue;
             set
             {
-                if (SetProperty(ref _tareMotorSpeedValue, value))
+                if (SetProperty(ref _tareMotorSpeedBaseValue, value))
                 {
-                    _interfaceVariables.TareMotorSpeedValue = value;
-                    OnPropertyChanged(nameof(TareMotorSpeedValue));
+                    _interfaceVariables.TareMotorSpeedBaseValue = value;
+                    OnPropertyChanged(nameof(TareMotorSpeedBaseValue));
                 }
             }
         }
@@ -79,11 +79,16 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         {
             if (_interfaceVariables != null)
             {
-                MessageBox.Show("OK");
-                TareTorqueValue = _interfaceVariables.Torque.Value;
-                TareThrustValue = _interfaceVariables.Thrust.Value;
-                TareCurrentValue = _interfaceVariables.Current;
-                TareMotorSpeedValue = _interfaceVariables.MotorSpeed.Value;
+
+                TareTorqueBaseValue = _interfaceVariables.Torque.BaseValue;
+                TareThrustBaseValue = _interfaceVariables.Thrust.BaseValue;
+                TareCurrentBaseValue = _interfaceVariables.Current;
+                TareMotorSpeedBaseValue = _interfaceVariables.MotorSpeed.BaseValue;
+                // Tare değerlerini InterfaceVariables.Instance'da saklayın
+                InterfaceVariables.Instance.TareTorqueBaseValue = TareTorqueBaseValue;
+                InterfaceVariables.Instance.TareThrustBaseValue = TareThrustBaseValue;
+                InterfaceVariables.Instance.TareCurrentBaseValue = TareCurrentBaseValue;
+                InterfaceVariables.Instance.TareMotorSpeedBaseValue = TareMotorSpeedBaseValue;
             }
         }
 

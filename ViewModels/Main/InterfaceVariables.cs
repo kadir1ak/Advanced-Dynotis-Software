@@ -71,10 +71,10 @@ public class InterfaceVariables : INotifyPropertyChanged
     private bool _saveStatus;
     private string _testMode;
 
-    private double _tareTorqueValue;
-    private double _tareThrustValue;
-    private double _tareCurrentValue;
-    private double _tareMotorSpeedValue;
+    private double _tareTorqueBaseValue;
+    private double _tareThrustBaseValue;
+    private double _tareCurrentBaseValue;
+    private double _tareMotorSpeedBaseValue;
 
     private int _selectedTorqueUnitIndex;
     private int _selectedThrustUnitIndex;
@@ -260,28 +260,28 @@ public class InterfaceVariables : INotifyPropertyChanged
         set => SetProperty(ref _testMode, value);
     }
 
-    public double TareTorqueValue
+    public double TareTorqueBaseValue
     {
-        get => _tareTorqueValue;
-        set => SetProperty(ref _tareTorqueValue, value);
+        get => _tareTorqueBaseValue;
+        set => SetProperty(ref _tareTorqueBaseValue, value);
     }
 
-    public double TareThrustValue
+    public double TareThrustBaseValue
     {
-        get => _tareThrustValue;
-        set => SetProperty(ref _tareThrustValue, value);
+        get => _tareThrustBaseValue;
+        set => SetProperty(ref _tareThrustBaseValue, value);
     }
 
-    public double TareCurrentValue
+    public double TareCurrentBaseValue
     {
-        get => _tareCurrentValue;
-        set => SetProperty(ref _tareCurrentValue, value);
+        get => _tareCurrentBaseValue;
+        set => SetProperty(ref _tareCurrentBaseValue, value);
     }
 
-    public double TareMotorSpeedValue
+    public double TareMotorSpeedBaseValue
     {
-        get => _tareMotorSpeedValue;
-        set => SetProperty(ref _tareMotorSpeedValue, value);
+        get => _tareMotorSpeedBaseValue;
+        set => SetProperty(ref _tareMotorSpeedBaseValue, value);
     }
 
     public int SelectedTorqueUnitIndex
@@ -443,32 +443,32 @@ public class InterfaceVariables : INotifyPropertyChanged
         SelectedWindSpeedUnitIndex = InterfaceVariables.Instance.SelectedWindSpeedUnitIndex;
         SelectedPressureUnitIndex = InterfaceVariables.Instance.SelectedPressureUnitIndex;
 
-        TareTorqueValue = InterfaceVariables.Instance.TareTorqueValue;
-        TareThrustValue = InterfaceVariables.Instance.TareThrustValue;
-        TareCurrentValue = InterfaceVariables.Instance.TareCurrentValue;
-        TareMotorSpeedValue = InterfaceVariables.Instance.TareMotorSpeedValue;
+ 
 
     }
     public Unit ThrustTareSet(Unit data)
     {
-        double newValue = data.Value - TareThrustValue;
+        Unit temp = ThrustUnitSet(data.Value, data.UnitName,data.UnitSymbol, TareThrustBaseValue, data.BaseUnitName, data.BaseUnitSymbol);
+        double newValue = data.Value - temp.Value;
         return new Unit(newValue, data.UnitName, data.UnitSymbol, data.BaseValue, data.BaseUnitName, data.BaseUnitSymbol);
     }
 
     public Unit TorqueTareSet(Unit data)
     {
-        double newValue = data.Value - TareTorqueValue;
+        Unit temp = TorqueUnitSet(data.Value, data.UnitName, data.UnitSymbol, TareTorqueBaseValue, data.BaseUnitName, data.BaseUnitSymbol);
+        double newValue = data.Value - temp.Value;
         return new Unit(newValue, data.UnitName, data.UnitSymbol, data.BaseValue, data.BaseUnitName, data.BaseUnitSymbol);
     }
 
     public double CurrentTareSet(double value)
     {
-        return value - TareCurrentValue;
+        return value - TareCurrentBaseValue;
     }
 
     public Unit MotorSpeedTareSet(Unit data)
     {
-        double newValue = data.Value - TareMotorSpeedValue;
+        Unit temp = MotorSpeedUnitSet(data.Value, data.UnitName, data.UnitSymbol, TareMotorSpeedBaseValue, data.BaseUnitName, data.BaseUnitSymbol);
+        double newValue = data.Value - temp.Value;
         return new Unit(newValue, data.UnitName, data.UnitSymbol, data.BaseValue, data.BaseUnitName, data.BaseUnitSymbol);
     }
 
