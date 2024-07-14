@@ -13,13 +13,12 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private double _tareThrustValue;
         private double _tareCurrentValue;
         private double _tareMotorSpeedValue;
-        private DynotisData _dynotisData;
+        private InterfaceVariables _interfaceVariables;
 
-        public TareViewModel(DynotisData dynotisData)
+        public TareViewModel(InterfaceVariables interfaceVariables)
         {
-            _dynotisData = dynotisData;
+            _interfaceVariables = interfaceVariables;
             TareCommand = new RelayCommand(param => ExecuteTare());
-
         }
 
         public ICommand TareCommand { get; }
@@ -31,8 +30,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 if (SetProperty(ref _tareTorqueValue, value))
                 {
-                    _dynotisData.TareTorqueValue = value;
-                    OnPropertyChanged(nameof(_dynotisData));
+                    _interfaceVariables.TareTorqueValue = value;
+                    OnPropertyChanged(nameof(TareTorqueValue));
                 }
             }
         }
@@ -44,8 +43,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 if (SetProperty(ref _tareThrustValue, value))
                 {
-                    _dynotisData.TareThrustValue = value;
-                    OnPropertyChanged(nameof(_dynotisData));
+                    _interfaceVariables.TareThrustValue = value;
+                    OnPropertyChanged(nameof(TareThrustValue));
                 }
             }
         }
@@ -57,8 +56,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 if (SetProperty(ref _tareCurrentValue, value))
                 {
-                    _dynotisData.TareCurrentValue = value;
-                    OnPropertyChanged(nameof(_dynotisData));
+                    _interfaceVariables.TareCurrentValue = value;
+                    OnPropertyChanged(nameof(TareCurrentValue));
                 }
             }
         }
@@ -70,27 +69,22 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 if (SetProperty(ref _tareMotorSpeedValue, value))
                 {
-                    _dynotisData.TareMotorSpeedValue = value;
-                    OnPropertyChanged(nameof(_dynotisData));
+                    _interfaceVariables.TareMotorSpeedValue = value;
+                    OnPropertyChanged(nameof(TareMotorSpeedValue));
                 }
             }
         }
- 
+
         private void ExecuteTare()
         {
-            MessageBox.Show("Tare İşlemleri Yapıldı");
-
-            // Verileri senkronize et
-            TareThrustValue = _dynotisData.Thrust.Value;
-            TareTorqueValue = _dynotisData.Torque.Value;
-            TareCurrentValue = _dynotisData.Current;
-            TareMotorSpeedValue = _dynotisData.MotorSpeed.Value;
-
-            // PropertyChanged olayını tetikleyerek UI'yi güncelle
-            OnPropertyChanged(nameof(TareThrustValue));
-            OnPropertyChanged(nameof(TareTorqueValue));
-            OnPropertyChanged(nameof(TareCurrentValue));
-            OnPropertyChanged(nameof(TareMotorSpeedValue));
+            if (_interfaceVariables != null)
+            {
+                MessageBox.Show("OK");
+                TareTorqueValue = _interfaceVariables.Torque.Value;
+                TareThrustValue = _interfaceVariables.Thrust.Value;
+                TareCurrentValue = _interfaceVariables.Current;
+                TareMotorSpeedValue = _interfaceVariables.MotorSpeed.Value;
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

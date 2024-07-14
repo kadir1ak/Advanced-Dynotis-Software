@@ -13,7 +13,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Managers
             _tare = new Dictionary<string, TareViewModel>();
         }
 
-        public TareViewModel GetTareViewModel(string devicePortName, DynotisData dynotisData)
+        public TareViewModel GetTareViewModel(string devicePortName, DynotisData dynotisData, InterfaceVariables interfaceVariables)
         {
             if (_tare.ContainsKey(devicePortName))
             {
@@ -21,7 +21,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Managers
             }
             else
             {
-                var viewModel = new TareViewModel(dynotisData);
+                var viewModel = new TareViewModel(interfaceVariables);
                 _tare[devicePortName] = viewModel;
                 return viewModel;
             }

@@ -432,10 +432,6 @@ public class InterfaceVariables : INotifyPropertyChanged
         SaveFile = data.SaveFile;
         SaveStatus = data.SaveStatus;
         TestMode = data.TestMode;
-        TareThrustValue = data.TareThrustValue;
-        TareTorqueValue = data.TareTorqueValue;
-        TareCurrentValue = data.TareCurrentValue;
-        TareMotorSpeedValue = data.TareMotorSpeedValue;
 
         // Ensure your values ​​are protected
         SelectedIsTurkishChecked = InterfaceVariables.Instance.SelectedIsTurkishChecked;
@@ -446,6 +442,11 @@ public class InterfaceVariables : INotifyPropertyChanged
         SelectedTemperatureUnitIndex = InterfaceVariables.Instance.SelectedTemperatureUnitIndex;
         SelectedWindSpeedUnitIndex = InterfaceVariables.Instance.SelectedWindSpeedUnitIndex;
         SelectedPressureUnitIndex = InterfaceVariables.Instance.SelectedPressureUnitIndex;
+
+        TareTorqueValue = InterfaceVariables.Instance.TareTorqueValue;
+        TareThrustValue = InterfaceVariables.Instance.TareThrustValue;
+        TareCurrentValue = InterfaceVariables.Instance.TareCurrentValue;
+        TareMotorSpeedValue = InterfaceVariables.Instance.TareMotorSpeedValue;
 
     }
     public Unit ThrustTareSet(Unit data)

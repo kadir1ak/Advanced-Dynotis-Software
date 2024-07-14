@@ -54,96 +54,6 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 }
             }
         }
-        public TareViewModel CurrentTare
-        {
-            get => _currentTare;
-            set
-            {
-                if (SetProperty(ref _currentTare, value))
-                {
-                    _currentTare.PropertyChanged += (sender, e) =>
-                    {
-                        if (e.PropertyName == nameof(TareViewModel.TareThrustValue) ||
-                            e.PropertyName == nameof(TareViewModel.TareTorqueValue) ||
-                            e.PropertyName == nameof(TareViewModel.TareCurrentValue) ||
-                            e.PropertyName == nameof(TareViewModel.TareMotorSpeedValue))
-                        {
-                            ConnectedDevice.Device.DynotisData.TareThrustValue = _currentTare.TareThrustValue;
-                            ConnectedDevice.Device.DynotisData.TareTorqueValue = _currentTare.TareTorqueValue;
-                            ConnectedDevice.Device.DynotisData.TareCurrentValue = _currentTare.TareCurrentValue;
-                            ConnectedDevice.Device.DynotisData.TareMotorSpeedValue = _currentTare.TareMotorSpeedValue;
-                            ConnectedDevice.Device.OnPropertyChanged(nameof(Dynotis.DynotisData));
-                        }
-                    };
-                }
-            }
-        }
-        public EquipmentParametersViewModel CurrentEquipmentParameters
-        {
-            get => _currentEquipmentParameters;
-            set
-            {
-                if (SetProperty(ref _currentEquipmentParameters, value))
-                {
-                    CurrentEquipmentParameters.PropertyChanged += (sender, e) =>
-                    {
-                        if (e.PropertyName == nameof(EquipmentParametersViewModel.UserPropellerArea) ||
-                            e.PropertyName == nameof(EquipmentParametersViewModel.UserMotorInner) ||
-                            e.PropertyName == nameof(EquipmentParametersViewModel.UserNoLoadCurrents))
-                        {
-                            ConnectedDevice.Device.DynotisData.PropellerArea = CurrentEquipmentParameters.UserPropellerArea;
-                            ConnectedDevice.Device.DynotisData.MotorInner = CurrentEquipmentParameters.UserMotorInner;
-                            ConnectedDevice.Device.DynotisData.NoLoadCurrents = CurrentEquipmentParameters.UserNoLoadCurrents;
-                            ConnectedDevice.Device.OnPropertyChanged(nameof(Dynotis.DynotisData));
-                        }
-                    };
-                }
-            }
-        }
-
-        public ESCParametersViewModel CurrentESCParameters
-        {
-            get => _currentESCParameters;
-            set
-            {
-                if (SetProperty(ref _currentESCParameters, value))
-                {
-                    CurrentESCParameters.PropertyChanged += (sender, e) =>
-                    {
-                        if (e.PropertyName == nameof(ESCParametersViewModel.ESCValue) ||
-                            e.PropertyName == nameof(ESCParametersViewModel.ESCStatus))
-                        {
-                            ConnectedDevice.Device.DynotisData.ESCValue = CurrentESCParameters.ESCValue;
-                            ConnectedDevice.Device.DynotisData.ESCStatus = CurrentESCParameters.ESCStatus ? true : false;
-                            ConnectedDevice.Device.OnPropertyChanged(nameof(Dynotis.DynotisData));
-                        }
-                    };
-                }
-            }
-        }
-
-        public BatterySecurityLimitsViewModel CurrentBatterySecurityLimits
-        {
-            get => _currentBatterySecurityLimits;
-            set
-            {
-                if (SetProperty(ref _currentBatterySecurityLimits, value))
-                {
-                    CurrentBatterySecurityLimits.PropertyChanged += (sender, e) =>
-                    {
-                        if (e.PropertyName == nameof(BatterySecurityLimitsViewModel.MaxCurrent) ||
-                            e.PropertyName == nameof(BatterySecurityLimitsViewModel.BatteryLevel) ||
-                            e.PropertyName == nameof(BatterySecurityLimitsViewModel.SecurityStatus))
-                        {
-                            ConnectedDevice.Device.DynotisData.MaxCurrent = CurrentBatterySecurityLimits.MaxCurrent;
-                            ConnectedDevice.Device.DynotisData.BatteryLevel = CurrentBatterySecurityLimits.BatteryLevel;
-                            ConnectedDevice.Device.DynotisData.SecurityStatus = CurrentBatterySecurityLimits.SecurityStatus;
-                            ConnectedDevice.Device.OnPropertyChanged(nameof(Dynotis.DynotisData));
-                        }
-                    };
-                }
-            }
-        }
 
         public ICommand ConnectCommand { get; }
 
@@ -167,10 +77,9 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             await DeviceManager.Instance.ConnectToDeviceAsync(SelectedDevice.Device.PortName);
             ConnectedDevice = SelectedDevice;
 
-            CurrentEquipmentParameters = _equipmentParametersManager.GetEquipmentParametersViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData);
-            CurrentESCParameters = _escParametersManager.GetESCParametersViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData);
-            CurrentBatterySecurityLimits = _batterySecurityLimitsManager.GetBatterySecurityLimitsViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData);
-            CurrentTare = _tareManager.GetTareViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData);
+            ConnectedDevice.CurrentEquipmentParameters = _equipmentParametersManager.GetEquipmentParametersViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData);
+            ConnectedDevice.CurrentESCParameters = _escParametersManager.GetESCParametersViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData);
+            ConnectedDevice.CurrentBatterySecurityLimits = _batterySecurityLimitsManager.GetBatterySecurityLimitsViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData);
         }
 
         private void OnDeviceDisconnected(DeviceViewModel device)
@@ -178,10 +87,9 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             if (ConnectedDevice == device)
             {
                 ConnectedDevice = null;
-                CurrentEquipmentParameters = null;
-                CurrentESCParameters = null;
-                CurrentBatterySecurityLimits = null;
-                CurrentTare = null;
+                ConnectedDevice.CurrentEquipmentParameters = null;
+                ConnectedDevice.CurrentESCParameters = null;
+                ConnectedDevice.CurrentBatterySecurityLimits = null;
             }
             RefreshAvailableDevices();
         }

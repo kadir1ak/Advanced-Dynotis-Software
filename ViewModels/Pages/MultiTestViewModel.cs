@@ -45,7 +45,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 device.CurrentEquipmentParameters = _equipmentParametersManager.GetEquipmentParametersViewModel(device.Device.PortName, device.Device.DynotisData);
                 device.CurrentESCParameters = _escParametersManager.GetESCParametersViewModel(device.Device.PortName, device.Device.DynotisData);
                 device.CurrentBatterySecurityLimits = _batterySecurityLimitsManager.GetBatterySecurityLimitsViewModel(device.Device.PortName, device.Device.DynotisData);
-                device.CurrentTare = _tareManager.GetTareViewModel(device.Device.PortName, device.Device.DynotisData);
+                device.CurrentTare = _tareManager.GetTareViewModel(device.Device.PortName, device.Device.DynotisData, device.DeviceInterfaceVariables);
             }
         }
 
@@ -57,7 +57,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 device.CurrentEquipmentParameters = _equipmentParametersManager.GetEquipmentParametersViewModel(device.Device.PortName, device.Device.DynotisData);
                 device.CurrentESCParameters = _escParametersManager.GetESCParametersViewModel(device.Device.PortName, device.Device.DynotisData);
                 device.CurrentBatterySecurityLimits = _batterySecurityLimitsManager.GetBatterySecurityLimitsViewModel(device.Device.PortName, device.Device.DynotisData);
-                device.CurrentTare = _tareManager.GetTareViewModel(device.Device.PortName, device.Device.DynotisData);
+                device.CurrentTare = _tareManager.GetTareViewModel(device.Device.PortName, device.Device.DynotisData, device.DeviceInterfaceVariables);
             }
         }
 

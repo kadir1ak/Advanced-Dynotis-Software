@@ -12,7 +12,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
 {
     public class DeviceViewModel : INotifyPropertyChanged, IDisposable
     {
-        public InterfaceVariables InterfaceVariables { get; private set; }
+        public InterfaceVariables DeviceInterfaceVariables { get; private set; }
 
         public ChartViewModel ChartViewModel { get; }
 
@@ -55,11 +55,11 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                                 e.PropertyName == nameof(TareViewModel.TareCurrentValue) ||
                                 e.PropertyName == nameof(TareViewModel.TareMotorSpeedValue))
                             {
-                                Device.DynotisData.TareThrustValue = _currentTare.TareThrustValue;
-                                Device.DynotisData.TareTorqueValue = _currentTare.TareTorqueValue;
-                                Device.DynotisData.TareCurrentValue = _currentTare.TareCurrentValue;
-                                Device.DynotisData.TareMotorSpeedValue = _currentTare.TareMotorSpeedValue;
-                                OnPropertyChanged(nameof(Device.DynotisData));
+                                DeviceInterfaceVariables.TareThrustValue = _currentTare.TareThrustValue;
+                                DeviceInterfaceVariables.TareTorqueValue = _currentTare.TareTorqueValue;
+                                DeviceInterfaceVariables.TareCurrentValue = _currentTare.TareCurrentValue;
+                                DeviceInterfaceVariables.TareMotorSpeedValue = _currentTare.TareMotorSpeedValue;
+                                OnPropertyChanged(nameof(DeviceInterfaceVariables));
                             }
                         };
                     }
@@ -150,7 +150,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         {
             if (!DesignerProperties.GetIsInDesignMode(new DependencyObject()))
             {
-                InterfaceVariables = new InterfaceVariables();
+                DeviceInterfaceVariables = new InterfaceVariables();
                 Device = new Dynotis(portName);
                 ChartViewModel = new ChartViewModel();
                 _cancellationTokenSource = new CancellationTokenSource();
@@ -184,8 +184,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                 {
                     await Application.Current.Dispatcher.InvokeAsync(() =>
                     {
-                        InterfaceVariables.UpdateFrom(latestData);
-                        ChartViewModel.UpdateChartData(InterfaceVariables);
+                        DeviceInterfaceVariables.UpdateFrom(latestData);
+                        ChartViewModel.UpdateChartData(DeviceInterfaceVariables);
 
                     });
                 }

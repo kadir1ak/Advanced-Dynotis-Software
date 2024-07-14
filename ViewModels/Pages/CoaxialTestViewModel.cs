@@ -29,15 +29,6 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         private TareManager _tareManagerOne;
         private TareManager _tareManagerTwo;
 
-        private EquipmentParametersViewModel _currentEquipmentParametersOne;
-        private EquipmentParametersViewModel _currentEquipmentParametersTwo;
-        private ESCParametersViewModel _currentESCParametersOne;
-        private ESCParametersViewModel _currentESCParametersTwo;
-        private BatterySecurityLimitsViewModel _currentBatterySecurityLimitsOne;
-        private BatterySecurityLimitsViewModel _currentBatterySecurityLimitsTwo;
-        private TareViewModel _currentTareOne;
-        private TareViewModel _currentTareTwo;
-
         public ObservableCollection<DeviceViewModel> AvailableDevicesOne { get; private set; }
         public ObservableCollection<DeviceViewModel> AvailableDevicesTwo { get; private set; }
 
@@ -100,53 +91,6 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 }
             }
         }
-        public TareViewModel CurrentTareOne
-        {
-            get => _currentTareOne;
-            set => SetProperty(ref _currentTareOne, value);
-        }
-
-        public TareViewModel CurrentTareTwo
-        {
-            get => _currentTareTwo;
-            set => SetProperty(ref _currentTareTwo, value);
-        }
-
-        public EquipmentParametersViewModel CurrentEquipmentParametersOne
-        {
-            get => _currentEquipmentParametersOne;
-            set => SetProperty(ref _currentEquipmentParametersOne, value);
-        }
-
-        public EquipmentParametersViewModel CurrentEquipmentParametersTwo
-        {
-            get => _currentEquipmentParametersTwo;
-            set => SetProperty(ref _currentEquipmentParametersTwo, value);
-        }
-
-        public ESCParametersViewModel CurrentESCParametersOne
-        {
-            get => _currentESCParametersOne;
-            set => SetProperty(ref _currentESCParametersOne, value);
-        }
-
-        public ESCParametersViewModel CurrentESCParametersTwo
-        {
-            get => _currentESCParametersTwo;
-            set => SetProperty(ref _currentESCParametersTwo, value);
-        }
-
-        public BatterySecurityLimitsViewModel CurrentBatterySecurityLimitsOne
-        {
-            get => _currentBatterySecurityLimitsOne;
-            set => SetProperty(ref _currentBatterySecurityLimitsOne, value);
-        }
-
-        public BatterySecurityLimitsViewModel CurrentBatterySecurityLimitsTwo
-        {
-            get => _currentBatterySecurityLimitsTwo;
-            set => SetProperty(ref _currentBatterySecurityLimitsTwo, value);
-        }
 
         public ICommand ConnectCommand { get; }
 
@@ -198,18 +142,18 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             if (deviceViewModel == SelectedDeviceOne)
             {
                 ConnectedOneDevice = SelectedDeviceOne;
-                CurrentEquipmentParametersOne = _equipmentParametersManagerOne.GetEquipmentParametersViewModel(SelectedDeviceOne.Device.PortName, SelectedDeviceOne.Device.DynotisData);
-                CurrentESCParametersOne = _escParametersManagerOne.GetESCParametersViewModel(SelectedDeviceOne.Device.PortName, SelectedDeviceOne.Device.DynotisData);
-                CurrentBatterySecurityLimitsOne = _batterySecurityLimitsManagerOne.GetBatterySecurityLimitsViewModel(SelectedDeviceOne.Device.PortName, SelectedDeviceOne.Device.DynotisData);
-                CurrentTareOne = _tareManagerOne.GetTareViewModel(SelectedDeviceOne.Device.PortName, SelectedDeviceOne.Device.DynotisData);
+                ConnectedOneDevice.CurrentEquipmentParameters = _equipmentParametersManagerOne.GetEquipmentParametersViewModel(SelectedDeviceOne.Device.PortName, SelectedDeviceOne.Device.DynotisData);
+                ConnectedOneDevice.CurrentESCParameters = _escParametersManagerOne.GetESCParametersViewModel(SelectedDeviceOne.Device.PortName, SelectedDeviceOne.Device.DynotisData);
+                ConnectedOneDevice.CurrentBatterySecurityLimits = _batterySecurityLimitsManagerOne.GetBatterySecurityLimitsViewModel(SelectedDeviceOne.Device.PortName, SelectedDeviceOne.Device.DynotisData);
+                ConnectedOneDevice.CurrentTare = _tareManagerOne.GetTareViewModel(SelectedDeviceOne.Device.PortName, SelectedDeviceOne.Device.DynotisData, SelectedDeviceOne.DeviceInterfaceVariables);
             }
             else if (deviceViewModel == SelectedDeviceTwo)
             {
                 ConnectedTwoDevice = SelectedDeviceTwo;
-                CurrentEquipmentParametersTwo = _equipmentParametersManagerTwo.GetEquipmentParametersViewModel(SelectedDeviceTwo.Device.PortName, SelectedDeviceTwo.Device.DynotisData);
-                CurrentESCParametersTwo = _escParametersManagerTwo.GetESCParametersViewModel(SelectedDeviceTwo.Device.PortName, SelectedDeviceTwo.Device.DynotisData);
-                CurrentBatterySecurityLimitsTwo = _batterySecurityLimitsManagerTwo.GetBatterySecurityLimitsViewModel(SelectedDeviceTwo.Device.PortName, SelectedDeviceTwo.Device.DynotisData);
-                CurrentTareTwo = _tareManagerTwo.GetTareViewModel(SelectedDeviceTwo.Device.PortName, SelectedDeviceTwo.Device.DynotisData);
+                ConnectedTwoDevice.CurrentEquipmentParameters = _equipmentParametersManagerTwo.GetEquipmentParametersViewModel(SelectedDeviceTwo.Device.PortName, SelectedDeviceTwo.Device.DynotisData);
+                ConnectedTwoDevice.CurrentESCParameters = _escParametersManagerTwo.GetESCParametersViewModel(SelectedDeviceTwo.Device.PortName, SelectedDeviceTwo.Device.DynotisData);
+                ConnectedTwoDevice.CurrentBatterySecurityLimits = _batterySecurityLimitsManagerTwo.GetBatterySecurityLimitsViewModel(SelectedDeviceTwo.Device.PortName, SelectedDeviceTwo.Device.DynotisData);
+                ConnectedTwoDevice.CurrentTare = _tareManagerTwo.GetTareViewModel(SelectedDeviceTwo.Device.PortName, SelectedDeviceTwo.Device.DynotisData, SelectedDeviceTwo.DeviceInterfaceVariables);
             }
         }
 
@@ -241,18 +185,10 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             if (ConnectedOneDevice == device)
             {
                 ConnectedOneDevice = null;
-                CurrentEquipmentParametersOne = null;
-                CurrentESCParametersOne = null;
-                CurrentBatterySecurityLimitsOne = null;
-                CurrentTareOne = null;
             }
             if (ConnectedTwoDevice == device)
             {
                 ConnectedTwoDevice = null;
-                CurrentEquipmentParametersTwo = null;
-                CurrentESCParametersTwo = null;
-                CurrentBatterySecurityLimitsTwo = null;
-                CurrentTareTwo = null;
             }
 
             if (SelectedDeviceOne == device)
