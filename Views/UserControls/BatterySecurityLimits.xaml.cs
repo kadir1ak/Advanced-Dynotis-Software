@@ -22,13 +22,11 @@ namespace Advanced_Dynotis_Software.Views.UserControls
         private void ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
             // ToggleButton Checked olduğunda çalışacak kod
-            MessageBox.Show("ToggleButton Checked");
         }
 
         private void ToggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
             // ToggleButton Unchecked olduğunda çalışacak kod
-            MessageBox.Show("ToggleButton Unchecked");
         }
 
         private void NumericTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)

@@ -9,42 +9,22 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 {
     public class TareViewModel : INotifyPropertyChanged
     {
-        public double _tareTorqueValue;
-        public double _tareThrustValue;
-        public double _tareCurrentValue;
-        public double _tareMotorSpeedValue;
+        private double _tareTorqueValue;
+        private double _tareThrustValue;
+        private double _tareCurrentValue;
+        private double _tareMotorSpeedValue;
         private DynotisData _dynotisData;
-        public ICommand TareCommand { get; }
 
         public TareViewModel(DynotisData dynotisData)
         {
             _dynotisData = dynotisData;
-            TareCommand = new RelayCommand(_ => Tare());
-        }
-
-        private void Tare()
-        {
-            MessageBox.Show("Tare İşlemleri Yapıldı");
-            tareThrustValue = _dynotisData.Thrust.Value;
-            tareTorqueValue = _dynotisData.Torque.Value;
-            tareCurrentValue = _dynotisData.Current;
-            tareMotorSpeedValue = _dynotisData.MotorSpeed.Value;
+            TareCommand = new RelayCommand(param => ExecuteTare());
 
         }
 
-        public double tareThrustValue
-        {
-            get => _tareThrustValue;
-            set
-            {
-                if (SetProperty(ref _tareThrustValue, value))
-                {
-                    _dynotisData.TareThrustValue = value;
-                }
-                OnPropertyChanged(nameof(tareThrustValue));
-            }
-        }
-        public double tareTorqueValue
+        public ICommand TareCommand { get; }
+
+        public double TareTorqueValue
         {
             get => _tareTorqueValue;
             set
@@ -52,11 +32,25 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 if (SetProperty(ref _tareTorqueValue, value))
                 {
                     _dynotisData.TareTorqueValue = value;
+                    OnPropertyChanged(nameof(_dynotisData));
                 }
-                OnPropertyChanged(nameof(tareTorqueValue));
             }
         }
-        public double tareCurrentValue
+
+        public double TareThrustValue
+        {
+            get => _tareThrustValue;
+            set
+            {
+                if (SetProperty(ref _tareThrustValue, value))
+                {
+                    _dynotisData.TareThrustValue = value;
+                    OnPropertyChanged(nameof(_dynotisData));
+                }
+            }
+        }
+
+        public double TareCurrentValue
         {
             get => _tareCurrentValue;
             set
@@ -64,11 +58,12 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 if (SetProperty(ref _tareCurrentValue, value))
                 {
                     _dynotisData.TareCurrentValue = value;
+                    OnPropertyChanged(nameof(_dynotisData));
                 }
-                OnPropertyChanged(nameof(tareCurrentValue));
             }
         }
-        public double tareMotorSpeedValue
+
+        public double TareMotorSpeedValue
         {
             get => _tareMotorSpeedValue;
             set
@@ -76,9 +71,26 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 if (SetProperty(ref _tareMotorSpeedValue, value))
                 {
                     _dynotisData.TareMotorSpeedValue = value;
+                    OnPropertyChanged(nameof(_dynotisData));
                 }
-                OnPropertyChanged(nameof(tareMotorSpeedValue));
             }
+        }
+ 
+        private void ExecuteTare()
+        {
+            MessageBox.Show("Tare İşlemleri Yapıldı");
+
+            // Verileri senkronize et
+            TareThrustValue = _dynotisData.Thrust.Value;
+            TareTorqueValue = _dynotisData.Torque.Value;
+            TareCurrentValue = _dynotisData.Current;
+            TareMotorSpeedValue = _dynotisData.MotorSpeed.Value;
+
+            // PropertyChanged olayını tetikleyerek UI'yi güncelle
+            OnPropertyChanged(nameof(TareThrustValue));
+            OnPropertyChanged(nameof(TareTorqueValue));
+            OnPropertyChanged(nameof(TareCurrentValue));
+            OnPropertyChanged(nameof(TareMotorSpeedValue));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -96,6 +108,4 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
-
-
 }

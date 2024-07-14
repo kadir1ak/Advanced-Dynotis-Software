@@ -13,6 +13,8 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 {
     public class Dynotis : INotifyPropertyChanged, IDisposable
     {
+        private readonly object _dataLock = new object();
+
         public readonly SerialPort Port;
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
@@ -282,30 +284,36 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
                         await Application.Current.Dispatcher.InvokeAsync(() =>
                         {
-                            var currentData = DynotisData;
-                            newData.PropellerArea = currentData.PropellerArea;
-                            newData.MotorInner = currentData.MotorInner;
-                            newData.NoLoadCurrents = currentData.NoLoadCurrents;
-                            newData.ESCValue = currentData.ESCValue;
-                            newData.ESCStatus = currentData.ESCStatus;
-                            newData.TestMode = currentData.TestMode;
-                            newData.SaveFile = currentData.SaveFile;
-                            newData.SaveStatus = currentData.SaveStatus;
-                            newData.BatteryLevel = currentData.BatteryLevel;
-                            newData.MaxCurrent = currentData.MaxCurrent;
-                            newData.SecurityStatus = currentData.SecurityStatus;
-                            newData.TareThrustValue = currentData.TareThrustValue;
-                            newData.TareTorqueValue = currentData.TareTorqueValue;
-                            newData.TareCurrentValue = currentData.TareCurrentValue;
-                            newData.TareMotorSpeedValue = currentData.TareMotorSpeedValue;
+                            lock (_dataLock)
+                            {
+                                var currentData = DynotisData;
+                                newData.PropellerArea = currentData.PropellerArea;
+                                newData.MotorInner = currentData.MotorInner;
+                                newData.NoLoadCurrents = currentData.NoLoadCurrents;
+                                newData.ESCValue = currentData.ESCValue;
+                                newData.ESCStatus = currentData.ESCStatus;
+                                newData.TestMode = currentData.TestMode;
+                                newData.SaveFile = currentData.SaveFile;
+                                newData.SaveStatus = currentData.SaveStatus;
+                                newData.BatteryLevel = currentData.BatteryLevel;
+                                newData.MaxCurrent = currentData.MaxCurrent;
+                                newData.SecurityStatus = currentData.SecurityStatus;
+                                newData.TareThrustValue = currentData.TareThrustValue;
+                                newData.TareTorqueValue = currentData.TareTorqueValue;
+                                newData.TareCurrentValue = currentData.TareCurrentValue;
+                                newData.TareMotorSpeedValue = currentData.TareMotorSpeedValue;
 
-                            DynotisData = newData;
+                                DynotisData = newData;
 
-                            DynotisData.Vibration = CalculateMagnitude(newData.VibrationX, newData.VibrationY, newData.VibrationZ);
-                            DynotisData.Power = newData.Current * newData.Voltage;
-                            DynotisData.WindDirection = 275 * newData.Voltage;
-                            DynotisData.AirDensity = 10.0 * newData.Voltage;
+                                DynotisData.Vibration = CalculateMagnitude(newData.VibrationX, newData.VibrationY, newData.VibrationZ);
+                                DynotisData.Power = newData.Current * newData.Voltage;
+                                DynotisData.WindDirection = 275 * newData.Voltage;
+                                DynotisData.AirDensity = 10.0 * newData.Voltage;
+
+                                OnPropertyChanged(nameof(DynotisData));
+                            }
                         });
+
 
                         await WriteLineAsync(Port, $"Device_Status:{Mode};ESC:{DynotisData.ESCValue};", token);
                     }

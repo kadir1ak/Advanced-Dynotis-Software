@@ -50,16 +50,15 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                     {
                         _currentTare.PropertyChanged += (sender, e) =>
                         {
-
-                            if (e.PropertyName == nameof(TareViewModel.tareThrustValue) ||
-                                e.PropertyName == nameof(TareViewModel.tareTorqueValue) ||
-                                e.PropertyName == nameof(TareViewModel.tareCurrentValue) ||
-                                e.PropertyName == nameof(TareViewModel.tareMotorSpeedValue))
+                            if (e.PropertyName == nameof(TareViewModel.TareThrustValue) ||
+                                e.PropertyName == nameof(TareViewModel.TareTorqueValue) ||
+                                e.PropertyName == nameof(TareViewModel.TareCurrentValue) ||
+                                e.PropertyName == nameof(TareViewModel.TareMotorSpeedValue))
                             {
-                                Device.DynotisData.TareThrustValue = _currentTare.tareThrustValue;
-                                Device.DynotisData.TareTorqueValue = _currentTare.tareTorqueValue;
-                                Device.DynotisData.TareCurrentValue = _currentTare.tareCurrentValue;
-                                Device.DynotisData.TareMotorSpeedValue = _currentTare.tareMotorSpeedValue;
+                                Device.DynotisData.TareThrustValue = _currentTare.TareThrustValue;
+                                Device.DynotisData.TareTorqueValue = _currentTare.TareTorqueValue;
+                                Device.DynotisData.TareCurrentValue = _currentTare.TareCurrentValue;
+                                Device.DynotisData.TareMotorSpeedValue = _currentTare.TareMotorSpeedValue;
                                 OnPropertyChanged(nameof(Device.DynotisData));
                             }
                         };
@@ -186,7 +185,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                     await Application.Current.Dispatcher.InvokeAsync(() =>
                     {
                         InterfaceVariables.UpdateFrom(latestData);
-                        ChartViewModel.UpdateChartData(InterfaceVariables); // InterfaceVariables'den güncellemeleri ChartViewModel'e iletme
+                        ChartViewModel.UpdateChartData(InterfaceVariables);
 
                     });
                 }

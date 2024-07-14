@@ -26,6 +26,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         private ESCParametersManager _escParametersManagerTwo;
         private BatterySecurityLimitsManager _batterySecurityLimitsManagerOne;
         private BatterySecurityLimitsManager _batterySecurityLimitsManagerTwo;
+        private TareManager _tareManagerOne;
+        private TareManager _tareManagerTwo;
 
         private EquipmentParametersViewModel _currentEquipmentParametersOne;
         private EquipmentParametersViewModel _currentEquipmentParametersTwo;
@@ -33,6 +35,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         private ESCParametersViewModel _currentESCParametersTwo;
         private BatterySecurityLimitsViewModel _currentBatterySecurityLimitsOne;
         private BatterySecurityLimitsViewModel _currentBatterySecurityLimitsTwo;
+        private TareViewModel _currentTareOne;
+        private TareViewModel _currentTareTwo;
 
         public ObservableCollection<DeviceViewModel> AvailableDevicesOne { get; private set; }
         public ObservableCollection<DeviceViewModel> AvailableDevicesTwo { get; private set; }
@@ -96,6 +100,17 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 }
             }
         }
+        public TareViewModel CurrentTareOne
+        {
+            get => _currentTareOne;
+            set => SetProperty(ref _currentTareOne, value);
+        }
+
+        public TareViewModel CurrentTareTwo
+        {
+            get => _currentTareTwo;
+            set => SetProperty(ref _currentTareTwo, value);
+        }
 
         public EquipmentParametersViewModel CurrentEquipmentParametersOne
         {
@@ -147,6 +162,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             _escParametersManagerTwo = new ESCParametersManager();
             _batterySecurityLimitsManagerOne = new BatterySecurityLimitsManager();
             _batterySecurityLimitsManagerTwo = new BatterySecurityLimitsManager();
+            _tareManagerOne = new TareManager();
+            _tareManagerTwo = new TareManager();
 
             DeviceManager.Instance.DeviceDisconnected += OnDeviceDisconnected;
             DeviceManager.Instance.DeviceConnected += OnDeviceConnected;
@@ -184,6 +201,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 CurrentEquipmentParametersOne = _equipmentParametersManagerOne.GetEquipmentParametersViewModel(SelectedDeviceOne.Device.PortName, SelectedDeviceOne.Device.DynotisData);
                 CurrentESCParametersOne = _escParametersManagerOne.GetESCParametersViewModel(SelectedDeviceOne.Device.PortName, SelectedDeviceOne.Device.DynotisData);
                 CurrentBatterySecurityLimitsOne = _batterySecurityLimitsManagerOne.GetBatterySecurityLimitsViewModel(SelectedDeviceOne.Device.PortName, SelectedDeviceOne.Device.DynotisData);
+                CurrentTareOne = _tareManagerOne.GetTareViewModel(SelectedDeviceOne.Device.PortName, SelectedDeviceOne.Device.DynotisData);
             }
             else if (deviceViewModel == SelectedDeviceTwo)
             {
@@ -191,6 +209,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 CurrentEquipmentParametersTwo = _equipmentParametersManagerTwo.GetEquipmentParametersViewModel(SelectedDeviceTwo.Device.PortName, SelectedDeviceTwo.Device.DynotisData);
                 CurrentESCParametersTwo = _escParametersManagerTwo.GetESCParametersViewModel(SelectedDeviceTwo.Device.PortName, SelectedDeviceTwo.Device.DynotisData);
                 CurrentBatterySecurityLimitsTwo = _batterySecurityLimitsManagerTwo.GetBatterySecurityLimitsViewModel(SelectedDeviceTwo.Device.PortName, SelectedDeviceTwo.Device.DynotisData);
+                CurrentTareTwo = _tareManagerTwo.GetTareViewModel(SelectedDeviceTwo.Device.PortName, SelectedDeviceTwo.Device.DynotisData);
             }
         }
 
@@ -225,6 +244,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 CurrentEquipmentParametersOne = null;
                 CurrentESCParametersOne = null;
                 CurrentBatterySecurityLimitsOne = null;
+                CurrentTareOne = null;
             }
             if (ConnectedTwoDevice == device)
             {
@@ -232,6 +252,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 CurrentEquipmentParametersTwo = null;
                 CurrentESCParametersTwo = null;
                 CurrentBatterySecurityLimitsTwo = null;
+                CurrentTareTwo = null;
             }
 
             if (SelectedDeviceOne == device)

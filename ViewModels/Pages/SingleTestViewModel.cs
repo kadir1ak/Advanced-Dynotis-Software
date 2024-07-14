@@ -61,24 +61,20 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             {
                 if (SetProperty(ref _currentTare, value))
                 {
-                    if (_currentTare != null)
+                    _currentTare.PropertyChanged += (sender, e) =>
                     {
-                        _currentTare.PropertyChanged += (sender, e) =>
+                        if (e.PropertyName == nameof(TareViewModel.TareThrustValue) ||
+                            e.PropertyName == nameof(TareViewModel.TareTorqueValue) ||
+                            e.PropertyName == nameof(TareViewModel.TareCurrentValue) ||
+                            e.PropertyName == nameof(TareViewModel.TareMotorSpeedValue))
                         {
-
-                            if (e.PropertyName == nameof(TareViewModel.tareThrustValue) ||
-                                e.PropertyName == nameof(TareViewModel.tareTorqueValue) ||
-                                e.PropertyName == nameof(TareViewModel.tareCurrentValue) ||
-                                e.PropertyName == nameof(TareViewModel.tareMotorSpeedValue))
-                            {
-                                ConnectedDevice.Device.DynotisData.TareThrustValue = _currentTare.tareThrustValue;
-                                ConnectedDevice.Device.DynotisData.TareTorqueValue = _currentTare.tareTorqueValue;
-                                ConnectedDevice.Device.DynotisData.TareCurrentValue = _currentTare.tareCurrentValue;
-                                ConnectedDevice.Device.DynotisData.TareMotorSpeedValue = _currentTare.tareMotorSpeedValue;
-                                OnPropertyChanged(nameof(Dynotis.DynotisData));
-                            }
-                        };
-                    }
+                            ConnectedDevice.Device.DynotisData.TareThrustValue = _currentTare.TareThrustValue;
+                            ConnectedDevice.Device.DynotisData.TareTorqueValue = _currentTare.TareTorqueValue;
+                            ConnectedDevice.Device.DynotisData.TareCurrentValue = _currentTare.TareCurrentValue;
+                            ConnectedDevice.Device.DynotisData.TareMotorSpeedValue = _currentTare.TareMotorSpeedValue;
+                            ConnectedDevice.Device.OnPropertyChanged(nameof(Dynotis.DynotisData));
+                        }
+                    };
                 }
             }
         }

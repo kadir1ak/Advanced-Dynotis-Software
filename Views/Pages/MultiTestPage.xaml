@@ -112,9 +112,13 @@
                                                 </ContentControl>
                                             </Border>
                                             <Border Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0 3 3 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                                                <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                                    <uc:Tare HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0"/>
-                                                </StackPanel>
+                                                <ContentControl Content="{Binding CurrentTare, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                                    <ContentControl.ContentTemplate>
+                                                        <DataTemplate>
+                                                            <uc:Tare HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"/>
+                                                        </DataTemplate>
+                                                    </ContentControl.ContentTemplate>
+                                                </ContentControl>
                                             </Border>
                                         </Grid>
 
