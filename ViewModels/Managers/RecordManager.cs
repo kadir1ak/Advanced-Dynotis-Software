@@ -1,81 +1,38 @@
-﻿using System;
-using System.Diagnostics;
-using System.Windows.Threading;
+﻿using Advanced_Dynotis_Software.Models.Dynotis;
+using Advanced_Dynotis_Software.ViewModels.UserControls;
+using System.Collections.Generic;
 
 namespace Advanced_Dynotis_Software.ViewModels.Managers
 {
     public class RecordManager
     {
-        private Record _record;
-        private DispatcherTimer _timer;
-        private Stopwatch _stopWatch;
-
-        public event EventHandler<TimeSpan> TimeUpdated;
+        private readonly Dictionary<string, RecordViewModel> _tare;
 
         public RecordManager()
         {
-            _record = new Record();
-            _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromMilliseconds(100); // Daha hassas bir zamanlayıcı
-            _timer.Tick += Timer_Tick;
-
-            _stopWatch = new Stopwatch();
+            _tare = new Dictionary<string, RecordViewModel>();
         }
 
-        private void Timer_Tick(object sender, EventArgs e)
+        public RecordViewModel GetRecordViewModel(string devicePortName, DynotisData dynotisData, InterfaceVariables interfaceVariables)
         {
-            if (_stopWatch.IsRunning)
+            if (_tare.ContainsKey(devicePortName))
             {
-                _record.Duration = _stopWatch.Elapsed;
-                TimeUpdated?.Invoke(this, _record.Duration);
-            }
-        }
-
-        public void ToggleRecording()
-        {
-            if (_record.IsRecording)
-            {
-                StopRecording();
+                return _tare[devicePortName];
             }
             else
             {
-                StartRecording();
+                var viewModel = new RecordViewModel(interfaceVariables);
+                _tare[devicePortName] = viewModel;
+                return viewModel;
             }
         }
 
-        private void StartRecording()
+        public void RemoveRecordViewModel(string devicePortName)
         {
-            _record.IsRecording = true;
-            _stopWatch.Start();
-            _timer.Start();
-        }
-
-        private void StopRecording()
-        {
-            _record.IsRecording = false;
-            _stopWatch.Stop();
-            _timer.Stop();
-        }
-
-        public bool IsRecording => _record.IsRecording;
-        public TimeSpan Duration => _record.Duration;
-        public string FileName
-        {
-            get => _record.FileName;
-            set => _record.FileName = value;
-        }
-    }
-    public class Record
-    {
-        public bool IsRecording { get; set; }
-        public TimeSpan Duration { get; set; }
-        public string FileName { get; set; }
-
-        public Record()
-        {
-            IsRecording = false;
-            Duration = TimeSpan.Zero;
-            FileName = string.Empty;
+            if (_tare.ContainsKey(devicePortName))
+            {
+                _tare.Remove(devicePortName);
+            }
         }
     }
 }

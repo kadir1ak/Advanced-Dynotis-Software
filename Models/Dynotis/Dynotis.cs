@@ -293,8 +293,8 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                                 newData.ESCValue = currentData.ESCValue;
                                 newData.ESCStatus = currentData.ESCStatus;
                                 newData.TestMode = currentData.TestMode;
-                                newData.SaveFile = currentData.SaveFile;
-                                newData.SaveStatus = currentData.SaveStatus;
+                                newData.FileName = currentData.FileName;
+                                newData.IsRecording = currentData.IsRecording;
                                 newData.BatteryLevel = currentData.BatteryLevel;
                                 newData.MaxCurrent = currentData.MaxCurrent;
                                 newData.SecurityStatus = currentData.SecurityStatus;
@@ -305,7 +305,8 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
                                 DynotisData = newData;
 
-                                DynotisData.Vibration = CalculateMagnitude(newData.VibrationX, newData.VibrationY, newData.VibrationZ);
+                                //DynotisData.Vibration =  Math.Sqrt(Math.Pow(newData.VibrationX, 2) + Math.Pow(newData.VibrationY, 2) + Math.Pow(newData.VibrationZ, 2));
+                                DynotisData.Vibration = Math.Sqrt(Math.Pow(newData.VibrationY, 2) + Math.Pow(newData.VibrationY, 2)); 
                                 DynotisData.Power = newData.Current * newData.Voltage;
                                 DynotisData.WindDirection = 275 * newData.Voltage;
                                 DynotisData.AirDensity = 10.0 * newData.Voltage;
@@ -356,11 +357,6 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 Logger.Log($"WriteLine error: {ex.Message}");
                 throw;
             }
-        }
-
-        private static double CalculateMagnitude(double x, double y, double z)
-        {
-            return Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2) + Math.Pow(z, 2));
         }
 
         public static bool TryParseDouble(string value, out double result)

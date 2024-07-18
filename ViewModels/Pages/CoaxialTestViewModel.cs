@@ -28,6 +28,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         private BatterySecurityLimitsManager _batterySecurityLimitsManagerTwo;
         private TareManager _tareManagerOne;
         private TareManager _tareManagerTwo;
+        private RecordManager _recordManagerOne;
+        private RecordManager _recordManagerTwo;
 
         public ObservableCollection<DeviceViewModel> AvailableDevicesOne { get; private set; }
         public ObservableCollection<DeviceViewModel> AvailableDevicesTwo { get; private set; }
@@ -107,7 +109,9 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             _batterySecurityLimitsManagerOne = new BatterySecurityLimitsManager();
             _batterySecurityLimitsManagerTwo = new BatterySecurityLimitsManager();
             _tareManagerOne = new TareManager();
-            _tareManagerTwo = new TareManager();
+            _tareManagerTwo = new TareManager();            
+            _recordManagerOne = new RecordManager();
+            _recordManagerTwo = new RecordManager();
 
             DeviceManager.Instance.DeviceDisconnected += OnDeviceDisconnected;
             DeviceManager.Instance.DeviceConnected += OnDeviceConnected;
@@ -146,6 +150,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 ConnectedOneDevice.CurrentESCParameters = _escParametersManagerOne.GetESCParametersViewModel(SelectedDeviceOne.Device.PortName, SelectedDeviceOne.Device.DynotisData);
                 ConnectedOneDevice.CurrentBatterySecurityLimits = _batterySecurityLimitsManagerOne.GetBatterySecurityLimitsViewModel(SelectedDeviceOne.Device.PortName, SelectedDeviceOne.Device.DynotisData);
                 ConnectedOneDevice.CurrentTare = _tareManagerOne.GetTareViewModel(SelectedDeviceOne.Device.PortName, SelectedDeviceOne.Device.DynotisData, SelectedDeviceOne.DeviceInterfaceVariables);
+                ConnectedOneDevice.CurrentRecord = _recordManagerOne.GetRecordViewModel(SelectedDeviceOne.Device.PortName, SelectedDeviceOne.Device.DynotisData, SelectedDeviceOne.DeviceInterfaceVariables);
             }
             else if (deviceViewModel == SelectedDeviceTwo)
             {
@@ -154,6 +159,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 ConnectedTwoDevice.CurrentESCParameters = _escParametersManagerTwo.GetESCParametersViewModel(SelectedDeviceTwo.Device.PortName, SelectedDeviceTwo.Device.DynotisData);
                 ConnectedTwoDevice.CurrentBatterySecurityLimits = _batterySecurityLimitsManagerTwo.GetBatterySecurityLimitsViewModel(SelectedDeviceTwo.Device.PortName, SelectedDeviceTwo.Device.DynotisData);
                 ConnectedTwoDevice.CurrentTare = _tareManagerTwo.GetTareViewModel(SelectedDeviceTwo.Device.PortName, SelectedDeviceTwo.Device.DynotisData, SelectedDeviceTwo.DeviceInterfaceVariables);
+                ConnectedTwoDevice.CurrentRecord = _recordManagerTwo.GetRecordViewModel(SelectedDeviceTwo.Device.PortName, SelectedDeviceTwo.Device.DynotisData, SelectedDeviceTwo.DeviceInterfaceVariables);
             }
         }
 

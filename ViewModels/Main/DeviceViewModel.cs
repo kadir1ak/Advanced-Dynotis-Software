@@ -22,7 +22,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         private DynotisData _latestDynotisData;
         private readonly object _dataLock = new();
         private CancellationTokenSource _cancellationTokenSource;
-        private int UpdateTimeMillisecond = 50;
+        private int UpdateTimeMillisecond = 20;
 
         public Dynotis Device
         {
@@ -34,6 +34,35 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                     _device = value;
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(Device.DynotisData)); // Notify when the device changes
+                }
+            }
+        }
+
+        private RecordViewModel _currentRecord;
+        public RecordViewModel CurrentRecord
+        {
+            get => _currentRecord;
+            set
+            {
+                if (SetProperty(ref _currentRecord, value))
+                {
+                    if (_currentRecord != null)
+                    {
+                        _currentRecord.PropertyChanged += (sender, e) =>
+                        {
+                            if (e.PropertyName == nameof(RecordViewModel.FileName) ||
+                                e.PropertyName == nameof(RecordViewModel.IsRecording) ||
+                                e.PropertyName == nameof(RecordViewModel.TestMode) ||
+                                e.PropertyName == nameof(RecordViewModel.Duration))
+                            {
+                                DeviceInterfaceVariables.FileName = _currentRecord.FileName;
+                                DeviceInterfaceVariables.IsRecording = _currentRecord.IsRecording;
+                                DeviceInterfaceVariables.TestMode = _currentRecord.TestMode;
+                                DeviceInterfaceVariables.Duration = _currentRecord.Duration;
+                                OnPropertyChanged(nameof(DeviceInterfaceVariables));
+                            }
+                        };
+                    }
                 }
             }
         }

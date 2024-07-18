@@ -106,10 +106,10 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             TimeLabels.Add(data.Time.ToString());
             UpdateSeries(VibrationSeriesCollection, data.Vibration);
             UpdateSeries(CurrentSeriesCollection, data.Current);
-            UpdateSeries(MotorSpeedSeriesCollection, data.MotorSpeed.BaseValue);
+            UpdateSeries(MotorSpeedSeriesCollection, data.MotorSpeed.Value);
             UpdateSeries(VoltageSeriesCollection, data.Voltage);
-            UpdateSeries(ThrustSeriesCollection, data.Thrust.BaseValue);
-            UpdateSeries(TorqueSeriesCollection, data.Torque.BaseValue);
+            UpdateSeries(ThrustSeriesCollection, data.Thrust.Value);
+            UpdateSeries(TorqueSeriesCollection, data.Torque.Value);
 
             UpdateChartSteps();
         }

@@ -47,10 +47,12 @@
                     <Grid Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="2*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox x:Name="addTimeTextBox" Grid.Column="0" Width="100" VerticalAlignment="Center" Margin="5" ToolTip="Enter time in seconds" Foreground="{DynamicResource AutomateText}">
+                        <icon:PackIconMaterial Kind="TimerEdit" Grid.Column="0" Foreground="{DynamicResource deviceCardIcon}" Width="20" Height="20" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBox x:Name="addTimeTextBox" Grid.Column="1" Width="100" VerticalAlignment="Center" Margin="5" ToolTip="Enter time in seconds" Foreground="{DynamicResource AutomateText}">
                             <TextBox.Style>
                                 <Style TargetType="TextBox">
                                     <Style.Triggers>
@@ -69,8 +71,8 @@
                                 </Style>
                             </TextBox.Style>
                         </TextBox>
-                        <Button Grid.Column="1" Content="{x:Static p:Resources.AutomateTestPage_AddPoint}" VerticalAlignment="Center" Height="30" Width="150" Command="{Binding AddRowCommand}" CommandParameter="{Binding Text, ElementName=addTimeTextBox}" Margin="2" Foreground="{DynamicResource AutomateText}" Background="{DynamicResource AutomateAddButton}"/>
-                        <Button Grid.Column="2" Content="{x:Static p:Resources.AutomateTestPage_ClearAllPoints}" VerticalAlignment="Center" Height="30" Width="150" Command="{Binding ClearAllPointsCommand}" HorizontalAlignment="Right" Margin="2" Foreground="{DynamicResource AutomateText}" Background="{DynamicResource AutomateClearButton}"/>
+                        <Button Grid.Column="2" Content="{x:Static p:Resources.AutomateTestPage_AddPoint}" VerticalAlignment="Center" Height="30" Width="150" Command="{Binding AddRowCommand}" CommandParameter="{Binding Text, ElementName=addTimeTextBox}" Margin="2" Foreground="{DynamicResource AutomateText}" Background="{DynamicResource AutomateAddButton}"/>
+                        <Button Grid.Column="3" Content="{x:Static p:Resources.AutomateTestPage_ClearAllPoints}" VerticalAlignment="Center" Height="30" Width="150" Command="{Binding ClearAllPointsCommand}" HorizontalAlignment="Right" Margin="2" Foreground="{DynamicResource AutomateText}" Background="{DynamicResource AutomateClearButton}"/>
                     </Grid>
                 </Border>
 

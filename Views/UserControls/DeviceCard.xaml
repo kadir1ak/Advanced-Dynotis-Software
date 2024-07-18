@@ -129,6 +129,24 @@
                     <TextBlock x:Name="WindDirectionValueLabel" Text="{Binding DeviceInterfaceVariables.WindDirection, Mode=OneWay, StringFormat={}{0:0.0}}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <TextBlock x:Name="WindDirectionUnitLabel" Text="°" Width="40" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
+
+                <!-- Record  -->
+                <StackPanel Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <TextBlock Text="TestMode: " Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <TextBlock Text="{Binding DeviceInterfaceVariables.TestMode, Mode=OneWay}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <TextBlock Text="IsRecording: " Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <TextBlock Text="{Binding DeviceInterfaceVariables.IsRecording, Mode=OneWay}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <TextBlock Text="FileName: " Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <TextBlock Text="{Binding DeviceInterfaceVariables.FileName, Mode=OneWay}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <TextBlock Text="Duration: " Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <TextBlock Text="{Binding DeviceInterfaceVariables.Duration, Mode=OneWay}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                </StackPanel>
             </StackPanel>
         </Border>
 

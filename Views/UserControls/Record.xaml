@@ -23,14 +23,14 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <Label Grid.Row="0" Grid.Column="1" FontSize="14" FontWeight="DemiBold" Content="{x:Static p:Resources.Record_Recording}" Foreground="{DynamicResource RecordText}" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+        <Label Grid.Row="1" Grid.Column="0" FontSize="14" FontWeight="DemiBold" Content="{x:Static p:Resources.Record_Recording}" Foreground="{DynamicResource RecordText}" VerticalAlignment="Top" HorizontalAlignment="Center"/>
 
-        <icon:PackIconMaterial Grid.Row="1" Grid.Column="0" Kind="FileExcel" Foreground="Green" Margin="3" Height="30" Width="30" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" FontSize="16" HorizontalAlignment="Stretch" Margin="3" ToolTip="{x:Static p:Resources.Record_FileNameToolTip}" Foreground="{DynamicResource AutomateText}" TextChanged="FileNameTextBox_TextChanged">
+        <icon:PackIconMaterial Grid.Row="3" Grid.Column="3" Kind="FileExcel" Foreground="Green" Margin="3" Height="30" Width="30" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBox Grid.Row="1" Grid.Column="1" ToolTip="{x:Static p:Resources.Record_FileNameToolTip}" Text="{Binding FileName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="80" VerticalAlignment="Center" FontSize="16" HorizontalAlignment="Stretch" Margin="3"  Foreground="{DynamicResource AutomateText}">
             <TextBox.Style>
                 <Style TargetType="TextBox">
                     <Style.Triggers>
@@ -50,15 +50,15 @@
             </TextBox.Style>
         </TextBox>
 
-        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3">
-            <Button Width="35" Height="35" Background="Transparent" BorderBrush="Transparent" Click="RecordButton_Click">
+        <StackPanel Grid.Row="2" Grid.Column="0" Width="150" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="3">
+            <Button Width="35" Height="35" Command="{Binding RecordCommand}" HorizontalAlignment="Left" Background="Transparent" BorderBrush="Transparent">
                 <icon:PackIconMaterial x:Name="RecordButtonIcon" Kind="PlayCircleOutline" Width="30" Height="30" Foreground="{DynamicResource RecordButton}"/>
             </Button>
-            <TextBlock x:Name="RecordTimeTextBlock" Text="00:00:00" FontSize="16" Foreground="{DynamicResource RecordText}" VerticalAlignment="Center" Margin="10,0,0,0"/>
+            <TextBlock Text="{Binding Duration, StringFormat='{}{0:hh\\:mm\\:ss}'}" HorizontalAlignment="Center" FontSize="16" Foreground="{DynamicResource RecordText}" VerticalAlignment="Center" Margin="15,0,0,0"/>
         </StackPanel>
 
-        <icon:PackIconMaterial Grid.Row="0" Grid.RowSpan="3" Grid.Column="3" 
+        <icon:PackIconMaterial x:Name="RecordRec_Icon" Grid.Row="1" Grid.Column="3" 
                                Style="{StaticResource ToggleIconStyle}" 
-                               Kind="RecordRec" Margin="3 -10 3 0"/>
+                               Kind="RecordRec" Margin="0"/>
     </Grid>
 </UserControl>

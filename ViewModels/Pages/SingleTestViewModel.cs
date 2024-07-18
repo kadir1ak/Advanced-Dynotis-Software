@@ -20,11 +20,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         private ESCParametersManager _escParametersManager;
         private BatterySecurityLimitsManager _batterySecurityLimitsManager;
         private TareManager _tareManager;
-
-        private EquipmentParametersViewModel _currentEquipmentParameters;
-        private ESCParametersViewModel _currentESCParameters;
-        private BatterySecurityLimitsViewModel _currentBatterySecurityLimits;
-        private TareViewModel _currentTare;
+        private RecordManager _recordManager;
 
         public ObservableCollection<DeviceViewModel> AvailableDevices { get; }
 
@@ -65,6 +61,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             _escParametersManager = new ESCParametersManager();
             _batterySecurityLimitsManager = new BatterySecurityLimitsManager();
             _tareManager = new TareManager();
+            _recordManager = new RecordManager();
 
             DeviceManager.Instance.DeviceDisconnected += OnDeviceDisconnected;
             DeviceManager.Instance.DeviceConnected += OnDeviceConnected;
@@ -80,6 +77,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             ConnectedDevice.CurrentEquipmentParameters = _equipmentParametersManager.GetEquipmentParametersViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData);
             ConnectedDevice.CurrentESCParameters = _escParametersManager.GetESCParametersViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData);
             ConnectedDevice.CurrentBatterySecurityLimits = _batterySecurityLimitsManager.GetBatterySecurityLimitsViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData);
+            ConnectedDevice.CurrentTare = _tareManager.GetTareViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData, SelectedDevice.DeviceInterfaceVariables);
+            ConnectedDevice.CurrentRecord = _recordManager.GetRecordViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData, SelectedDevice.DeviceInterfaceVariables);
         }
 
         private void OnDeviceDisconnected(DeviceViewModel device)
@@ -90,6 +89,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 ConnectedDevice.CurrentEquipmentParameters = null;
                 ConnectedDevice.CurrentESCParameters = null;
                 ConnectedDevice.CurrentBatterySecurityLimits = null;
+                ConnectedDevice.CurrentTare = null;
+                ConnectedDevice.CurrentRecord = null;
             }
             RefreshAvailableDevices();
         }

@@ -60,7 +60,13 @@
                 </Border>
 
                 <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="4" BorderBrush="{DynamicResource PageBorder}" BorderThickness="1" HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="3">
-                    <uc:Record HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5"/>
+                    <ContentControl Content="{Binding CurrentRecord, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <ContentControl.ContentTemplate>
+                            <DataTemplate>
+                                <uc:Record HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"/>
+                            </DataTemplate>
+                        </ContentControl.ContentTemplate>
+                    </ContentControl>
                 </Border>
             </Grid>
         </Border>

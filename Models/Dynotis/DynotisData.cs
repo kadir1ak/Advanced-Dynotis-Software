@@ -47,9 +47,15 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         private bool   _securityStatus;
         private double _escValue;
         private bool   _escStatus;
-        private string _saveFile;
-        private bool   _saveStatus;
+
+
+
         private string _testMode;
+        private bool   _isRecording;        
+        private string _fileName;
+        private TimeSpan _duration;
+
+
 
         private double _tareTorqueValue;
         private double _tareThrustValue;
@@ -240,22 +246,26 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             set => SetProperty(ref _escStatus, value);
         }
 
-        public string SaveFile
+        public bool IsRecording
         {
-            get => _saveFile;
-            set => SetProperty(ref _saveFile, value);
-        }
-
-        public bool SaveStatus
-        {
-            get => _saveStatus;
-            set => SetProperty(ref _saveStatus, value);
+            get => _isRecording;
+            set => SetProperty(ref _isRecording, value);
         }
 
         public string TestMode
         {
             get => _testMode;
             set => SetProperty(ref _testMode, value);
+        }        
+        public string FileName
+        {
+            get => _fileName;
+            set => SetProperty(ref _fileName, value);
+        }        
+        public TimeSpan Duration
+        {
+            get => _duration;
+            set => SetProperty(ref _duration, value);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

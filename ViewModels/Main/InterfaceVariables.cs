@@ -19,6 +19,11 @@ public class InterfaceVariables : INotifyPropertyChanged
         _selectedTemperatureUnitIndex = 0;
         _selectedWindSpeedUnitIndex = 0;
         _selectedPressureUnitIndex = 1;
+
+        TestMode = "fuzzy";
+        IsRecording = false;
+        Duration = TimeSpan.Zero;
+        FileName = null;
     }
     public struct Unit
     {
@@ -67,9 +72,12 @@ public class InterfaceVariables : INotifyPropertyChanged
     private bool _securityStatus;
     private double _escValue;
     private bool _escStatus;
-    private string _saveFile;
-    private bool _saveStatus;
+
     private string _testMode;
+    private bool _isRecording;
+    private string _fileName;
+    private TimeSpan _duration;
+
 
     private double _tareTorqueBaseValue;
     private double _tareThrustBaseValue;
@@ -242,22 +250,26 @@ public class InterfaceVariables : INotifyPropertyChanged
         set => SetProperty(ref _escStatus, value);
     }
 
-    public string SaveFile
+    public bool IsRecording
     {
-        get => _saveFile;
-        set => SetProperty(ref _saveFile, value);
-    }
-
-    public bool SaveStatus
-    {
-        get => _saveStatus;
-        set => SetProperty(ref _saveStatus, value);
+        get => _isRecording;
+        set => SetProperty(ref _isRecording, value);
     }
 
     public string TestMode
     {
         get => _testMode;
         set => SetProperty(ref _testMode, value);
+    }
+    public string FileName
+    {
+        get => _fileName;
+        set => SetProperty(ref _fileName, value);
+    }
+    public TimeSpan Duration
+    {
+        get => _duration;
+        set => SetProperty(ref _duration, value);
     }
 
     public double TareTorqueBaseValue
@@ -429,9 +441,6 @@ public class InterfaceVariables : INotifyPropertyChanged
         SecurityStatus = data.SecurityStatus;
         ESCValue = data.ESCValue;
         ESCStatus = data.ESCStatus;
-        SaveFile = data.SaveFile;
-        SaveStatus = data.SaveStatus;
-        TestMode = data.TestMode;
 
         // Ensure your values ​​are protected
         SelectedIsTurkishChecked = InterfaceVariables.Instance.SelectedIsTurkishChecked;
@@ -442,9 +451,6 @@ public class InterfaceVariables : INotifyPropertyChanged
         SelectedTemperatureUnitIndex = InterfaceVariables.Instance.SelectedTemperatureUnitIndex;
         SelectedWindSpeedUnitIndex = InterfaceVariables.Instance.SelectedWindSpeedUnitIndex;
         SelectedPressureUnitIndex = InterfaceVariables.Instance.SelectedPressureUnitIndex;
-
- 
-
     }
     public Unit ThrustTareSet(Unit data)
     {

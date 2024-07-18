@@ -16,6 +16,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         private ESCParametersManager _escParametersManager;
         private BatterySecurityLimitsManager _batterySecurityLimitsManager;
         private TareManager _tareManager;
+        private RecordManager _recordManager;
 
         public ObservableCollection<DeviceViewModel> DevicesViewModel
         {
@@ -36,6 +37,9 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             _escParametersManager = new ESCParametersManager();
             _batterySecurityLimitsManager = new BatterySecurityLimitsManager();
             _tareManager = new TareManager();
+            _tareManager = new TareManager();
+            _recordManager = new RecordManager();
+
             DevicesViewModel = new ObservableCollection<DeviceViewModel>(DeviceManager.Instance.GetAllDevices());
             DeviceManager.Instance.DeviceConnected += OnDeviceConnected;
             DeviceManager.Instance.DeviceDisconnected += OnDeviceDisconnected;
@@ -46,6 +50,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 device.CurrentESCParameters = _escParametersManager.GetESCParametersViewModel(device.Device.PortName, device.Device.DynotisData);
                 device.CurrentBatterySecurityLimits = _batterySecurityLimitsManager.GetBatterySecurityLimitsViewModel(device.Device.PortName, device.Device.DynotisData);
                 device.CurrentTare = _tareManager.GetTareViewModel(device.Device.PortName, device.Device.DynotisData, device.DeviceInterfaceVariables);
+                device.CurrentRecord = _recordManager.GetRecordViewModel(device.Device.PortName, device.Device.DynotisData, device.DeviceInterfaceVariables);
             }
         }
 
@@ -58,6 +63,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 device.CurrentESCParameters = _escParametersManager.GetESCParametersViewModel(device.Device.PortName, device.Device.DynotisData);
                 device.CurrentBatterySecurityLimits = _batterySecurityLimitsManager.GetBatterySecurityLimitsViewModel(device.Device.PortName, device.Device.DynotisData);
                 device.CurrentTare = _tareManager.GetTareViewModel(device.Device.PortName, device.Device.DynotisData, device.DeviceInterfaceVariables);
+                device.CurrentRecord = _recordManager.GetRecordViewModel(device.Device.PortName, device.Device.DynotisData, device.DeviceInterfaceVariables);
             }
         }
 
@@ -70,6 +76,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 _escParametersManager.RemoveESCParametersViewModel(device.Device.PortName);
                 _batterySecurityLimitsManager.RemoveBatterySecurityLimitsViewModel(device.Device.PortName);
                 _tareManager.RemoveTareViewModel(device.Device.PortName);
+                _recordManager.RemoveRecordViewModel(device.Device.PortName);
             }
         }
 
