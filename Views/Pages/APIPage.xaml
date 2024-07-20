@@ -6,7 +6,19 @@
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.Pages"
              mc:Ignorable="d" 
              xmlns:p="clr-namespace:Advanced_Dynotis_Software.Properties">
-    <Grid>
-        <TextBlock Text="{x:Static p:Resources.APIPage_Text}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#151F2D"/>
+    <Grid Background="{DynamicResource Page}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0">
+            <TextBlock Text="{x:Static p:Resources.APIPage_Text}" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Foreground="{DynamicResource Text}"/>
+        </StackPanel>
+
     </Grid>
 </UserControl>

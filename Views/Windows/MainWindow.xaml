@@ -29,7 +29,7 @@
         <Grid>
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" MaxWidth="100" MinWidth="60"/>
+                    <ColumnDefinition Width="Auto" MaxWidth="120" MinWidth="120"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
@@ -116,17 +116,18 @@
 
                         <Grid Grid.Row="1" VerticalAlignment="Top">
                             <ScrollViewer VerticalAlignment="Top" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
-                                <Viewbox Stretch="Uniform" Margin="5 0 5 0">
+                                <Viewbox Stretch="Uniform" Margin="0 0 5 0">
                                     <StackPanel x:Name="LeftMenuPanel" VerticalAlignment="Top">
                                         <!-- Menu Buttons -->
-                                        <uc:MenuButton x:Name="HomeButton" Icon="Home" Text="{x:Static p:Resources.MainWindow_Home}" IsActive="True" Click="MenuButton_Click" />
-                                        <uc:MenuButton x:Name="SingleButton" Icon="UsbPort" Text="{x:Static p:Resources.MainWindow_Single}" Click="MenuButton_Click"/>
-                                        <uc:MenuButton x:Name="CoaxialButton" Icon="Usb" Text="{x:Static p:Resources.MainWindow_Coaxial}" Click="MenuButton_Click" />
-                                        <uc:MenuButton x:Name="MultiButton" Icon="Multicast" Text="{x:Static p:Resources.MainWindow_Multi}" Click="MenuButton_Click"/>
-                                        <uc:MenuButton x:Name="APIButton" Icon="Network" Text="{x:Static p:Resources.MainWindow_API}" Click="MenuButton_Click"/>
-                                        <uc:MenuButton x:Name="ScriptButton" Icon="Script" Text="{x:Static p:Resources.MainWindow_Script}" Click="MenuButton_Click"/>
-                                        <uc:MenuButton x:Name="AutomateTestButton" Icon="Autorenew" Text="{x:Static p:Resources.MainWindow_Automate}" Click="MenuButton_Click"/>
-                                        <uc:MenuButton x:Name="SettingsButton" Icon="Tools" Text="{x:Static p:Resources.MainWindow_Settings}" Click="MenuButton_Click"/>
+                                        <uc:MenuButton x:Name="HomeButton" Icon="Home" Text="{x:Static p:Resources.MainWindow_Home}" IsActive="True" Click="MenuButton_Click" Width="100"/>
+                                        <uc:MenuButton x:Name="SingleButton" Icon="UsbPort" Text="{x:Static p:Resources.MainWindow_Single}" Click="MenuButton_Click" Width="100"/>
+                                        <uc:MenuButton x:Name="CoaxialButton" Icon="Usb" Text="{x:Static p:Resources.MainWindow_Coaxial}" Click="MenuButton_Click" Width="100"/>
+                                        <uc:MenuButton x:Name="MultiButton" Icon="Multicast" Text="{x:Static p:Resources.MainWindow_Multi}" Click="MenuButton_Click" Width="100"/>
+                                        <uc:MenuButton x:Name="BalancerButton" Icon="ScaleBalance" Text="{x:Static p:Resources.MultiTestPage_Balancer}" Click="MenuButton_Click" Width="100"/>
+                                        <uc:MenuButton x:Name="APIButton" Icon="Network" Text="{x:Static p:Resources.MainWindow_API}" Click="MenuButton_Click" Width="100"/>
+                                        <uc:MenuButton x:Name="ScriptButton" Icon="Script" Text="{x:Static p:Resources.MainWindow_Script}" Click="MenuButton_Click" Width="100"/>
+                                        <uc:MenuButton x:Name="AutomateTestButton" Icon="Autorenew" Text="{x:Static p:Resources.MainWindow_Automate}" Click="MenuButton_Click" Width="100"/>
+                                        <uc:MenuButton x:Name="SettingsButton" Icon="Tools" Text="{x:Static p:Resources.MainWindow_Settings}" Click="MenuButton_Click" Width="100"/>
                                     </StackPanel>
                                 </Viewbox>
                             </ScrollViewer>

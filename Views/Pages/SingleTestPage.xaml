@@ -27,9 +27,9 @@
         </Grid.ColumnDefinitions>
 
         <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="10 10 10 0" BorderBrush="{DynamicResource PageBorder}" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Top">
-            <Grid>
-                <TextBlock Text="{x:Static p:Resources.SingleTestPage_Text}"  FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource Text}"/>
-            </Grid>
+            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                <TextBlock Text="{x:Static p:Resources.SingleTestPage_Text}" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Foreground="{DynamicResource Text}"/>
+            </StackPanel>
         </Border>
 
         <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="10 10 10 0" BorderBrush="{DynamicResource PageBorder}" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Top">

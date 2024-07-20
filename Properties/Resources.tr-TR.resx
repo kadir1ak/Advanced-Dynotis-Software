@@ -403,16 +403,16 @@
     <value>API</value>
   </data>
   <data name="MainWindow_Automate" xml:space="preserve">
-    <value>Otomatik</value>
+    <value>Otomatik Test</value>
   </data>
   <data name="MainWindow_Coaxial" xml:space="preserve">
-    <value>Koaksiyel</value>
+    <value>Koaksiyel Test</value>
   </data>
   <data name="MainWindow_Home" xml:space="preserve">
     <value>Ana</value>
   </data>
   <data name="MainWindow_Multi" xml:space="preserve">
-    <value>Çoklu</value>
+    <value>Çoklu Test</value>
   </data>
   <data name="MainWindow_Script" xml:space="preserve">
     <value>Senaryo</value>
@@ -421,7 +421,10 @@
     <value>Ayarlar</value>
   </data>
   <data name="MainWindow_Single" xml:space="preserve">
-    <value>Tekli</value>
+    <value>Tekli Test</value>
+  </data>
+  <data name="MultiTestPage_Balancer" xml:space="preserve">
+    <value>Pervane Dengeleyici</value>
   </data>
   <data name="MultiTestPage_Text" xml:space="preserve">
     <value>Çoklu Test</value>

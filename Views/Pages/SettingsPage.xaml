@@ -9,7 +9,16 @@
              mc:Ignorable="d"
              xmlns:p="clr-namespace:Advanced_Dynotis_Software.Properties">
     <Grid Background="{DynamicResource Page}">
-        <Border>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Margin="10 10 10 0" BorderBrush="{DynamicResource PageBorder}" BorderThickness="1">
+            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                <TextBlock Text="{x:Static p:Resources.SettingsPage_Text}" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Foreground="{DynamicResource Text}"/>
+            </StackPanel>
+        </Border>
+        <Border Grid.Row="1">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>

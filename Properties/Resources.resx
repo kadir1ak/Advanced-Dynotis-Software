@@ -171,6 +171,9 @@
   <data name="AutomateTestPage_Time" xml:space="preserve">
     <value>Time (s)</value>
   </data>
+  <data name="BalancerPage_Text" xml:space="preserve">
+    <value>Balancer</value>
+  </data>
   <data name="BatterySecurityLimits_Battery" xml:space="preserve">
     <value>Battery (S)</value>
   </data>
@@ -406,13 +409,13 @@
     <value>Automate</value>
   </data>
   <data name="MainWindow_Coaxial" xml:space="preserve">
-    <value>Coaxial</value>
+    <value>Coaxial Test</value>
   </data>
   <data name="MainWindow_Home" xml:space="preserve">
     <value>Home</value>
   </data>
   <data name="MainWindow_Multi" xml:space="preserve">
-    <value>Multi</value>
+    <value>Multi Test</value>
   </data>
   <data name="MainWindow_Script" xml:space="preserve">
     <value>Script</value>
@@ -421,7 +424,10 @@
     <value>Settings</value>
   </data>
   <data name="MainWindow_Single" xml:space="preserve">
-    <value>Single</value>
+    <value>Single Test</value>
+  </data>
+  <data name="MultiTestPage_Balancer" xml:space="preserve">
+    <value>Propeller Balancer</value>
   </data>
   <data name="MultiTestPage_Text" xml:space="preserve">
     <value>Multi Test</value>

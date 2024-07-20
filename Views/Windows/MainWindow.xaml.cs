@@ -23,6 +23,7 @@ namespace Advanced_Dynotis_Software.Views.Windows
         private ScriptViewModel _scriptViewModel;
         private AutomateTestViewModel _automateTestViewModel;
         private SettingsViewModel _settingsViewModel;
+        private BalancerViewModel _balancerViewModel;
 
         public MainWindow()
         {
@@ -46,6 +47,7 @@ namespace Advanced_Dynotis_Software.Views.Windows
             _scriptViewModel = new ScriptViewModel();
             _automateTestViewModel = new AutomateTestViewModel();
             _settingsViewModel = new SettingsViewModel();
+            _balancerViewModel = new BalancerViewModel();
         }
 
         private void HomeInitialize()
@@ -98,6 +100,9 @@ namespace Advanced_Dynotis_Software.Views.Windows
                         break;
                     case PackIconMaterialKind.Multicast:
                         ContentArea.Content = new MultiTestPage { DataContext = _multiTestViewModel };
+                        break;
+                    case PackIconMaterialKind.ScaleBalance:
+                        ContentArea.Content = new BalancerPage { DataContext = _balancerViewModel };
                         break;
                     case PackIconMaterialKind.Network:
                         ContentArea.Content = new APIPage { DataContext = _apiViewModel };

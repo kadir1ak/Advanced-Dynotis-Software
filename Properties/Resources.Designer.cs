@@ -223,6 +223,15 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   Balancer benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_Text {
+            get {
+                return ResourceManager.GetString("BalancerPage_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Battery (S) benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string BatterySecurityLimits_Battery {
@@ -925,7 +934,7 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
-        ///   Coaxial benzeri yerelleştirilmiş bir dize arar.
+        ///   Coaxial Test benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string MainWindow_Coaxial {
             get {
@@ -943,7 +952,7 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
-        ///   Multi benzeri yerelleştirilmiş bir dize arar.
+        ///   Multi Test benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string MainWindow_Multi {
             get {
@@ -970,11 +979,20 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
-        ///   Single benzeri yerelleştirilmiş bir dize arar.
+        ///   Single Test benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string MainWindow_Single {
             get {
                 return ResourceManager.GetString("MainWindow_Single", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Propeller Balancer benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string MultiTestPage_Balancer {
+            get {
+                return ResourceManager.GetString("MultiTestPage_Balancer", resourceCulture);
             }
         }
         
