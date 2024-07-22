@@ -101,7 +101,7 @@ namespace Advanced_Dynotis_Software.Views.Windows
                     case PackIconMaterialKind.Multicast:
                         ContentArea.Content = new MultiTestPage { DataContext = _multiTestViewModel };
                         break;
-                    case PackIconMaterialKind.ScaleBalance:
+                    case PackIconMaterialKind.Fan:
                         ContentArea.Content = new BalancerPage { DataContext = _balancerViewModel };
                         break;
                     case PackIconMaterialKind.Network:

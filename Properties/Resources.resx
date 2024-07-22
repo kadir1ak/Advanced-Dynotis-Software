@@ -157,7 +157,7 @@
     <value>Clear All Points</value>
   </data>
   <data name="AutomateTestPage_ESCOutput" xml:space="preserve">
-    <value>ESC throttle output value(%)</value>
+    <value>ESC throttle output value (%)</value>
   </data>
   <data name="AutomateTestPage_Index" xml:space="preserve">
     <value>Index</value>
@@ -170,6 +170,30 @@
   </data>
   <data name="AutomateTestPage_Time" xml:space="preserve">
     <value>Time (s)</value>
+  </data>
+  <data name="BalancerPage_AddedWeightValue" xml:space="preserve">
+    <value>Added Weight</value>
+  </data>
+  <data name="BalancerPage_AddedWeightValueToolTip" xml:space="preserve">
+    <value>Enter the Added Weight Value</value>
+  </data>
+  <data name="BalancerPage_Button" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="BalancerPage_Connect" xml:space="preserve">
+    <value>Connect</value>
+  </data>
+  <data name="BalancerPage_FixedMotorSpeedValue" xml:space="preserve">
+    <value>Fixed Motor Speed ​​Value</value>
+  </data>
+  <data name="BalancerPage_FixedMotorSpeedValueToolTip" xml:space="preserve">
+    <value>Enter Fixed Motor Speed ​​Value</value>
+  </data>
+  <data name="BalancerPage_PropellerDiameter" xml:space="preserve">
+    <value>Propeller Diameter</value>
+  </data>
+  <data name="BalancerPage_PropellerDiameterToolTip" xml:space="preserve">
+    <value>Enter the propeller diameter.</value>
   </data>
   <data name="BalancerPage_Text" xml:space="preserve">
     <value>Balancer</value>
@@ -192,8 +216,8 @@
   <data name="CoaxialTestPage_2Device" xml:space="preserve">
     <value>2. Device</value>
   </data>
-  <data name="CoaxialTestPage_Open" xml:space="preserve">
-    <value>Open</value>
+  <data name="CoaxialTestPage_Connect" xml:space="preserve">
+    <value>Connect</value>
   </data>
   <data name="CoaxialTestPage_Text" xml:space="preserve">
     <value>Coaxial Test</value>
@@ -248,6 +272,15 @@
   </data>
   <data name="DeviceCard_Vibration" xml:space="preserve">
     <value>Vibration</value>
+  </data>
+  <data name="DeviceCard_VibrationX" xml:space="preserve">
+    <value>X</value>
+  </data>
+  <data name="DeviceCard_VibrationY" xml:space="preserve">
+    <value>Y</value>
+  </data>
+  <data name="DeviceCard_VibrationZ" xml:space="preserve">
+    <value>Z</value>
   </data>
   <data name="DeviceCard_Voltage" xml:space="preserve">
     <value>Voltage</value>
@@ -474,8 +507,8 @@
   <data name="SettingsPage_UnitsSettings" xml:space="preserve">
     <value>Units Settings</value>
   </data>
-  <data name="SingleTestPage_Open" xml:space="preserve">
-    <value>Open</value>
+  <data name="SingleTestPage_Connect" xml:space="preserve">
+    <value>Connect</value>
   </data>
   <data name="SingleTestPage_Text" xml:space="preserve">
     <value>Single Test</value>

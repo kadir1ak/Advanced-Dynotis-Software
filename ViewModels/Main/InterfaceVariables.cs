@@ -94,6 +94,9 @@ public class InterfaceVariables : INotifyPropertyChanged
     private bool _selectedIsTurkishChecked;
     private bool _selectedIsEnglishChecked;
 
+    private int _fixedMotorSpeedValue;
+    private int _userPropellerArea;
+    private int _addedWeightValue;
     public double Time
     {
         get => _time;
@@ -412,6 +415,22 @@ public class InterfaceVariables : INotifyPropertyChanged
         get => _selectedIsEnglishChecked;
         set => SetProperty(ref _selectedIsEnglishChecked, value);
     }
+
+    public int FixedMotorSpeedValue
+    {
+        get => _fixedMotorSpeedValue;
+        set => SetProperty(ref _fixedMotorSpeedValue, value);
+    }
+    public int UserPropellerArea
+    {
+        get => _userPropellerArea;
+        set => SetProperty(ref _userPropellerArea, value);
+    }
+    public int AddedWeightValue
+    {
+        get => _addedWeightValue;
+        set => SetProperty(ref _addedWeightValue, value);
+    }
     public void UpdateFrom(DynotisData data)
     {
         // Synchronization of updated values
@@ -451,6 +470,8 @@ public class InterfaceVariables : INotifyPropertyChanged
         SelectedTemperatureUnitIndex = InterfaceVariables.Instance.SelectedTemperatureUnitIndex;
         SelectedWindSpeedUnitIndex = InterfaceVariables.Instance.SelectedWindSpeedUnitIndex;
         SelectedPressureUnitIndex = InterfaceVariables.Instance.SelectedPressureUnitIndex;
+
+
     }
     public Unit ThrustTareSet(Unit data)
     {

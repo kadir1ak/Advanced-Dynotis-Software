@@ -178,7 +178,7 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
-        ///   ESC throttle output value(%) benzeri yerelleştirilmiş bir dize arar.
+        ///   ESC throttle output value (%) benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string AutomateTestPage_ESCOutput {
             get {
@@ -219,6 +219,78 @@ namespace Advanced_Dynotis_Software.Properties {
         public static string AutomateTestPage_Time {
             get {
                 return ResourceManager.GetString("AutomateTestPage_Time", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Added Weight benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_AddedWeightValue {
+            get {
+                return ResourceManager.GetString("BalancerPage_AddedWeightValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Enter the Added Weight Value benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_AddedWeightValueToolTip {
+            get {
+                return ResourceManager.GetString("BalancerPage_AddedWeightValueToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Start benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_Button {
+            get {
+                return ResourceManager.GetString("BalancerPage_Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Connect benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_Connect {
+            get {
+                return ResourceManager.GetString("BalancerPage_Connect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Fixed Motor Speed ​​Value benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_FixedMotorSpeedValue {
+            get {
+                return ResourceManager.GetString("BalancerPage_FixedMotorSpeedValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Enter Fixed Motor Speed ​​Value benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_FixedMotorSpeedValueToolTip {
+            get {
+                return ResourceManager.GetString("BalancerPage_FixedMotorSpeedValueToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Propeller Diameter benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_PropellerDiameter {
+            get {
+                return ResourceManager.GetString("BalancerPage_PropellerDiameter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Enter the propeller diameter. benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_PropellerDiameterToolTip {
+            get {
+                return ResourceManager.GetString("BalancerPage_PropellerDiameterToolTip", resourceCulture);
             }
         }
         
@@ -286,11 +358,11 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
-        ///   Open benzeri yerelleştirilmiş bir dize arar.
+        ///   Connect benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
-        public static string CoaxialTestPage_Open {
+        public static string CoaxialTestPage_Connect {
             get {
-                return ResourceManager.GetString("CoaxialTestPage_Open", resourceCulture);
+                return ResourceManager.GetString("CoaxialTestPage_Connect", resourceCulture);
             }
         }
         
@@ -453,6 +525,33 @@ namespace Advanced_Dynotis_Software.Properties {
         public static string DeviceCard_Vibration {
             get {
                 return ResourceManager.GetString("DeviceCard_Vibration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   X benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceCard_VibrationX {
+            get {
+                return ResourceManager.GetString("DeviceCard_VibrationX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Y benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceCard_VibrationY {
+            get {
+                return ResourceManager.GetString("DeviceCard_VibrationY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Z benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceCard_VibrationZ {
+            get {
+                return ResourceManager.GetString("DeviceCard_VibrationZ", resourceCulture);
             }
         }
         
@@ -1132,11 +1231,11 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
-        ///   Open benzeri yerelleştirilmiş bir dize arar.
+        ///   Connect benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
-        public static string SingleTestPage_Open {
+        public static string SingleTestPage_Connect {
             get {
-                return ResourceManager.GetString("SingleTestPage_Open", resourceCulture);
+                return ResourceManager.GetString("SingleTestPage_Connect", resourceCulture);
             }
         }
         

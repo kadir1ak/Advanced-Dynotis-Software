@@ -171,6 +171,30 @@
   <data name="AutomateTestPage_Time" xml:space="preserve">
     <value>Zaman (s)</value>
   </data>
+  <data name="BalancerPage_AddedWeightValue" xml:space="preserve">
+    <value>Eklenen Ağırlık</value>
+  </data>
+  <data name="BalancerPage_AddedWeightValueToolTip" xml:space="preserve">
+    <value>Eklenen Ağırlık Değerini Giriniz</value>
+  </data>
+  <data name="BalancerPage_Button" xml:space="preserve">
+    <value>Başla</value>
+  </data>
+  <data name="BalancerPage_Connect" xml:space="preserve">
+    <value>Bağlan</value>
+  </data>
+  <data name="BalancerPage_FixedMotorSpeedValue" xml:space="preserve">
+    <value>Sabit Motor Hız Değeri</value>
+  </data>
+  <data name="BalancerPage_FixedMotorSpeedValueToolTip" xml:space="preserve">
+    <value>ESC Set Değerini Girin</value>
+  </data>
+  <data name="BalancerPage_PropellerDiameter" xml:space="preserve">
+    <value>Pervane Çapı</value>
+  </data>
+  <data name="BalancerPage_PropellerDiameterToolTip" xml:space="preserve">
+    <value>Enter the propeller diameter.</value>
+  </data>
   <data name="BatterySecurityLimits_Battery" xml:space="preserve">
     <value>Pil (S)</value>
   </data>
@@ -189,8 +213,8 @@
   <data name="CoaxialTestPage_2Device" xml:space="preserve">
     <value>2. Cihaz</value>
   </data>
-  <data name="CoaxialTestPage_Open" xml:space="preserve">
-    <value>Aç</value>
+  <data name="CoaxialTestPage_Connect" xml:space="preserve">
+    <value>Bağlan</value>
   </data>
   <data name="CoaxialTestPage_Text" xml:space="preserve">
     <value>Koaksiyel Test</value>
@@ -245,6 +269,15 @@
   </data>
   <data name="DeviceCard_Vibration" xml:space="preserve">
     <value>Titreşim</value>
+  </data>
+  <data name="DeviceCard_VibrationX" xml:space="preserve">
+    <value>X</value>
+  </data>
+  <data name="DeviceCard_VibrationY" xml:space="preserve">
+    <value>Y</value>
+  </data>
+  <data name="DeviceCard_VibrationZ" xml:space="preserve">
+    <value>Z</value>
   </data>
   <data name="DeviceCard_Voltage" xml:space="preserve">
     <value>Voltaj</value>
@@ -471,8 +504,8 @@
   <data name="SettingsPage_UnitsSettings" xml:space="preserve">
     <value>Birim Ayarları</value>
   </data>
-  <data name="SingleTestPage_Open" xml:space="preserve">
-    <value>Aç</value>
+  <data name="SingleTestPage_Connect" xml:space="preserve">
+    <value>Bağlan</value>
   </data>
   <data name="SingleTestPage_Text" xml:space="preserve">
     <value>Tekli Test</value>

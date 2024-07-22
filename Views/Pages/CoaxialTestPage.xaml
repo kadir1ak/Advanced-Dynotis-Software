@@ -70,7 +70,7 @@
                                 <!-- 1. Device Selection -->
                                 <Label Grid.Row="0" Grid.Column="0" Margin="3,0,3,0" Content="{x:Static p:Resources.CoaxialTestPage_1Device}" Foreground="{DynamicResource Text}" FontSize="14" HorizontalAlignment="Center"/>
                                 <ComboBox Grid.Row="1" Grid.Column="0" Margin="3,10,3,0" Width="120" ItemsSource="{Binding AvailableDevicesOne}" SelectedItem="{Binding SelectedDeviceOne}" DisplayMemberPath="DeviceDisplayName" VerticalAlignment="Center"/>
-                                <Button Grid.Row="2" Grid.Column="0" Margin="3,10,3,0" Content="{x:Static p:Resources.CoaxialTestPage_Open}" Command="{Binding ConnectCommand}" CommandParameter="One" VerticalAlignment="Center"/>
+                                <Button Grid.Row="2" Grid.Column="0" Margin="3,10,3,0" Content="{x:Static p:Resources.CoaxialTestPage_Connect}" Command="{Binding ConnectCommand}" CommandParameter="One" VerticalAlignment="Center"/>
 
                             </Grid>
                         </Border>
@@ -90,7 +90,7 @@
                                 <!-- 2. Device Selection -->
                                 <Label Grid.Row="0" Grid.Column="1" Margin="3,0,3,0" Content="{x:Static p:Resources.CoaxialTestPage_1Device}" Foreground="{DynamicResource Text}" FontSize="14" HorizontalAlignment="Center"/>
                                 <ComboBox Grid.Row="1" Grid.Column="1" Margin="3,10,3,0" Width="120" ItemsSource="{Binding AvailableDevicesTwo}" SelectedItem="{Binding SelectedDeviceTwo}" DisplayMemberPath="DeviceDisplayName" VerticalAlignment="Center"/>
-                                <Button Grid.Row="2" Grid.Column="1" Margin="3,10,3,0" Content="{x:Static p:Resources.CoaxialTestPage_Open}" Command="{Binding ConnectCommand}" CommandParameter="Two" VerticalAlignment="Center"/>
+                                <Button Grid.Row="2" Grid.Column="1" Margin="3,10,3,0" Content="{x:Static p:Resources.CoaxialTestPage_Connect}" Command="{Binding ConnectCommand}" CommandParameter="Two" VerticalAlignment="Center"/>
 
                             </Grid>
                         </Border>

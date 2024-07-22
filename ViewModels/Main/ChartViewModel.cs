@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Media;
 using Advanced_Dynotis_Software.Models.Dynotis;
 using LiveCharts;
+using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 
 namespace Advanced_Dynotis_Software.ViewModels.Main
@@ -52,7 +53,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             VoltageSeriesCollection = CreateSeriesCollection("Voltage", Colors.Orange);
             ThrustSeriesCollection = CreateSeriesCollection("Thrust", Colors.DarkOliveGreen);
             TorqueSeriesCollection = CreateSeriesCollection("Torque", Colors.HotPink);
-
+            
             TimeLabels = new ObservableCollection<string>();
 
             InitializeDefaultChartData();
@@ -75,7 +76,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             }
 
             UpdateChartSteps();
-        }
+        }       
 
         private static SeriesCollection CreateSeriesCollection(string title, Color color)
         {
