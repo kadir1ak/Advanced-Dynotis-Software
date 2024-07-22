@@ -10,9 +10,9 @@
             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
             xmlns:p="clr-namespace:Advanced_Dynotis_Software.Properties"
             mc:Ignorable="d" 
-            d:DataContext="{d:DesignInstance vmPages:SingleTestViewModel, IsDesignTimeCreatable=True}">
+            d:DataContext="{d:DesignInstance vmPages:BalancerViewModel, IsDesignTimeCreatable=True}">
     <UserControl.DataContext>
-        <vmPages:SingleTestViewModel/>
+        <vmPages:BalancerViewModel/>
     </UserControl.DataContext>
 
     <UserControl.Resources>
@@ -168,7 +168,34 @@
                                             </Viewbox>
                                         </Grid>
                                     </Border>
-                                   
+
+                                    <Border Grid.Row="0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3 3 0 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
+                                        <Grid Margin="5" Width="250" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <Image Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" Height="75" Width="250" Source="pack://application:,,,/Documents/Images/Airplane-propeller.png" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                                            <!-- Grid çizgilerini belli etmek için Border kullanımı -->
+                                            <Border Grid.Column="0" BorderBrush="Black" BorderThickness="0.1" />
+                                            <Border Grid.Column="1" BorderBrush="Black" BorderThickness="0.1" />
+                                            <Border Grid.Column="2" BorderBrush="Black" BorderThickness="0.1" />
+                                            <Border Grid.Column="3" BorderBrush="Black" BorderThickness="0.1" />
+                                            <Border Grid.Column="4" BorderBrush="Black" BorderThickness="0.1" />
+                                            <Border Grid.Column="5" BorderBrush="Black" BorderThickness="0.1" />
+
+                                            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0 0 0 0">
+                                                <icon:PackIconMaterial Kind="ArrowDownBold" Foreground="{DynamicResource deviceCardIcon}" Width="20" Height="20" Margin="0 5 0 0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+
                                 </Grid>
                             </Border>
 
@@ -201,10 +228,14 @@
                                                 <TextBlock x:Name="VibrationValueLabel" Text="{Binding DeviceInterfaceVariables.Vibration, Mode=OneWay, StringFormat={}{0:0.00}}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                                                 <TextBlock x:Name="VibrationUnitLabel" Text="g" Width="40" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                                             </StackPanel>
+                                            
+                                            <!-- Çizgi Separator -->
+                                            <Separator Margin="0 20 0 10"  />
+
                                             <!-- Vibration -->
                                             <StackPanel Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                                 <icon:PackIconMaterial Kind="Axis" Foreground="{DynamicResource deviceCardIcon}" Width="20" Height="20" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                <TextBlock x:Name="VibrationXNameLabel" Text="{x:Static p:Resources.DeviceCard_VibrationX}" Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Left"/>
+                                                <TextBlock x:Name="VibrationXNameLabel" Text="{x:Static p:Resources.DeviceCard_VibrationX}" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Right"/>
                                                 <TextBlock Text=":" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                                                 <TextBlock x:Name="VibrationXValueLabel" Text="{Binding DeviceInterfaceVariables.VibrationX, Mode=OneWay, StringFormat={}{0:0.00}}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                                                 <TextBlock x:Name="VibrationXUnitLabel" Text="g" Width="40" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
@@ -212,7 +243,7 @@
                                             <!-- Vibration -->
                                             <StackPanel Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                                 <icon:PackIconMaterial Kind="Axis" Foreground="{DynamicResource deviceCardIcon}" Width="20" Height="20" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                <TextBlock x:Name="VibrationYNameLabel" Text="{x:Static p:Resources.DeviceCard_VibrationY}" Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Left"/>
+                                                <TextBlock x:Name="VibrationYNameLabel" Text="{x:Static p:Resources.DeviceCard_VibrationY}"  Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Right"/>
                                                 <TextBlock Text=":" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                                                 <TextBlock x:Name="VibrationYValueLabel" Text="{Binding DeviceInterfaceVariables.VibrationY, Mode=OneWay, StringFormat={}{0:0.00}}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                                                 <TextBlock x:Name="VibrationYUnitLabel" Text="g" Width="40" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
@@ -220,19 +251,28 @@
                                             <!-- Vibration -->
                                             <StackPanel Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                                 <icon:PackIconMaterial Kind="Axis" Foreground="{DynamicResource deviceCardIcon}" Width="20" Height="20" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                <TextBlock x:Name="VibrationZNameLabel" Text="{x:Static p:Resources.DeviceCard_VibrationZ}" Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Left"/>
+                                                <TextBlock x:Name="VibrationZNameLabel" Text="{x:Static p:Resources.DeviceCard_VibrationZ}" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Right"/>
                                                 <TextBlock Text=":" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                                                 <TextBlock x:Name="VibrationZValueLabel" Text="{Binding DeviceInterfaceVariables.VibrationZ, Mode=OneWay, StringFormat={}{0:0.00}}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                                                 <TextBlock x:Name="VibrationZUnitLabel" Text="g" Width="40" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                                             </StackPanel>
-
+                                            
+                                            <!-- Çizgi Separator -->
+                                            <Separator Margin="0 20 0 10"  />
+                                            
                                             <StackPanel Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                <TextBlock Text="FixedMotorSpeedValue" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Right"/>
+                                                <TextBlock Text=":" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                                                 <TextBlock Text="{Binding DeviceInterfaceVariables.FixedMotorSpeedValue, Mode=OneWay, StringFormat={}{0:0.00}}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                <TextBlock Text="UserPropellerArea" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Right"/>
+                                                <TextBlock Text=":" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                                                 <TextBlock Text="{Binding DeviceInterfaceVariables.UserPropellerArea, Mode=OneWay, StringFormat={}{0:0.00}}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                <TextBlock Text="AddedWeightValue" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Right"/>
+                                                <TextBlock Text=":" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                                                 <TextBlock Text="{Binding DeviceInterfaceVariables.AddedWeightValue, Mode=OneWay, StringFormat={}{0:0.00}}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                                             </StackPanel>
                                         </StackPanel>
@@ -308,8 +348,8 @@
                                         <RowDefinition Height="*" MinHeight="200" MaxHeight="400"/>
                                     </Grid.RowDefinitions>
                                     <!-- Vibration around the clock (Polar) -->
-
-
+                                  
+                                    
                                 </Grid>
                             </Border>                          
 

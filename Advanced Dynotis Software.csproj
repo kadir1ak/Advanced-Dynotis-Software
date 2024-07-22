@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Documents\Images\Airplane-propeller.png" />
     <None Remove="Documents\Images\Dynotis.png" />
     <None Remove="Documents\Images\EN.png" />
     <None Remove="Documents\Images\Semai_Urban_Air_Mobility.png" />
@@ -35,6 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Documents\Images\Airplane-propeller.png" />
     <Resource Include="Documents\Images\Dynotis.png" />
     <Resource Include="Documents\Images\EN.png" />
     <Resource Include="Documents\Images\Semai_Urban_Air_Mobility.png" />
