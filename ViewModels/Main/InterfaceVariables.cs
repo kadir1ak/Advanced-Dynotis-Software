@@ -95,7 +95,8 @@ public class InterfaceVariables : INotifyPropertyChanged
     private bool _selectedIsEnglishChecked;
 
     private int _referenceMotorSpeed;
-    private int _referenceWeight;
+    private double _referenceWeight;
+    private double _referencePropellerArea;
     public double Time
     {
         get => _time;
@@ -420,10 +421,15 @@ public class InterfaceVariables : INotifyPropertyChanged
         get => _referenceMotorSpeed;
         set => SetProperty(ref _referenceMotorSpeed, value);
     }
-    public int ReferenceWeight
+    public double ReferenceWeight
     {
         get => _referenceWeight;
         set => SetProperty(ref _referenceWeight, value);
+    }   
+    public double ReferencePropellerArea
+    {
+        get => _referencePropellerArea;
+        set => SetProperty(ref _referencePropellerArea, value);
     }
     public void UpdateFrom(DynotisData data)
     {

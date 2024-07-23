@@ -38,6 +38,33 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             }
         }
 
+        private BalancerParametersViewModel _currentBalancerParameters;
+        public BalancerParametersViewModel CurrentBalancerParameters
+        {
+            get => _currentBalancerParameters;
+            set
+            {
+                if (SetProperty(ref _currentBalancerParameters, value))
+                {
+                    if (_currentBalancerParameters != null)
+                    {
+                        _currentBalancerParameters.PropertyChanged += (sender, e) =>
+                        {
+                            if (e.PropertyName == nameof(BalancerParametersViewModel.ReferenceMotorSpeed) ||
+                                e.PropertyName == nameof(BalancerParametersViewModel.ReferencePropellerArea) ||
+                                e.PropertyName == nameof(BalancerParametersViewModel.ReferenceWeight))
+                            {
+                                DeviceInterfaceVariables.ReferenceMotorSpeed = _currentBalancerParameters.ReferenceMotorSpeed;
+                                DeviceInterfaceVariables.PropellerArea = _currentBalancerParameters.ReferencePropellerArea;
+                                DeviceInterfaceVariables.ReferenceWeight = _currentBalancerParameters.ReferenceWeight;
+                                OnPropertyChanged(nameof(DeviceInterfaceVariables));
+                            }
+                        };
+                    }
+                }
+            }
+        }
+
         private RecordViewModel _currentRecord;
         public RecordViewModel CurrentRecord
         {
@@ -200,7 +227,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         {
             while (!token.IsCancellationRequested)
             {
-                await Task.Delay(UpdateTimeMillisecond); 
+                await Task.Delay(UpdateTimeMillisecond, token);
 
                 DynotisData latestData;
                 lock (_dataLock)

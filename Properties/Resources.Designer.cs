@@ -223,33 +223,6 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
-        ///   Added Weight (gr) benzeri yerelleştirilmiş bir dize arar.
-        /// </summary>
-        public static string BalancerPage_AddedWeight {
-            get {
-                return ResourceManager.GetString("BalancerPage_AddedWeight", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Added Weight benzeri yerelleştirilmiş bir dize arar.
-        /// </summary>
-        public static string BalancerPage_AddedWeightValue {
-            get {
-                return ResourceManager.GetString("BalancerPage_AddedWeightValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Enter the Added Weight Value benzeri yerelleştirilmiş bir dize arar.
-        /// </summary>
-        public static string BalancerPage_AddedWeightValueToolTip {
-            get {
-                return ResourceManager.GetString("BalancerPage_AddedWeightValueToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Connect benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string BalancerPage_Connect {
@@ -381,6 +354,24 @@ namespace Advanced_Dynotis_Software.Properties {
         public static string BalancerPage_ReferenceWeightToolTip {
             get {
                 return ResourceManager.GetString("BalancerPage_ReferenceWeightToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Reference Weight benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_ReferenceWeightValue {
+            get {
+                return ResourceManager.GetString("BalancerPage_ReferenceWeightValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Enter the Reference Weight Value benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_ReferenceWeightValueToolTip {
+            get {
+                return ResourceManager.GetString("BalancerPage_ReferenceWeightValueToolTip", resourceCulture);
             }
         }
         

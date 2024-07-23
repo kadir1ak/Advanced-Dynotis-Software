@@ -17,13 +17,7 @@
         <vmPages:BalancerViewModel/>
     </UserControl.DataContext>
 
-    <UserControl.Resources>
-        <Style x:Key="NumericTextBoxStyle" TargetType="TextBox">
-            <EventSetter Event="PreviewTextInput" Handler="NumericTextBox_PreviewTextInput"/>
-        </Style>
-    </UserControl.Resources>
-
-    <Grid Background="{DynamicResource Page}" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+    <Grid Background="{DynamicResource Page}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -145,7 +139,7 @@
                                                     <TextBlock Text="{x:Static p:Resources.DeviceInformation_ESCValue}" Grid.Row="7" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
                                                     <TextBlock Text=":" Grid.Row="7" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
 
-                                           
+
                                                     <TextBlock Text="{Binding Device.PortName}" Grid.Row="0" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
                                                     <TextBlock Text="{Binding Device.Model}" Grid.Row="1" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
                                                     <TextBlock Text="{Binding Device.SeriNo}" Grid.Row="2" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
@@ -180,95 +174,38 @@
                                                         <ColumnDefinition Width="1*"/>
                                                     </Grid.ColumnDefinitions>
 
-                                                    <TextBlock Text="{x:Static p:Resources.BalancerPage_ReferenceMotorSpeed}" Grid.Row="0" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="{x:Static p:Resources.BalancerPage_PropellerDiameter}" Grid.Row="0" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
                                                     <TextBlock Text=":" Grid.Row="0" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
-                                                    <TextBlock Text="{x:Static p:Resources.BalancerPage_PropellerDiameter}" Grid.Row="1" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="{x:Static p:Resources.BalancerPage_ReferenceMotorSpeed}" Grid.Row="1" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
                                                     <TextBlock Text=":" Grid.Row="1" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
                                                     <TextBlock Text="{x:Static p:Resources.BalancerPage_ReferenceWeight}" Grid.Row="2" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
                                                     <TextBlock Text=":" Grid.Row="2" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
 
 
-                                                    <TextBlock Text="{Binding DeviceInterfaceVariables.ReferenceMotorSpeed}" Grid.Row="0" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
-                                                    <TextBlock Text="{Binding DeviceInterfaceVariables.PropellerArea}" Grid.Row="1" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="{Binding DeviceInterfaceVariables.ReferencePropellerArea}" Grid.Row="0" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="{Binding DeviceInterfaceVariables.ReferenceMotorSpeed}" Grid.Row="1" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
                                                     <TextBlock Text="{Binding DeviceInterfaceVariables.ReferenceWeight}" Grid.Row="2" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
 
-                                                    <TextBlock Text="{Binding DeviceInterfaceVariables.MotorSpeed.UnitSymbol}" Grid.Row="0" Grid.Column="2"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
-                                                    <TextBlock Text="Inch" Grid.Row="1" Grid.Column="2"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="Inch" Grid.Row="0" Grid.Column="2"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="{Binding DeviceInterfaceVariables.MotorSpeed.UnitSymbol}" Grid.Row="1" Grid.Column="2"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
                                                     <TextBlock Text="g" Grid.Row="2" Grid.Column="2"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
 
-                                                </Grid>                                             
+                                                </Grid>
                                             </StackPanel>
-                                          
+
                                         </Grid>
                                     </Border>
 
-
-                                    <Border Grid.Row="0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3 3 0 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                                        <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
-                                            <Viewbox HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                                <Border BorderThickness="1" CornerRadius="0" BorderBrush="{DynamicResource Page}" Margin="0 0 0 0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="{DynamicResource Page}">
-                                                    <Grid>
-                                                        <Grid.RowDefinitions>
-                                                            <RowDefinition Height="Auto"/>
-                                                            <RowDefinition Height="*"/>
-                                                            <RowDefinition Height="*"/>
-                                                            <RowDefinition Height="*"/>
-                                                        </Grid.RowDefinitions>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="*"/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="3 3 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                                                            <TextBlock FontSize="14" Text="{x:Static p:Resources.BalancerPage_ReferenceValues}" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                        </Border>
-                                                        <Label  Grid.Row="1" Grid.Column="0" Content="{x:Static p:Resources.BalancerPage_PropellerDiameter}" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Left"/>
-                                                        <Label Grid.Row="1" Grid.Column="2" Content="Inch" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Left"/>
-                                                        <TextBox  Grid.Row="1" Grid.Column="1" Style="{StaticResource NumericTextBoxStyle}" Text="{Binding UserPropellerArea, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="Auto" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1.5">
-                                                            <TextBox.ToolTip>
-                                                                <ToolTip>
-                                                                    <ToolTip.Resources>
-                                                                        <Style TargetType="{x:Type Border}">
-                                                                            <Setter Property="CornerRadius" Value="12"/>
-                                                                        </Style>
-                                                                    </ToolTip.Resources>
-                                                                    <TextBlock x:Name="PropellerAreaToolTip" Text="{x:Static p:Resources.BalancerPage_PropellerDiameterToolTip}" FontStyle="Normal" TextWrapping="WrapWithOverflow" FontSize="14" Margin="5 5" Cursor=""/>
-                                                                </ToolTip>
-                                                            </TextBox.ToolTip>
-                                                        </TextBox>
-                                                        <Label Grid.Row="2" Grid.Column="0" x:Name="FixedMotorSpeedLabel" Content="{x:Static p:Resources.BalancerPage_ReferenceMotorSpeed}" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Left"/>
-                                                        <Label Grid.Row="2" Grid.Column="2" x:Name="FixedMotorSpeedUnitLabel" Content="{Binding DeviceInterfaceVariables.MotorSpeed.UnitSymbol}" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Left"/>
-                                                        <TextBox Grid.Row="2" Grid.Column="1" x:Name="FixedMotorSpeedTextBox" Style="{StaticResource NumericTextBoxStyle}" Text="{Binding FixedMotorSpeedValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="Auto" Width="100" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1.5">
-                                                            <TextBox.ToolTip>
-                                                                <ToolTip>
-                                                                    <ToolTip.Resources>
-                                                                        <Style TargetType="{x:Type Border}">
-                                                                            <Setter Property="CornerRadius" Value="12"/>
-                                                                        </Style>
-                                                                    </ToolTip.Resources>
-                                                                    <TextBlock x:Name="FixedMotorSpeedValueToolTip" Text="{x:Static p:Resources.BalancerPage_ReferenceMotorSpeedToolTip}" FontStyle="Normal" TextWrapping="WrapWithOverflow" FontSize="14" Margin="5 5" Cursor=""/>
-                                                                </ToolTip>
-                                                            </TextBox.ToolTip>
-                                                        </TextBox>                                                     
-                                                        <Label Grid.Row="3" Grid.Column="0" x:Name="AddedWeightLabel" Content="{x:Static p:Resources.BalancerPage_AddedWeightValue}" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Left"/>
-                                                        <Label Grid.Row="3" Grid.Column="2" x:Name="AddedWeightUnitLabel" Content="g" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Left"/>
-                                                        <TextBox Grid.Row="3" Grid.Column="1" x:Name="AddedWeightTextBox" Style="{StaticResource NumericTextBoxStyle}" Text="{Binding AddedWeightValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="Auto" Width="100" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1.5">
-                                                            <TextBox.ToolTip>
-                                                                <ToolTip>
-                                                                    <ToolTip.Resources>
-                                                                        <Style TargetType="{x:Type Border}">
-                                                                            <Setter Property="CornerRadius" Value="12"/>
-                                                                        </Style>
-                                                                    </ToolTip.Resources>
-                                                                    <TextBlock x:Name="AddedWeightValueToolTip" Text="{x:Static p:Resources.BalancerPage_ReferenceWeightToolTip}" FontStyle="Normal" TextWrapping="WrapWithOverflow" FontSize="14" Margin="5 5" Cursor=""/>
-                                                                </ToolTip>
-                                                            </TextBox.ToolTip>
-                                                        </TextBox>
-                                                    </Grid>
-                                                </Border>
-                                            </Viewbox>
-                                        </Grid>
+                                    <Border  Grid.Row="0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3 3 0 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
+                                        <ContentControl Content="{Binding CurrentBalancerParameters, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                            <ContentControl.ContentTemplate>
+                                                <DataTemplate>
+                                                    <uc:BalancerParameters HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0"/>
+                                                </DataTemplate>
+                                            </ContentControl.ContentTemplate>
+                                        </ContentControl>
                                     </Border>
+
 
                                     <Border Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3 3 0 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
                                         <Grid>
@@ -364,8 +301,8 @@
                                                 <TextBlock x:Name="VibrationValueLabel" Text="{Binding DeviceInterfaceVariables.Vibration, Mode=OneWay, StringFormat={}{0:0.00}}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                                                 <TextBlock x:Name="VibrationUnitLabel" Text="g" Width="40" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                                             </StackPanel>
-                                            
-                                          
+
+
 
                                             <!-- Vibration -->
                                             <StackPanel Orientation="Horizontal" Margin="10 10 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -390,8 +327,8 @@
                                                 <TextBlock Text=":" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                                                 <TextBlock x:Name="VibrationZValueLabel" Text="{Binding DeviceInterfaceVariables.VibrationZ, Mode=OneWay, StringFormat={}{0:0.00}}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                                                 <TextBlock x:Name="VibrationZUnitLabel" Text="g" Width="40" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
-                                            </StackPanel>                                            
-                                          
+                                            </StackPanel>
+
                                         </StackPanel>
                                     </Border>
 
@@ -461,12 +398,12 @@
                                             <TextBlock FontSize="14" Text="{x:Static p:Resources.BalancerPage_PolarVibration}" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                         <Border Grid.Row="1" Margin="0 0 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                                          
+
                                         </Border>
                                     </Grid>
                                 </Grid>
                             </Border>
-                            
+
 
                             <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="10 10 10 0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderBrush="{DynamicResource PageBorder}" BorderThickness="1">
                                 <Grid>
@@ -483,7 +420,7 @@
 
 
                                 </Grid>
-                            </Border>                          
+                            </Border>
 
                         </Grid>
                     </DataTemplate>

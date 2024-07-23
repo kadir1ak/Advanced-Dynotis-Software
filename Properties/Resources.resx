@@ -171,15 +171,6 @@
   <data name="AutomateTestPage_Time" xml:space="preserve">
     <value>Time (s)</value>
   </data>
-  <data name="BalancerPage_AddedWeight" xml:space="preserve">
-    <value>Added Weight (gr)</value>
-  </data>
-  <data name="BalancerPage_AddedWeightValue" xml:space="preserve">
-    <value>Added Weight</value>
-  </data>
-  <data name="BalancerPage_AddedWeightValueToolTip" xml:space="preserve">
-    <value>Enter the Added Weight Value</value>
-  </data>
   <data name="BalancerPage_Connect" xml:space="preserve">
     <value>Connect</value>
   </data>
@@ -224,6 +215,12 @@
   </data>
   <data name="BalancerPage_ReferenceWeightToolTip" xml:space="preserve">
     <value>Enter Reference Weight.</value>
+  </data>
+  <data name="BalancerPage_ReferenceWeightValue" xml:space="preserve">
+    <value>Reference Weight</value>
+  </data>
+  <data name="BalancerPage_ReferenceWeightValueToolTip" xml:space="preserve">
+    <value>Enter the Reference Weight Value</value>
   </data>
   <data name="BalancerPage_SaveButton" xml:space="preserve">
     <value>Record</value>

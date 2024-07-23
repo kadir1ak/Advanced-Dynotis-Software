@@ -171,15 +171,6 @@
   <data name="AutomateTestPage_Time" xml:space="preserve">
     <value>Zaman (s)</value>
   </data>
-  <data name="BalancerPage_AddedWeight" xml:space="preserve">
-    <value>Eklenen Ağırlık (gr)</value>
-  </data>
-  <data name="BalancerPage_AddedWeightValue" xml:space="preserve">
-    <value>Eklenen Ağırlık</value>
-  </data>
-  <data name="BalancerPage_AddedWeightValueToolTip" xml:space="preserve">
-    <value>Eklenen Ağırlık Değerini Giriniz</value>
-  </data>
   <data name="BalancerPage_Connect" xml:space="preserve">
     <value>Bağlan</value>
   </data>
@@ -208,7 +199,7 @@
     <value>Pervane Çapı</value>
   </data>
   <data name="BalancerPage_PropellerDiameterToolTip" xml:space="preserve">
-    <value>Enter the propeller diameter.</value>
+    <value>Pervane çapını girin.</value>
   </data>
   <data name="BalancerPage_ReferenceMotorSpeed" xml:space="preserve">
     <value>Referans Motor Hızı</value>
@@ -224,6 +215,12 @@
   </data>
   <data name="BalancerPage_ReferenceWeightToolTip" xml:space="preserve">
     <value>Referans Ağırlığı Giriniz.</value>
+  </data>
+  <data name="BalancerPage_ReferenceWeightValue" xml:space="preserve">
+    <value>Referans Ağırlık</value>
+  </data>
+  <data name="BalancerPage_ReferenceWeightValueToolTip" xml:space="preserve">
+    <value>Referans Ağırlık Değerini Giriniz</value>
   </data>
   <data name="BalancerPage_SaveButton" xml:space="preserve">
     <value>Kaydet</value>

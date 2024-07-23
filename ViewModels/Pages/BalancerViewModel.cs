@@ -21,57 +21,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         private BatterySecurityLimitsManager _batterySecurityLimitsManager;
         private TareManager _tareManager;
         private RecordManager _recordManager;
+        private BalancerParametersManager _balancerParametersManager;
 
-        private int _referenceMotorSpeed;
-        private int _referenceWeight;
-        private int _propellerArea;
-        public int FixedMotorSpeedValue
-        {
-            get => _referenceMotorSpeed;
-            set
-            {
-                if (SetProperty(ref _referenceMotorSpeed, value))
-                {
-                    if (SelectedDevice != null && SelectedDevice.DeviceInterfaceVariables != null)
-                    {
-                        SelectedDevice.DeviceInterfaceVariables.ReferenceMotorSpeed = value;
-                        OnPropertyChanged(nameof(FixedMotorSpeedValue));
-                    }
-                }
-            }
-        }
-
-        public int PropellerArea
-        {
-            get => _propellerArea;
-            set
-            {
-                if (SetProperty(ref _propellerArea, value))
-                {
-                    if (SelectedDevice != null && SelectedDevice.DeviceInterfaceVariables != null)
-                    {
-                        SelectedDevice.DeviceInterfaceVariables.PropellerArea = value;
-                        OnPropertyChanged(nameof(PropellerArea));
-                    }
-                }
-            }
-        }
-
-        public int ReferenceWeight
-        {
-            get => _referenceWeight;
-            set
-            {
-                if (SetProperty(ref _referenceWeight, value))
-                {
-                    if (SelectedDevice != null && SelectedDevice.DeviceInterfaceVariables != null)
-                    {
-                        SelectedDevice.DeviceInterfaceVariables.ReferenceWeight = value;
-                        OnPropertyChanged(nameof(ReferenceWeight));
-                    }
-                }
-            }
-        }
 
         public ObservableCollection<DeviceViewModel> AvailableDevices { get; }
 
@@ -113,6 +64,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             _batterySecurityLimitsManager = new BatterySecurityLimitsManager();
             _tareManager = new TareManager();
             _recordManager = new RecordManager();
+            _balancerParametersManager = new BalancerParametersManager();
 
             DeviceManager.Instance.DeviceDisconnected += OnDeviceDisconnected;
             DeviceManager.Instance.DeviceConnected += OnDeviceConnected;
@@ -130,6 +82,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             ConnectedDevice.CurrentBatterySecurityLimits = _batterySecurityLimitsManager.GetBatterySecurityLimitsViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData);
             ConnectedDevice.CurrentTare = _tareManager.GetTareViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData, SelectedDevice.DeviceInterfaceVariables);
             ConnectedDevice.CurrentRecord = _recordManager.GetRecordViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData, SelectedDevice.DeviceInterfaceVariables);
+            ConnectedDevice.CurrentBalancerParameters = _balancerParametersManager.GetBalancerParametersViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData, SelectedDevice.DeviceInterfaceVariables);
         }
 
         private void OnDeviceDisconnected(DeviceViewModel device)
@@ -142,6 +95,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 ConnectedDevice.CurrentBatterySecurityLimits = null;
                 ConnectedDevice.CurrentTare = null;
                 ConnectedDevice.CurrentRecord = null;
+                ConnectedDevice.CurrentBalancerParameters = null;
             }
             RefreshAvailableDevices();
         }
