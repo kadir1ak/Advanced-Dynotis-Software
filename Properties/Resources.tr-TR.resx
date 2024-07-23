@@ -171,6 +171,9 @@
   <data name="AutomateTestPage_Time" xml:space="preserve">
     <value>Zaman (s)</value>
   </data>
+  <data name="BalancerPage_AddedWeight" xml:space="preserve">
+    <value>Eklenen Ağırlık (gr)</value>
+  </data>
   <data name="BalancerPage_AddedWeightValue" xml:space="preserve">
     <value>Eklenen Ağırlık</value>
   </data>
@@ -183,11 +186,23 @@
   <data name="BalancerPage_Connect" xml:space="preserve">
     <value>Bağlan</value>
   </data>
+  <data name="BalancerPage_Description" xml:space="preserve">
+    <value>Açıklama</value>
+  </data>
   <data name="BalancerPage_FixedMotorSpeedValue" xml:space="preserve">
     <value>Sabit Motor Hız Değeri</value>
   </data>
   <data name="BalancerPage_FixedMotorSpeedValueToolTip" xml:space="preserve">
     <value>ESC Set Değerini Girin</value>
+  </data>
+  <data name="BalancerPage_Index" xml:space="preserve">
+    <value>İndex</value>
+  </data>
+  <data name="BalancerPage_MotorSpeed" xml:space="preserve">
+    <value>Motor Hızı</value>
+  </data>
+  <data name="BalancerPage_Noise" xml:space="preserve">
+    <value>Gürültü (g)</value>
   </data>
   <data name="BalancerPage_PropellerDiameter" xml:space="preserve">
     <value>Pervane Çapı</value>

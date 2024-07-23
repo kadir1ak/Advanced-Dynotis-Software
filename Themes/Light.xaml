@@ -64,4 +64,8 @@
     <SolidColorBrush Color="#151F2D" x:Key="TareText"/>
     <SolidColorBrush Color="#151F2D" x:Key="TareIcon"/>
 
+    <!-- Balancer -->
+    <BitmapImage x:Key="MotorAndPropellerImage" UriSource="pack://application:,,,/Documents/Images/Motor_and_Propeller.png"/>
+    <SolidColorBrush Color="#151F2D" x:Key="Line"/>
+
 </ResourceDictionary>

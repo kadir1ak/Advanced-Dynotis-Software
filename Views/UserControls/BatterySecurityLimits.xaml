@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
+             xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d"
              xmlns:p="clr-namespace:Advanced_Dynotis_Software.Properties">
     <UserControl.Resources>
@@ -16,6 +17,7 @@
         <Border BorderThickness="2" CornerRadius="15" BorderBrush="{DynamicResource Page}" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center" Background="{DynamicResource Page}">
             <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="Auto" Height="Auto" Margin="10 5 5 10">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
@@ -38,6 +40,7 @@
                     </TextBox.ToolTip>
                 </TextBox>
                 <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="BatteryLabel" Content="{x:Static p:Resources.BatterySecurityLimits_Battery}" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                <icon:PackIconMaterial Grid.Row="1" Kind="BatteryCharging" Foreground="{DynamicResource deviceCardIcon}" Width="20" Height="20" Margin="7 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 <TextBox Grid.Row="1" Grid.Column="2" Margin="0 0 5 0" x:Name="BatteryTextBox" Style="{StaticResource NumericTextBoxStyle}" Text="{Binding BatteryLevel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="Auto" Width="Auto" MinWidth="50" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1.5">
                     <TextBox.ToolTip>
                         <ToolTip>

@@ -223,6 +223,15 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   Added Weight (gr) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_AddedWeight {
+            get {
+                return ResourceManager.GetString("BalancerPage_AddedWeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Added Weight benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string BalancerPage_AddedWeightValue {
@@ -259,6 +268,15 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   Description benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_Description {
+            get {
+                return ResourceManager.GetString("BalancerPage_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Fixed Motor Speed ​​Value benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string BalancerPage_FixedMotorSpeedValue {
@@ -277,6 +295,33 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   Index benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_Index {
+            get {
+                return ResourceManager.GetString("BalancerPage_Index", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Motor Speed benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_MotorSpeed {
+            get {
+                return ResourceManager.GetString("BalancerPage_MotorSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Noise (g) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_Noise {
+            get {
+                return ResourceManager.GetString("BalancerPage_Noise", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Propeller Diameter benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string BalancerPage_PropellerDiameter {
@@ -291,6 +336,24 @@ namespace Advanced_Dynotis_Software.Properties {
         public static string BalancerPage_PropellerDiameterToolTip {
             get {
                 return ResourceManager.GetString("BalancerPage_PropellerDiameterToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Record benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_SaveButton {
+            get {
+                return ResourceManager.GetString("BalancerPage_SaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Next Step benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_StepButton {
+            get {
+                return ResourceManager.GetString("BalancerPage_StepButton", resourceCulture);
             }
         }
         

@@ -13,6 +13,9 @@
     <None Remove="Documents\Images\Airplane-propeller.png" />
     <None Remove="Documents\Images\Dynotis.png" />
     <None Remove="Documents\Images\EN.png" />
+    <None Remove="Documents\Images\Motor_and_Propeller.png" />
+    <None Remove="Documents\Images\Motor_and_Propeller2.png" />
+    <None Remove="Documents\Images\Motor_and_Propeller3.png" />
     <None Remove="Documents\Images\Semai_Urban_Air_Mobility.png" />
     <None Remove="Documents\Images\TR.png" />
   </ItemGroup>
@@ -24,6 +27,7 @@
 
   <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.102.3" />
+    <PackageReference Include="DotNetProjects.SVGImage" Version="5.2.1" />
     <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
     <PackageReference Include="LiveCharts.Core" Version="0.9.8" />
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
@@ -39,6 +43,9 @@
     <Resource Include="Documents\Images\Airplane-propeller.png" />
     <Resource Include="Documents\Images\Dynotis.png" />
     <Resource Include="Documents\Images\EN.png" />
+    <Resource Include="Documents\Images\Motor_and_Propeller.png" />
+    <Resource Include="Documents\Images\Motor_and_Propeller2.png" />
+    <Resource Include="Documents\Images\Motor_and_Propeller3.png" />
     <Resource Include="Documents\Images\Semai_Urban_Air_Mobility.png" />
     <Resource Include="Documents\Images\TR.png" />
   </ItemGroup>

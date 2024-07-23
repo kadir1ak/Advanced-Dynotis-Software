@@ -171,6 +171,9 @@
   <data name="AutomateTestPage_Time" xml:space="preserve">
     <value>Time (s)</value>
   </data>
+  <data name="BalancerPage_AddedWeight" xml:space="preserve">
+    <value>Added Weight (gr)</value>
+  </data>
   <data name="BalancerPage_AddedWeightValue" xml:space="preserve">
     <value>Added Weight</value>
   </data>
@@ -183,17 +186,35 @@
   <data name="BalancerPage_Connect" xml:space="preserve">
     <value>Connect</value>
   </data>
+  <data name="BalancerPage_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
   <data name="BalancerPage_FixedMotorSpeedValue" xml:space="preserve">
     <value>Fixed Motor Speed ​​Value</value>
   </data>
   <data name="BalancerPage_FixedMotorSpeedValueToolTip" xml:space="preserve">
     <value>Enter Fixed Motor Speed ​​Value</value>
   </data>
+  <data name="BalancerPage_Index" xml:space="preserve">
+    <value>Index</value>
+  </data>
+  <data name="BalancerPage_MotorSpeed" xml:space="preserve">
+    <value>Motor Speed</value>
+  </data>
+  <data name="BalancerPage_Noise" xml:space="preserve">
+    <value>Noise (g)</value>
+  </data>
   <data name="BalancerPage_PropellerDiameter" xml:space="preserve">
     <value>Propeller Diameter</value>
   </data>
   <data name="BalancerPage_PropellerDiameterToolTip" xml:space="preserve">
     <value>Enter the propeller diameter.</value>
+  </data>
+  <data name="BalancerPage_SaveButton" xml:space="preserve">
+    <value>Record</value>
+  </data>
+  <data name="BalancerPage_StepButton" xml:space="preserve">
+    <value>Next Step</value>
   </data>
   <data name="BalancerPage_Text" xml:space="preserve">
     <value>Balancer</value>
