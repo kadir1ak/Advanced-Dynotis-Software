@@ -10,10 +10,14 @@
         <!-- Style for TextBox accepting double values -->
         <Style x:Key="NumericTextBoxDoubleStyle" TargetType="TextBox">
             <EventSetter Event="PreviewTextInput" Handler="NumericTextBoxDouble_PreviewTextInput"/>
+            <EventSetter Event="TextChanged" Handler="NumericTextBox_TextChanged"/>
+            <EventSetter Event="PreviewKeyDown" Handler="NumericTextBox_PreviewKeyDown"/>
         </Style>
         <!-- Style for TextBox accepting int values -->
         <Style x:Key="NumericTextBoxIntStyle" TargetType="TextBox">
             <EventSetter Event="PreviewTextInput" Handler="NumericTextBoxInt_PreviewTextInput"/>
+            <EventSetter Event="TextChanged" Handler="NumericTextBox_TextChanged"/>
+            <EventSetter Event="PreviewKeyDown" Handler="NumericTextBox_PreviewKeyDown"/>
         </Style>
     </UserControl.Resources>
     <Grid Background="{DynamicResource Page}">

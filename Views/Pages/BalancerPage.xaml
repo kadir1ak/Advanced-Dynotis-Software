@@ -20,7 +20,7 @@
     <Grid Background="{DynamicResource Page}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*" MinHeight="300"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>

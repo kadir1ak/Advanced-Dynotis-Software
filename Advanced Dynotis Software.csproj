@@ -27,7 +27,6 @@
 
   <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.102.3" />
-    <PackageReference Include="DotNetProjects.SVGImage" Version="5.2.1" />
     <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
     <PackageReference Include="LiveCharts.Core" Version="0.9.8" />
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
