@@ -250,15 +250,6 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
-        ///   Start benzeri yerelleştirilmiş bir dize arar.
-        /// </summary>
-        public static string BalancerPage_Button {
-            get {
-                return ResourceManager.GetString("BalancerPage_Button", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Connect benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string BalancerPage_Connect {
@@ -277,20 +268,20 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
-        ///   Fixed Motor Speed ​​Value benzeri yerelleştirilmiş bir dize arar.
+        ///   Device List benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
-        public static string BalancerPage_FixedMotorSpeedValue {
+        public static string BalancerPage_DeviceList {
             get {
-                return ResourceManager.GetString("BalancerPage_FixedMotorSpeedValue", resourceCulture);
+                return ResourceManager.GetString("BalancerPage_DeviceList", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Enter Fixed Motor Speed ​​Value benzeri yerelleştirilmiş bir dize arar.
+        ///   Device Parameters benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
-        public static string BalancerPage_FixedMotorSpeedValueToolTip {
+        public static string BalancerPage_DeviceParameters {
             get {
-                return ResourceManager.GetString("BalancerPage_FixedMotorSpeedValueToolTip", resourceCulture);
+                return ResourceManager.GetString("BalancerPage_DeviceParameters", resourceCulture);
             }
         }
         
@@ -322,6 +313,15 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   Polar Vibration benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_PolarVibration {
+            get {
+                return ResourceManager.GetString("BalancerPage_PolarVibration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Propeller Diameter benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string BalancerPage_PropellerDiameter {
@@ -340,6 +340,51 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   Reference Motor Speed benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_ReferenceMotorSpeed {
+            get {
+                return ResourceManager.GetString("BalancerPage_ReferenceMotorSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Enter the Reference Motor Speed. benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_ReferenceMotorSpeedToolTip {
+            get {
+                return ResourceManager.GetString("BalancerPage_ReferenceMotorSpeedToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Reference Values benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_ReferenceValues {
+            get {
+                return ResourceManager.GetString("BalancerPage_ReferenceValues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Reference Weight benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_ReferenceWeight {
+            get {
+                return ResourceManager.GetString("BalancerPage_ReferenceWeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Enter Reference Weight. benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_ReferenceWeightToolTip {
+            get {
+                return ResourceManager.GetString("BalancerPage_ReferenceWeightToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Record benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string BalancerPage_SaveButton {
@@ -349,7 +394,7 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
-        ///   Next Step benzeri yerelleştirilmiş bir dize arar.
+        ///   Next benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string BalancerPage_StepButton {
             get {
@@ -358,7 +403,7 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
-        ///   Balancer benzeri yerelleştirilmiş bir dize arar.
+        ///   Propeller Balancer benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string BalancerPage_Text {
             get {
@@ -1096,6 +1141,15 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   Propeller Balancer benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string MainWindow_Balancer {
+            get {
+                return ResourceManager.GetString("MainWindow_Balancer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Coaxial Test benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string MainWindow_Coaxial {
@@ -1146,15 +1200,6 @@ namespace Advanced_Dynotis_Software.Properties {
         public static string MainWindow_Single {
             get {
                 return ResourceManager.GetString("MainWindow_Single", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Propeller Balancer benzeri yerelleştirilmiş bir dize arar.
-        /// </summary>
-        public static string MultiTestPage_Balancer {
-            get {
-                return ResourceManager.GetString("MultiTestPage_Balancer", resourceCulture);
             }
         }
         

@@ -22,52 +22,52 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         private TareManager _tareManager;
         private RecordManager _recordManager;
 
-        private int _fixedMotorSpeedValue;
-        private int _userPropellerArea;
-        private int _addedWeightValue;
+        private int _referenceMotorSpeed;
+        private int _referenceWeight;
+        private int _propellerArea;
         public int FixedMotorSpeedValue
         {
-            get => _fixedMotorSpeedValue;
+            get => _referenceMotorSpeed;
             set
             {
-                if (SetProperty(ref _fixedMotorSpeedValue, value))
+                if (SetProperty(ref _referenceMotorSpeed, value))
                 {
                     if (SelectedDevice != null && SelectedDevice.DeviceInterfaceVariables != null)
                     {
-                        SelectedDevice.DeviceInterfaceVariables.FixedMotorSpeedValue = value;
+                        SelectedDevice.DeviceInterfaceVariables.ReferenceMotorSpeed = value;
                         OnPropertyChanged(nameof(FixedMotorSpeedValue));
                     }
                 }
             }
         }
 
-        public int UserPropellerArea
+        public int PropellerArea
         {
-            get => _userPropellerArea;
+            get => _propellerArea;
             set
             {
-                if (SetProperty(ref _userPropellerArea, value))
+                if (SetProperty(ref _propellerArea, value))
                 {
                     if (SelectedDevice != null && SelectedDevice.DeviceInterfaceVariables != null)
                     {
-                        SelectedDevice.DeviceInterfaceVariables.UserPropellerArea = value;
-                        OnPropertyChanged(nameof(UserPropellerArea));
+                        SelectedDevice.DeviceInterfaceVariables.PropellerArea = value;
+                        OnPropertyChanged(nameof(PropellerArea));
                     }
                 }
             }
         }
 
-        public int AddedWeightValue
+        public int ReferenceWeight
         {
-            get => _addedWeightValue;
+            get => _referenceWeight;
             set
             {
-                if (SetProperty(ref _addedWeightValue, value))
+                if (SetProperty(ref _referenceWeight, value))
                 {
                     if (SelectedDevice != null && SelectedDevice.DeviceInterfaceVariables != null)
                     {
-                        SelectedDevice.DeviceInterfaceVariables.AddedWeightValue = value;
-                        OnPropertyChanged(nameof(AddedWeightValue));
+                        SelectedDevice.DeviceInterfaceVariables.ReferenceWeight = value;
+                        OnPropertyChanged(nameof(ReferenceWeight));
                     }
                 }
             }

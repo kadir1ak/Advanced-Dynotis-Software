@@ -123,7 +123,7 @@
                                         <uc:MenuButton x:Name="SingleButton" Icon="UsbPort" Text="{x:Static p:Resources.MainWindow_Single}" Click="MenuButton_Click" Width="100"/>
                                         <uc:MenuButton x:Name="CoaxialButton" Icon="Usb" Text="{x:Static p:Resources.MainWindow_Coaxial}" Click="MenuButton_Click" Width="100"/>
                                         <uc:MenuButton x:Name="MultiButton" Icon="Multicast" Text="{x:Static p:Resources.MainWindow_Multi}" Click="MenuButton_Click" Width="100"/>
-                                        <uc:MenuButton x:Name="BalancerButton" Icon="Fan" Text="{x:Static p:Resources.MultiTestPage_Balancer}" Click="MenuButton_Click" Width="100"/>
+                                        <uc:MenuButton x:Name="BalancerButton" Icon="Fan" Text="{x:Static p:Resources.MainWindow_Balancer}" Click="MenuButton_Click" Width="100"/>
                                         <uc:MenuButton x:Name="APIButton" Icon="Network" Text="{x:Static p:Resources.MainWindow_API}" Click="MenuButton_Click" Width="100"/>
                                         <uc:MenuButton x:Name="ScriptButton" Icon="Script" Text="{x:Static p:Resources.MainWindow_Script}" Click="MenuButton_Click" Width="100"/>
                                         <uc:MenuButton x:Name="AutomateTestButton" Icon="Autorenew" Text="{x:Static p:Resources.MainWindow_Automate}" Click="MenuButton_Click" Width="100"/>

@@ -180,20 +180,17 @@
   <data name="BalancerPage_AddedWeightValueToolTip" xml:space="preserve">
     <value>Enter the Added Weight Value</value>
   </data>
-  <data name="BalancerPage_Button" xml:space="preserve">
-    <value>Start</value>
-  </data>
   <data name="BalancerPage_Connect" xml:space="preserve">
     <value>Connect</value>
   </data>
   <data name="BalancerPage_Description" xml:space="preserve">
     <value>Description</value>
   </data>
-  <data name="BalancerPage_FixedMotorSpeedValue" xml:space="preserve">
-    <value>Fixed Motor Speed ​​Value</value>
+  <data name="BalancerPage_DeviceList" xml:space="preserve">
+    <value>Device List</value>
   </data>
-  <data name="BalancerPage_FixedMotorSpeedValueToolTip" xml:space="preserve">
-    <value>Enter Fixed Motor Speed ​​Value</value>
+  <data name="BalancerPage_DeviceParameters" xml:space="preserve">
+    <value>Device Parameters</value>
   </data>
   <data name="BalancerPage_Index" xml:space="preserve">
     <value>Index</value>
@@ -204,20 +201,38 @@
   <data name="BalancerPage_Noise" xml:space="preserve">
     <value>Noise (g)</value>
   </data>
+  <data name="BalancerPage_PolarVibration" xml:space="preserve">
+    <value>Polar Vibration</value>
+  </data>
   <data name="BalancerPage_PropellerDiameter" xml:space="preserve">
     <value>Propeller Diameter</value>
   </data>
   <data name="BalancerPage_PropellerDiameterToolTip" xml:space="preserve">
     <value>Enter the propeller diameter.</value>
   </data>
+  <data name="BalancerPage_ReferenceMotorSpeed" xml:space="preserve">
+    <value>Reference Motor Speed</value>
+  </data>
+  <data name="BalancerPage_ReferenceMotorSpeedToolTip" xml:space="preserve">
+    <value>Enter the Reference Motor Speed.</value>
+  </data>
+  <data name="BalancerPage_ReferenceValues" xml:space="preserve">
+    <value>Reference Values</value>
+  </data>
+  <data name="BalancerPage_ReferenceWeight" xml:space="preserve">
+    <value>Reference Weight</value>
+  </data>
+  <data name="BalancerPage_ReferenceWeightToolTip" xml:space="preserve">
+    <value>Enter Reference Weight.</value>
+  </data>
   <data name="BalancerPage_SaveButton" xml:space="preserve">
     <value>Record</value>
   </data>
   <data name="BalancerPage_StepButton" xml:space="preserve">
-    <value>Next Step</value>
+    <value>Next</value>
   </data>
   <data name="BalancerPage_Text" xml:space="preserve">
-    <value>Balancer</value>
+    <value>Propeller Balancer</value>
   </data>
   <data name="BatterySecurityLimits_Battery" xml:space="preserve">
     <value>Battery (S)</value>
@@ -462,6 +477,9 @@
   <data name="MainWindow_Automate" xml:space="preserve">
     <value>Automate</value>
   </data>
+  <data name="MainWindow_Balancer" xml:space="preserve">
+    <value>Propeller Balancer</value>
+  </data>
   <data name="MainWindow_Coaxial" xml:space="preserve">
     <value>Coaxial Test</value>
   </data>
@@ -479,9 +497,6 @@
   </data>
   <data name="MainWindow_Single" xml:space="preserve">
     <value>Single Test</value>
-  </data>
-  <data name="MultiTestPage_Balancer" xml:space="preserve">
-    <value>Propeller Balancer</value>
   </data>
   <data name="MultiTestPage_Text" xml:space="preserve">
     <value>Multi Test</value>
