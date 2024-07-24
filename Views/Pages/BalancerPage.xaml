@@ -128,26 +128,17 @@
                                                     <TextBlock Text=":" Grid.Row="1" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
                                                     <TextBlock Text="{x:Static p:Resources.DeviceInformation_SeriNo}" Grid.Row="2" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
                                                     <TextBlock Text=":" Grid.Row="2" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
-                                                    <TextBlock Text="{x:Static p:Resources.DeviceInformation_PropellerDiameter}" Grid.Row="3" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="{x:Static p:Resources.DeviceInformation_ESCStatus}" Grid.Row="3" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
                                                     <TextBlock Text=":" Grid.Row="3" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
-                                                    <TextBlock Text="{x:Static p:Resources.DeviceInformation_InternalRes}" Grid.Row="4" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="{x:Static p:Resources.DeviceInformation_ESCValue}" Grid.Row="4" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
                                                     <TextBlock Text=":" Grid.Row="4" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
-                                                    <TextBlock Text="{x:Static p:Resources.DeviceInformation_NoLoadCurrent}" Grid.Row="5" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
-                                                    <TextBlock Text=":" Grid.Row="5" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
-                                                    <TextBlock Text="{x:Static p:Resources.DeviceInformation_ESCStatus}" Grid.Row="6" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
-                                                    <TextBlock Text=":" Grid.Row="6" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
-                                                    <TextBlock Text="{x:Static p:Resources.DeviceInformation_ESCValue}" Grid.Row="7" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
-                                                    <TextBlock Text=":" Grid.Row="7" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
 
 
                                                     <TextBlock Text="{Binding Device.PortName}" Grid.Row="0" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
                                                     <TextBlock Text="{Binding Device.Model}" Grid.Row="1" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
                                                     <TextBlock Text="{Binding Device.SeriNo}" Grid.Row="2" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
-                                                    <TextBlock Text="{Binding Device.DynotisData.PropellerArea}" Grid.Row="3" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
-                                                    <TextBlock Text="{Binding Device.DynotisData.MotorInner}" Grid.Row="4" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
-                                                    <TextBlock Text="{Binding Device.DynotisData.NoLoadCurrents}" Grid.Row="5" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
-                                                    <TextBlock Text="{Binding Device.DynotisData.ESCStatus}" Grid.Row="6" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
-                                                    <TextBlock Text="{Binding Device.DynotisData.ESCValue}" Grid.Row="7" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="{Binding Device.DynotisData.ESCStatus}" Grid.Row="3" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="{Binding Device.DynotisData.ESCValue}" Grid.Row="4" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
 
                                                 </Grid>
                                             </StackPanel>
@@ -182,9 +173,9 @@
                                                     <TextBlock Text=":" Grid.Row="2" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
 
 
-                                                    <TextBlock Text="{Binding DeviceInterfaceVariables.ReferencePropellerArea}" Grid.Row="0" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="{Binding DeviceInterfaceVariables.ReferencePropellerArea, StringFormat={}{0:0.00}}" Grid.Row="0" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
                                                     <TextBlock Text="{Binding DeviceInterfaceVariables.ReferenceMotorSpeed}" Grid.Row="1" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
-                                                    <TextBlock Text="{Binding DeviceInterfaceVariables.ReferenceWeight}" Grid.Row="2" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="{Binding DeviceInterfaceVariables.ReferenceWeight, StringFormat={}{0:0.000}}" Grid.Row="2" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
 
                                                     <TextBlock Text="Inch" Grid.Row="0" Grid.Column="2"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
                                                     <TextBlock Text="{Binding DeviceInterfaceVariables.MotorSpeed.UnitSymbol}" Grid.Row="1" Grid.Column="2"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
@@ -197,13 +188,64 @@
                                     </Border>
 
                                     <Border  Grid.Row="0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3 3 0 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                                        <ContentControl Content="{Binding CurrentBalancerParameters, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                            <ContentControl.ContentTemplate>
-                                                <DataTemplate>
-                                                    <uc:BalancerParameters HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0"/>
-                                                </DataTemplate>
-                                            </ContentControl.ContentTemplate>
-                                        </ContentControl>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            <ContentControl Grid.Row="0" Content="{Binding CurrentBalancerParameters, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                                <ContentControl.ContentTemplate>
+                                                    <DataTemplate>
+                                                        <uc:BalancerParameters HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0"/>
+                                                    </DataTemplate>
+                                                </ContentControl.ContentTemplate>
+                                            </ContentControl>
+
+  
+                                            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="0 50 0 0">
+                                                <Grid VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="1*"/>
+                                                        <RowDefinition Height="1*"/>
+                                                        <RowDefinition Height="1*"/>
+                                                        <RowDefinition Height="1*"/>
+                                                        <RowDefinition Height="1*"/>
+                                                        <RowDefinition Height="1*"/>
+                                                        <RowDefinition Height="1*"/>
+                                                        <RowDefinition Height="1*"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="1*"/>
+                                                        <ColumnDefinition Width="1*"/>
+                                                    </Grid.ColumnDefinitions>
+
+
+                                                    <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="3 3 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                                        <TextBlock FontSize="14" Text="{x:Static p:Resources.BalancerPage_CalculatedValues}" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </Border>
+
+                                                    <TextBlock Text="{x:Static p:Resources.BalancerPage_BalancingWeight}" Grid.Row="1" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5 0 10 0"/>
+                                                    <TextBlock Text=":" Grid.Row="1" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="2 0 0 0"/>
+                                                    <TextBlock Text="{x:Static p:Resources.BalancerPage_BalancingPosition}" Grid.Row="2" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5 0 10 0"/>
+                                                    <TextBlock Text=":" Grid.Row="2" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="2 0 0 0"/>
+                                                    <TextBlock Text="{x:Static p:Resources.BalancerPage_ReferenceWeight}" Grid.Row="3" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5 0 10 0"/>
+                                                    <TextBlock Text=":" Grid.Row="3" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="2 0 0 0"/>
+
+                                                    <TextBlock Text="{Binding DeviceInterfaceVariables.BalancingWeight, StringFormat={}{0:0.000}}" Grid.Row="1" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="{Binding DeviceInterfaceVariables.BalancingPosition}" Grid.Row="2" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="{Binding DeviceInterfaceVariables.ReferenceWeight, StringFormat={}{0:0.000}}" Grid.Row="3" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+
+                                                    <TextBlock Text="g" Grid.Row="1" Grid.Column="2"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="" Grid.Row="2" Grid.Column="2"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="g" Grid.Row="3" Grid.Column="2"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+
+                                                </Grid>
+                                            </StackPanel>
+
+                                        </Grid>
+                             
                                     </Border>
 
 
@@ -221,7 +263,17 @@
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
                                             <icon:PackIconMaterial Kind="PanRight" Foreground="{DynamicResource deviceCardIcon}" Width="20" Height="20" Margin="10 24 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Margin="35 20 20 20" Content="{x:Static p:Resources.BalancerPage_Description}"/>
+                                            <Label Grid.Row="0" Grid.Column="0" FontSize="14" Grid.ColumnSpan="4" Margin="35 20 20 20" Content="{x:Static p:Resources.BalancerPage_Description}"/>
+                                            <TextBlock Margin="50,50,50,50" Width="400" Grid.Column="0" Grid.ColumnSpan="4" FontSize="14"
+                                                       Text="İşlem:                                                       
+                                                       1.) Hafif olan kanadın konumuna ağırlık ekleyin veya ağır bıçaktan ağırlık çıkarın. (Şekildeki gibi)
+                                                       2.) Titreşim seviyesi bellirli değere gelene kadar bekleyiniz. 
+                                                       3.) Test verilerinizi kaydediniz."
+                                                   TextWrapping="Wrap" 
+                                                   TextAlignment="Left"/>
+
+
+
                                             <uc:GeneralButton  Grid.Row="2" Grid.Column="1" Margin="5"  Icon="ArrowRightLongSolid" Text="{x:Static p:Resources.BalancerPage_StepButton}" Command="{Binding StepCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
                                             <uc:GeneralButton  Grid.Row="2" Grid.Column="2" Margin="5"  Icon="FileLinesRegular" Text="{x:Static p:Resources.BalancerPage_SaveButton}" Command="{Binding SaveCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
                                             <uc:StatusBar Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Value="30" ></uc:StatusBar>
@@ -398,7 +450,7 @@
                                             <TextBlock FontSize="14" Text="{x:Static p:Resources.BalancerPage_PolarVibration}" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                         <Border Grid.Row="1" Margin="0 0 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-
+          
                                         </Border>
                                     </Grid>
                                 </Grid>

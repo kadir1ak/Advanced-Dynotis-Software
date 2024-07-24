@@ -39,7 +39,7 @@
         <Label Grid.Row="1" Grid.Column="2" Content="Inch" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Left"/>
         <!-- Propeller Area TextBox -->
         <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource NumericTextBoxDoubleStyle}" 
-             Text="{Binding ReferencePropellerArea, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+             Text="{Binding ReferencePropellerArea, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.00}}" 
              FontSize="14" Height="Auto" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1.5">
             <TextBox.ToolTip>
                 <ToolTip>
@@ -73,7 +73,7 @@
         <Label Grid.Row="3" Grid.Column="2" Content="g" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Left"/>
         <!-- Reference Weight TextBox -->
         <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource NumericTextBoxDoubleStyle}" 
-             Text="{Binding ReferenceWeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+             Text="{Binding ReferenceWeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.000}}" 
              FontSize="14" Height="Auto" Width="100" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1.5">
             <TextBox.ToolTip>
                 <ToolTip>

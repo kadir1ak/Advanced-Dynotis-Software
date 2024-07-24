@@ -171,6 +171,15 @@
   <data name="AutomateTestPage_Time" xml:space="preserve">
     <value>Time (s)</value>
   </data>
+  <data name="BalancerPage_BalancingPosition" xml:space="preserve">
+    <value>Balancing Position</value>
+  </data>
+  <data name="BalancerPage_BalancingWeight" xml:space="preserve">
+    <value>Balancing Weight</value>
+  </data>
+  <data name="BalancerPage_CalculatedValues" xml:space="preserve">
+    <value>Calculated Values</value>
+  </data>
   <data name="BalancerPage_Connect" xml:space="preserve">
     <value>Connect</value>
   </data>

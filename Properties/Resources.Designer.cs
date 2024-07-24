@@ -223,6 +223,33 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   Balancing Position benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_BalancingPosition {
+            get {
+                return ResourceManager.GetString("BalancerPage_BalancingPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Balancing Weight benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_BalancingWeight {
+            get {
+                return ResourceManager.GetString("BalancerPage_BalancingWeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Calculated Values benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_CalculatedValues {
+            get {
+                return ResourceManager.GetString("BalancerPage_CalculatedValues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Connect benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string BalancerPage_Connect {

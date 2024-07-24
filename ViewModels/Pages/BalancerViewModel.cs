@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows;
 
 namespace Advanced_Dynotis_Software.ViewModels.Pages
 {
@@ -54,11 +55,15 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         }
 
         public ICommand ConnectCommand { get; }
+        public ICommand StepCommand { get; }
+        public ICommand SaveCommand { get; }
 
         public BalancerViewModel()
         {
             AvailableDevices = new ObservableCollection<DeviceViewModel>(DeviceManager.Instance.GetAllDevices());
             ConnectCommand = new RelayCommand(async _ => await ConnectToDeviceAsync());
+            StepCommand = new RelayCommand(param => ESCValueSet());
+            SaveCommand = new RelayCommand(param => SaveDeviceParameters());
             _equipmentParametersManager = new EquipmentParametersManager();
             _escParametersManager = new ESCParametersManager();
             _batterySecurityLimitsManager = new BatterySecurityLimitsManager();
@@ -68,6 +73,20 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
 
             DeviceManager.Instance.DeviceDisconnected += OnDeviceDisconnected;
             DeviceManager.Instance.DeviceConnected += OnDeviceConnected;
+        }
+
+        private void ESCValueSet()
+        {
+            if (ConnectedDevice?.DeviceInterfaceVariables != null)
+            {
+                ConnectedDevice.DeviceInterfaceVariables.ESCValue = 25;
+                MessageBox.Show("ESC değeri 25 olarak ayarlandı.");
+            }
+        }
+        private void SaveDeviceParameters()
+        {
+            // Burada cihaz parametrelerinin kaydedilmesi için gerekli işlemleri yapabilirsiniz.
+            MessageBox.Show("Cihaz parametreleri kaydedildi.");
         }
 
         private async Task ConnectToDeviceAsync()

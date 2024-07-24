@@ -97,6 +97,8 @@ public class InterfaceVariables : INotifyPropertyChanged
     private int _referenceMotorSpeed;
     private double _referenceWeight;
     private double _referencePropellerArea;
+    private double _balancingWeight;
+    private double _balancingPosition;
     public double Time
     {
         get => _time;
@@ -430,6 +432,17 @@ public class InterfaceVariables : INotifyPropertyChanged
     {
         get => _referencePropellerArea;
         set => SetProperty(ref _referencePropellerArea, value);
+    }
+
+    public double BalancingWeight
+    {
+        get => _balancingWeight;
+        set => SetProperty(ref _balancingWeight, value);
+    }   
+    public double BalancingPosition
+    {
+        get => _balancingPosition;
+        set => SetProperty(ref _balancingPosition, value);
     }
     public void UpdateFrom(DynotisData data)
     {

@@ -15,7 +15,7 @@ namespace Advanced_Dynotis_Software.Services.Helpers
         {
             if (value is bool boolValue)
             {
-                return boolValue ? Visibility.Visible : Visibility.Collapsed;
+                return boolValue ? Visibility.Collapsed : Visibility.Visible;
             }
             return Visibility.Collapsed;
         }

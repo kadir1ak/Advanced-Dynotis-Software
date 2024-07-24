@@ -171,6 +171,15 @@
   <data name="AutomateTestPage_Time" xml:space="preserve">
     <value>Zaman (s)</value>
   </data>
+  <data name="BalancerPage_BalancingPosition" xml:space="preserve">
+    <value>Dengeleme Konumu</value>
+  </data>
+  <data name="BalancerPage_BalancingWeight" xml:space="preserve">
+    <value>Dengeleme Ağırlığı</value>
+  </data>
+  <data name="BalancerPage_CalculatedValues" xml:space="preserve">
+    <value>Hesaplanan Değerler</value>
+  </data>
   <data name="BalancerPage_Connect" xml:space="preserve">
     <value>Bağlan</value>
   </data>
@@ -551,6 +560,9 @@
   </data>
   <data name="SoftwareUpdatePage_Text" xml:space="preserve">
     <value>Yazılım Güncellemeleri</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value>Dengeleme Konumu</value>
   </data>
   <data name="Tare_Tare" xml:space="preserve">
     <value>Dara</value>

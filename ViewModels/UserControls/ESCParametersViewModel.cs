@@ -16,12 +16,12 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         public ESCParametersViewModel(DynotisData dynotisData)
         {
             _dynotisData = dynotisData;
-            ESCValue = dynotisData.ESCValue;
-            ESCStatus = dynotisData.ESCStatus == true;
+            ESCValue = 0; // Başlangıçta 0
+            ESCStatus = false; // Başlangıçta false
 
             EscLockCommand = new RelayCommand(_ => LockESC());
-            IncreaseByFiveCommand = new RelayCommand(_ => IncreaseByFive());
-            StopCommand = new RelayCommand(_ => Stop());
+            IncreaseByFiveCommand = new RelayCommand(_ => IncreaseByFive(), _ => ESCStatus);
+            StopCommand = new RelayCommand(_ => Stop(), _ => ESCStatus);
         }
 
         public double ESCValue
@@ -33,7 +33,6 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 {
                     _dynotisData.ESCValue = value;
                 }
-                OnPropertyChanged(nameof(ESCValue));
             }
         }
 
@@ -44,7 +43,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 if (SetProperty(ref _escStatus, value))
                 {
-                    _dynotisData.ESCStatus = value ? true : false;
+                    _dynotisData.ESCStatus = value;
                     if (_escStatus)
                     {
                         ESCValue = 0;
@@ -61,11 +60,15 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private void LockESC()
         {
             ESCStatus = !ESCStatus;
+            if (!ESCStatus)
+            {
+                ESCValue = 0;
+            }
         }
 
         private void IncreaseByFive()
         {
-            if (!ESCStatus)
+            if (ESCStatus)
             {
                 ESCValue = Math.Min(ESCValue + 5, 100);
             }
@@ -73,7 +76,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
         private void Stop()
         {
-            if (!ESCStatus)
+            if (ESCStatus)
             {
                 ESCValue = 0;
             }

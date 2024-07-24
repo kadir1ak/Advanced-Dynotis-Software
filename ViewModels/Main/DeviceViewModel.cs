@@ -55,7 +55,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                                 e.PropertyName == nameof(BalancerParametersViewModel.ReferenceWeight))
                             {
                                 DeviceInterfaceVariables.ReferenceMotorSpeed = _currentBalancerParameters.ReferenceMotorSpeed;
-                                DeviceInterfaceVariables.PropellerArea = _currentBalancerParameters.ReferencePropellerArea;
+                                DeviceInterfaceVariables.ReferencePropellerArea = _currentBalancerParameters.ReferencePropellerArea;
                                 DeviceInterfaceVariables.ReferenceWeight = _currentBalancerParameters.ReferenceWeight;
                                 OnPropertyChanged(nameof(DeviceInterfaceVariables));
                             }
