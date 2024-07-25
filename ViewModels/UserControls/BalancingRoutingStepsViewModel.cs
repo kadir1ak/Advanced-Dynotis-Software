@@ -1,6 +1,7 @@
 ﻿using Advanced_Dynotis_Software.Models.Dynotis;
 using Advanced_Dynotis_Software.Services.Controllers;
 using Advanced_Dynotis_Software.Services.Helpers;
+using Advanced_Dynotis_Software.Services.Logger;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,11 +26,16 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private DispatcherTimer _pidTimer;
         private double _progressValue;
 
+        public ICommand RunCommand { get; }
+        public ICommand SaveCommand { get; }
+
+        public List<string> Steps => _steps;
+
         private bool _isRunButtonEnabled;
         private bool _isSaveButtonEnabled;
 
         private bool _escStatus;
-        private double _escValue;
+        private int _escValue;
 
         public BalancingRoutingStepsViewModel(DynotisData dynotisData, InterfaceVariables interfaceVariables)
         {
@@ -39,25 +45,22 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             ESCValue = dynotisData.ESCValue;
 
             // Initialize the PID Controller with tuned parameters (Kp, Ki, Kd)
-            //_pidController = new PIDController(0.3, 0.01, 0.01); // Kp değerini biraz artırabiliriz
-
-            // Daha hassas PID parametreleri
-            _pidController = new PIDController(0.5, 0.01, 0.01, integralMax: 200.0, integralMin: -200.0, alpha: 0.01);
+            _pidController = new PIDController(0.2, 0.01, 0.05, integralMax: 500.0, integralMin: -500.0, alpha: 0.1);
 
 
             RunCommand = new RelayCommand(param => Run(), param => IsRunButtonEnabled);
             SaveCommand = new RelayCommand(param => Save(), param => IsSaveButtonEnabled);
 
             _steps = new List<string>
-            {
-                "Cihazın Hazırlanması ve Başlangıç Titreşiminin Ölçülmesi",
-                "Pervane Titreşim Ölçümü (Ağırlıksız)",
-                "Balans Yönünün Belirlenmesi (0 Derece Pozisyonu)",
-                "Balans Yönünün Belirlenmesi (180 Derece Pozisyonu)",
-                "Balanslama için Değerlerin Hesaplanması",
-                "Test ve Değerlendirme",
-                "Balanslama İyileşme Oranının Hesaplanması"
-            };
+        {
+            "Cihazın Hazırlanması ve Başlangıç Titreşiminin Ölçülmesi",
+            "Pervane Titreşim Ölçümü (Ağırlıksız)",
+            "Balans Yönünün Belirlenmesi (0 Derece Pozisyonu)",
+            "Balans Yönünün Belirlenmesi (180 Derece Pozisyonu)",
+            "Balanslama için Değerlerin Hesaplanması",
+            "Test ve Değerlendirme",
+            "Balanslama İyileşme Oranının Hesaplanması"
+        };
 
             _currentStepIndex = 0;
             _progressValue = 0;
@@ -69,14 +72,87 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             _progressTimer.Tick += ProgressTimer_Tick;
 
             _pidTimer = new DispatcherTimer();
-            _pidTimer.Interval = TimeSpan.FromMilliseconds(100); // Adjust the interval as needed
+            _pidTimer.Interval = TimeSpan.FromSeconds(1); // Adjust the interval as needed
             _pidTimer.Tick += PIDTimer_Tick;
         }
 
-        public ICommand RunCommand { get; }
-        public ICommand SaveCommand { get; }
+        private void Run()
+        {
+            if (_interfaceVariables.ReferenceMotorSpeed <= 0)
+            {
+                MessageBox.Show("Lütfen değer giriniz");
+            }
+            else
+            {
+                ESCStatus = true;
+                ESCValue = 10;
+                _pidController.Reset();
 
-        public List<string> Steps => _steps;
+                IsRunButtonEnabled = false;
+                IsSaveButtonEnabled = false;
+                _progressTimer.Start();
+                _pidTimer.Start();
+            }
+        }
+
+        private void ProgressTimer_Tick(object sender, EventArgs e)
+        {
+            if (ProgressValue < 100)
+            {
+                ProgressValue += 5;
+            }
+            else
+            {
+                ESCStatus = false;
+                ESCValue = 0;
+
+                _progressTimer.Stop();
+                _pidTimer.Stop();
+                IsSaveButtonEnabled = true;
+            }
+        }
+
+        private void PIDTimer_Tick(object sender, EventArgs e)
+        {
+            double currentSpeed = _interfaceVariables.MotorSpeed.Value;
+            double pidOutput = _pidController.Calculate(_interfaceVariables.ReferenceMotorSpeed, currentSpeed);
+
+            pidOutput = Math.Clamp(pidOutput, 0, 100);
+
+            // ESC değerini düzgün geçiş yaparak güncelle
+            ESCValue = SmoothTransition(ESCValue, (int)pidOutput);
+        }
+
+        private int SmoothTransition(int currentValue, int targetValue)
+        {
+            int step = 1; // Adım boyutunu belirle
+
+            if (Math.Abs(_interfaceVariables.MotorSpeed.Value - _interfaceVariables.ReferenceMotorSpeed) > 500)
+            {
+                if (Math.Abs(currentValue - targetValue) <= step)
+                {
+                    return targetValue; // Hedefe yeterince yakınsa, doğrudan ayarla
+                }
+                if (currentValue < targetValue)
+                {
+                    currentValue = Math.Min(currentValue + step, targetValue);
+                }
+                else if (currentValue > targetValue)
+                {
+                    currentValue = Math.Max(currentValue - step, targetValue);
+                }
+            }
+            return currentValue;
+        }
+
+
+        private void Save()
+        {
+            MessageBox.Show("Save");
+            IsRunButtonEnabled = true;
+            IsSaveButtonEnabled = false;
+            ProgressValue = 0;
+        }
 
         public int CurrentStepIndex
         {
@@ -154,7 +230,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             }
         }
 
-        public double ESCValue
+        public int ESCValue
         {
             get => _escValue;
             set
@@ -165,90 +241,6 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     OnPropertyChanged(nameof(ESCValue));
                 }
             }
-        }
-
-        private void Run()
-        {
-            if (_interfaceVariables.ReferenceMotorSpeed <= 0)
-            {
-                MessageBox.Show("Lütfen değer giriniz");
-            }
-            else
-            {
-                ESCStatus = true;
-                ESCValue = 10;
-                _pidController.Reset();
-
-                IsRunButtonEnabled = false;
-                IsSaveButtonEnabled = false;
-                _progressTimer.Start();
-                _pidTimer.Start();
-            }
-        }
-
-        private void ProgressTimer_Tick(object sender, EventArgs e)
-        {
-            if (ProgressValue < 100)
-            {
-                ProgressValue += 5;
-            }
-            else
-            {
-                ESCStatus = false;
-                ESCValue = 0;
-
-                _progressTimer.Stop();
-                _pidTimer.Stop();
-                IsSaveButtonEnabled = true;
-            }
-        }
-
-        private void PIDTimer_Tick(object sender, EventArgs e)
-        {
-            double currentSpeed = _interfaceVariables.MotorSpeed.Value;
-            double escValue = _pidController.Calculate(_interfaceVariables.ReferenceMotorSpeed, currentSpeed);
-
-            // Clamp the PID output to prevent sudden jumps
-            escValue = Math.Clamp(escValue, 0, 100);
-
-            // Smooth the transition by slowly adjusting the ESC value
-            ESCValue = SmoothTransition(ESCValue, escValue);
-        }
-
-        private double SmoothTransition(double currentValue, double targetValue)
-        {
-            double step = 0.01; // Smaller step value for higher sensitivity
-            if (_interfaceVariables.MotorSpeed.Value <= 0)
-            {
-                step = 0.1;
-
-            }
-            else
-            {
-                step = 0.01;
-            }
-
-            if (Math.Abs(currentValue - targetValue) < step)
-            {
-                return targetValue; // Close enough to the target, set directly
-            }
-            if (currentValue < targetValue)
-            {
-                currentValue = Math.Min(currentValue + step, targetValue);
-            }
-            else if (currentValue > targetValue)
-            {
-                currentValue = Math.Max(currentValue - step, targetValue);
-            }
-            return currentValue;
-        }
-
-        private void Save()
-        {
-            MessageBox.Show("Save");
-            IsRunButtonEnabled = true;
-            IsSaveButtonEnabled = false;
-            ProgressValue = 0;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -15,7 +15,7 @@ namespace Advanced_Dynotis_Software.Services.Controllers
         private double _previousDerivative;
         private double _alpha; // Smoothing factor for derivative
 
-        public PIDController(double kp, double ki, double kd, double integralMax = 20.0, double integralMin = -20.0, double alpha = 0.1)
+        public PIDController(double kp, double ki, double kd, double integralMax = 50.0, double integralMin = -50.0, double alpha = 0.1)
         {
             Kp = kp;
             Ki = ki;
@@ -41,7 +41,9 @@ namespace Advanced_Dynotis_Software.Services.Controllers
 
             _previousError = error;
 
-            return Kp * error + Ki * _integral + Kd * smoothedDerivative;
+            double output = Kp * error + Ki * _integral + Kd * smoothedDerivative;
+
+            return output;
         }
 
         public void Reset()

@@ -45,7 +45,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         private double _maxCurrent;
         private double _batteryLevel;
         private bool   _securityStatus;
-        private double _escValue;
+        private int _escValue;
         private bool   _escStatus;
 
 
@@ -234,7 +234,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             set => SetProperty(ref _securityStatus, value);
         }
 
-        public double ESCValue
+        public int ESCValue
         {
             get => _escValue;
             set => SetProperty(ref _escValue, value);

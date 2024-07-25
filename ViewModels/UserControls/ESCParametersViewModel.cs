@@ -9,7 +9,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 {
     public class ESCParametersViewModel : INotifyPropertyChanged
     {
-        private double _escValue;
+        private int _escValue;
         private bool _escStatus;
         private DynotisData _dynotisData;
 
@@ -24,7 +24,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             StopCommand = new RelayCommand(_ => Stop(), _ => ESCStatus);
         }
 
-        public double ESCValue
+        public int ESCValue
         {
             get => _escValue;
             set
