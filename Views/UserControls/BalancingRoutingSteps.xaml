@@ -33,7 +33,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <uc:GeneralButton Grid.Row="2" Grid.Column="1" Margin="5" Icon="ArrowRightLongSolid" Text="{x:Static p:Resources.BalancerPage_StepButton}" Command="{Binding StepCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+        <uc:GeneralButton Grid.Row="2" Grid.Column="1" Margin="5" Icon="ArrowDownUpAcrossLineSolid" Text="{x:Static p:Resources.BalancerPage_StepButton}" Command="{Binding StepCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
         <uc:GeneralButton Grid.Row="2" Grid.Column="2" Margin="5" Icon="FileLinesRegular" Text="{x:Static p:Resources.BalancerPage_SaveButton}" Command="{Binding SaveCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
         <uc:GeneralButton Grid.Row="2" Grid.Column="3" Margin="5" Icon="FileLinesRegular" Text="{x:Static p:Resources.BalancerPage_RunButton}" Command="{Binding RunCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
 
