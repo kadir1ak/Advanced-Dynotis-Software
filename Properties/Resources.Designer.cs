@@ -403,6 +403,15 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   Run Test benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_RunButton {
+            get {
+                return ResourceManager.GetString("BalancerPage_RunButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Record benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string BalancerPage_SaveButton {

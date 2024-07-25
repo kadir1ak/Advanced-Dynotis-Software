@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="Advanced_Dynotis_Software.Views.UserControls.BalancingRoutingSteps"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
+             xmlns:p="clr-namespace:Advanced_Dynotis_Software.Properties"
+             xmlns:uc="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
+             xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <icon:PackIconMaterial Kind="PanRight" Foreground="{DynamicResource deviceCardIcon}" Width="20" Height="20" Margin="10 24 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Label Grid.Row="0" Grid.Column="0" FontSize="14" Grid.ColumnSpan="5" Margin="35 20 20 20" Content="{x:Static p:Resources.BalancerPage_Description}"/>
+
+        <ListBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Margin="20" ItemsSource="{Binding Steps}" SelectedIndex="{Binding CurrentStepIndex}" FontSize="14">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" TextWrapping="Wrap" TextAlignment="Left"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <uc:GeneralButton Grid.Row="2" Grid.Column="1" Margin="5" Icon="ArrowRightLongSolid" Text="{x:Static p:Resources.BalancerPage_StepButton}" Command="{Binding StepCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+        <uc:GeneralButton Grid.Row="2" Grid.Column="2" Margin="5" Icon="FileLinesRegular" Text="{x:Static p:Resources.BalancerPage_SaveButton}" Command="{Binding SaveCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+        <uc:GeneralButton Grid.Row="2" Grid.Column="3" Margin="5" Icon="FileLinesRegular" Text="{x:Static p:Resources.BalancerPage_RunButton}" Command="{Binding RunCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+
+        <uc:StatusBar Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Value="30" ></uc:StatusBar>
+    </Grid>
+</UserControl>

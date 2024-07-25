@@ -23,6 +23,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         private TareManager _tareManager;
         private RecordManager _recordManager;
         private BalancerParametersManager _balancerParametersManager;
+        private BalancingRoutingStepsManager _balancingRoutingStepsManager;
 
 
         public ObservableCollection<DeviceViewModel> AvailableDevices { get; }
@@ -55,38 +56,21 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         }
 
         public ICommand ConnectCommand { get; }
-        public ICommand StepCommand { get; }
-        public ICommand SaveCommand { get; }
 
         public BalancerViewModel()
         {
             AvailableDevices = new ObservableCollection<DeviceViewModel>(DeviceManager.Instance.GetAllDevices());
             ConnectCommand = new RelayCommand(async _ => await ConnectToDeviceAsync());
-            StepCommand = new RelayCommand(param => ESCValueSet());
-            SaveCommand = new RelayCommand(param => SaveDeviceParameters());
             _equipmentParametersManager = new EquipmentParametersManager();
             _escParametersManager = new ESCParametersManager();
             _batterySecurityLimitsManager = new BatterySecurityLimitsManager();
             _tareManager = new TareManager();
             _recordManager = new RecordManager();
             _balancerParametersManager = new BalancerParametersManager();
+            _balancingRoutingStepsManager = new BalancingRoutingStepsManager();
 
             DeviceManager.Instance.DeviceDisconnected += OnDeviceDisconnected;
             DeviceManager.Instance.DeviceConnected += OnDeviceConnected;
-        }
-
-        private void ESCValueSet()
-        {
-            if (ConnectedDevice?.DeviceInterfaceVariables != null)
-            {
-                ConnectedDevice.DeviceInterfaceVariables.ESCValue = 25;
-                MessageBox.Show("ESC değeri 25 olarak ayarlandı.");
-            }
-        }
-        private void SaveDeviceParameters()
-        {
-            // Burada cihaz parametrelerinin kaydedilmesi için gerekli işlemleri yapabilirsiniz.
-            MessageBox.Show("Cihaz parametreleri kaydedildi.");
         }
 
         private async Task ConnectToDeviceAsync()
@@ -102,6 +86,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             ConnectedDevice.CurrentTare = _tareManager.GetTareViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData, SelectedDevice.DeviceInterfaceVariables);
             ConnectedDevice.CurrentRecord = _recordManager.GetRecordViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData, SelectedDevice.DeviceInterfaceVariables);
             ConnectedDevice.CurrentBalancerParameters = _balancerParametersManager.GetBalancerParametersViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData, SelectedDevice.DeviceInterfaceVariables);
+            ConnectedDevice.CurrentBalancingRoutingSteps = _balancingRoutingStepsManager.GetBalancingRoutingStepsViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData, SelectedDevice.DeviceInterfaceVariables);
         }
 
         private void OnDeviceDisconnected(DeviceViewModel device)
@@ -115,6 +100,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 ConnectedDevice.CurrentTare = null;
                 ConnectedDevice.CurrentRecord = null;
                 ConnectedDevice.CurrentBalancerParameters = null;
+                ConnectedDevice.CurrentBalancingRoutingSteps = null;
             }
             RefreshAvailableDevices();
         }

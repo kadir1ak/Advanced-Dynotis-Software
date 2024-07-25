@@ -231,6 +231,9 @@
   <data name="BalancerPage_ReferenceWeightValueToolTip" xml:space="preserve">
     <value>Enter the Reference Weight Value</value>
   </data>
+  <data name="BalancerPage_RunButton" xml:space="preserve">
+    <value>Run Test</value>
+  </data>
   <data name="BalancerPage_SaveButton" xml:space="preserve">
     <value>Record</value>
   </data>

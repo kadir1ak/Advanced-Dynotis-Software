@@ -38,6 +38,29 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             }
         }
 
+        private BalancingRoutingStepsViewModel _currentBalancingRoutingSteps;
+        public BalancingRoutingStepsViewModel CurrentBalancingRoutingSteps
+        {
+            get => _currentBalancingRoutingSteps;
+            set
+            {
+                if (SetProperty(ref _currentBalancingRoutingSteps, value))
+                {
+                    if (_currentBalancingRoutingSteps != null)
+                    {
+                        _currentBalancingRoutingSteps.PropertyChanged += (sender, e) =>
+                        {
+                            if (e.PropertyName == nameof(BalancingRoutingStepsViewModel.BalancingIterationStep))
+                            {
+                                DeviceInterfaceVariables.BalancingIterationStep = _currentBalancingRoutingSteps.BalancingIterationStep;
+                                OnPropertyChanged(nameof(DeviceInterfaceVariables));
+                            }
+                        };
+                    }
+                }
+            }
+        }       
+        
         private BalancerParametersViewModel _currentBalancerParameters;
         public BalancerParametersViewModel CurrentBalancerParameters
         {
