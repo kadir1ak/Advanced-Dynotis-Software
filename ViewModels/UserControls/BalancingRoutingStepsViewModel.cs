@@ -68,7 +68,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             _isSaveButtonEnabled = false;
 
             _progressTimer = new DispatcherTimer();
-            _progressTimer.Interval = TimeSpan.FromSeconds(10); // Adjusted for finer control
+            _progressTimer.Interval = TimeSpan.FromSeconds(1); // Adjusted for finer control
             _progressTimer.Tick += ProgressTimer_Tick;
 
             _pidTimer = new DispatcherTimer();
@@ -85,7 +85,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             else
             {
                 ESCStatus = true;
-                ESCValue = 10;
+                ESCValue = 20;
                 _pidController.Reset();
 
                 IsRunButtonEnabled = false;
@@ -99,7 +99,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         {
             if (ProgressValue < 100)
             {
-                ProgressValue += 5;
+                ProgressValue += 10;
             }
             else
             {
@@ -149,6 +149,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private void Save()
         {
             MessageBox.Show("Save");
+            CurrentStepIndex++;
+            BalancingIterationStep = CurrentStepIndex;
             IsRunButtonEnabled = true;
             IsSaveButtonEnabled = false;
             ProgressValue = 0;
