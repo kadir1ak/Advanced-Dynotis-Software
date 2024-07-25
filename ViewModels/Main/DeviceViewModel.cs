@@ -50,10 +50,16 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                     {
                         _currentBalancingRoutingSteps.PropertyChanged += (sender, e) =>
                         {
-                            if (e.PropertyName == nameof(BalancingRoutingStepsViewModel.BalancingIterationStep))
+                            if (e.PropertyName == nameof(BalancingRoutingStepsViewModel.BalancingIterationStep) ||
+                                e.PropertyName == nameof(BalancingRoutingStepsViewModel.ESCValue) ||
+                                e.PropertyName == nameof(BalancingRoutingStepsViewModel.ESCStatus))
                             {
                                 DeviceInterfaceVariables.BalancingIterationStep = _currentBalancingRoutingSteps.BalancingIterationStep;
                                 OnPropertyChanged(nameof(DeviceInterfaceVariables));
+
+                                Device.DynotisData.ESCValue = _currentBalancingRoutingSteps.ESCValue;
+                                Device.DynotisData.ESCStatus = _currentBalancingRoutingSteps.ESCStatus;
+                                OnPropertyChanged(nameof(Device.DynotisData));
                             }
                         };
                     }

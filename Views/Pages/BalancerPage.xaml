@@ -230,17 +230,13 @@
                                                     <TextBlock Text=":" Grid.Row="1" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="2 0 0 0"/>
                                                     <TextBlock Text="{x:Static p:Resources.BalancerPage_BalancingPosition}" Grid.Row="2" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5 0 10 0"/>
                                                     <TextBlock Text=":" Grid.Row="2" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="2 0 0 0"/>
-                                                    <TextBlock Text="{x:Static p:Resources.BalancerPage_ReferenceWeight}" Grid.Row="3" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5 0 10 0"/>
-                                                    <TextBlock Text=":" Grid.Row="3" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="2 0 0 0"/>
-
+                                                 
                                                     <TextBlock Text="{Binding DeviceInterfaceVariables.BalancingWeight, StringFormat={}{0:0.000}}" Grid.Row="1" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
                                                     <TextBlock Text="{Binding DeviceInterfaceVariables.BalancingPosition}" Grid.Row="2" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
-                                                    <TextBlock Text="{Binding DeviceInterfaceVariables.ReferenceWeight, StringFormat={}{0:0.000}}" Grid.Row="3" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
-
+                                                  
                                                     <TextBlock Text="g" Grid.Row="1" Grid.Column="2"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
                                                     <TextBlock Text="" Grid.Row="2" Grid.Column="2"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
-                                                    <TextBlock Text="g" Grid.Row="3" Grid.Column="2"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
-
+                                                 
                                                 </Grid>
                                             </StackPanel>
 
@@ -327,7 +323,7 @@
                                                     <ColumnDefinition Width="Auto"/>
                                                 </Grid.ColumnDefinitions>
                                                 <!-- Motor Speed -->
-                                                <lvc:AngularGauge Grid.Row="1" Grid.Column="1" Height="175" Width="175" Margin="5 5 0 5"
+                                                <lvc:AngularGauge Grid.Row="1" Grid.Column="1" Height="150" Width="150" Margin="5 5 0 5"
                                                         Value="{Binding DeviceInterfaceVariables.Vibration}"                
                                                         FromValue="0"
                                                         ToValue="3000"

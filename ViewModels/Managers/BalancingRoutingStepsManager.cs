@@ -25,7 +25,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Managers
             }
             else
             {
-                var viewModel = new BalancingRoutingStepsViewModel(interfaceVariables);
+                var viewModel = new BalancingRoutingStepsViewModel(dynotisData, interfaceVariables);
                 _balancingRoutingSteps[devicePortName] = viewModel;
                 return viewModel;
             }
