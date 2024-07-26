@@ -171,10 +171,16 @@
   <data name="AutomateTestPage_Time" xml:space="preserve">
     <value>Zaman (s)</value>
   </data>
-  <data name="BalancerPage_BalancingPosition" xml:space="preserve">
+  <data name="BalancerPage_ApprovalButton" xml:space="preserve">
+    <value>Onayla</value>
+  </data>
+  <data name="BalancerPage_BalancedPropellersListViewHeader" xml:space="preserve">
+    <value>Pervaneler</value>
+  </data>
+  <data name="BalancerPage_BalancerPosition" xml:space="preserve">
     <value>Dengeleme Konumu</value>
   </data>
-  <data name="BalancerPage_BalancingWeight" xml:space="preserve">
+  <data name="BalancerPage_BalancerWeight" xml:space="preserve">
     <value>Dengeleme Ağırlığı</value>
   </data>
   <data name="BalancerPage_CalculatedValues" xml:space="preserve">
@@ -273,11 +279,23 @@
   <data name="BalancerPage_PolarVibration" xml:space="preserve">
     <value>Kutupsal Titreşim</value>
   </data>
+  <data name="BalancerPage_PropellerDeleteButton" xml:space="preserve">
+    <value>Sil</value>
+  </data>
   <data name="BalancerPage_PropellerDiameter" xml:space="preserve">
-    <value>Pervane Çapı</value>
+    <value>Pervane Çapı:</value>
   </data>
   <data name="BalancerPage_PropellerDiameterToolTip" xml:space="preserve">
     <value>Pervane çapını girin.</value>
+  </data>
+  <data name="BalancerPage_PropellerID" xml:space="preserve">
+    <value>Propeller ID:</value>
+  </data>
+  <data name="BalancerPage_PropellerLoadButton" xml:space="preserve">
+    <value>Yükle</value>
+  </data>
+  <data name="BalancerPage_PropellerSaveButton" xml:space="preserve">
+    <value>Pervaneyi Kaydet</value>
   </data>
   <data name="BalancerPage_ReferenceMotorSpeed" xml:space="preserve">
     <value>Referans Motor Hızı</value>
@@ -300,8 +318,14 @@
   <data name="BalancerPage_ReferenceWeightValueToolTip" xml:space="preserve">
     <value>Referans Ağırlık Değerini Giriniz</value>
   </data>
-  <data name="BalancerPage_RunButton" xml:space="preserve">
-    <value>Testi Çalıştır</value>
+  <data name="BalancerPage_RunButton1" xml:space="preserve">
+    <value>Test Başladı</value>
+  </data>
+  <data name="BalancerPage_RunButton2" xml:space="preserve">
+    <value>Test Başladı</value>
+  </data>
+  <data name="BalancerPage_RunButton3" xml:space="preserve">
+    <value>Repeat Test</value>
   </data>
   <data name="BalancerPage_SaveButton" xml:space="preserve">
     <value>Kaydet</value>
@@ -317,6 +341,9 @@
   </data>
   <data name="BalancerPage_StepButton" xml:space="preserve">
     <value>İleri</value>
+  </data>
+  <data name="BalancerPage_StopButton" xml:space="preserve">
+    <value>Testi Durdur</value>
   </data>
   <data name="BalancerPage_Text" xml:space="preserve">
     <value>Pervane Dengeleyici</value>

@@ -223,20 +223,38 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   Approve benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_ApprovalButton {
+            get {
+                return ResourceManager.GetString("BalancerPage_ApprovalButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Propellers benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_BalancedPropellersListViewHeader {
+            get {
+                return ResourceManager.GetString("BalancerPage_BalancedPropellersListViewHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Balancing Position benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
-        public static string BalancerPage_BalancingPosition {
+        public static string BalancerPage_BalancerPosition {
             get {
-                return ResourceManager.GetString("BalancerPage_BalancingPosition", resourceCulture);
+                return ResourceManager.GetString("BalancerPage_BalancerPosition", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Balancing Weight benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
-        public static string BalancerPage_BalancingWeight {
+        public static string BalancerPage_BalancerWeight {
             get {
-                return ResourceManager.GetString("BalancerPage_BalancingWeight", resourceCulture);
+                return ResourceManager.GetString("BalancerPage_BalancerWeight", resourceCulture);
             }
         }
         
@@ -529,7 +547,16 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
-        ///   Propeller Diameter benzeri yerelleştirilmiş bir dize arar.
+        ///   Delete benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_PropellerDeleteButton {
+            get {
+                return ResourceManager.GetString("BalancerPage_PropellerDeleteButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Propeller Diameter: benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string BalancerPage_PropellerDiameter {
             get {
@@ -543,6 +570,33 @@ namespace Advanced_Dynotis_Software.Properties {
         public static string BalancerPage_PropellerDiameterToolTip {
             get {
                 return ResourceManager.GetString("BalancerPage_PropellerDiameterToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Propeller ID: benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_PropellerID {
+            get {
+                return ResourceManager.GetString("BalancerPage_PropellerID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Load benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_PropellerLoadButton {
+            get {
+                return ResourceManager.GetString("BalancerPage_PropellerLoadButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Propeller Save benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_PropellerSaveButton {
+            get {
+                return ResourceManager.GetString("BalancerPage_PropellerSaveButton", resourceCulture);
             }
         }
         
@@ -610,11 +664,29 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
-        ///   Run Test benzeri yerelleştirilmiş bir dize arar.
+        ///   Start Test benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
-        public static string BalancerPage_RunButton {
+        public static string BalancerPage_RunButton1 {
             get {
-                return ResourceManager.GetString("BalancerPage_RunButton", resourceCulture);
+                return ResourceManager.GetString("BalancerPage_RunButton1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Testing Started benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_RunButton2 {
+            get {
+                return ResourceManager.GetString("BalancerPage_RunButton2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Repeat Test benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_RunButton3 {
+            get {
+                return ResourceManager.GetString("BalancerPage_RunButton3", resourceCulture);
             }
         }
         
@@ -660,6 +732,15 @@ namespace Advanced_Dynotis_Software.Properties {
         public static string BalancerPage_StepButton {
             get {
                 return ResourceManager.GetString("BalancerPage_StepButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Test Stop benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_StopButton {
+            get {
+                return ResourceManager.GetString("BalancerPage_StopButton", resourceCulture);
             }
         }
         

@@ -65,5 +65,6 @@
     <!-- Balancer -->
     <BitmapImage x:Key="MotorAndPropellerImage" UriSource="pack://application:,,,/Documents/Images/Motor_and_Propeller3.png"/>
     <SolidColorBrush Color="White" x:Key="Line"/>
+    <SolidColorBrush Color="#151F2D" x:Key="BalancerRoutingStepsListBoxText"/>
 
 </ResourceDictionary>

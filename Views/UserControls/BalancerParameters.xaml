@@ -25,7 +25,6 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -34,28 +33,11 @@
         </Grid.ColumnDefinitions>
         <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="3 3 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
             <TextBlock FontSize="14" Text="{x:Static p:Resources.BalancerPage_ReferenceValues}" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        </Border>
-        <Label  Grid.Row="1" Grid.Column="0" Content="{x:Static p:Resources.BalancerPage_PropellerDiameter}" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Left"/>
-        <Label Grid.Row="1" Grid.Column="2" Content="Inch" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Left"/>
-        <!-- Propeller Area TextBox -->
-        <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource NumericTextBoxDoubleStyle}" 
-             Text="{Binding ReferencePropellerArea, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.00}}" 
-             FontSize="14" Height="Auto" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1.5">
-            <TextBox.ToolTip>
-                <ToolTip>
-                    <ToolTip.Resources>
-                        <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="12"/>
-                        </Style>
-                    </ToolTip.Resources>
-                    <TextBlock Text="{x:Static p:Resources.BalancerPage_PropellerDiameterToolTip}" FontStyle="Normal" TextWrapping="WrapWithOverflow" FontSize="14" Margin="5 5" Cursor=""/>
-                </ToolTip>
-            </TextBox.ToolTip>
-        </TextBox>
-        <Label Grid.Row="2" Grid.Column="0" Content="{x:Static p:Resources.BalancerPage_ReferenceMotorSpeed}" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Left"/>
-        <Label Grid.Row="2" Grid.Column="2" Content="{Binding DeviceInterfaceVariables.MotorSpeed.UnitSymbol}" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Left"/>
+        </Border>     
+        <Label Grid.Row="1" Grid.Column="0" Content="{x:Static p:Resources.BalancerPage_ReferenceMotorSpeed}" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Left"/>
+        <Label Grid.Row="1" Grid.Column="2" Content="{Binding DeviceInterfaceVariables.MotorSpeed.UnitSymbol}" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Left"/>
         <!-- Reference Motor Speed TextBox -->
-        <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource NumericTextBoxIntStyle}" 
+        <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource NumericTextBoxIntStyle}" 
              Text="{Binding ReferenceMotorSpeed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
              FontSize="14" Height="Auto" Width="100" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1.5">
             <TextBox.ToolTip>
@@ -69,10 +51,10 @@
                 </ToolTip>
             </TextBox.ToolTip>
         </TextBox>
-        <Label Grid.Row="3" Grid.Column="0" Content="{x:Static p:Resources.BalancerPage_ReferenceWeightValue}" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Left"/>
-        <Label Grid.Row="3" Grid.Column="2" Content="g" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Left"/>
+        <Label Grid.Row="2" Grid.Column="0" Content="{x:Static p:Resources.BalancerPage_ReferenceWeightValue}" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Left"/>
+        <Label Grid.Row="2" Grid.Column="2" Content="g" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Left"/>
         <!-- Reference Weight TextBox -->
-        <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource NumericTextBoxDoubleStyle}" 
+        <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource NumericTextBoxDoubleStyle}" 
              Text="{Binding ReferenceWeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.000}}" 
              FontSize="14" Height="Auto" Width="100" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1.5">
             <TextBox.ToolTip>

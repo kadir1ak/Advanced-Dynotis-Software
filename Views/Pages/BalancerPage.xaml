@@ -89,6 +89,7 @@
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="Auto"/>
@@ -187,7 +188,29 @@
                                         </Grid>
                                     </Border>
 
-                                    <Border  Grid.Row="0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3 3 0 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
+
+                                    <Border Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3 3 0 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
+                                        <ContentControl Grid.Row="0" Content="{Binding CurrentBalancerRoutingSteps, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                            <ContentControl.ContentTemplate>
+                                                <DataTemplate>
+                                                    <uc:BalancedPropellers HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0"/>
+                                                </DataTemplate>
+                                            </ContentControl.ContentTemplate>
+                                        </ContentControl>
+                                    </Border>
+
+
+                                    <Border Grid.Row="0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3 3 0 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
+                                        <ContentControl Grid.Row="0" Content="{Binding CurrentBalancerRoutingSteps, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                            <ContentControl.ContentTemplate>
+                                                <DataTemplate>
+                                                    <uc:BalancerRoutingSteps HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0"/>
+                                                </DataTemplate>
+                                            </ContentControl.ContentTemplate>
+                                        </ContentControl>
+                                    </Border>
+                                    
+                                    <Border  Grid.Row="0" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3 3 0 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto"/>
@@ -203,7 +226,7 @@
                                             </ContentControl>
 
 
-                                            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="0 50 0 0">
+                                            <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Vertical" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="0 50 0 0">
                                                 <Grid VerticalAlignment="Top" HorizontalAlignment="Stretch">
                                                     <Grid.RowDefinitions>
                                                         <RowDefinition Height="1*"/>
@@ -226,71 +249,23 @@
                                                         <TextBlock FontSize="14" Text="{x:Static p:Resources.BalancerPage_CalculatedValues}" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                     </Border>
 
-                                                    <TextBlock Text="{x:Static p:Resources.BalancerPage_BalancingWeight}" Grid.Row="1" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5 0 10 0"/>
+                                                    <TextBlock Text="{x:Static p:Resources.BalancerPage_BalancerWeight}" Grid.Row="1" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5 0 10 0"/>
                                                     <TextBlock Text=":" Grid.Row="1" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="2 0 0 0"/>
-                                                    <TextBlock Text="{x:Static p:Resources.BalancerPage_BalancingPosition}" Grid.Row="2" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5 0 10 0"/>
+                                                    <TextBlock Text="{x:Static p:Resources.BalancerPage_BalancerPosition}" Grid.Row="2" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5 0 10 0"/>
                                                     <TextBlock Text=":" Grid.Row="2" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="2 0 0 0"/>
                                                  
-                                                    <TextBlock Text="{Binding DeviceInterfaceVariables.BalancingWeight, StringFormat={}{0:0.000}}" Grid.Row="1" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
-                                                    <TextBlock Text="{Binding DeviceInterfaceVariables.BalancingPosition}" Grid.Row="2" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="{Binding DeviceInterfaceVariables.BalancerWeight, StringFormat={}{0:0.000}}" Grid.Row="1" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="{Binding DeviceInterfaceVariables.BalancerPosition}" Grid.Row="2" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
                                                   
                                                     <TextBlock Text="g" Grid.Row="1" Grid.Column="2"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
                                                     <TextBlock Text="" Grid.Row="2" Grid.Column="2"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
                                                  
                                                 </Grid>
                                             </StackPanel>
-
                                         </Grid>
+                                    </Border>           
 
-                                    </Border>
-
-
-                                    <Border Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3 3 0 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                                        <ContentControl Grid.Row="0" Content="{Binding CurrentBalancingRoutingSteps, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                            <ContentControl.ContentTemplate>
-                                                <DataTemplate>
-                                                    <uc:BalancerRoutingSteps HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0"/>
-                                                </DataTemplate>
-                                            </ContentControl.ContentTemplate>
-                                        </ContentControl>
-                                    </Border>
-
-                                    <Border Grid.Row="0" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3 3 0 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                                        <Grid Margin="5" Width="300" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-
-                                            <Image Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="12" Margin="5" Height="250" Source="{DynamicResource MotorAndPropellerImage}" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.75"/>
-
-                                            <!-- Grid çizgilerini belli etmek için Border kullanımı -->
-                                            <Border Grid.Column="1" Grid.Row="0" Height="60" VerticalAlignment="Top" Margin="0 25 0 0" BorderBrush="{DynamicResource Line}" BorderThickness="0.2" />
-                                            <Border Grid.Column="2" Grid.Row="0" Height="60" VerticalAlignment="Top" Margin="0 25 0 0" BorderBrush="{DynamicResource Line}" BorderThickness="0.2" />
-                                            <Border Grid.Column="3" Grid.Row="0" Height="60" VerticalAlignment="Top" Margin="0 25 0 0" BorderBrush="{DynamicResource Line}" BorderThickness="0.2" />
-                                            <Border Grid.Column="4" Grid.Row="0" Height="60" VerticalAlignment="Top" Margin="0 25 0 0" BorderBrush="{DynamicResource Line}" BorderThickness="0.2" />
-                                            <Border Grid.Column="5" Grid.Row="0" Height="60" VerticalAlignment="Top" Margin="0 25 0 0" BorderBrush="{DynamicResource Line}" BorderThickness="0.2" />
-                                            <Border Grid.Column="6" Grid.Row="0" Height="60" VerticalAlignment="Top" Margin="0 25 0 0" BorderBrush="{DynamicResource Line}" BorderThickness="0.2" />
-                                            <Border Grid.Column="7" Grid.Row="0" Height="60" VerticalAlignment="Top" Margin="0 25 0 0" BorderBrush="{DynamicResource Line}" BorderThickness="0.2" />
-                                            <Border Grid.Column="8" Grid.Row="0" Height="60" VerticalAlignment="Top" Margin="0 25 0 0" BorderBrush="{DynamicResource Line}" BorderThickness="0.2" />
-                                            <Border Grid.Column="9" Grid.Row="0" Height="60" VerticalAlignment="Top" Margin="0 25 0 0" BorderBrush="{DynamicResource Line}" BorderThickness="0.2" />
-                                            <Border Grid.Column="10" Grid.Row="0" Height="60" VerticalAlignment="Top" Margin="0 25 0 0" BorderBrush="{DynamicResource Line}" BorderThickness="0.2" />
-
-                                            <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0 0 0 0">
-                                                <icon:PackIconMaterial Kind="Brightness1" Foreground="OrangeRed" Width="25" Height="25" Margin="0 40 0 0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                                            </StackPanel>
-                                        </Grid>
-                                    </Border>
+                            
 
                                 </Grid>
                             </Border>
@@ -298,9 +273,8 @@
                             <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="10 10 10 0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderBrush="{DynamicResource PageBorder}" BorderThickness="1">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" MinWidth="250"/>
-                                        <ColumnDefinition Width="*" MinWidth="300" MaxWidth="600"/>
-                                        <ColumnDefinition Width="*" MinWidth="300" MaxWidth="600"/>
+                                        <ColumnDefinition Width="Auto" MinWidth="200"/>
+                                        <ColumnDefinition Width="*" MinWidth="800"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
@@ -347,7 +321,7 @@
                                                         <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding DeviceInterfaceVariables.MotorSpeed.UnitSymbol}" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Left"/>
                                                     </Grid>
                                                 </Border>
-                                                
+
 
                                                 <!-- Vibration -->
                                                 <lvc:AngularGauge Grid.Row="2" Height="150" Width="150" Margin="5 25 0 45"
@@ -383,108 +357,124 @@
                                                         <TextBlock Grid.Row="1" Grid.Column="1" Text="g" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Left"/>
                                                         <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding DeviceInterfaceVariables.VibrationmV, Mode=OneWay, StringFormat={}{0:0.00}}" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="20 0 5 0" HorizontalAlignment="Left"/>
                                                         <TextBlock Grid.Row="2" Grid.Column="1" Text="mV" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Left"/>
-                                                     </Grid>
-                                                </Border>           
+                                                    </Grid>
+                                                </Border>
 
                                             </Grid>
                                         </StackPanel>
                                     </Border>
 
-                                    <!-- @@@@@@@@@@@@@@@    Motor Speed Chart    @@@@@@@@@@@@@@@ -->
-                                    <Grid Grid.Row="0" Grid.Column="1" >
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
-                                        <Border Grid.Row="0" Margin="0 3 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                                            <TextBlock FontSize="14" Text="{x:Static p:Resources.DeviceCard_MotorSpeed}" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Border>
-                                        <Border Grid.Row="1" Margin="0 0 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                                            <lvc:CartesianChart Series="{Binding ChartViewModel.MotorSpeedSeriesCollection}" Margin="2 0 0 2" DisableAnimations="True" DataTooltip="{x:Null}">
-                                                <lvc:CartesianChart.AxisX>
-                                                    <lvc:Axis Title="{x:Static p:Resources.DeviceCard_ChartTime}" Labels="{Binding ChartViewModel.TimeLabels}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.XAxisFormatter}">
-                                                        <lvc:Axis.Separator>
-                                                            <lvc:Separator Step="{Binding ChartViewModel.MotorSpeedXAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
-                                                        </lvc:Axis.Separator>
-                                                    </lvc:Axis>
-                                                </lvc:CartesianChart.AxisX>
-                                                <lvc:CartesianChart.AxisY>
-                                                    <lvc:Axis Title="{x:Static p:Resources.DeviceCard_ChartMotorSpeed}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.YAxisFormatter}">
-                                                        <lvc:Axis.Separator>
-                                                            <lvc:Separator Step="{Binding ChartViewModel.MotorSpeedYAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
-                                                        </lvc:Axis.Separator>
-                                                    </lvc:Axis>
-                                                </lvc:CartesianChart.AxisY>
-                                            </lvc:CartesianChart>
-                                        </Border>
-                                    </Grid>
-                                    <!-- @@@@@@@@@@@@@@@    Vibration Chart    @@@@@@@@@@@@@@@ -->
-                                    <Grid Grid.Row="0" Grid.Column="2" >
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
-                                        <Border Grid.Row="0" Margin="0 3 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                                            <TextBlock FontSize="14" Text="{x:Static p:Resources.DeviceCard_Vibration}" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Border>
-                                        <Border Grid.Row="1" Margin="0 0 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                                            <lvc:CartesianChart Series="{Binding ChartViewModel.VibrationSeriesCollection}" Margin="2 0 0 2" DisableAnimations="True" DataTooltip="{x:Null}">
-                                                <lvc:CartesianChart.AxisX>
-                                                    <lvc:Axis Title="{x:Static p:Resources.DeviceCard_ChartTime}" Labels="{Binding ChartViewModel.TimeLabels}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.XAxisFormatter}">
-                                                        <lvc:Axis.Separator>
-                                                            <lvc:Separator Step="{Binding ChartViewModel.VibrationXAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
-                                                        </lvc:Axis.Separator>
-                                                    </lvc:Axis>
-                                                </lvc:CartesianChart.AxisX>
-                                                <lvc:CartesianChart.AxisY>
-                                                    <lvc:Axis Title="{x:Static p:Resources.DeviceCard_ChartVibration}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.YAxisFormatter}">
-                                                        <lvc:Axis.Separator>
-                                                            <lvc:Separator Step="{Binding ChartViewModel.VibrationYAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
-                                                        </lvc:Axis.Separator>
-                                                    </lvc:Axis>
-                                                </lvc:CartesianChart.AxisY>
-                                            </lvc:CartesianChart>
-                                        </Border>
-                                    </Grid>
-                                </Grid>
-                            </Border>
 
 
-                            <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="10 10 10 0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderBrush="{DynamicResource PageBorder}" BorderThickness="1">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*" MinWidth="200" MaxWidth="600"/>
-                                        <ColumnDefinition Width="*" MinWidth="200" MaxWidth="600"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*" MinHeight="200" MaxHeight="400"/>
-                                    </Grid.RowDefinitions>
+                                    <Border Grid.Row="0" Grid.Column="1" Margin="3"  BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" MinWidth="600" MaxWidth="800"/>
+                                                <ColumnDefinition Width="*" MinWidth="600" MaxWidth="800"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*" MinHeight="200" MaxHeight="400"/>
+                                                <RowDefinition Height="*" MinHeight="200" MaxHeight="400"/>
+                                            </Grid.RowDefinitions>
 
 
-                                    <Border Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3 3 0 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                                        <ContentControl Grid.Row="0" Content="{Binding CurrentBalancerVibrationLevels, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                            <ContentControl.ContentTemplate>
-                                                <DataTemplate>
-                                                    <uc:BalancerVibrationLevels HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0"/>
-                                                </DataTemplate>
-                                            </ContentControl.ContentTemplate>
-                                        </ContentControl>
+                                            <!-- @@@@@@@@@@@@@@@    Motor Speed Chart    @@@@@@@@@@@@@@@ -->
+                                            <Grid Grid.Row="0" Grid.Column="0" >
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
+                                                <Border Grid.Row="0" Margin="3 3 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
+                                                    <TextBlock FontSize="14" Text="{x:Static p:Resources.DeviceCard_MotorSpeed}" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                                <Border Grid.Row="1" Margin="3 0 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
+                                                    <lvc:CartesianChart Series="{Binding ChartViewModel.MotorSpeedSeriesCollection}" Margin="2 0 0 2" DisableAnimations="True" DataTooltip="{x:Null}">
+                                                        <lvc:CartesianChart.AxisX>
+                                                            <lvc:Axis Title="{x:Static p:Resources.DeviceCard_ChartTime}" Labels="{Binding ChartViewModel.TimeLabels}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.XAxisFormatter}">
+                                                                <lvc:Axis.Separator>
+                                                                    <lvc:Separator Step="{Binding ChartViewModel.MotorSpeedXAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
+                                                                </lvc:Axis.Separator>
+                                                            </lvc:Axis>
+                                                        </lvc:CartesianChart.AxisX>
+                                                        <lvc:CartesianChart.AxisY>
+                                                            <lvc:Axis Title="{x:Static p:Resources.DeviceCard_ChartMotorSpeed}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.YAxisFormatter}">
+                                                                <lvc:Axis.Separator>
+                                                                    <lvc:Separator Step="{Binding ChartViewModel.MotorSpeedYAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
+                                                                </lvc:Axis.Separator>
+                                                            </lvc:Axis>
+                                                        </lvc:CartesianChart.AxisY>
+                                                    </lvc:CartesianChart>
+                                                </Border>
+
+                                            </Grid>
+
+
+                                            <!-- @@@@@@@@@@@@@@@    Vibration Chart    @@@@@@@@@@@@@@@ -->
+                                            <Grid Grid.Row="0" Grid.Column="1" >
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
+                                                <Border Grid.Row="0" Margin="0 3 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
+                                                    <TextBlock FontSize="14" Text="{x:Static p:Resources.DeviceCard_Vibration}" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                                <Border Grid.Row="1" Margin="0 0 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
+                                                    <lvc:CartesianChart Series="{Binding ChartViewModel.VibrationSeriesCollection}" Margin="2 0 0 2" DisableAnimations="True" DataTooltip="{x:Null}">
+                                                        <lvc:CartesianChart.AxisX>
+                                                            <lvc:Axis Title="{x:Static p:Resources.DeviceCard_ChartTime}" Labels="{Binding ChartViewModel.TimeLabels}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.XAxisFormatter}">
+                                                                <lvc:Axis.Separator>
+                                                                    <lvc:Separator Step="{Binding ChartViewModel.VibrationXAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
+                                                                </lvc:Axis.Separator>
+                                                            </lvc:Axis>
+                                                        </lvc:CartesianChart.AxisX>
+                                                        <lvc:CartesianChart.AxisY>
+                                                            <lvc:Axis Title="{x:Static p:Resources.DeviceCard_ChartVibration}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.YAxisFormatter}">
+                                                                <lvc:Axis.Separator>
+                                                                    <lvc:Separator Step="{Binding ChartViewModel.VibrationYAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
+                                                                </lvc:Axis.Separator>
+                                                            </lvc:Axis>
+                                                        </lvc:CartesianChart.AxisY>
+                                                    </lvc:CartesianChart>
+                                                </Border>
+                                            </Grid>
+
+
+
+                                            <!-- @@@@@@@@@@@@@@@    Vibration Levels Chart    @@@@@@@@@@@@@@@ -->
+                                            <Grid Grid.Row="1" Grid.Column="0">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
+                                                <Border Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3 3 0 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
+                                                    <ContentControl Grid.Row="0" Content="{Binding CurrentBalancerVibrationLevels, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                                        <ContentControl.ContentTemplate>
+                                                            <DataTemplate>
+                                                                <uc:BalancerVibrationLevels HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0" MinHeight="200"/>
+                                                            </DataTemplate>
+                                                        </ContentControl.ContentTemplate>
+                                                    </ContentControl>
+                                                </Border>
+                                            </Grid>
+
+
+                                            <!-- @@@@@@@@@@@@@@@    Vibration Chart    @@@@@@@@@@@@@@@ -->
+                                            <Grid Grid.Row="1" Grid.Column="2" >
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
+                                                <Border Grid.Row="0" Grid.Column="0" Margin="0 3 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
+                                                    <TextBlock FontSize="14" Text="{x:Static p:Resources.BalancerPage_PolarVibration}" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+
+                                            </Grid>
+
+
+                                        </Grid>
                                     </Border>
-
-                                    <Grid Grid.Row="0" Grid.Column="2" >
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
-                                        <Border Grid.Row="0" Grid.Column="0" Margin="0 3 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                                            <TextBlock FontSize="14" Text="{x:Static p:Resources.BalancerPage_PolarVibration}" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Border>
-
-                                    </Grid>
                                 </Grid>
                             </Border>
-
                         </Grid>
                     </DataTemplate>
                 </ContentControl.ContentTemplate>

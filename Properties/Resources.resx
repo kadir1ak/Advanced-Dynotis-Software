@@ -171,10 +171,16 @@
   <data name="AutomateTestPage_Time" xml:space="preserve">
     <value>Time (s)</value>
   </data>
-  <data name="BalancerPage_BalancingPosition" xml:space="preserve">
+  <data name="BalancerPage_ApprovalButton" xml:space="preserve">
+    <value>Approve</value>
+  </data>
+  <data name="BalancerPage_BalancedPropellersListViewHeader" xml:space="preserve">
+    <value>Propellers</value>
+  </data>
+  <data name="BalancerPage_BalancerPosition" xml:space="preserve">
     <value>Balancing Position</value>
   </data>
-  <data name="BalancerPage_BalancingWeight" xml:space="preserve">
+  <data name="BalancerPage_BalancerWeight" xml:space="preserve">
     <value>Balancing Weight</value>
   </data>
   <data name="BalancerPage_CalculatedValues" xml:space="preserve">
@@ -273,11 +279,23 @@
   <data name="BalancerPage_PolarVibration" xml:space="preserve">
     <value>Polar Vibration</value>
   </data>
+  <data name="BalancerPage_PropellerDeleteButton" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="BalancerPage_PropellerDiameter" xml:space="preserve">
-    <value>Propeller Diameter</value>
+    <value>Propeller Diameter:</value>
   </data>
   <data name="BalancerPage_PropellerDiameterToolTip" xml:space="preserve">
     <value>Enter the propeller diameter.</value>
+  </data>
+  <data name="BalancerPage_PropellerID" xml:space="preserve">
+    <value>Propeller ID:</value>
+  </data>
+  <data name="BalancerPage_PropellerLoadButton" xml:space="preserve">
+    <value>Load</value>
+  </data>
+  <data name="BalancerPage_PropellerSaveButton" xml:space="preserve">
+    <value>Propeller Save</value>
   </data>
   <data name="BalancerPage_ReferenceMotorSpeed" xml:space="preserve">
     <value>Reference Motor Speed</value>
@@ -300,8 +318,14 @@
   <data name="BalancerPage_ReferenceWeightValueToolTip" xml:space="preserve">
     <value>Enter the Reference Weight Value</value>
   </data>
-  <data name="BalancerPage_RunButton" xml:space="preserve">
-    <value>Run Test</value>
+  <data name="BalancerPage_RunButton1" xml:space="preserve">
+    <value>Start Test</value>
+  </data>
+  <data name="BalancerPage_RunButton2" xml:space="preserve">
+    <value>Testing Started</value>
+  </data>
+  <data name="BalancerPage_RunButton3" xml:space="preserve">
+    <value>Repeat Test</value>
   </data>
   <data name="BalancerPage_SaveButton" xml:space="preserve">
     <value>Record</value>
@@ -317,6 +341,9 @@
   </data>
   <data name="BalancerPage_StepButton" xml:space="preserve">
     <value>Next</value>
+  </data>
+  <data name="BalancerPage_StopButton" xml:space="preserve">
+    <value>Test Stop</value>
   </data>
   <data name="BalancerPage_Text" xml:space="preserve">
     <value>Propeller Balancer</value>

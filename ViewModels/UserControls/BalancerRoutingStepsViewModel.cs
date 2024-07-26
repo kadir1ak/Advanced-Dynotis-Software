@@ -29,9 +29,11 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private bool _motorReadyStatus;
         private bool _testReadyStatus;
         private string _statusMessage;
+        private string _balancerPage_RunButton;
 
         public ICommand RunCommand { get; }
-        public ICommand SaveCommand { get; }
+        public ICommand ApprovalCommand { get; }
+        public ICommand StopCommand { get; }
 
         private int _balancerIterationStep;
         private int _currentStepIndex;
@@ -40,7 +42,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         public List<string> Steps => _steps;
 
         private bool _isRunButtonEnabled;
-        private bool _isSaveButtonEnabled;
+        private bool _isApprovalButtonEnabled;
 
         private bool _escStatus;
         private int _escValue;
@@ -61,7 +63,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             _pidController = new PIDController(0.2, 0.01, 0.05, integralMax: 50.0, integralMin: -50.0, alpha: 0.1);
 
             RunCommand = new RelayCommand(param => Run(), param => IsRunButtonEnabled);
-            SaveCommand = new RelayCommand(param => Save(), param => IsSaveButtonEnabled);
+            ApprovalCommand = new RelayCommand(param => Approval(), param => IsApprovalButtonEnabled);
+            StopCommand = new RelayCommand(param => Stop());
 
             _steps = new List<string>
             {
@@ -74,6 +77,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 Resources.BalancerPage_Group7,
             };
 
+            BalancerPage_RunButton = Resources.BalancerPage_RunButton1;
+
             _vibrationDataBuffer = new List<double>();
             _highVibrations = new List<double>();
 
@@ -81,7 +86,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             _motorReadyTimeCount = 0;
             _testTimeCount = 0;
             _isRunButtonEnabled = true;
-            _isSaveButtonEnabled = false;
+            _isApprovalButtonEnabled = false;
             _testReadyStatus = false;
             _motorReadyStatus = false;
 
@@ -110,12 +115,13 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             else
             {
                 StatusMessage = Resources.BalancerPage_StatusMessage1;
+                BalancerPage_RunButton = Resources.BalancerPage_RunButton2;
                 ESCStatus = true;
                 ESCValue = 800; // Başlangıç değeri olarak 800 µs kullanıyoruz
                 _pidController.Reset();
 
                 IsRunButtonEnabled = false;
-                IsSaveButtonEnabled = false;
+                IsApprovalButtonEnabled = false;
                 _progressTimer.Start();
                 _pidTimer.Start();
             }
@@ -135,6 +141,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     if (TestTimeCount < 100)
                     {
                         StatusMessage = Resources.BalancerPage_StatusMessage3;
+                        BalancerPage_RunButton = Resources.BalancerPage_RunButton3;
                         _avgTimer.Start();
                         TestTimeCount += 5;
                     }
@@ -144,7 +151,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                         MotorReadyStatus = false;
                         TestStatus = false;
                         ESCStatus = false;
-                        IsSaveButtonEnabled = true;
+                        IsApprovalButtonEnabled = true;
                         ESCValue = 800;
                         _progressTimer.Stop();
                         _pidTimer.Stop();
@@ -234,7 +241,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             return average;
         }
 
-        private void Save()
+        private void Approval()
         {
             if (CurrentStepIndex < Steps.Count - 1)
             {
@@ -247,7 +254,24 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             BalancerIterationStep = CurrentStepIndex;
 
             IsRunButtonEnabled = true;
-            IsSaveButtonEnabled = false;
+            IsApprovalButtonEnabled = false;
+            TestTimeCount = 0;
+            MotorReadyTimeCount = 0;
+        }
+
+        private void Stop()
+        {
+            StatusMessage = "";
+            MotorReadyStatus = false;
+            TestStatus = false;
+            ESCStatus = false;
+            ESCValue = 800;
+            _progressTimer.Stop();
+            _pidTimer.Stop();
+            _avgTimer.Stop();
+
+            IsRunButtonEnabled = true;
+            IsApprovalButtonEnabled = false;
             TestTimeCount = 0;
             MotorReadyTimeCount = 0;
         }
@@ -320,6 +344,17 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     OnPropertyChanged(nameof(StatusMessage));
                 }
             }
+        }        
+        public string BalancerPage_RunButton
+        {
+            get => _balancerPage_RunButton;
+            set
+            {
+                if (SetProperty(ref _balancerPage_RunButton, value))
+                {
+                    OnPropertyChanged(nameof(BalancerPage_RunButton));
+                }
+            }
         }
         public bool MotorReadyStatus
         {
@@ -346,18 +381,18 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             }
         }
 
-        public bool IsSaveButtonEnabled
+        public bool IsApprovalButtonEnabled
         {
-            get => _isSaveButtonEnabled;
+            get => _isApprovalButtonEnabled;
             set
             {
-                if (SetProperty(ref _isSaveButtonEnabled, value))
+                if (SetProperty(ref _isApprovalButtonEnabled, value))
                 {
-                    OnPropertyChanged(nameof(IsSaveButtonEnabled));
+                    OnPropertyChanged(nameof(IsApprovalButtonEnabled));
                     CommandManager.InvalidateRequerySuggested();
                 }
             }
-        }
+        }       
 
         public bool ESCStatus
         {
