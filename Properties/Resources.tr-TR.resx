@@ -157,7 +157,7 @@
     <value>Tüm Noktaları Temizle</value>
   </data>
   <data name="AutomateTestPage_ESCOutput" xml:space="preserve">
-    <value>ESC throttle çıkışı değeri(%)</value>
+    <value>ESC throttle çıkışı değeri(μs)</value>
   </data>
   <data name="AutomateTestPage_Index" xml:space="preserve">
     <value>İndex</value>
@@ -191,6 +191,75 @@
   </data>
   <data name="BalancerPage_DeviceParameters" xml:space="preserve">
     <value>Cihaz Parametreleri</value>
+  </data>
+  <data name="BalancerPage_Group1" xml:space="preserve">
+    <value>1. Cihazın Hazırlanması ve Başlangıç Titreşiminin Ölçülmesi</value>
+  </data>
+  <data name="BalancerPage_Group1_Step1" xml:space="preserve">
+    <value>Cihazın sabitlenmesi:</value>
+  </data>
+  <data name="BalancerPage_Group1_Step1_Description" xml:space="preserve">
+    <value>Cihazı uygun bir şekilde sabitleyin.</value>
+  </data>
+  <data name="BalancerPage_Group1_Step2" xml:space="preserve">
+    <value>Motorun monte edilmesi: </value>
+  </data>
+  <data name="BalancerPage_Group1_Step2_Description" xml:space="preserve">
+    <value>Test motorunu cihaza uygun şekilde monte edin.</value>
+  </data>
+  <data name="BalancerPage_Group1_Step3" xml:space="preserve">
+    <value>Referans hız seçimi:</value>
+  </data>
+  <data name="BalancerPage_Group1_Step3_Description" xml:space="preserve">
+    <value>Cihaz titreşim seviyesini ölçmek için uygun referans motor hızını seçin (tüm testlerde kullanılacak sabit bir değer olmalıdır).</value>
+  </data>
+  <data name="BalancerPage_Group1_Step4" xml:space="preserve">
+    <value>Testin başlatılması:</value>
+  </data>
+  <data name="BalancerPage_Group1_Step4_Description" xml:space="preserve">
+    <value>Testi başlatın ve motorun sabit hızda kararlı bir duruma gelmesini bekleyin.</value>
+  </data>
+  <data name="BalancerPage_Group1_Step5" xml:space="preserve">
+    <value>Veri kaydı:</value>
+  </data>
+  <data name="BalancerPage_Group1_Step5_Description" xml:space="preserve">
+    <value>Uygun bir anda 10 saniyelik kayıt alın. Bu süre boyunca cihaza herhangi bir müdahalede bulunmayın.</value>
+  </data>
+  <data name="BalancerPage_Group2" xml:space="preserve">
+    <value>2. Pervane Titreşim Ölçümü (Ağırlıksız)</value>
+  </data>
+  <data name="BalancerPage_Group2_Step1" xml:space="preserve">
+    <value>Pervane montajı:</value>
+  </data>
+  <data name="BalancerPage_Group2_Step1_Description" xml:space="preserve">
+    <value>Test pervanesini motora uygun şekilde monte edin.</value>
+  </data>
+  <data name="BalancerPage_Group2_Step2" xml:space="preserve">
+    <value>Testin başlatılması:</value>
+  </data>
+  <data name="BalancerPage_Group2_Step2_Description" xml:space="preserve">
+    <value>Testi başlatın ve motorun sabit hızda kararlı bir duruma gelmesini bekleyin.</value>
+  </data>
+  <data name="BalancerPage_Group2_Step3" xml:space="preserve">
+    <value>Veri kaydı: </value>
+  </data>
+  <data name="BalancerPage_Group2_Step3_Description" xml:space="preserve">
+    <value>Uygun bir anda 10 saniyelik kayıt alın. Bu süre boyunca cihaza herhangi bir müdahalede bulunmayın.</value>
+  </data>
+  <data name="BalancerPage_Group3" xml:space="preserve">
+    <value>3. Balans Yönünün Belirlenmesi (0 Derece Pozisyonu)</value>
+  </data>
+  <data name="BalancerPage_Group4" xml:space="preserve">
+    <value>4. Balans Yönünün Belirlenmesi (180 Derece Pozisyonu)</value>
+  </data>
+  <data name="BalancerPage_Group5" xml:space="preserve">
+    <value>5. Balanslama için Değerlerin Hesaplanması</value>
+  </data>
+  <data name="BalancerPage_Group6" xml:space="preserve">
+    <value>6. Test ve Değerlendirme</value>
+  </data>
+  <data name="BalancerPage_Group7" xml:space="preserve">
+    <value>7. Balanslama İyileşme Oranının Hesaplanması</value>
   </data>
   <data name="BalancerPage_Index" xml:space="preserve">
     <value>İndex</value>
@@ -343,7 +412,7 @@
     <value>ESC Durumu</value>
   </data>
   <data name="DeviceInformation_ESCValue" xml:space="preserve">
-    <value>ESC Değeri (%)</value>
+    <value>ESC Değeri (μs)</value>
   </data>
   <data name="DeviceInformation_Firmware" xml:space="preserve">
     <value>Donanım Yazılımı</value>
@@ -456,8 +525,8 @@
   <data name="ESCCalibrationPage_Text" xml:space="preserve">
     <value>ESC Kalibrasyonu</value>
   </data>
-  <data name="ESC_Increaseby5" xml:space="preserve">
-    <value>5 artır</value>
+  <data name="ESC_IncreaseStepByStep" xml:space="preserve">
+    <value>Adım Adım Artırın</value>
   </data>
   <data name="ESC_LockUnLockESC" xml:space="preserve">
     <value>ESC'yi Kilitle/Kilidi Aç</value>

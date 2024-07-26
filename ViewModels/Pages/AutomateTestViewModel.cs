@@ -215,7 +215,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         private void ClearAllPoints()
         {
             SequenceItems.Clear();
-            SequenceItems.Add(new SequenceItem { Time = 0, ThrottleOutput = 0 });
+            SequenceItems.Add(new SequenceItem { Time = 0, ThrottleOutput = 800 });
             UpdateChart();
         }
 

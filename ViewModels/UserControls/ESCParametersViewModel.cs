@@ -16,11 +16,11 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         public ESCParametersViewModel(DynotisData dynotisData)
         {
             _dynotisData = dynotisData;
-            ESCValue = 0; // Başlangıçta 0
-            ESCStatus = false; // Başlangıçta false
+            ESCValue = 800; 
+            ESCStatus = false; 
 
             EscLockCommand = new RelayCommand(_ => LockESC());
-            IncreaseByFiveCommand = new RelayCommand(_ => IncreaseByFive(), _ => ESCStatus);
+            IncreaseStepByStepCommand = new RelayCommand(_ => IncreaseStepByStep(), _ => ESCStatus);
             StopCommand = new RelayCommand(_ => Stop(), _ => ESCStatus);
         }
 
@@ -46,7 +46,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     _dynotisData.ESCStatus = value;
                     if (_escStatus)
                     {
-                        ESCValue = 0;
+                        ESCValue = 800;
                     }
                     OnPropertyChanged(nameof(ESCStatus));
                 }
@@ -54,7 +54,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         }
 
         public ICommand EscLockCommand { get; }
-        public ICommand IncreaseByFiveCommand { get; }
+        public ICommand IncreaseStepByStepCommand { get; }
         public ICommand StopCommand { get; }
 
         private void LockESC()
@@ -62,15 +62,15 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             ESCStatus = !ESCStatus;
             if (!ESCStatus)
             {
-                ESCValue = 0;
+                ESCValue = 800;
             }
         }
 
-        private void IncreaseByFive()
+        private void IncreaseStepByStep()
         {
             if (ESCStatus)
             {
-                ESCValue = Math.Min(ESCValue + 5, 100);
+                ESCValue = Math.Min(ESCValue + 100, 2200);
             }
         }
 
@@ -78,7 +78,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         {
             if (ESCStatus)
             {
-                ESCValue = 0;
+                ESCValue = 800;
             }
         }
 

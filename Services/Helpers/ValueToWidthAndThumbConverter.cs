@@ -14,7 +14,9 @@ namespace Advanced_Dynotis_Software.Services.Helpers
         {
             if (values.Length == 2 && values[0] is double sliderValue && values[1] is double actualWidth)
             {
-                double percentage = sliderValue / 100;
+                double min = 800;
+                double max = 2200;
+                double percentage = (sliderValue - min) / (max - min);
                 return percentage * actualWidth;
             }
             return 0;
@@ -25,4 +27,5 @@ namespace Advanced_Dynotis_Software.Services.Helpers
             throw new NotImplementedException();
         }
     }
+
 }

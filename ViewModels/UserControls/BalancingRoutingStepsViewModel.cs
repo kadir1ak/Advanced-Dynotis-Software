@@ -1,14 +1,15 @@
-﻿using Advanced_Dynotis_Software.Models.Dynotis;
-using Advanced_Dynotis_Software.Services.Controllers;
-using Advanced_Dynotis_Software.Services.Helpers;
-using Advanced_Dynotis_Software.Services.Logger;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using Advanced_Dynotis_Software.Properties;
+using Advanced_Dynotis_Software.Models.Dynotis;
+using Advanced_Dynotis_Software.Services.Controllers;
+using Advanced_Dynotis_Software.Services.Helpers;
+using Advanced_Dynotis_Software.Services.Logger;
 
 namespace Advanced_Dynotis_Software.ViewModels.UserControls
 {
@@ -18,17 +19,18 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private DynotisData _dynotisData;
         private PIDController _pidController;
 
-        private int _balancingIterationStep;
-        private int _currentStepIndex;
-        private readonly List<string> _steps;
-
         private DispatcherTimer _progressTimer;
         private DispatcherTimer _pidTimer;
         private double _progressValue;
+        private bool _progressStatus;
 
         public ICommand RunCommand { get; }
         public ICommand SaveCommand { get; }
 
+        private int _balancingIterationStep;
+        private int _currentStepIndex;
+
+        private readonly List<string> _steps;
         public List<string> Steps => _steps;
 
         private bool _isRunButtonEnabled;
@@ -52,20 +54,21 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             SaveCommand = new RelayCommand(param => Save(), param => IsSaveButtonEnabled);
 
             _steps = new List<string>
-        {
-            "Cihazın Hazırlanması ve Başlangıç Titreşiminin Ölçülmesi",
-            "Pervane Titreşim Ölçümü (Ağırlıksız)",
-            "Balans Yönünün Belirlenmesi (0 Derece Pozisyonu)",
-            "Balans Yönünün Belirlenmesi (180 Derece Pozisyonu)",
-            "Balanslama için Değerlerin Hesaplanması",
-            "Test ve Değerlendirme",
-            "Balanslama İyileşme Oranının Hesaplanması"
-        };
+            {
+                Resources.BalancerPage_Group1,
+                Resources.BalancerPage_Group2,
+                Resources.BalancerPage_Group3,
+                Resources.BalancerPage_Group4,
+                Resources.BalancerPage_Group5,
+                Resources.BalancerPage_Group6,
+                Resources.BalancerPage_Group7,
+            };
 
             _currentStepIndex = 0;
             _progressValue = 0;
             _isRunButtonEnabled = true;
             _isSaveButtonEnabled = false;
+            _progressStatus = false;
 
             _progressTimer = new DispatcherTimer();
             _progressTimer.Interval = TimeSpan.FromSeconds(1); // Adjusted for finer control
@@ -85,7 +88,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             else
             {
                 ESCStatus = true;
-                ESCValue = 20;
+                ESCValue = 10;
                 _pidController.Reset();
 
                 IsRunButtonEnabled = false;
@@ -97,18 +100,21 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
         private void ProgressTimer_Tick(object sender, EventArgs e)
         {
-            if (ProgressValue < 100)
-            {
-                ProgressValue += 10;
-            }
-            else
-            {
-                ESCStatus = false;
-                ESCValue = 0;
-
-                _progressTimer.Stop();
-                _pidTimer.Stop();
-                IsSaveButtonEnabled = true;
+            if(ProgressStatus)
+            {            
+                if (ProgressValue < 100)
+                {
+                    ProgressValue += 5;
+                }
+                else
+                {
+                    ProgressStatus = false;
+                    ESCStatus = false;
+                    ESCValue = 0;
+                    _progressTimer.Stop();
+                    _pidTimer.Stop();
+                    IsSaveButtonEnabled = true;
+                }
             }
         }
 
@@ -119,19 +125,17 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
             pidOutput = Math.Clamp(pidOutput, 0, 100);
 
-            // ESC değerini düzgün geçiş yaparak güncelle
             ESCValue = SmoothTransition(ESCValue, (int)pidOutput);
         }
 
         private int SmoothTransition(int currentValue, int targetValue)
         {
-            int step = 1; // Adım boyutunu belirle
-
             if (Math.Abs(_interfaceVariables.MotorSpeed.Value - _interfaceVariables.ReferenceMotorSpeed) > 500)
             {
+                int step = 1; 
                 if (Math.Abs(currentValue - targetValue) <= step)
                 {
-                    return targetValue; // Hedefe yeterince yakınsa, doğrudan ayarla
+                    return targetValue; 
                 }
                 if (currentValue < targetValue)
                 {
@@ -141,16 +145,28 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 {
                     currentValue = Math.Max(currentValue - step, targetValue);
                 }
+                ProgressStatus = false;
+            }
+            else
+            {
+                ProgressStatus = true;
             }
             return currentValue;
         }
 
 
         private void Save()
-        {
-            MessageBox.Show("Save");
-            CurrentStepIndex++;
+        {         
+            if (CurrentStepIndex < Steps.Count-1)
+            {
+                CurrentStepIndex++;
+            }
+            else
+            {
+                CurrentStepIndex = 0;
+            }
             BalancingIterationStep = CurrentStepIndex;
+
             IsRunButtonEnabled = true;
             IsSaveButtonEnabled = false;
             ProgressValue = 0;
@@ -189,6 +205,17 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 if (SetProperty(ref _progressValue, value))
                 {
                     OnPropertyChanged(nameof(ProgressValue));
+                }
+            }
+        }       
+        public bool ProgressStatus
+        {
+            get => _progressStatus;
+            set
+            {
+                if (SetProperty(ref _progressStatus, value))
+                {
+                    OnPropertyChanged(nameof(ProgressStatus));
                 }
             }
         }

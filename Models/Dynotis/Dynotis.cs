@@ -226,7 +226,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                             WorkingStatus = "Unknown";
                             ConnectionStatus = "True";
                             DynotisData.ESCStatus = false;
-                            DynotisData.ESCValue = 0;
+                            DynotisData.ESCValue = 800;
                             DynotisData.BatteryLevel = 1;
                             DynotisData.MaxCurrent = 0;
                             DynotisData.SecurityStatus = false;

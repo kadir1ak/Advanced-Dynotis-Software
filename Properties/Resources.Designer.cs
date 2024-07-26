@@ -178,7 +178,7 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
-        ///   ESC throttle output value (%) benzeri yerelleştirilmiş bir dize arar.
+        ///   ESC throttle output value (μs) benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string AutomateTestPage_ESCOutput {
             get {
@@ -282,6 +282,213 @@ namespace Advanced_Dynotis_Software.Properties {
         public static string BalancerPage_DeviceParameters {
             get {
                 return ResourceManager.GetString("BalancerPage_DeviceParameters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   1. Cihazın Hazırlanması ve Başlangıç Titreşiminin Ölçülmesi benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_Group1 {
+            get {
+                return ResourceManager.GetString("BalancerPage_Group1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cihazın sabitlenmesi: benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_Group1_Step1 {
+            get {
+                return ResourceManager.GetString("BalancerPage_Group1_Step1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cihazı uygun bir şekilde sabitleyin. benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_Group1_Step1_Description {
+            get {
+                return ResourceManager.GetString("BalancerPage_Group1_Step1_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Motorun monte edilmesi:  benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_Group1_Step2 {
+            get {
+                return ResourceManager.GetString("BalancerPage_Group1_Step2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Test motorunu cihaza uygun şekilde monte edin. benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_Group1_Step2_Description {
+            get {
+                return ResourceManager.GetString("BalancerPage_Group1_Step2_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Referans hız seçimi: benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_Group1_Step3 {
+            get {
+                return ResourceManager.GetString("BalancerPage_Group1_Step3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cihaz titreşim seviyesini ölçmek için uygun referans motor hızını seçin (tüm testlerde kullanılacak sabit bir değer olmalıdır). benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_Group1_Step3_Description {
+            get {
+                return ResourceManager.GetString("BalancerPage_Group1_Step3_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Testin başlatılması: benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_Group1_Step4 {
+            get {
+                return ResourceManager.GetString("BalancerPage_Group1_Step4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Testi başlatın ve motorun sabit hızda kararlı bir duruma gelmesini bekleyin. benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_Group1_Step4_Description {
+            get {
+                return ResourceManager.GetString("BalancerPage_Group1_Step4_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Veri kaydı: benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_Group1_Step5 {
+            get {
+                return ResourceManager.GetString("BalancerPage_Group1_Step5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Uygun bir anda 10 saniyelik kayıt alın. Bu süre boyunca cihaza herhangi bir müdahalede bulunmayın. benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_Group1_Step5_Description {
+            get {
+                return ResourceManager.GetString("BalancerPage_Group1_Step5_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   2. Pervane Titreşim Ölçümü (Ağırlıksız) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_Group2 {
+            get {
+                return ResourceManager.GetString("BalancerPage_Group2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Pervane montajı: benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_Group2_Step1 {
+            get {
+                return ResourceManager.GetString("BalancerPage_Group2_Step1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Test pervanesini motora uygun şekilde monte edin. benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_Group2_Step1_Description {
+            get {
+                return ResourceManager.GetString("BalancerPage_Group2_Step1_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Testin başlatılması: benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_Group2_Step2 {
+            get {
+                return ResourceManager.GetString("BalancerPage_Group2_Step2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Testi başlatın ve motorun sabit hızda kararlı bir duruma gelmesini bekleyin. benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_Group2_Step2_Description {
+            get {
+                return ResourceManager.GetString("BalancerPage_Group2_Step2_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Veri kaydı:  benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_Group2_Step3 {
+            get {
+                return ResourceManager.GetString("BalancerPage_Group2_Step3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Uygun bir anda 10 saniyelik kayıt alın. Bu süre boyunca cihaza herhangi bir müdahalede bulunmayın. benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_Group2_Step3_Description {
+            get {
+                return ResourceManager.GetString("BalancerPage_Group2_Step3_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   3. Balans Yönünün Belirlenmesi (0 Derece Pozisyonu) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_Group3 {
+            get {
+                return ResourceManager.GetString("BalancerPage_Group3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   4. Balans Yönünün Belirlenmesi (180 Derece Pozisyonu) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_Group4 {
+            get {
+                return ResourceManager.GetString("BalancerPage_Group4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   5. Balanslama için Değerlerin Hesaplanması benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_Group5 {
+            get {
+                return ResourceManager.GetString("BalancerPage_Group5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   6. Test ve Değerlendirme benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_Group6 {
+            get {
+                return ResourceManager.GetString("BalancerPage_Group6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   7. Balanslama İyileşme Oranının Hesaplanması benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_Group7 {
+            get {
+                return ResourceManager.GetString("BalancerPage_Group7", resourceCulture);
             }
         }
         
@@ -736,7 +943,7 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
-        ///   ESC Value (%) benzeri yerelleştirilmiş bir dize arar.
+        ///   ESC Value (μs) benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string DeviceInformation_ESCValue {
             get {
@@ -1069,11 +1276,11 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
-        ///   Increase by 5 benzeri yerelleştirilmiş bir dize arar.
+        ///   Increase Step By Step benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
-        public static string ESC_Increaseby5 {
+        public static string ESC_IncreaseStepByStep {
             get {
-                return ResourceManager.GetString("ESC_Increaseby5", resourceCulture);
+                return ResourceManager.GetString("ESC_IncreaseStepByStep", resourceCulture);
             }
         }
         

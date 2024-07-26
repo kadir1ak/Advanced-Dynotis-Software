@@ -272,7 +272,7 @@
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
 
-                                            <Image Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="12" Margin="5" Height="250" Source="{DynamicResource MotorAndPropellerImage}" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <Image Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="12" Margin="5" Height="250" Source="{DynamicResource MotorAndPropellerImage}" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.75"/>
 
                                             <!-- Grid çizgilerini belli etmek için Border kullanımı -->
                                             <Border Grid.Column="1" Grid.Row="0" Height="60" VerticalAlignment="Top" Margin="0 25 0 0" BorderBrush="{DynamicResource Line}" BorderThickness="0.2" />
@@ -301,10 +301,9 @@
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*" MinWidth="200" MaxWidth="600"/>
                                         <ColumnDefinition Width="*" MinWidth="200" MaxWidth="600"/>
-                                        <ColumnDefinition Width="*" MinWidth="200" MaxWidth="600"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" MinHeight="400" MaxHeight="400"/>
+                                        <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
                                     <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Margin="3"  BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
                                         <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Orientation="Vertical" Margin="3" >
@@ -315,16 +314,12 @@
                                             <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="Auto"/>
-                                                    <RowDefinition Height="*"/>
-                                                    <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
                                                 </Grid.RowDefinitions>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                </Grid.ColumnDefinitions>
                                                 <!-- Motor Speed -->
-                                                <lvc:AngularGauge Grid.Row="1" Grid.Column="1" Height="150" Width="150" Margin="5 5 0 5"
-                                                        Value="{Binding DeviceInterfaceVariables.Vibration}"                
+                                                <lvc:AngularGauge Grid.Row="1" Height="150" Width="150" Margin="5 5 0 30"
+                                                        Value="{Binding DeviceInterfaceVariables.MotorSpeed.Value}"                
                                                         FromValue="0"
                                                         ToValue="3000"
                                                         TicksStep="100"
@@ -335,25 +330,27 @@
                                                         Wedge="270">
                                                 </lvc:AngularGauge>
                                                 <!-- Motor Speed -->
-                                                <Grid  Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 0 0">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="Auto"/>
-                                                        <RowDefinition Height="Auto"/>
-                                                        <RowDefinition Height="Auto"/>
-                                                    </Grid.RowDefinitions>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <icon:PackIconMaterial Grid.Row="0" Grid.Column="0" Kind="Vibrate" Foreground="{DynamicResource deviceCardIcon}" Width="20" Height="20" Margin="2 2 10 2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                                    <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{x:Static p:Resources.DeviceCard_MotorSpeed}" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="25 0 5 0" HorizontalAlignment="Right"/>
-                                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding DeviceInterfaceVariables.MotorSpeed.Value, Mode=OneWay, StringFormat={}{0:0.00}}" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="20 0 5 0" HorizontalAlignment="Left"/>
-                                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding DeviceInterfaceVariables.MotorSpeed.UnitSymbol}" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Left"/>
-                                                </Grid>
-
+                                                <Border Grid.Row="1" CornerRadius="10" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
+                                                    <Grid>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="Auto"/>
+                                                            <RowDefinition Height="Auto"/>
+                                                            <RowDefinition Height="Auto"/>
+                                                        </Grid.RowDefinitions>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <icon:PackIconMaterial Grid.Row="0" Grid.Column="0" Kind="Speedometer" Foreground="{DynamicResource deviceCardIcon}" Width="20" Height="20" Margin="2 2 10 2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                                        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{x:Static p:Resources.DeviceCard_MotorSpeed}" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="25 0 5 0" HorizontalAlignment="Right"/>
+                                                        <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding DeviceInterfaceVariables.MotorSpeed.Value, Mode=OneWay, StringFormat={}{0:0.00}}" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="20 0 5 0" HorizontalAlignment="Left"/>
+                                                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding DeviceInterfaceVariables.MotorSpeed.UnitSymbol}" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Left"/>
+                                                    </Grid>
+                                                </Border>
+                                                
 
                                                 <!-- Vibration -->
-                                                <lvc:AngularGauge Grid.Row="2" Grid.Column="1" Height="150" Width="150" Margin="5 5 0 5"
+                                                <lvc:AngularGauge Grid.Row="2" Height="150" Width="150" Margin="5 25 0 45"
                                                         Value="{Binding DeviceInterfaceVariables.Vibration}"              
                                                         FromValue="0"
                                                         ToValue="2"
@@ -368,23 +365,24 @@
                                                     </lvc:AngularGauge.Sections>
                                                 </lvc:AngularGauge>
                                                 <!-- Vibration -->
-                                                <Grid  Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0 0 0 0">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="Auto"/>
-                                                        <RowDefinition Height="Auto"/>
-                                                        <RowDefinition Height="Auto"/>
-                                                    </Grid.RowDefinitions>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <icon:PackIconMaterial Grid.Row="0" Grid.Column="0" Kind="Vibrate" Foreground="{DynamicResource deviceCardIcon}" Width="20" Height="20" Margin="2 2 10 2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                                    <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{x:Static p:Resources.DeviceCard_Vibration}" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="25 0 5 0" HorizontalAlignment="Right"/>
-                                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding DeviceInterfaceVariables.Vibration, Mode=OneWay, StringFormat={}{0:0.00}}" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="20 0 5 0" HorizontalAlignment="Left"/>
-                                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="g" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Left"/>
-                                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding DeviceInterfaceVariables.Vibration, Mode=OneWay, StringFormat={}{0:0.00}}" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="20 0 5 0" HorizontalAlignment="Left"/>
-                                                    <TextBlock Grid.Row="2" Grid.Column="1" Text="mV" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Left"/>
-                                                </Grid>
+                                                <Border Grid.Row="2" CornerRadius="10" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
+                                                    <Grid>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="Auto"/>
+                                                            <RowDefinition Height="Auto"/>
+                                                            <RowDefinition Height="Auto"/>
+                                                        </Grid.RowDefinitions>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <icon:PackIconMaterial Grid.Row="0" Grid.Column="0" Kind="Vibrate" Foreground="{DynamicResource deviceCardIcon}" Width="20" Height="20" Margin="2 2 10 2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                                        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{x:Static p:Resources.DeviceCard_Vibration}" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="25 0 5 0" HorizontalAlignment="Right"/>
+                                                        <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding DeviceInterfaceVariables.Vibration, Mode=OneWay, StringFormat={}{0:0.00}}" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="20 0 5 0" HorizontalAlignment="Left"/>
+                                                        <TextBlock Grid.Row="1" Grid.Column="1" Text="g" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Left"/>
+                                                     </Grid>
+                                                </Border>
+
                                             </Grid>
                                         </StackPanel>
                                     </Border>
@@ -445,22 +443,6 @@
                                             </lvc:CartesianChart>
                                         </Border>
                                     </Grid>
-                                    <!-- @@@@@@@@@@@@@@@    Vibration Chart    @@@@@@@@@@@@@@@ -->
-                                    <Grid Grid.Row="0" Grid.Column="3" >
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 3 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                                            <TextBlock FontSize="14" Text="{x:Static p:Resources.BalancerPage_PolarVibration}" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Border>
-                                        
-                                    </Grid>
                                 </Grid>
                             </Border>
 
@@ -477,7 +459,22 @@
                                     </Grid.RowDefinitions>
                                     <!-- Vibration around the clock (Polar) -->
 
+                                    <!-- @@@@@@@@@@@@@@@    Vibration Chart    @@@@@@@@@@@@@@@ -->
+                                    <Grid Grid.Row="0" Grid.Column="3" >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 3 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
+                                            <TextBlock FontSize="14" Text="{x:Static p:Resources.BalancerPage_PolarVibration}" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
 
+                                    </Grid>
                                 </Grid>
                             </Border>
 
