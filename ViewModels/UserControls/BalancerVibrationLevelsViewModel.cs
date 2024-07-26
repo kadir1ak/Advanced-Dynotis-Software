@@ -20,7 +20,7 @@ public class BalancerVibrationLevelsViewModel : INotifyPropertyChanged
         _interfaceVariables.PropertyChanged += InterfaceVariables_PropertyChanged;
 
         HighVibrations = new List<double>();
-        BalancingIterationStep = 0;
+        BalancerIterationStep = 0;
 
         VibrationSeriesCollection = new SeriesCollection
         {
@@ -42,9 +42,9 @@ public class BalancerVibrationLevelsViewModel : INotifyPropertyChanged
             HighVibrations = _interfaceVariables.HighVibrations;
             UpdateVibrationChart();
         }
-        else if (e.PropertyName == nameof(InterfaceVariables.BalancingIterationStep))
+        else if (e.PropertyName == nameof(InterfaceVariables.BalancerIterationStep))
         {
-            BalancingIterationStep = _interfaceVariables.BalancingIterationStep;
+            BalancerIterationStep = _interfaceVariables.BalancerIterationStep;
             UpdateVibrationChart();
         }
     }
@@ -62,11 +62,11 @@ public class BalancerVibrationLevelsViewModel : INotifyPropertyChanged
         }
     }
 
-    private int _balancingIterationStep;
-    public int BalancingIterationStep
+    private int _balancerIterationStep;
+    public int BalancerIterationStep
     {
-        get => _balancingIterationStep;
-        set => SetProperty(ref _balancingIterationStep, value);
+        get => _balancerIterationStep;
+        set => SetProperty(ref _balancerIterationStep, value);
     }
 
     public SeriesCollection VibrationSeriesCollection { get; set; }

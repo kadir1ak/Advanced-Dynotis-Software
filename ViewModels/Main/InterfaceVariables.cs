@@ -21,8 +21,8 @@ public class InterfaceVariables : INotifyPropertyChanged
         _selectedPressureUnitIndex = 1;
 
         _highVibrations = new List<double>();
-        _balancingIterationStep = 0;
-
+        _balancerIterationStep = 0;
+        
         TestMode = "fuzzy";
         IsRecording = false;
         Duration = TimeSpan.Zero;
@@ -102,9 +102,9 @@ public class InterfaceVariables : INotifyPropertyChanged
     private int _referenceMotorSpeed;
     private double _referenceWeight;
     private double _referencePropellerArea;
-    private double _balancingWeight;
-    private double _balancingPosition;
-    private int _balancingIterationStep;
+    private double _balancerWeight;
+    private double _balancerPosition;
+    private int _balancerIterationStep;
     public double Time
     {
         get => _time;
@@ -450,20 +450,20 @@ public class InterfaceVariables : INotifyPropertyChanged
         set => SetProperty(ref _referencePropellerArea, value);
     }
 
-    public double BalancingWeight
+    public double BalancerWeight
     {
-        get => _balancingWeight;
-        set => SetProperty(ref _balancingWeight, value);
+        get => _balancerWeight;
+        set => SetProperty(ref _balancerWeight, value);
     }   
-    public double BalancingPosition
+    public double BalancerPosition
     {
-        get => _balancingPosition;
-        set => SetProperty(ref _balancingPosition, value);
+        get => _balancerPosition;
+        set => SetProperty(ref _balancerPosition, value);
     }    
-    public int BalancingIterationStep
+    public int BalancerIterationStep
     {
-        get => _balancingIterationStep;
-        set => SetProperty(ref _balancingIterationStep, value);
+        get => _balancerIterationStep;
+        set => SetProperty(ref _balancerIterationStep, value);
     }
     public void UpdateFrom(DynotisData data)
     {

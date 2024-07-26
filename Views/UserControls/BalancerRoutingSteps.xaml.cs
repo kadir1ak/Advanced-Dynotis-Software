@@ -1,6 +1,4 @@
-﻿using Advanced_Dynotis_Software.Models.Dynotis;
-using Advanced_Dynotis_Software.ViewModels.UserControls;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,11 +16,11 @@ using System.Windows.Shapes;
 namespace Advanced_Dynotis_Software.Views.UserControls
 {
     /// <summary>
-    /// BalancingRoutingSteps.xaml etkileşim mantığı
+    /// BalancerRoutingSteps.xaml etkileşim mantığı
     /// </summary>
-    public partial class BalancingRoutingSteps : UserControl
+    public partial class BalancerRoutingSteps : UserControl
     {
-        public BalancingRoutingSteps()
+        public BalancerRoutingSteps()
         {
             InitializeComponent();
         }

@@ -14,7 +14,7 @@ using DocumentFormat.OpenXml.Drawing;
 
 namespace Advanced_Dynotis_Software.ViewModels.UserControls
 {
-    public class BalancingRoutingStepsViewModel : INotifyPropertyChanged
+    public class BalancerRoutingStepsViewModel : INotifyPropertyChanged
     {
         private InterfaceVariables _interfaceVariables;
         private DynotisData _dynotisData;
@@ -33,7 +33,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         public ICommand RunCommand { get; }
         public ICommand SaveCommand { get; }
 
-        private int _balancingIterationStep;
+        private int _balancerIterationStep;
         private int _currentStepIndex;
 
         private readonly List<string> _steps;
@@ -50,7 +50,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private List<double> _vibrationDataBuffer;
         private List<double> _highVibrations;
 
-        public BalancingRoutingStepsViewModel(DynotisData dynotisData, InterfaceVariables interfaceVariables)
+        public BalancerRoutingStepsViewModel(DynotisData dynotisData, InterfaceVariables interfaceVariables)
         {
             _interfaceVariables = interfaceVariables;
             _dynotisData = dynotisData;
@@ -74,7 +74,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 Resources.BalancerPage_Group7,
             };
 
-            _vibrationDataBuffer = new List<double>(); 
+            _vibrationDataBuffer = new List<double>();
             _highVibrations = new List<double>();
 
             _currentStepIndex = 0;
@@ -88,7 +88,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             smoothTransitionStep = 0;
 
             _progressTimer = new DispatcherTimer();
-            _progressTimer.Interval = TimeSpan.FromSeconds(1); 
+            _progressTimer.Interval = TimeSpan.FromSeconds(1);
             _progressTimer.Tick += ProgressTimer_Tick;
 
             _pidTimer = new DispatcherTimer();
@@ -96,7 +96,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             _pidTimer.Tick += PIDTimer_Tick;
 
             _avgTimer = new DispatcherTimer();
-            _avgTimer.Interval = TimeSpan.FromMilliseconds(1); 
+            _avgTimer.Interval = TimeSpan.FromMilliseconds(1);
             _avgTimer.Tick += AVGTimer_Tick;
 
         }
@@ -244,7 +244,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 CurrentStepIndex = 0;
             }
-            BalancingIterationStep = CurrentStepIndex;
+            BalancerIterationStep = CurrentStepIndex;
 
             IsRunButtonEnabled = true;
             IsSaveButtonEnabled = false;
@@ -264,15 +264,15 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             }
         }
 
-        public int BalancingIterationStep
+        public int BalancerIterationStep
         {
-            get => _balancingIterationStep;
+            get => _balancerIterationStep;
             set
             {
-                if (SetProperty(ref _balancingIterationStep, value))
+                if (SetProperty(ref _balancerIterationStep, value))
                 {
                     _interfaceVariables.BalancerIterationStep = value;
-                    OnPropertyChanged(nameof(BalancingIterationStep));
+                    OnPropertyChanged(nameof(BalancerIterationStep));
                 }
             }
         }
