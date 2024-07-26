@@ -628,6 +628,33 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   Motor Speed ​​Control is Provided benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_StatusMessage1 {
+            get {
+                return ResourceManager.GetString("BalancerPage_StatusMessage1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Checking System Stability benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_StatusMessage2 {
+            get {
+                return ResourceManager.GetString("BalancerPage_StatusMessage2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Testing is in progress. Please do not interfere with the device! benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_StatusMessage3 {
+            get {
+                return ResourceManager.GetString("BalancerPage_StatusMessage3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Next benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string BalancerPage_StepButton {
@@ -642,6 +669,15 @@ namespace Advanced_Dynotis_Software.Properties {
         public static string BalancerPage_Text {
             get {
                 return ResourceManager.GetString("BalancerPage_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   When the test starts, be careful about your distance from the propeller; it may crash. benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_WarningMessage {
+            get {
+                return ResourceManager.GetString("BalancerPage_WarningMessage", resourceCulture);
             }
         }
         

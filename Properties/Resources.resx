@@ -306,11 +306,23 @@
   <data name="BalancerPage_SaveButton" xml:space="preserve">
     <value>Record</value>
   </data>
+  <data name="BalancerPage_StatusMessage1" xml:space="preserve">
+    <value>Motor Speed ​​Control is Provided</value>
+  </data>
+  <data name="BalancerPage_StatusMessage2" xml:space="preserve">
+    <value>Checking System Stability</value>
+  </data>
+  <data name="BalancerPage_StatusMessage3" xml:space="preserve">
+    <value>Testing is in progress. Please do not interfere with the device!</value>
+  </data>
   <data name="BalancerPage_StepButton" xml:space="preserve">
     <value>Next</value>
   </data>
   <data name="BalancerPage_Text" xml:space="preserve">
     <value>Propeller Balancer</value>
+  </data>
+  <data name="BalancerPage_WarningMessage" xml:space="preserve">
+    <value>When the test starts, be careful about your distance from the propeller; it may crash.</value>
   </data>
   <data name="BatterySecurityLimits_Battery" xml:space="preserve">
     <value>Battery (S)</value>

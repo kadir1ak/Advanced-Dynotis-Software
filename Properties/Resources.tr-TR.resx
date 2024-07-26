@@ -306,11 +306,23 @@
   <data name="BalancerPage_SaveButton" xml:space="preserve">
     <value>Kaydet</value>
   </data>
+  <data name="BalancerPage_StatusMessage1" xml:space="preserve">
+    <value>Motor Hız Kontrolü Sağlanıyor</value>
+  </data>
+  <data name="BalancerPage_StatusMessage2" xml:space="preserve">
+    <value>Sistem Stabilitesinin Kontrol Ediliyor</value>
+  </data>
+  <data name="BalancerPage_StatusMessage3" xml:space="preserve">
+    <value>Test devam ediyor. Lütfen cihaza müdahale etmeyin!</value>
+  </data>
   <data name="BalancerPage_StepButton" xml:space="preserve">
     <value>İleri</value>
   </data>
   <data name="BalancerPage_Text" xml:space="preserve">
     <value>Pervane Dengeleyici</value>
+  </data>
+  <data name="BalancerPage_WarningMessage" xml:space="preserve">
+    <value>Test başladığında pervaneye olan mesafenize dikkat edin; çarpabilir.</value>
   </data>
   <data name="BatterySecurityLimits_Battery" xml:space="preserve">
     <value>Pil (S)</value>

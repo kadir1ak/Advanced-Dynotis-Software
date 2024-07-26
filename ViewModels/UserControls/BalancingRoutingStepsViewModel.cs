@@ -10,6 +10,7 @@ using Advanced_Dynotis_Software.Models.Dynotis;
 using Advanced_Dynotis_Software.Services.Controllers;
 using Advanced_Dynotis_Software.Services.Helpers;
 using Advanced_Dynotis_Software.Services.Logger;
+using DocumentFormat.OpenXml.Drawing;
 
 namespace Advanced_Dynotis_Software.ViewModels.UserControls
 {
@@ -21,8 +22,13 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
         private DispatcherTimer _progressTimer;
         private DispatcherTimer _pidTimer;
-        private double _progressValue;
-        private bool _progressStatus;
+
+
+        private double _testTimeCount;
+        private double _motorReadyTimeCount;
+        private bool _motorReadyStatus;
+        private bool _testReadyStatus;
+        private string _statusMessage;
 
         public ICommand RunCommand { get; }
         public ICommand SaveCommand { get; }
@@ -39,6 +45,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private bool _escStatus;
         private int _escValue;
 
+        private int smoothTransitionStep;
+
         public BalancingRoutingStepsViewModel(DynotisData dynotisData, InterfaceVariables interfaceVariables)
         {
             _interfaceVariables = interfaceVariables;
@@ -47,8 +55,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             ESCValue = dynotisData.ESCValue;
 
             // Initialize the PID Controller with tuned parameters (Kp, Ki, Kd)
-            _pidController = new PIDController(0.2, 0.01, 0.05, integralMax: 500.0, integralMin: -500.0, alpha: 0.1);
-
+            _pidController = new PIDController(0.2, 0.01, 0.05, integralMax: 50.0, integralMin: -50.0, alpha: 0.1);
 
             RunCommand = new RelayCommand(param => Run(), param => IsRunButtonEnabled);
             SaveCommand = new RelayCommand(param => Save(), param => IsSaveButtonEnabled);
@@ -65,10 +72,14 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             };
 
             _currentStepIndex = 0;
-            _progressValue = 0;
+            _motorReadyTimeCount = 0;            
+            _testTimeCount = 0;            
             _isRunButtonEnabled = true;
             _isSaveButtonEnabled = false;
-            _progressStatus = false;
+            _testReadyStatus = false;
+            _motorReadyStatus = false;
+
+            smoothTransitionStep = 0;
 
             _progressTimer = new DispatcherTimer();
             _progressTimer.Interval = TimeSpan.FromSeconds(1); // Adjusted for finer control
@@ -87,8 +98,9 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             }
             else
             {
+                StatusMessage = Resources.BalancerPage_StatusMessage1;
                 ESCStatus = true;
-                ESCValue = 10;
+                ESCValue = 800; // Başlangıç değeri olarak 800 µs kullanıyoruz
                 _pidController.Reset();
 
                 IsRunButtonEnabled = false;
@@ -100,20 +112,31 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
         private void ProgressTimer_Tick(object sender, EventArgs e)
         {
-            if(ProgressStatus)
-            {            
-                if (ProgressValue < 100)
+            if (MotorReadyStatus)
+            {
+                if(MotorReadyTimeCount < 100)
                 {
-                    ProgressValue += 5;
+                    StatusMessage = Resources.BalancerPage_StatusMessage2;
+                    MotorReadyTimeCount += 10;
                 }
-                else
+                else 
                 {
-                    ProgressStatus = false;
-                    ESCStatus = false;
-                    ESCValue = 0;
-                    _progressTimer.Stop();
-                    _pidTimer.Stop();
-                    IsSaveButtonEnabled = true;
+                    if (TestTimeCount < 100)
+                    {
+                        StatusMessage = Resources.BalancerPage_StatusMessage3;
+                        TestTimeCount += 5;
+                    }
+                    else
+                    {
+                        StatusMessage = "";
+                        MotorReadyStatus = false;
+                        TestStatus = false;
+                        ESCStatus = false;
+                        ESCValue = 800;
+                        _progressTimer.Stop();
+                        _pidTimer.Stop();
+                        IsSaveButtonEnabled = true;
+                    }
                 }
             }
         }
@@ -123,41 +146,62 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             double currentSpeed = _interfaceVariables.MotorSpeed.Value;
             double pidOutput = _pidController.Calculate(_interfaceVariables.ReferenceMotorSpeed, currentSpeed);
 
-            pidOutput = Math.Clamp(pidOutput, 0, 100);
+            // PID çıktısını 800-2200 aralığına uyarlama
+            pidOutput = MapToESCValue(pidOutput);
+
+            pidOutput = Math.Clamp(pidOutput, 800, 2200);
 
             ESCValue = SmoothTransition(ESCValue, (int)pidOutput);
         }
 
+        private double MapToESCValue(double pidOutput)
+        {
+            // PID çıktısını 0-100 aralığından 800-2200 aralığına dönüştürme
+            double minOutput = 0;
+            double maxOutput = 100;
+            double minESC = 800;
+            double maxESC = 2200;
+            return (pidOutput - minOutput) * (maxESC - minESC) / (maxOutput - minOutput) + minESC;
+        }
+
         private int SmoothTransition(int currentValue, int targetValue)
         {
-            if (Math.Abs(_interfaceVariables.MotorSpeed.Value - _interfaceVariables.ReferenceMotorSpeed) > 500)
+            double speedDifference = Math.Abs(_interfaceVariables.MotorSpeed.Value - _interfaceVariables.ReferenceMotorSpeed);
+
+            if (speedDifference > 50)
             {
-                int step = 1; 
-                if (Math.Abs(currentValue - targetValue) <= step)
+                if (speedDifference >= 1000)                                    { smoothTransitionStep = 50; }
+                else if ((speedDifference <= 1000) && (speedDifference > 500))  { smoothTransitionStep = 10; }
+                else if ((speedDifference <= 500) && (speedDifference > 250))   { smoothTransitionStep = 3; }
+                else if ((speedDifference <= 250) && (speedDifference > 100))   { smoothTransitionStep = 2; }
+                else if ((speedDifference <= 100) && (speedDifference > 50))    { smoothTransitionStep = 1;}
+                else                                                            { smoothTransitionStep = 0; }
+
+                if (Math.Abs(currentValue - targetValue) <= smoothTransitionStep)
                 {
-                    return targetValue; 
+                    return targetValue;
                 }
                 if (currentValue < targetValue)
                 {
-                    currentValue = Math.Min(currentValue + step, targetValue);
+                    currentValue = Math.Min(currentValue + smoothTransitionStep, targetValue);
                 }
                 else if (currentValue > targetValue)
                 {
-                    currentValue = Math.Max(currentValue - step, targetValue);
+                    currentValue = Math.Max(currentValue - smoothTransitionStep, targetValue);
                 }
-                ProgressStatus = false;
+
+                MotorReadyStatus = false;
             }
             else
             {
-                ProgressStatus = true;
+                MotorReadyStatus = true;
             }
             return currentValue;
         }
 
-
         private void Save()
-        {         
-            if (CurrentStepIndex < Steps.Count-1)
+        {
+            if (CurrentStepIndex < Steps.Count - 1)
             {
                 CurrentStepIndex++;
             }
@@ -169,7 +213,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
             IsRunButtonEnabled = true;
             IsSaveButtonEnabled = false;
-            ProgressValue = 0;
+            TestTimeCount = 0;
+            MotorReadyTimeCount = 0;
         }
 
         public int CurrentStepIndex
@@ -197,25 +242,58 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             }
         }
 
-        public double ProgressValue
+        public double TestTimeCount
         {
-            get => _progressValue;
+            get => _testTimeCount;
             set
             {
-                if (SetProperty(ref _progressValue, value))
+                if (SetProperty(ref _testTimeCount, value))
                 {
-                    OnPropertyChanged(nameof(ProgressValue));
+                    OnPropertyChanged(nameof(TestTimeCount));
                 }
             }
-        }       
-        public bool ProgressStatus
+        }      
+        public double MotorReadyTimeCount
         {
-            get => _progressStatus;
+            get => _motorReadyTimeCount;
             set
             {
-                if (SetProperty(ref _progressStatus, value))
+                if (SetProperty(ref _motorReadyTimeCount, value))
                 {
-                    OnPropertyChanged(nameof(ProgressStatus));
+                    OnPropertyChanged(nameof(MotorReadyTimeCount));
+                }
+            }
+        }
+        public bool TestStatus
+        {
+            get => _testReadyStatus;
+            set
+            {
+                if (SetProperty(ref _testReadyStatus, value))
+                {
+                    OnPropertyChanged(nameof(TestStatus));
+                }
+            }
+        }     
+        public string StatusMessage
+        {
+            get => _statusMessage;
+            set
+            {
+                if (SetProperty(ref _statusMessage, value))
+                {
+                    OnPropertyChanged(nameof(StatusMessage));
+                }
+            }
+        }        
+        public bool MotorReadyStatus
+        {
+            get => _motorReadyStatus;
+            set
+            {
+                if (SetProperty(ref _motorReadyStatus, value))
+                {
+                    OnPropertyChanged(nameof(MotorReadyStatus));
                 }
             }
         }
@@ -288,4 +366,3 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         }
     }
 }
-

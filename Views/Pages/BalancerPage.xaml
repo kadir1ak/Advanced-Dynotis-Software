@@ -249,7 +249,7 @@
                                         <ContentControl Grid.Row="0" Content="{Binding CurrentBalancingRoutingSteps, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                             <ContentControl.ContentTemplate>
                                                 <DataTemplate>
-                                                    <uc:BalancingRoutingSteps HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0"/>
+                                                    <uc:BalancingRoutingSteps HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0"/>
                                                 </DataTemplate>
                                             </ContentControl.ContentTemplate>
                                         </ContentControl>
