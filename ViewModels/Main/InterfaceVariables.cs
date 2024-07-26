@@ -20,6 +20,9 @@ public class InterfaceVariables : INotifyPropertyChanged
         _selectedWindSpeedUnitIndex = 0;
         _selectedPressureUnitIndex = 1;
 
+        _highVibrations = new List<double>();
+        _balancingIterationStep = 0;
+
         TestMode = "fuzzy";
         IsRecording = false;
         Duration = TimeSpan.Zero;

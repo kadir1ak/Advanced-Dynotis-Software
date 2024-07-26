@@ -22,7 +22,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         private DynotisData _latestDynotisData;
         private readonly object _dataLock = new();
         private CancellationTokenSource _cancellationTokenSource;
-        private int UpdateTimeMillisecond = 10;
+        private int UpdateTimeMillisecond = 20;
 
         public Dynotis Device
         {
@@ -50,17 +50,20 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                     {
                         _currentBalancerVibrationLevels.PropertyChanged += (sender, e) =>
                         {
-                            if (e.PropertyName == nameof(BalancerVibrationLevelsViewModel.Value) )
+                            if (e.PropertyName == nameof(BalancerVibrationLevelsViewModel.HighVibrations) ||
+                                e.PropertyName == nameof(BalancerVibrationLevelsViewModel.BalancingIterationStep))
                             {
-                               // DeviceInterfaceVariables.BalancingIterationStep = _currentBalancerVibrationLevels.BalancingIterationStep;
+                                //DeviceInterfaceVariables.BalancingIterationStep = _currentBalancerVibrationLevels.BalancingIterationStep;
                                 OnPropertyChanged(nameof(DeviceInterfaceVariables));
+                                OnPropertyChanged(nameof(Device.DynotisData));
                             }
                         };
                     }
                 }
             }
-        }        
-        
+        }
+
+
         private BalancingRoutingStepsViewModel _currentBalancingRoutingSteps;
         public BalancingRoutingStepsViewModel CurrentBalancingRoutingSteps
         {
