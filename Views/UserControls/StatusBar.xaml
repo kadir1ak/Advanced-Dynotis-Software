@@ -10,7 +10,7 @@
         <helpers:ValueToWidthAndThumbConverter x:Key="ValueToWidthAndThumbConverter"/>
     </UserControl.Resources>
     <Grid>
-        <Border CornerRadius="10" Background="#E0E0E0" Height="25" VerticalAlignment="Bottom" Margin="10">
+        <Border CornerRadius="10" Background="#E0E0E0" Height="25" VerticalAlignment="Bottom" Margin="0">
             <ProgressBar Height="15" VerticalAlignment="Center" Minimum="0" Maximum="100" Value="{Binding Value, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="5" Foreground="DodgerBlue">
                 <ProgressBar.Template>
                     <ControlTemplate TargetType="ProgressBar">

@@ -673,6 +673,24 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   Vibration Levels benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_VibrationLevels {
+            get {
+                return ResourceManager.GetString("BalancerPage_VibrationLevels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vibration (g) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_VibrationLevelsChart {
+            get {
+                return ResourceManager.GetString("BalancerPage_VibrationLevelsChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   When the test starts, be careful about your distance from the propeller; it may crash. benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string BalancerPage_WarningMessage {

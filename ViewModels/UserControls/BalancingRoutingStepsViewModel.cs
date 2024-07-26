@@ -117,7 +117,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 if(MotorReadyTimeCount < 100)
                 {
                     StatusMessage = Resources.BalancerPage_StatusMessage2;
-                    MotorReadyTimeCount += 10;
+                    MotorReadyTimeCount += 20;
                 }
                 else 
                 {

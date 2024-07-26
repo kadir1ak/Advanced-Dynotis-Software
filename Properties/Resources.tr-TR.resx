@@ -321,6 +321,12 @@
   <data name="BalancerPage_Text" xml:space="preserve">
     <value>Pervane Dengeleyici</value>
   </data>
+  <data name="BalancerPage_VibrationLevelsChart" xml:space="preserve">
+    <value>Titreşim (g)</value>
+  </data>
+  <data name="BalancerPage_VibrationSteps" xml:space="preserve">
+    <value>Vibration Seviyeleri</value>
+  </data>
   <data name="BalancerPage_WarningMessage" xml:space="preserve">
     <value>Test başladığında pervaneye olan mesafenize dikkat edin; çarpabilir.</value>
   </data>

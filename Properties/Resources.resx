@@ -321,6 +321,12 @@
   <data name="BalancerPage_Text" xml:space="preserve">
     <value>Propeller Balancer</value>
   </data>
+  <data name="BalancerPage_VibrationLevels" xml:space="preserve">
+    <value>Vibration Levels</value>
+  </data>
+  <data name="BalancerPage_VibrationLevelsChart" xml:space="preserve">
+    <value>Vibration (g)</value>
+  </data>
   <data name="BalancerPage_WarningMessage" xml:space="preserve">
     <value>When the test starts, be careful about your distance from the propeller; it may crash.</value>
   </data>

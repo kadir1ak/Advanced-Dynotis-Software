@@ -25,7 +25,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         private BalancerParametersManager _balancerParametersManager;
         private BalancingRoutingStepsManager _balancingRoutingStepsManager;
 
-
+        public Func<double, string> XFormatter { get; set; }
+        public Func<double, string> YFormatter { get; set; }
         public ObservableCollection<DeviceViewModel> AvailableDevices { get; }
 
         public DeviceViewModel SelectedDevice
@@ -68,6 +69,9 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             _recordManager = new RecordManager();
             _balancerParametersManager = new BalancerParametersManager();
             _balancingRoutingStepsManager = new BalancingRoutingStepsManager();
+
+            XFormatter = value => value.ToString("0.00");
+            YFormatter = value => value.ToString("0");
 
             DeviceManager.Instance.DeviceDisconnected += OnDeviceDisconnected;
             DeviceManager.Instance.DeviceConnected += OnDeviceConnected;
