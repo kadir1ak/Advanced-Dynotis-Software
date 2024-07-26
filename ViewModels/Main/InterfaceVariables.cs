@@ -60,6 +60,7 @@ public class InterfaceVariables : INotifyPropertyChanged
     private double _vibrationY;
     private double _vibrationZ;
     private double _vibration;
+    private double _vibrationmV;
     private Unit _windSpeed;
     private double _windDirection;
     private double _airDensity;
@@ -188,6 +189,11 @@ public class InterfaceVariables : INotifyPropertyChanged
     {
         get => _vibration;
         set => SetProperty(ref _vibration, value);
+    }    
+    public double VibrationmV
+    {
+        get => _vibrationmV;
+        set => SetProperty(ref _vibrationmV, value);
     }
 
     public Unit WindSpeed
@@ -468,6 +474,7 @@ public class InterfaceVariables : INotifyPropertyChanged
         VibrationY = data.VibrationY;
         VibrationZ = data.VibrationZ;
         Vibration = data.Vibration;
+        VibrationmV = data.Vibration*1/128;
         WindSpeed = WindSpeedUnitSet(WindSpeed.Value, WindSpeed.UnitName, WindSpeed.UnitSymbol, data.WindSpeed.Value, data.WindSpeed.UnitName, data.WindSpeed.UnitSymbol);
         WindDirection = data.WindDirection;
         AirDensity = data.AirDensity;
