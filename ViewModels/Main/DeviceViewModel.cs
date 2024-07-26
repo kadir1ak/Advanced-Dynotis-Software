@@ -22,7 +22,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         private DynotisData _latestDynotisData;
         private readonly object _dataLock = new();
         private CancellationTokenSource _cancellationTokenSource;
-        private int UpdateTimeMillisecond = 20;
+        private int UpdateTimeMillisecond = 10;
 
         public Dynotis Device
         {
@@ -38,6 +38,29 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             }
         }
 
+        private BalancerVibrationLevelsViewModel _currentBalancerVibrationLevels;
+        public BalancerVibrationLevelsViewModel CurrentBalancerVibrationLevels
+        {
+            get => _currentBalancerVibrationLevels;
+            set
+            {
+                if (SetProperty(ref _currentBalancerVibrationLevels, value))
+                {
+                    if (_currentBalancerVibrationLevels != null)
+                    {
+                        _currentBalancerVibrationLevels.PropertyChanged += (sender, e) =>
+                        {
+                            if (e.PropertyName == nameof(BalancerVibrationLevelsViewModel.Value) )
+                            {
+                               // DeviceInterfaceVariables.BalancingIterationStep = _currentBalancerVibrationLevels.BalancingIterationStep;
+                                OnPropertyChanged(nameof(DeviceInterfaceVariables));
+                            }
+                        };
+                    }
+                }
+            }
+        }        
+        
         private BalancingRoutingStepsViewModel _currentBalancingRoutingSteps;
         public BalancingRoutingStepsViewModel CurrentBalancingRoutingSteps
         {
@@ -52,9 +75,11 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                         {
                             if (e.PropertyName == nameof(BalancingRoutingStepsViewModel.BalancingIterationStep) ||
                                 e.PropertyName == nameof(BalancingRoutingStepsViewModel.ESCValue) ||
-                                e.PropertyName == nameof(BalancingRoutingStepsViewModel.ESCStatus))
+                                e.PropertyName == nameof(BalancingRoutingStepsViewModel.ESCStatus) ||
+                                e.PropertyName == nameof(BalancingRoutingStepsViewModel.HighVibrations))
                             {
                                 DeviceInterfaceVariables.BalancingIterationStep = _currentBalancingRoutingSteps.BalancingIterationStep;
+                                DeviceInterfaceVariables.HighVibrations = _currentBalancingRoutingSteps.HighVibrations;
                                 OnPropertyChanged(nameof(DeviceInterfaceVariables));
 
                                 Device.DynotisData.ESCValue = _currentBalancingRoutingSteps.ESCValue;

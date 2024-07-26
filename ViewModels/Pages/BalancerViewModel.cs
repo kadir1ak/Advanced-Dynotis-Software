@@ -10,6 +10,8 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
+using LiveCharts;
+using LiveCharts.Wpf;
 
 namespace Advanced_Dynotis_Software.ViewModels.Pages
 {
@@ -24,10 +26,36 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         private RecordManager _recordManager;
         private BalancerParametersManager _balancerParametersManager;
         private BalancingRoutingStepsManager _balancingRoutingStepsManager;
+        private BalancerVibrationLevelsManager _balancingVibrationLevelsManager;
+        public ObservableCollection<DeviceViewModel> AvailableDevices { get; }
 
+        private List<double> _highVibrations;
+        private int _balancingIterationStep;
+
+        public List<double> HighVibrations
+        {
+            get => _highVibrations;
+            set
+            {
+                _highVibrations = value;
+                OnPropertyChanged(nameof(HighVibrations));
+                UpdateVibrationChart();
+            }
+        }
+
+        public int BalancingIterationStep
+        {
+            get => _balancingIterationStep;
+            set
+            {
+                _balancingIterationStep = value;
+                OnPropertyChanged(nameof(BalancingIterationStep));
+            }
+        }
+
+        public SeriesCollection VibrationSeriesCollection { get; set; }
         public Func<double, string> XFormatter { get; set; }
         public Func<double, string> YFormatter { get; set; }
-        public ObservableCollection<DeviceViewModel> AvailableDevices { get; }
 
         public DeviceViewModel SelectedDevice
         {
@@ -69,12 +97,36 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             _recordManager = new RecordManager();
             _balancerParametersManager = new BalancerParametersManager();
             _balancingRoutingStepsManager = new BalancingRoutingStepsManager();
+            _balancingVibrationLevelsManager = new BalancerVibrationLevelsManager();
+
+            HighVibrations = new List<double> {}; 
+            BalancingIterationStep = 0;
+
+            VibrationSeriesCollection = new SeriesCollection
+            {
+                new LineSeries
+                {
+                    Title = "Vibration Levels",
+                    Values = new ChartValues<double>(HighVibrations)
+                }
+            };
 
             XFormatter = value => value.ToString("0.00");
             YFormatter = value => value.ToString("0");
 
             DeviceManager.Instance.DeviceDisconnected += OnDeviceDisconnected;
             DeviceManager.Instance.DeviceConnected += OnDeviceConnected;
+        }
+        private void UpdateVibrationChart()
+        {
+            if (VibrationSeriesCollection != null && VibrationSeriesCollection.Count > 0)
+            {
+                var series = VibrationSeriesCollection[0] as LineSeries;
+                if (series != null)
+                {
+                    series.Values = new ChartValues<double>(HighVibrations);
+                }
+            }
         }
 
         private async Task ConnectToDeviceAsync()
@@ -91,6 +143,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             ConnectedDevice.CurrentRecord = _recordManager.GetRecordViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData, SelectedDevice.DeviceInterfaceVariables);
             ConnectedDevice.CurrentBalancerParameters = _balancerParametersManager.GetBalancerParametersViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData, SelectedDevice.DeviceInterfaceVariables);
             ConnectedDevice.CurrentBalancingRoutingSteps = _balancingRoutingStepsManager.GetBalancingRoutingStepsViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData, SelectedDevice.DeviceInterfaceVariables);
+            ConnectedDevice.CurrentBalancerVibrationLevels = _balancingVibrationLevelsManager.GetBalancerVibrationLevelsViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData, SelectedDevice.DeviceInterfaceVariables);
         }
 
         private void OnDeviceDisconnected(DeviceViewModel device)
@@ -105,6 +158,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 ConnectedDevice.CurrentRecord = null;
                 ConnectedDevice.CurrentBalancerParameters = null;
                 ConnectedDevice.CurrentBalancingRoutingSteps = null;
+                ConnectedDevice.CurrentBalancerVibrationLevels = null;
             }
             RefreshAvailableDevices();
         }

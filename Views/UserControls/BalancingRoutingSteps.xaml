@@ -14,6 +14,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -43,5 +45,5 @@
             <icon:PackIconMaterial Kind="ShieldAlert" Foreground="{DynamicResource deviceCardIcon}" Width="20" Height="20" Margin="5 0 0 0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <Label Height="30" Content="{x:Static p:Resources.BalancerPage_WarningMessage}" Margin="5 2 5 2" FontSize="16" FontWeight="DemiBold" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </StackPanel>
-     </Grid>
+    </Grid>
 </UserControl>

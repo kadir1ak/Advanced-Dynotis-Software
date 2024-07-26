@@ -22,7 +22,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
         private DispatcherTimer _progressTimer;
         private DispatcherTimer _pidTimer;
-
+        private DispatcherTimer _avgTimer;
 
         private double _testTimeCount;
         private double _motorReadyTimeCount;
@@ -46,6 +46,9 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private int _escValue;
 
         private int smoothTransitionStep;
+
+        private List<double> _vibrationDataBuffer;
+        private List<double> _highVibrations;
 
         public BalancingRoutingStepsViewModel(DynotisData dynotisData, InterfaceVariables interfaceVariables)
         {
@@ -71,9 +74,12 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 Resources.BalancerPage_Group7,
             };
 
+            _vibrationDataBuffer = new List<double>(); 
+            _highVibrations = new List<double>();
+
             _currentStepIndex = 0;
-            _motorReadyTimeCount = 0;            
-            _testTimeCount = 0;            
+            _motorReadyTimeCount = 0;
+            _testTimeCount = 0;
             _isRunButtonEnabled = true;
             _isSaveButtonEnabled = false;
             _testReadyStatus = false;
@@ -82,12 +88,17 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             smoothTransitionStep = 0;
 
             _progressTimer = new DispatcherTimer();
-            _progressTimer.Interval = TimeSpan.FromSeconds(1); // Adjusted for finer control
+            _progressTimer.Interval = TimeSpan.FromSeconds(1); 
             _progressTimer.Tick += ProgressTimer_Tick;
 
             _pidTimer = new DispatcherTimer();
-            _pidTimer.Interval = TimeSpan.FromSeconds(1); // Adjust the interval as needed
+            _pidTimer.Interval = TimeSpan.FromSeconds(1);
             _pidTimer.Tick += PIDTimer_Tick;
+
+            _avgTimer = new DispatcherTimer();
+            _avgTimer.Interval = TimeSpan.FromMilliseconds(1); 
+            _avgTimer.Tick += AVGTimer_Tick;
+
         }
 
         private void Run()
@@ -114,16 +125,17 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         {
             if (MotorReadyStatus)
             {
-                if(MotorReadyTimeCount < 100)
+                if (MotorReadyTimeCount < 100)
                 {
                     StatusMessage = Resources.BalancerPage_StatusMessage2;
                     MotorReadyTimeCount += 20;
                 }
-                else 
+                else
                 {
                     if (TestTimeCount < 100)
                     {
                         StatusMessage = Resources.BalancerPage_StatusMessage3;
+                        _avgTimer.Start();
                         TestTimeCount += 5;
                     }
                     else
@@ -132,13 +144,22 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                         MotorReadyStatus = false;
                         TestStatus = false;
                         ESCStatus = false;
+                        IsSaveButtonEnabled = true;
                         ESCValue = 800;
                         _progressTimer.Stop();
                         _pidTimer.Stop();
-                        IsSaveButtonEnabled = true;
+
+                        _avgTimer.Stop();
+                        HighVibrations.Add(CalculateAverageOfHighVibrations(VibrationDataBuffer.ToArray()));
+                        VibrationDataBuffer.Clear();
                     }
                 }
             }
+        }
+
+        private void AVGTimer_Tick(object sender, EventArgs e)
+        {
+            VibrationDataBuffer.Add(_interfaceVariables.Vibration);
         }
 
         private void PIDTimer_Tick(object sender, EventArgs e)
@@ -170,12 +191,12 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
             if (speedDifference > 50)
             {
-                if (speedDifference >= 1000)                                    { smoothTransitionStep = 50; }
-                else if ((speedDifference <= 1000) && (speedDifference > 500))  { smoothTransitionStep = 10; }
-                else if ((speedDifference <= 500) && (speedDifference > 250))   { smoothTransitionStep = 3; }
-                else if ((speedDifference <= 250) && (speedDifference > 100))   { smoothTransitionStep = 2; }
-                else if ((speedDifference <= 100) && (speedDifference > 50))    { smoothTransitionStep = 1;}
-                else                                                            { smoothTransitionStep = 0; }
+                if (speedDifference >= 1000) { smoothTransitionStep = 50; }
+                else if ((speedDifference <= 1000) && (speedDifference > 500)) { smoothTransitionStep = 10; }
+                else if ((speedDifference <= 500) && (speedDifference > 250)) { smoothTransitionStep = 3; }
+                else if ((speedDifference <= 250) && (speedDifference > 100)) { smoothTransitionStep = 2; }
+                else if ((speedDifference <= 100) && (speedDifference > 50)) { smoothTransitionStep = 1; }
+                else { smoothTransitionStep = 0; }
 
                 if (Math.Abs(currentValue - targetValue) <= smoothTransitionStep)
                 {
@@ -197,6 +218,20 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 MotorReadyStatus = true;
             }
             return currentValue;
+        }
+
+        public double CalculateAverageOfHighVibrations(double[] vibrationData)
+        {
+            // Genel ortalamayı hesapla
+            double overallAverage = vibrationData.Average();
+
+            // Yüksek gürültü değerlerini belirle (genel ortalamanın %50'sinden fazla olan değerler)
+            var highVibrations = vibrationData.Where(value => value > overallAverage * 1.1);
+
+            // Eğer yüksek gürültü değerleri varsa ortalamasını hesapla, yoksa 0 döner
+            double average = highVibrations.Any() ? highVibrations.Average() : 0;
+
+            return average;
         }
 
         private void Save()
@@ -252,7 +287,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     OnPropertyChanged(nameof(TestTimeCount));
                 }
             }
-        }      
+        }
         public double MotorReadyTimeCount
         {
             get => _motorReadyTimeCount;
@@ -274,7 +309,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     OnPropertyChanged(nameof(TestStatus));
                 }
             }
-        }     
+        }
         public string StatusMessage
         {
             get => _statusMessage;
@@ -285,7 +320,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     OnPropertyChanged(nameof(StatusMessage));
                 }
             }
-        }        
+        }
         public bool MotorReadyStatus
         {
             get => _motorReadyStatus;
@@ -346,6 +381,30 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 {
                     _dynotisData.ESCValue = value;
                     OnPropertyChanged(nameof(ESCValue));
+                }
+            }
+        }
+
+        public List<double> VibrationDataBuffer
+        {
+            get => _vibrationDataBuffer;
+            set
+            {
+                if (SetProperty(ref _vibrationDataBuffer, value))
+                {
+                    OnPropertyChanged(nameof(VibrationDataBuffer));
+                }
+            }
+        }
+        public List<double> HighVibrations
+        {
+            get => _highVibrations;
+            set
+            {
+                if (SetProperty(ref _highVibrations, value))
+                {
+                    _interfaceVariables.HighVibrations = value;
+                    OnPropertyChanged(nameof(HighVibrations));
                 }
             }
         }
