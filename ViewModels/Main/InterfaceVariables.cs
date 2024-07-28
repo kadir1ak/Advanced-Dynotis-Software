@@ -1,4 +1,5 @@
 ﻿using Advanced_Dynotis_Software.Models.Dynotis;
+using Advanced_Dynotis_Software.Views.UserControls;
 using DocumentFormat.OpenXml;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -28,6 +29,7 @@ public class InterfaceVariables : INotifyPropertyChanged
         Duration = TimeSpan.Zero;
         FileName = null;
     }
+
     public struct Unit
     {
         public double Value { get; set; }
@@ -105,6 +107,7 @@ public class InterfaceVariables : INotifyPropertyChanged
     private double _balancerWeight;
     private double _balancerPosition;
     private int _balancerIterationStep;
+    private BalancedPropellers _balancedPropeller;
     public double Time
     {
         get => _time;
@@ -464,6 +467,11 @@ public class InterfaceVariables : INotifyPropertyChanged
     {
         get => _balancerIterationStep;
         set => SetProperty(ref _balancerIterationStep, value);
+    }    
+    public BalancedPropellers BalancedPropeller
+    {
+        get => _balancedPropeller;
+        set => SetProperty(ref _balancedPropeller, value);
     }
     public void UpdateFrom(DynotisData data)
     {
@@ -841,6 +849,84 @@ public class InterfaceVariables : INotifyPropertyChanged
         }
 
         return new Unit(value, unitName, unitSymbol, baseValue, baseUnitName, baseUnitSymbol);
+    }
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+    {
+        if (Equals(field, value)) return false;
+        field = value;
+        OnPropertyChanged(propertyName);
+        return true;
+    }   
+}
+public class BalancedPropellers
+{
+    private string _balancedPropellerID;
+    private double _referencePropellerArea;
+
+    public string BalancedPropellerID
+    {
+        get => _balancedPropellerID;
+        set => SetProperty(ref _balancedPropellerID, value);
+    }
+
+    public double ReferencePropellerArea
+    {
+        get => _referencePropellerArea;
+        set => SetProperty(ref _referencePropellerArea, value);
+    }
+
+    private List<DateTime> _balancingDate;
+    private List<int> _referenceMotorSpeed;
+    private List<double> _referenceWeight;
+
+    public List<DateTime> BalancingDate
+    {
+        get => _balancingDate;
+        set => SetProperty(ref _balancingDate, value);
+    }
+
+    public List<int> ReferenceMotorSpeed
+    {
+        get => _referenceMotorSpeed;
+        set => SetProperty(ref _referenceMotorSpeed, value);
+    }    
+    public List<double> ReferenceWeight
+    {
+        get => _referenceWeight;
+        set => SetProperty(ref _referenceWeight, value);
+    }
+
+    private List<double> _balancerWeight;
+    private List<string> _balancerPosition;
+    public List<double> BalancerWeight
+    {
+        get => _balancerWeight;
+        set => SetProperty(ref _balancerWeight, value);
+    }
+    public List<string> BalancerPosition
+    {
+        get => _balancerPosition;
+        set => SetProperty(ref _balancerPosition, value);
+    }
+    private List<double> _lowestVibrationLevel;
+    private List<double> _maximumVibrationLevel;
+    public List<double> LowestVibrationLevel
+    {
+        get => _lowestVibrationLevel;
+        set => SetProperty(ref _lowestVibrationLevel, value);
+    }
+    public List<double> MaximumVibrationLevel
+    {
+        get => _maximumVibrationLevel;
+        set => SetProperty(ref _maximumVibrationLevel, value);
     }
 
     public event PropertyChangedEventHandler PropertyChanged;

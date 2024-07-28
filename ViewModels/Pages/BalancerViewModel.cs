@@ -27,6 +27,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         private BalancerParametersManager _balancerParametersManager;
         private BalancerRoutingStepsManager _balancerRoutingStepsManager;
         private BalancerVibrationLevelsManager _balancerVibrationLevelsManager;
+        private BalancedPropellersManager _balancedPropellersManager;
         public ObservableCollection<DeviceViewModel> AvailableDevices { get; }
 
         private List<double> _highVibrations;
@@ -98,6 +99,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             _balancerParametersManager = new BalancerParametersManager();
             _balancerRoutingStepsManager = new BalancerRoutingStepsManager();
             _balancerVibrationLevelsManager = new BalancerVibrationLevelsManager();
+            _balancedPropellersManager = new BalancedPropellersManager();
 
             HighVibrations = new List<double> {}; 
             BalancingIterationStep = 0;
@@ -144,6 +146,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             ConnectedDevice.CurrentBalancerParameters = _balancerParametersManager.GetBalancerParametersViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData, SelectedDevice.DeviceInterfaceVariables);
             ConnectedDevice.CurrentBalancerRoutingSteps = _balancerRoutingStepsManager.GetBalancerRoutingStepsViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData, SelectedDevice.DeviceInterfaceVariables);
             ConnectedDevice.CurrentBalancerVibrationLevels = _balancerVibrationLevelsManager.GetBalancerVibrationLevelsViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData, SelectedDevice.DeviceInterfaceVariables);
+            ConnectedDevice.CurrentBalancedPropellers = _balancedPropellersManager.GetBalancedPropellersViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData, SelectedDevice.DeviceInterfaceVariables);
         }
 
         private void OnDeviceDisconnected(DeviceViewModel device)
@@ -159,6 +162,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 ConnectedDevice.CurrentBalancerParameters = null;
                 ConnectedDevice.CurrentBalancerRoutingSteps = null;
                 ConnectedDevice.CurrentBalancerVibrationLevels = null;
+                ConnectedDevice.CurrentBalancedPropellers = null;
             }
             RefreshAvailableDevices();
         }

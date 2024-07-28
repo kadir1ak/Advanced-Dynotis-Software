@@ -38,6 +38,42 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             }
         }
 
+        private BalancedPropellersViewModel _currentBalancedPropellers;
+        public BalancedPropellersViewModel CurrentBalancedPropellers
+        {
+            get => _currentBalancedPropellers;
+            set
+            {
+                if (SetProperty(ref _currentBalancedPropellers, value))
+                {
+                    if (_currentBalancedPropellers != null)
+                    {
+                        _currentBalancedPropellers.PropertyChanged += (sender, e) =>
+                        {
+                            if (e.PropertyName == nameof(BalancedPropellersViewModel.BalancedPropellerID) ||
+                                e.PropertyName == nameof(BalancedPropellersViewModel.ReferencePropellerArea) ||
+                                e.PropertyName == nameof(BalancedPropellersViewModel.ReferenceMotorSpeed) ||
+                                e.PropertyName == nameof(BalancedPropellersViewModel.ReferenceWeight) ||
+                                e.PropertyName == nameof(BalancedPropellersViewModel.BalancerWeight) ||
+                                e.PropertyName == nameof(BalancedPropellersViewModel.BalancerPosition) ||
+                                e.PropertyName == nameof(BalancedPropellersViewModel.LowestVibrationLevel) ||
+                                e.PropertyName == nameof(BalancedPropellersViewModel.MaximumVibrationLevel))
+                            {
+                                DeviceInterfaceVariables.BalancedPropeller.BalancedPropellerID = _currentBalancedPropellers.BalancedPropellerID;
+                                DeviceInterfaceVariables.BalancedPropeller.ReferencePropellerArea = _currentBalancedPropellers.ReferencePropellerArea;
+                                DeviceInterfaceVariables.BalancedPropeller.ReferenceMotorSpeed = _currentBalancedPropellers.ReferenceMotorSpeed;
+                                DeviceInterfaceVariables.BalancedPropeller.ReferenceWeight = _currentBalancedPropellers.ReferenceWeight;
+                                DeviceInterfaceVariables.BalancedPropeller.BalancerPosition = _currentBalancedPropellers.BalancerPosition;
+                                DeviceInterfaceVariables.BalancedPropeller.LowestVibrationLevel = _currentBalancedPropellers.LowestVibrationLevel;
+                                DeviceInterfaceVariables.BalancedPropeller.MaximumVibrationLevel = _currentBalancedPropellers.MaximumVibrationLevel;
+                                OnPropertyChanged(nameof(DeviceInterfaceVariables));
+                            }
+                        };
+                    }
+                }
+            }
+        }
+
         private BalancerVibrationLevelsViewModel _currentBalancerVibrationLevels;
         public BalancerVibrationLevelsViewModel CurrentBalancerVibrationLevels
         {
@@ -107,11 +143,9 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                         _currentBalancerParameters.PropertyChanged += (sender, e) =>
                         {
                             if (e.PropertyName == nameof(BalancerParametersViewModel.ReferenceMotorSpeed) ||
-                                e.PropertyName == nameof(BalancerParametersViewModel.ReferencePropellerArea) ||
                                 e.PropertyName == nameof(BalancerParametersViewModel.ReferenceWeight))
                             {
                                 DeviceInterfaceVariables.ReferenceMotorSpeed = _currentBalancerParameters.ReferenceMotorSpeed;
-                                DeviceInterfaceVariables.ReferencePropellerArea = _currentBalancerParameters.ReferencePropellerArea;
                                 DeviceInterfaceVariables.ReferenceWeight = _currentBalancerParameters.ReferenceWeight;
                                 OnPropertyChanged(nameof(DeviceInterfaceVariables));
                             }

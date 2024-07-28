@@ -15,7 +15,6 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
     {
 
         private int _referenceMotorSpeed;
-        private double _referencePropellerArea;
         private double _referenceWeight;
         private InterfaceVariables _interfaceVariables;
 
@@ -40,19 +39,6 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             }
         }
 
-        public double ReferencePropellerArea
-        {
-            get => _referencePropellerArea;
-            set
-            {
-                if (SetProperty(ref _referencePropellerArea, value))
-                {
-                    _interfaceVariables.ReferencePropellerArea = value;
-                    OnPropertyChanged(nameof(ReferencePropellerArea));
-                }
-            }
-        }
-
         public double ReferenceWeight
         {
             get => _referenceWeight;
@@ -71,11 +57,9 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             if (_interfaceVariables != null)
             {
                 ReferenceMotorSpeed = _interfaceVariables.ReferenceMotorSpeed;
-                ReferencePropellerArea = _interfaceVariables.ReferencePropellerArea;
                 ReferenceWeight = _interfaceVariables.ReferenceWeight;
                 // Balance Parametre Değerlerini InterfaceVariables.Instance'da saklayın
                 InterfaceVariables.Instance.ReferenceMotorSpeed = ReferenceMotorSpeed;
-                InterfaceVariables.Instance.ReferencePropellerArea = ReferencePropellerArea;
                 InterfaceVariables.Instance.ReferenceWeight = ReferenceWeight;
             }
         }

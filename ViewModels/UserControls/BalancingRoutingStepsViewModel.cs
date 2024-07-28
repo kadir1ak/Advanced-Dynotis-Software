@@ -92,7 +92,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             _progressTimer.Tick += ProgressTimer_Tick;
 
             _pidTimer = new DispatcherTimer();
-            _pidTimer.Interval = TimeSpan.FromSeconds(1);
+            _pidTimer.Interval = TimeSpan.FromMicroseconds(1);
             _pidTimer.Tick += PIDTimer_Tick;
 
             _avgTimer = new DispatcherTimer();
@@ -128,7 +128,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 if (MotorReadyTimeCount < 100)
                 {
                     StatusMessage = Resources.BalancerPage_StatusMessage2;
-                    MotorReadyTimeCount += 20;
+                    MotorReadyTimeCount += 10;
                 }
                 else
                 {
