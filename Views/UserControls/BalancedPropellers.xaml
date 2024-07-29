@@ -81,14 +81,14 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <DataGrid Grid.Row="1" Grid.Column="1" ItemsSource="{Binding BalancingTestResults}" AutoGenerateColumns="False"
+            <DataGrid Grid.Row="1" Grid.Column="1" ItemsSource="{Binding BalancingTestDatas}" AutoGenerateColumns="False"
                       CanUserAddRows="False" CanUserDeleteRows="False" PreviewKeyDown="DataGrid_PreviewKeyDown" VerticalAlignment="Stretch" 
                       HorizontalAlignment="Stretch" Margin="0" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" 
-                      ScrollViewer.HorizontalScrollBarVisibility="Auto" AlternationCount="{Binding BalancingTestResults.Count}" 
+                      ScrollViewer.HorizontalScrollBarVisibility="Auto" AlternationCount="{Binding BalancingTestDatas.Count}" 
                       Foreground="#151F2D" Background="{DynamicResource Page}">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Balancing Test Date" Binding="{Binding TestDate, StringFormat={}{0:MM/dd/yyyy}}"/>
-                    <DataGridTextColumn Header="Vibration" Binding="{Binding Vibration}"/>
+                <DataGrid.Columns >
+                    <DataGridTextColumn Header="Balancing Test Date" Binding="{Binding TestDates, StringFormat={}{0:MM/dd/yyyy}}" Foreground="{DynamicResource Text}"/>
+                    <DataGridTextColumn Header="Vibration" Binding="{Binding Vibrations}"  Foreground="{DynamicResource Text}"/>
                 </DataGrid.Columns>
             </DataGrid>
 

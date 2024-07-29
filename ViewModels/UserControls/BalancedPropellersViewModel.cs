@@ -24,6 +24,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private string _selectedPropeller;
 
         private InterfaceVariables _interfaceVariables;
+        public ObservableCollection<BalanceTestData> BalancingTestDatas { get; set; }
 
         public ICommand SaveCommand { get; }
         public ICommand LoadCommand { get; }
@@ -34,6 +35,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             _interfaceVariables = interfaceVariables;
             _savedPropellers = new ObservableCollection<string>();
             _resultPropeller = new BalancedDataset();
+            BalancingTestDatas = new ObservableCollection<BalanceTestData>();
+
 
             SaveCommand = new RelayCommand(param => SaveBalancedPropeller());
             LoadCommand = new RelayCommand(param => LoadBalancedPropeller());
@@ -104,7 +107,20 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     BalancedPropellerArea = ResultPropeller.PropellerArea;
                     BalancingTestDates = ResultPropeller.TestDates;
                     VibrationLevels = ResultPropeller.Vibrations;
-                    
+   
+                    BalancingTestDatas = new ObservableCollection<BalanceTestData>();
+                    for (int i = 0; i < BalancingTestDates.Count; i++)
+                    {
+                        BalancingTestDatas.Add(new BalanceTestData
+                        {
+                            TestDates = BalancingTestDates[i],
+                            Vibrations = VibrationLevels[i]
+                        });
+                    }
+
+                    OnPropertyChanged(nameof(BalancingTestDatas)); // BalancingTestDatas'in güncellendiğini bildir
+
+
                 }
             }
             catch (Exception ex)
@@ -228,6 +244,11 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             OnPropertyChanged(propertyName);
             return true;
         }
+    }
+    public class BalanceTestData
+    {
+        public DateTime TestDates { get; set; }
+        public double Vibrations { get; set; }
     }
     public class BalancedDataset : INotifyPropertyChanged
     {
