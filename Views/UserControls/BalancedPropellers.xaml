@@ -36,39 +36,42 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-
         <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="3 3 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}" HorizontalAlignment="Stretch" VerticalAlignment="Center">
             <TextBlock FontSize="14" Text="{x:Static p:Resources.DeviceInformation_Text}" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Border>
 
-
-        <StackPanel  Grid.Row="1" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Left" >
+        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Left">
             <Label Content="{x:Static p:Resources.BalancerPage_PropellerID}" Margin="5 0 10 0" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{DynamicResource Text}" />
-            <TextBox Text="{Binding PropellerID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.00}}" Margin="0 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Stretch" MinWidth="100"/>
+            <TextBox Text="{Binding BalancedPropellerID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Stretch" MinWidth="100"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Left" >
+        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Left">
             <Label Content="{x:Static p:Resources.BalancerPage_PropellerDiameter}" Margin="5 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{DynamicResource Text}" />
-             <!-- Propeller Area TextBox -->
-            <TextBox Style="{StaticResource NumericTextBoxDoubleStyle}" Margin="5 0 5 0"
-             VerticalAlignment="Center" HorizontalAlignment="Left" Width="68" FontSize="14" BorderThickness="1.5"
-             Text="{Binding ReferencePropellerArea, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.00}}">
-                <TextBox.ToolTip>
+            <TextBox Text="{Binding BalancedPropellerArea, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+         Style="{StaticResource NumericTextBoxDoubleStyle}" 
+         Margin="5 0 5 0" 
+         VerticalAlignment="Center" 
+         HorizontalAlignment="Left" 
+         Width="68" 
+         FontSize="14" 
+         BorderThickness="1.5">
+            <TextBox.ToolTip>
                     <ToolTip>
                         <ToolTip.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="12"/>
                             </Style>
                         </ToolTip.Resources>
-                        <TextBlock Text="{x:Static p:Resources.BalancerPage_PropellerDiameterToolTip}" FontStyle="Normal" TextWrapping="WrapWithOverflow" FontSize="14" Margin="5 5" Cursor=""/>
+                        <TextBlock Text="{x:Static p:Resources.BalancerPage_PropellerDiameterToolTip}" FontStyle="Normal" TextWrapping="WrapWithOverflow" FontSize="14" Margin="5 5"/>
                     </ToolTip>
                 </TextBox.ToolTip>
             </TextBox>
             <Label Content="Inch" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Left" Margin="0 0 0 0" VerticalAlignment="Center"/>
         </StackPanel>
-    
-        <uc:GeneralButton Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Margin="2 20 2 2" Icon="DownloadSolid" Text="{x:Static p:Resources.BalancerPage_PropellerSaveButton}" 
-                            Foreground="{DynamicResource Text}" Command="{Binding SaveCommand}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+        <uc:GeneralButton Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Margin="2 20 2 2" Icon="DownloadSolid" 
+                          Text="{x:Static p:Resources.BalancerPage_PropellerSaveButton}" Foreground="{DynamicResource Text}" Command="{Binding SaveCommand}" 
+                          VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
         <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid.RowDefinitions>
@@ -80,44 +83,33 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <DataGrid Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Items}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
-                      PreviewKeyDown="DataGrid_PreviewKeyDown" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0"
-                      ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                      AlternationCount="{Binding Items.Count}" Foreground="#151F2D" Background="{DynamicResource Page}"> 
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="CellEditEnding">
-                        <i:InvokeCommandAction Command="{Binding CellEditEndingCommand}" CommandParameter="{Binding}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
+            <DataGrid Grid.Row="1" Grid.Column="1" ItemsSource="{Binding BalancingTestResults}" AutoGenerateColumns="False"
+                      CanUserAddRows="False" CanUserDeleteRows="False" PreviewKeyDown="DataGrid_PreviewKeyDown" VerticalAlignment="Stretch" 
+                      HorizontalAlignment="Stretch" Margin="0" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                      ScrollViewer.HorizontalScrollBarVisibility="Auto" AlternationCount="{Binding BalancingTestResults.Count}" 
+                      Foreground="#151F2D" Background="{DynamicResource Page}">
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="{x:Static p:Resources.BalancerPage_Index}" Width="40">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}, Path=AlternationIndex}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="{x:Static p:Resources.BalancerPage_BalancingTestDate}" Width="65" Binding="{Binding Time, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
-                    <DataGridTextColumn Header="{x:Static p:Resources.BalancerPage_Vibration}" Width="65" Binding="{Binding Time, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+                    <DataGridTextColumn Header="Balancing Test Date" Binding="{Binding TestDate, StringFormat={}{0:MM/dd/yyyy}}"/>
+                    <DataGridTextColumn Header="Vibration" Binding="{Binding Vibration}"/>
                 </DataGrid.Columns>
             </DataGrid>
 
-            <ListView Grid.Row="1" Grid.Column="0" ItemsSource="{Binding SavedBalancedPropellers}" SelectedItem="{Binding SelectedPropeller}" 
-                  Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" FontWeight="DemiBold" 
-                  ScrollViewer.VerticalScrollBarVisibility="Auto" PreviewMouseWheel="ListBox_PreviewMouseWheel" Foreground="#151F2D" Background="{DynamicResource Page}">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="{x:Static p:Resources.BalancerPage_BalancedPropellersListViewHeader}" DisplayMemberBinding="{Binding}" Width="200" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
+            <ScrollViewer Grid.Row="1" Grid.Column="0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <ListView ItemsSource="{Binding SavedBalancedPropellers}" SelectedItem="{Binding SelectedPropeller}" Margin="0"
+                     FontSize="14" FontWeight="DemiBold" ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                      PreviewMouseWheel="ListBox_PreviewMouseWheel" Foreground="#151F2D" Background="{DynamicResource Page}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="{x:Static p:Resources.BalancerPage_BalancedPropellersListViewHeader}" DisplayMemberBinding="{Binding}" Width="200"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </ScrollViewer>
 
 
-            <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center" >
-                <uc:GeneralButton Margin="2" Icon="UploadSolid" Text="{x:Static p:Resources.BalancerPage_PropellerLoadButton}" 
-                    Foreground="{DynamicResource Text}" Width="100" Command="{Binding LoadCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-                <uc:GeneralButton Margin="2" Icon="TrashSolid" Text="{x:Static p:Resources.BalancerPage_PropellerDeleteButton}" 
-                    Foreground="{DynamicResource Text}" Width="100" Command="{Binding DeleteCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+            <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                <uc:GeneralButton Command="{Binding LoadCommand}" Margin="2" Icon="UploadSolid" Text="{x:Static p:Resources.BalancerPage_PropellerLoadButton}" Foreground="{DynamicResource Text}" Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                <uc:GeneralButton Command="{Binding DeleteCommand}" Margin="2" Icon="TrashSolid" Text="{x:Static p:Resources.BalancerPage_PropellerDeleteButton}" Foreground="{DynamicResource Text}" Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
             </StackPanel>
         </Grid>
     </Grid>

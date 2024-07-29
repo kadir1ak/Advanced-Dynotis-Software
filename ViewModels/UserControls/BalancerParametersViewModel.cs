@@ -21,11 +21,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         public BalancerParametersViewModel(InterfaceVariables interfaceVariables)
         {
             _interfaceVariables = interfaceVariables;
-            SetCommand = new RelayCommand(param => ExecuteTare());
         }
-
-        public ICommand SetCommand { get; }
-
         public int ReferenceMotorSpeed
         {
             get => _referenceMotorSpeed;
@@ -49,18 +45,6 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     _interfaceVariables.ReferenceWeight = value;
                     OnPropertyChanged(nameof(ReferenceWeight));
                 }
-            }
-        }
-
-        private void ExecuteTare()
-        {
-            if (_interfaceVariables != null)
-            {
-                ReferenceMotorSpeed = _interfaceVariables.ReferenceMotorSpeed;
-                ReferenceWeight = _interfaceVariables.ReferenceWeight;
-                // Balance Parametre Değerlerini InterfaceVariables.Instance'da saklayın
-                InterfaceVariables.Instance.ReferenceMotorSpeed = ReferenceMotorSpeed;
-                InterfaceVariables.Instance.ReferenceWeight = ReferenceWeight;
             }
         }
 

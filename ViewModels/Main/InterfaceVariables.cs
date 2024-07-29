@@ -1,6 +1,7 @@
 ﻿using Advanced_Dynotis_Software.Models.Dynotis;
 using Advanced_Dynotis_Software.Views.UserControls;
 using DocumentFormat.OpenXml;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -883,14 +884,14 @@ public class BalancedPropellers
         set => SetProperty(ref _referencePropellerArea, value);
     }
 
-    private List<DateTime> _balancingTestDate;
-    private List<double> _vibrationLevel;
-    public List<double> VibrationLevel
+    private ObservableCollection<DateTime> _balancingTestDate;
+    private ObservableCollection<double> _vibrationLevel;
+    public ObservableCollection<double> VibrationLevel
     {
         get => _vibrationLevel;
         set => SetProperty(ref _vibrationLevel, value);
     }
-    public List<DateTime> BalancingTestDate
+    public ObservableCollection<DateTime> BalancingTestDate
     {
         get => _balancingTestDate;
         set => SetProperty(ref _balancingTestDate, value);

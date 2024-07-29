@@ -28,11 +28,6 @@ namespace Advanced_Dynotis_Software.Views.UserControls
             InitializeComponent();
         }
 
-        private void DataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
-        {
-
-        }
-
         private void DataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -48,14 +43,6 @@ namespace Advanced_Dynotis_Software.Views.UserControls
                         var bindingExpression = textBox.GetBindingExpression(TextBox.TextProperty);
                         bindingExpression.UpdateSource();
                     }
-                }
-
-                e.Handled = true;
-
-                if (DataContext is BalancedPropellersViewModel viewModel)
-                {
-                   // viewModel.SortAndRefreshItems();
-                   // viewModel.UpdateChartCommand.Execute(null);
                 }
             }
         }
