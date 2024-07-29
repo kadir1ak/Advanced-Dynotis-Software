@@ -180,6 +180,9 @@
   <data name="BalancerPage_ApprovalButton" xml:space="preserve">
     <value>Approve</value>
   </data>
+  <data name="BalancerPage_BalancedPropellers" xml:space="preserve">
+    <value>Propellers</value>
+  </data>
   <data name="BalancerPage_BalancedPropellersListViewHeader" xml:space="preserve">
     <value>Propellers</value>
   </data>

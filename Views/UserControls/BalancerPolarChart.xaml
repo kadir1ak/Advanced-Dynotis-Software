@@ -5,14 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
              xmlns:oxy="http://oxyplot.org/wpf"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             mc:Ignorable="d">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <oxy:PlotView Height="250" Grid.Column="0" Model="{Binding CartesianPlotModel}" FontSize="12" />
-        <oxy:PlotView Height="250" Width="250" Grid.Column="1" Model="{Binding PolarPlotModel}"  FontSize="12"/>
+        <oxy:PlotView Height="225" Grid.Column="0" Model="{Binding CartesianPlotModel}" FontSize="12" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+        <oxy:PlotView Height="200" Width="200" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Column="1" Model="{Binding PolarPlotModel}"  FontSize="12"/>
     </Grid>
 </UserControl>

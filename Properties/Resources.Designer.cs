@@ -252,6 +252,15 @@ namespace Advanced_Dynotis_Software.Properties {
         /// <summary>
         ///   Propellers benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
+        public static string BalancerPage_BalancedPropellers {
+            get {
+                return ResourceManager.GetString("BalancerPage_BalancedPropellers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Propellers benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
         public static string BalancerPage_BalancedPropellersListViewHeader {
             get {
                 return ResourceManager.GetString("BalancerPage_BalancedPropellersListViewHeader", resourceCulture);

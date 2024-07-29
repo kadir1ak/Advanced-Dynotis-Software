@@ -37,7 +37,7 @@
         </Grid.ColumnDefinitions>
 
         <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="3 3 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-            <TextBlock FontSize="14" Text="{x:Static p:Resources.DeviceInformation_Text}" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock FontSize="14" Text="{x:Static p:Resources.BalancerPage_BalancedPropellers}" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Border>
 
         <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Left">

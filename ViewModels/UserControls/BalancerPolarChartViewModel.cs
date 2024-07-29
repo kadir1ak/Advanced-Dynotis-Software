@@ -35,13 +35,14 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
             // Sabit veriler ekleniyor
             series.Points.Add(new DataPoint(0, 10));
-            series.Points.Add(new DataPoint(45, 8));
-            series.Points.Add(new DataPoint(90, 9));
-            series.Points.Add(new DataPoint(135, 10));
-            series.Points.Add(new DataPoint(180, 12));
-            series.Points.Add(new DataPoint(225, 11));
-            series.Points.Add(new DataPoint(270, 9));
-            series.Points.Add(new DataPoint(315, 10));
+            series.Points.Add(new DataPoint(45, 11));
+            series.Points.Add(new DataPoint(90, 10));
+            series.Points.Add(new DataPoint(135, 11));
+            series.Points.Add(new DataPoint(180, 9));
+            series.Points.Add(new DataPoint(225, 9));
+            series.Points.Add(new DataPoint(270, 10));
+            series.Points.Add(new DataPoint(315, 9));
+            series.Points.Add(new DataPoint(355, 9));
 
             model.Series.Add(series);
 
@@ -58,6 +59,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 MinorGridlineStyle = LineStyle.Dot,
                 StartAngle = 0,
                 EndAngle = 360
+                
             };
             model.Axes.Add(angleAxis);
 
@@ -74,17 +76,20 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 MarkerType = MarkerType.Circle,
                 MarkerSize = 4,
                 MarkerStroke = OxyColors.Blue
+                
             };
 
             // Sabit veriler ekleniyor
-            series.Points.Add(new DataPoint(0, 10));
-            series.Points.Add(new DataPoint(45, 8));
-            series.Points.Add(new DataPoint(90, 9));
-            series.Points.Add(new DataPoint(135, 10));
-            series.Points.Add(new DataPoint(180, 12));
-            series.Points.Add(new DataPoint(225, 11));
-            series.Points.Add(new DataPoint(270, 9));
-            series.Points.Add(new DataPoint(315, 10));
+            series.Points.Add(new DataPoint(0, 0));
+            series.Points.Add(new DataPoint(11, 30));
+            series.Points.Add(new DataPoint(12, 45));
+            series.Points.Add(new DataPoint(10, 90));
+            series.Points.Add(new DataPoint(8, 135));
+            series.Points.Add(new DataPoint(9, 180));
+            series.Points.Add(new DataPoint(11, 225));
+            series.Points.Add(new DataPoint(10, 270));
+            series.Points.Add(new DataPoint(11, 315));
+            series.Points.Add(new DataPoint(12, 355));
 
             model.Series.Add(series);
 
