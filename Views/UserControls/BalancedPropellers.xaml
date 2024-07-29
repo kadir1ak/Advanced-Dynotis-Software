@@ -55,7 +55,7 @@
          Width="68" 
          FontSize="14" 
          BorderThickness="1.5">
-            <TextBox.ToolTip>
+                <TextBox.ToolTip>
                     <ToolTip>
                         <ToolTip.Resources>
                             <Style TargetType="{x:Type Border}">
@@ -69,9 +69,7 @@
             <Label Content="Inch" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Left" Margin="0 0 0 0" VerticalAlignment="Center"/>
         </StackPanel>
 
-        <uc:GeneralButton Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Margin="2 20 2 2" Icon="DownloadSolid" 
-                          Text="{x:Static p:Resources.BalancerPage_PropellerSaveButton}" Foreground="{DynamicResource Text}" Command="{Binding SaveCommand}" 
-                          VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <uc:GeneralButton Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Margin="2 20 2 2" Icon="DownloadSolid" Text="{x:Static p:Resources.BalancerPage_PropellerSaveButton}" Foreground="{DynamicResource Text}" Command="{Binding SaveCommand}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
         <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid.RowDefinitions>
