@@ -56,7 +56,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                                 e.PropertyName == nameof(BalancedPropellersViewModel.VibrationLevel))
                             {
                                 DeviceInterfaceVariables.BalancedPropeller.BalancedPropellerID = _currentBalancedPropellers.BalancedPropellerID;
-                                DeviceInterfaceVariables.BalancedPropeller.ReferencePropellerArea = _currentBalancedPropellers.BalancedPropellerArea;
+                                DeviceInterfaceVariables.BalancedPropeller.BalancedPropellerArea = _currentBalancedPropellers.BalancedPropellerArea;
                                 DeviceInterfaceVariables.BalancedPropeller.BalancingTestDate = _currentBalancedPropellers.BalancingTestDate;
                                 DeviceInterfaceVariables.BalancedPropeller.VibrationLevel = _currentBalancedPropellers.VibrationLevel;
                                 OnPropertyChanged(nameof(DeviceInterfaceVariables));

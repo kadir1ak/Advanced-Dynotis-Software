@@ -870,7 +870,7 @@ public class InterfaceVariables : INotifyPropertyChanged
 public class BalancedPropellers
 {
     private string _balancedPropellerID;
-    private double _referencePropellerArea;
+    private double _balancedPropellerArea;
 
     public string BalancedPropellerID
     {
@@ -878,10 +878,10 @@ public class BalancedPropellers
         set => SetProperty(ref _balancedPropellerID, value);
     }
 
-    public double ReferencePropellerArea
+    public double BalancedPropellerArea
     {
-        get => _referencePropellerArea;
-        set => SetProperty(ref _referencePropellerArea, value);
+        get => _balancedPropellerArea;
+        set => SetProperty(ref _balancedPropellerArea, value);
     }
 
     private ObservableCollection<DateTime> _balancingTestDate;

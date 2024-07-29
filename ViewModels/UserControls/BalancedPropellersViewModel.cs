@@ -1,6 +1,7 @@
 ﻿using Advanced_Dynotis_Software.Services.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -14,10 +15,10 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
     {
 
         private string _balancedPropellerID;
-        private double _referencePropellerArea;
+        private double _balancedPropellerArea;
 
-        private List<DateTime> _balancingTestDate;
-        private List<double> _vibrationLevel;
+        private ObservableCollection<DateTime> _balancingTestDate;
+        private ObservableCollection<double> _vibrationLevel;
 
         private InterfaceVariables _interfaceVariables;
 
@@ -42,19 +43,19 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
-        public double ReferencePropellerArea
+        public double BalancedPropellerArea
         {
-            get => _referencePropellerArea;
+            get => _balancedPropellerArea;
             set
             {
-                if (SetProperty(ref _referencePropellerArea, value))
+                if (SetProperty(ref _balancedPropellerArea, value))
                 {
-                    _interfaceVariables.BalancedPropeller.ReferencePropellerArea = value;
-                    OnPropertyChanged(nameof(ReferencePropellerArea));
+                    _interfaceVariables.BalancedPropeller.BalancedPropellerArea = value;
+                    OnPropertyChanged(nameof(BalancedPropellerArea));
                 }
             }
         }
-        public List<DateTime> BalancingTestDate
+        public ObservableCollection<DateTime> BalancingTestDate
         {
             get => _balancingTestDate;
             set
@@ -66,7 +67,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
-        public List<double> VibrationLevel
+        public ObservableCollection<double> VibrationLevel
         {
             get => _vibrationLevel;
             set
