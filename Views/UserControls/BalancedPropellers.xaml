@@ -93,7 +93,7 @@
             </DataGrid>
 
             <ScrollViewer Grid.Row="1" Grid.Column="0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                <ListView ItemsSource="{Binding SavedBalancedPropellers}" SelectedItem="{Binding SelectedPropeller}" Margin="0"
+                <ListView ItemsSource="{Binding SavedPropellers}" SelectedItem="{Binding SelectedPropeller}" Margin="0"
                      FontSize="14" FontWeight="DemiBold" ScrollViewer.VerticalScrollBarVisibility="Auto" 
                       PreviewMouseWheel="ListBox_PreviewMouseWheel" Foreground="#151F2D" Background="{DynamicResource Page}">
                     <ListView.View>

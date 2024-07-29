@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 
+
 public class InterfaceVariables : INotifyPropertyChanged
 {
     private static InterfaceVariables _instance;
@@ -108,7 +109,10 @@ public class InterfaceVariables : INotifyPropertyChanged
     private double _balancerWeight;
     private double _balancerPosition;
     private int _balancerIterationStep;
-    private BalancedPropellers _balancedPropeller;
+    private string _balancedPropellersID;
+    private double _balancedPropellersArea;
+    private ObservableCollection<DateTime> _balancedPropellersTestDates;
+    private ObservableCollection<double> _balancedPropellersVibrations;
     public double Time
     {
         get => _time;
@@ -468,11 +472,28 @@ public class InterfaceVariables : INotifyPropertyChanged
     {
         get => _balancerIterationStep;
         set => SetProperty(ref _balancerIterationStep, value);
-    }    
-    public BalancedPropellers BalancedPropeller
+    }
+
+    public string BalancedPropellersID
     {
-        get => _balancedPropeller;
-        set => SetProperty(ref _balancedPropeller, value);
+        get => _balancedPropellersID;
+        set => SetProperty(ref _balancedPropellersID, value);
+    }
+    public double BalancedPropellersArea
+    {
+        get => _balancedPropellersArea;
+        set => SetProperty(ref _balancedPropellersArea, value);
+    }
+    public ObservableCollection<DateTime> BalancedPropellersTestDates
+    {
+        get => _balancedPropellersTestDates;
+        set => SetProperty(ref _balancedPropellersTestDates, value);
+    }
+
+    public ObservableCollection<double> BalancedPropellersVibrations
+    {
+        get => _balancedPropellersVibrations;
+        set => SetProperty(ref _balancedPropellersVibrations, value);
     }
     public void UpdateFrom(DynotisData data)
     {
@@ -514,7 +535,6 @@ public class InterfaceVariables : INotifyPropertyChanged
         SelectedTemperatureUnitIndex = InterfaceVariables.Instance.SelectedTemperatureUnitIndex;
         SelectedWindSpeedUnitIndex = InterfaceVariables.Instance.SelectedWindSpeedUnitIndex;
         SelectedPressureUnitIndex = InterfaceVariables.Instance.SelectedPressureUnitIndex;
-
 
     }
     public Unit ThrustTareSet(Unit data)
@@ -850,51 +870,6 @@ public class InterfaceVariables : INotifyPropertyChanged
         }
 
         return new Unit(value, unitName, unitSymbol, baseValue, baseUnitName, baseUnitSymbol);
-    }
-
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-
-    protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
-    {
-        if (Equals(field, value)) return false;
-        field = value;
-        OnPropertyChanged(propertyName);
-        return true;
-    }   
-}
-public class BalancedPropellers
-{
-    private string _balancedPropellerID;
-    private double _balancedPropellerArea;
-
-    public string BalancedPropellerID
-    {
-        get => _balancedPropellerID;
-        set => SetProperty(ref _balancedPropellerID, value);
-    }
-
-    public double BalancedPropellerArea
-    {
-        get => _balancedPropellerArea;
-        set => SetProperty(ref _balancedPropellerArea, value);
-    }
-
-    private ObservableCollection<DateTime> _balancingTestDate;
-    private ObservableCollection<double> _vibrationLevel;
-    public ObservableCollection<double> VibrationLevel
-    {
-        get => _vibrationLevel;
-        set => SetProperty(ref _vibrationLevel, value);
-    }
-    public ObservableCollection<DateTime> BalancingTestDate
-    {
-        get => _balancingTestDate;
-        set => SetProperty(ref _balancingTestDate, value);
     }
 
     public event PropertyChangedEventHandler PropertyChanged;

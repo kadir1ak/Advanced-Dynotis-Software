@@ -52,13 +52,13 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                         {
                             if (e.PropertyName == nameof(BalancedPropellersViewModel.BalancedPropellerID) ||
                                 e.PropertyName == nameof(BalancedPropellersViewModel.BalancedPropellerArea) ||
-                                e.PropertyName == nameof(BalancedPropellersViewModel.BalancingTestDate) ||
-                                e.PropertyName == nameof(BalancedPropellersViewModel.VibrationLevel))
+                                e.PropertyName == nameof(BalancedPropellersViewModel.BalancingTestDates) ||
+                                e.PropertyName == nameof(BalancedPropellersViewModel.VibrationLevels))
                             {
-                                DeviceInterfaceVariables.BalancedPropeller.BalancedPropellerID = _currentBalancedPropellers.BalancedPropellerID;
-                                DeviceInterfaceVariables.BalancedPropeller.BalancedPropellerArea = _currentBalancedPropellers.BalancedPropellerArea;
-                                DeviceInterfaceVariables.BalancedPropeller.BalancingTestDate = _currentBalancedPropellers.BalancingTestDate;
-                                DeviceInterfaceVariables.BalancedPropeller.VibrationLevel = _currentBalancedPropellers.VibrationLevel;
+                                DeviceInterfaceVariables.BalancedPropellersID = _currentBalancedPropellers.BalancedPropellerID;
+                                DeviceInterfaceVariables.BalancedPropellersArea = _currentBalancedPropellers.BalancedPropellerArea;
+                                DeviceInterfaceVariables.BalancedPropellersTestDates = _currentBalancedPropellers.BalancingTestDates;
+                                DeviceInterfaceVariables.BalancedPropellersVibrations = _currentBalancedPropellers.VibrationLevels;
                                 OnPropertyChanged(nameof(DeviceInterfaceVariables));
                             }
                         };

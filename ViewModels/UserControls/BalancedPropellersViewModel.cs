@@ -8,101 +8,22 @@ using System.Windows;
 using System.Windows.Input;
 using Advanced_Dynotis_Software.Services.Helpers;
 using Newtonsoft.Json;
+using static Advanced_Dynotis_Software.ViewModels.Pages.AutomateTestViewModel;
 
 namespace Advanced_Dynotis_Software.ViewModels.UserControls
 {
     public class BalancedPropellersViewModel : INotifyPropertyChanged
     {
-        private string _balancedPropellerID;
-        private double _balancedPropellerArea;
-        private ObservableCollection<DateTime> _balancingTestDate;
-        private ObservableCollection<double> _vibrationLevel;
+        private string _balancedPropellerID; // şuan arayüzümde gözlemlediğim pervane  ıd
+        private double _balancedPropellerArea; // şuan arayüzümde gözlemlediğim pervane  boyutu
+        private ObservableCollection<DateTime> _balancingTestDates; // şuan arayüzümde gözlemlediğim pervaneye ait test tarihleri
+        private ObservableCollection<double> _vibrationLevels;// şuan arayüzümde gözlemlediğim pervane testlerine ait titreşim verileri
+
+        private ObservableCollection<string> _savedPropellers; // Kalasör içerisindeki kayıtlı pervaneler
+        private BalancedDataset _resultPropeller; // seçilen pervane yüklenmek istendiğinde sonuç parametreleri
         private string _selectedPropeller;
-        private ObservableCollection<string> _savedBalancedPropellers;
-        private ObservableCollection<BalancingTestResult> _balancingTestResults;
+
         private InterfaceVariables _interfaceVariables;
-
-        public string BalancedPropellerID
-        {
-            get => _balancedPropellerID;
-            set
-            {
-                if (SetProperty(ref _balancedPropellerID, value))
-                {
-                    _interfaceVariables.BalancedPropeller.BalancedPropellerID = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public double BalancedPropellerArea
-        {
-            get => _balancedPropellerArea;
-            set
-            {
-                if (SetProperty(ref _balancedPropellerArea, value))
-                {
-                    _interfaceVariables.BalancedPropeller.BalancedPropellerArea = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public ObservableCollection<DateTime> BalancingTestDate
-        {
-            get => _balancingTestDate;
-            set
-            {
-                if (SetProperty(ref _balancingTestDate, value))
-                {
-                    _interfaceVariables.BalancedPropeller.BalancingTestDate = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public ObservableCollection<double> VibrationLevel
-        {
-            get => _vibrationLevel;
-            set
-            {
-                if (SetProperty(ref _vibrationLevel, value))
-                {
-                    _interfaceVariables.BalancedPropeller.VibrationLevel = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public ObservableCollection<string> SavedBalancedPropellers
-        {
-            get => _savedBalancedPropellers;
-            set
-            {
-                _savedBalancedPropellers = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public ObservableCollection<BalancingTestResult> BalancingTestResults
-        {
-            get => _balancingTestResults;
-            set
-            {
-                _balancingTestResults = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public string SelectedPropeller
-        {
-            get => _selectedPropeller;
-            set
-            {
-                _selectedPropeller = value;
-                OnPropertyChanged();
-            }
-        }
 
         public ICommand SaveCommand { get; }
         public ICommand LoadCommand { get; }
@@ -111,10 +32,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         public BalancedPropellersViewModel(InterfaceVariables interfaceVariables)
         {
             _interfaceVariables = interfaceVariables;
-            _savedBalancedPropellers = new ObservableCollection<string>();
-            _balancingTestResults = new ObservableCollection<BalancingTestResult>();
-            _balancingTestDate = new ObservableCollection<DateTime>();
-            _vibrationLevel = new ObservableCollection<double>();
+            _savedPropellers = new ObservableCollection<string>();
+            _resultPropeller = new BalancedDataset();
 
             SaveCommand = new RelayCommand(param => SaveBalancedPropeller());
             LoadCommand = new RelayCommand(param => LoadBalancedPropeller());
@@ -132,12 +51,12 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     Directory.CreateDirectory("BalancedPropellers");
                 }
 
-                SavedBalancedPropellers = new ObservableCollection<string>(Directory.GetFiles("BalancedPropellers", "*.json").Select(Path.GetFileNameWithoutExtension));
+                SavedPropellers = new ObservableCollection<string>(Directory.GetFiles("BalancedPropellers", "*.json").Select(Path.GetFileNameWithoutExtension));
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error loading saved balanced propellers: {ex.Message}");
-                SavedBalancedPropellers = new ObservableCollection<string>();
+                SavedPropellers = new ObservableCollection<string>();
             }
         }
 
@@ -145,21 +64,21 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         {
             try
             {
-                var balancedPropellerData = new BalancedPropeller
+                var balancedPropellerData = new BalancedDataset
                 {
-                    BalancedPropellerID = BalancedPropellerID,
-                    BalancedPropellerArea = BalancedPropellerArea,
-                    BalancingTestDate = BalancingTestDate.ToList(),
-                    VibrationLevel = VibrationLevel.ToList()
+                    PropellerID = BalancedPropellerID,
+                    PropellerArea = BalancedPropellerArea,
+                    TestDates = BalancingTestDates,
+                    Vibrations = VibrationLevels
                 };
 
                 var json = JsonConvert.SerializeObject(balancedPropellerData, Formatting.Indented);
                 Directory.CreateDirectory("BalancedPropellers");
                 File.WriteAllText(Path.Combine("BalancedPropellers", BalancedPropellerID + ".json"), json);
 
-                if (!SavedBalancedPropellers.Contains(BalancedPropellerID))
+                if (!SavedPropellers.Contains(BalancedPropellerID))
                 {
-                    SavedBalancedPropellers.Add(BalancedPropellerID);
+                    SavedPropellers.Add(BalancedPropellerID);
                 }
             }
             catch (Exception ex)
@@ -173,31 +92,24 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             try
             {
                 var json = File.ReadAllText(Path.Combine("BalancedPropellers", SelectedPropeller + ".json"));
-                var data = JsonConvert.DeserializeObject<BalancedPropeller>(json);
-
-                if (data == null)
+                var items = JsonConvert.DeserializeObject<BalancedDataset>(json);
+                
+                if (items != null)
                 {
-                    throw new Exception("Deserialized data is null");
-                }
+                    ResultPropeller = items;
 
-                BalancedPropellerID = data.BalancedPropellerID;
-                BalancedPropellerArea = data.BalancedPropellerArea;
-                BalancingTestDate = new ObservableCollection<DateTime>(data.BalancingTestDate ?? new List<DateTime>());
-                VibrationLevel = new ObservableCollection<double>(data.VibrationLevel ?? new List<double>());
-
-                BalancingTestResults.Clear();
-                for (int i = 0; i < BalancingTestDate.Count; i++)
-                {
-                    BalancingTestResults.Add(new BalancingTestResult
-                    {
-                        TestDate = BalancingTestDate[i],
-                        Vibration = VibrationLevel[i]
-                    });
+                    //Verileri ViewModel alanlarına aktar
+                    
+                    BalancedPropellerID = ResultPropeller.PropellerID;
+                    BalancedPropellerArea = ResultPropeller.PropellerArea;
+                    BalancingTestDates = ResultPropeller.TestDates;
+                    VibrationLevels = ResultPropeller.Vibrations;
+                    
                 }
             }
             catch (Exception ex)
             {
-               // MessageBox.Show($"Error loading balanced propeller: {ex.Message}");
+                MessageBox.Show($"Error loading balanced propeller: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 System.Diagnostics.Debug.WriteLine($"Error loading balanced propeller: {ex.Message}");
             }
         }
@@ -213,7 +125,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     if (result == MessageBoxResult.Yes)
                     {
                         File.Delete(filePath);
-                        SavedBalancedPropellers.Remove(SelectedPropeller);
+                        SavedPropellers.Remove(SelectedPropeller);
                         MessageBox.Show($"File \"{SelectedPropeller}\" has been deleted.", "Delete Successful", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                 }
@@ -222,6 +134,83 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 System.Diagnostics.Debug.WriteLine($"Error deleting balanced propeller: {ex.Message}");
                 MessageBox.Show($"Error deleting the file: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        public string BalancedPropellerID
+        {
+            get => _balancedPropellerID;
+            set
+            {
+                if (SetProperty(ref _balancedPropellerID, value))
+                {
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public double BalancedPropellerArea
+        {
+            get => _balancedPropellerArea;
+            set
+            {
+                if (SetProperty(ref _balancedPropellerArea, value))
+                {
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public ObservableCollection<DateTime> BalancingTestDates
+        {
+            get => _balancingTestDates;
+            set
+            {
+                if (SetProperty(ref _balancingTestDates, value))
+                {
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public ObservableCollection<double> VibrationLevels
+        {
+            get => _vibrationLevels;
+            set
+            {
+                if (SetProperty(ref _vibrationLevels, value))
+                {
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public ObservableCollection<string> SavedPropellers
+        {
+            get => _savedPropellers;
+            set
+            {
+                _savedPropellers = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public BalancedDataset ResultPropeller
+        {
+            get => _resultPropeller;
+            set
+            {
+                _resultPropeller = value;
+                OnPropertyChanged();
+            }
+        }
+        public string SelectedPropeller
+        {
+            get => _selectedPropeller;
+            set
+            {
+                _selectedPropeller = value;
+                OnPropertyChanged();
             }
         }
 
@@ -239,51 +228,77 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             OnPropertyChanged(propertyName);
             return true;
         }
+    }
+    public class BalancedDataset : INotifyPropertyChanged
+    {
+        private string _propellerID;
+        private double _propellerArea;
+        private ObservableCollection<DateTime> _testDates;
+        private ObservableCollection<double> _vibrations;
 
-        public class BalancedPropeller
+        public string PropellerID
         {
-            public string BalancedPropellerID { get; set; }
-            public double BalancedPropellerArea { get; set; }
-            public List<DateTime> BalancingTestDate { get; set; }
-            public List<double> VibrationLevel { get; set; }
+            get => _propellerID;
+            set
+            {
+                if (SetProperty(ref _propellerID, value))
+                {
+
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double PropellerArea
+        {
+            get => _propellerArea;
+            set
+            {
+                if (SetProperty(ref _propellerArea, value))
+                {
+
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public ObservableCollection<DateTime> TestDates
+        {
+            get => _testDates;
+            set
+            {
+                if (SetProperty(ref _testDates, value))
+                {
+
+                    OnPropertyChanged();
+                }
+            }
         }
 
-        public class BalancingTestResult : INotifyPropertyChanged
+        public ObservableCollection<double> Vibrations
         {
-            private DateTime _testDate;
-            private double _vibration;
-
-            public DateTime TestDate
+            get => _vibrations;
+            set
             {
-                get => _testDate;
-                set
+                if (SetProperty(ref _vibrations, value))
                 {
-                    if (_testDate != value)
-                    {
-                        _testDate = value;
-                        OnPropertyChanged();
-                    }
+
+                    OnPropertyChanged();
                 }
             }
+        }
 
-            public double Vibration
-            {
-                get => _vibration;
-                set
-                {
-                    if (_vibration != value)
-                    {
-                        _vibration = value;
-                        OnPropertyChanged();
-                    }
-                }
-            }
+        public event PropertyChangedEventHandler PropertyChanged;
 
-            public event PropertyChangedEventHandler PropertyChanged;
-            protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-            {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (Equals(field, value)) return false;
+            field = value;
+            OnPropertyChanged(propertyName);
+            return true;
         }
     }
 }
