@@ -171,6 +171,12 @@
   <data name="AutomateTestPage_Time" xml:space="preserve">
     <value>Zaman (s)</value>
   </data>
+  <data name="BalancedPropellers_Index" xml:space="preserve">
+    <value>İndex</value>
+  </data>
+  <data name="BalancedPropellers_Vibration" xml:space="preserve">
+    <value>Titreşim</value>
+  </data>
   <data name="BalancerPage_ApprovalButton" xml:space="preserve">
     <value>Onayla</value>
   </data>

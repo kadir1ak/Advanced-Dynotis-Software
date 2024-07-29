@@ -883,50 +883,17 @@ public class BalancedPropellers
         set => SetProperty(ref _referencePropellerArea, value);
     }
 
-    private List<DateTime> _balancingDate;
-    private List<int> _referenceMotorSpeed;
-    private List<double> _referenceWeight;
-
-    public List<DateTime> BalancingDate
+    private List<DateTime> _balancingTestDate;
+    private List<double> _vibrationLevel;
+    public List<double> VibrationLevel
     {
-        get => _balancingDate;
-        set => SetProperty(ref _balancingDate, value);
+        get => _vibrationLevel;
+        set => SetProperty(ref _vibrationLevel, value);
     }
-
-    public List<int> ReferenceMotorSpeed
+    public List<DateTime> BalancingTestDate
     {
-        get => _referenceMotorSpeed;
-        set => SetProperty(ref _referenceMotorSpeed, value);
-    }    
-    public List<double> ReferenceWeight
-    {
-        get => _referenceWeight;
-        set => SetProperty(ref _referenceWeight, value);
-    }
-
-    private List<double> _balancerWeight;
-    private List<string> _balancerPosition;
-    public List<double> BalancerWeight
-    {
-        get => _balancerWeight;
-        set => SetProperty(ref _balancerWeight, value);
-    }
-    public List<string> BalancerPosition
-    {
-        get => _balancerPosition;
-        set => SetProperty(ref _balancerPosition, value);
-    }
-    private List<double> _lowestVibrationLevel;
-    private List<double> _maximumVibrationLevel;
-    public List<double> LowestVibrationLevel
-    {
-        get => _lowestVibrationLevel;
-        set => SetProperty(ref _lowestVibrationLevel, value);
-    }
-    public List<double> MaximumVibrationLevel
-    {
-        get => _maximumVibrationLevel;
-        set => SetProperty(ref _maximumVibrationLevel, value);
+        get => _balancingTestDate;
+        set => SetProperty(ref _balancingTestDate, value);
     }
 
     public event PropertyChangedEventHandler PropertyChanged;

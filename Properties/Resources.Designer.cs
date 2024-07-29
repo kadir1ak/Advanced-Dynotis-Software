@@ -223,6 +223,24 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   Index benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancedPropellers_Index {
+            get {
+                return ResourceManager.GetString("BalancedPropellers_Index", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vibration benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancedPropellers_Vibration {
+            get {
+                return ResourceManager.GetString("BalancedPropellers_Vibration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Approve benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string BalancerPage_ApprovalButton {
@@ -255,6 +273,15 @@ namespace Advanced_Dynotis_Software.Properties {
         public static string BalancerPage_BalancerWeight {
             get {
                 return ResourceManager.GetString("BalancerPage_BalancerWeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Test Date benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_BalancingTestDate {
+            get {
+                return ResourceManager.GetString("BalancerPage_BalancingTestDate", resourceCulture);
             }
         }
         
@@ -750,6 +777,15 @@ namespace Advanced_Dynotis_Software.Properties {
         public static string BalancerPage_Text {
             get {
                 return ResourceManager.GetString("BalancerPage_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vibration benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_Vibration {
+            get {
+                return ResourceManager.GetString("BalancerPage_Vibration", resourceCulture);
             }
         }
         

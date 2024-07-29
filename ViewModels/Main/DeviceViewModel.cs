@@ -52,20 +52,13 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                         {
                             if (e.PropertyName == nameof(BalancedPropellersViewModel.BalancedPropellerID) ||
                                 e.PropertyName == nameof(BalancedPropellersViewModel.ReferencePropellerArea) ||
-                                e.PropertyName == nameof(BalancedPropellersViewModel.ReferenceMotorSpeed) ||
-                                e.PropertyName == nameof(BalancedPropellersViewModel.ReferenceWeight) ||
-                                e.PropertyName == nameof(BalancedPropellersViewModel.BalancerWeight) ||
-                                e.PropertyName == nameof(BalancedPropellersViewModel.BalancerPosition) ||
-                                e.PropertyName == nameof(BalancedPropellersViewModel.LowestVibrationLevel) ||
-                                e.PropertyName == nameof(BalancedPropellersViewModel.MaximumVibrationLevel))
+                                e.PropertyName == nameof(BalancedPropellersViewModel.BalancingTestDate) ||
+                                e.PropertyName == nameof(BalancedPropellersViewModel.VibrationLevel))
                             {
                                 DeviceInterfaceVariables.BalancedPropeller.BalancedPropellerID = _currentBalancedPropellers.BalancedPropellerID;
                                 DeviceInterfaceVariables.BalancedPropeller.ReferencePropellerArea = _currentBalancedPropellers.ReferencePropellerArea;
-                                DeviceInterfaceVariables.BalancedPropeller.ReferenceMotorSpeed = _currentBalancedPropellers.ReferenceMotorSpeed;
-                                DeviceInterfaceVariables.BalancedPropeller.ReferenceWeight = _currentBalancedPropellers.ReferenceWeight;
-                                DeviceInterfaceVariables.BalancedPropeller.BalancerPosition = _currentBalancedPropellers.BalancerPosition;
-                                DeviceInterfaceVariables.BalancedPropeller.LowestVibrationLevel = _currentBalancedPropellers.LowestVibrationLevel;
-                                DeviceInterfaceVariables.BalancedPropeller.MaximumVibrationLevel = _currentBalancedPropellers.MaximumVibrationLevel;
+                                DeviceInterfaceVariables.BalancedPropeller.BalancingTestDate = _currentBalancedPropellers.BalancingTestDate;
+                                DeviceInterfaceVariables.BalancedPropeller.VibrationLevel = _currentBalancedPropellers.VibrationLevel;
                                 OnPropertyChanged(nameof(DeviceInterfaceVariables));
                             }
                         };

@@ -171,6 +171,12 @@
   <data name="AutomateTestPage_Time" xml:space="preserve">
     <value>Time (s)</value>
   </data>
+  <data name="BalancedPropellers_Index" xml:space="preserve">
+    <value>Index</value>
+  </data>
+  <data name="BalancedPropellers_Vibration" xml:space="preserve">
+    <value>Vibration</value>
+  </data>
   <data name="BalancerPage_ApprovalButton" xml:space="preserve">
     <value>Approve</value>
   </data>
@@ -182,6 +188,9 @@
   </data>
   <data name="BalancerPage_BalancerWeight" xml:space="preserve">
     <value>Balancing Weight</value>
+  </data>
+  <data name="BalancerPage_BalancingTestDate" xml:space="preserve">
+    <value>Test Date</value>
   </data>
   <data name="BalancerPage_CalculatedValues" xml:space="preserve">
     <value>Calculated Values</value>
@@ -347,6 +356,9 @@
   </data>
   <data name="BalancerPage_Text" xml:space="preserve">
     <value>Propeller Balancer</value>
+  </data>
+  <data name="BalancerPage_Vibration" xml:space="preserve">
+    <value>Vibration</value>
   </data>
   <data name="BalancerPage_VibrationLevels" xml:space="preserve">
     <value>Vibration Levels</value>
