@@ -20,17 +20,17 @@
                 <TextBlock FontSize="14" Text="{x:Static p:Resources.BalancerPage_Tests}" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </StackPanel>
         </Border>
-        <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="3 3 3 3" BorderBrush="{DynamicResource PageBorder}" BorderThickness="1">
-            <lvc:CartesianChart Series="{Binding VibrationLevelsCollection}" Margin="0">
+        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="3 3 3 3" BorderBrush="{DynamicResource PageBorder}" BorderThickness="1">
+            <lvc:CartesianChart Series="{Binding SeriesCollection}" Margin="0">
                 <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="{x:Static p:Resources.BalancerPage_BalancingTestDates}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding XFormatter}">
+                    <lvc:Axis Title="{x:Static p:Resources.BalancerPage_BalancingTestDates}" Foreground="{DynamicResource Text}" Labels="{Binding TestDatesLabels}">
                         <lvc:Axis.Separator>
                             <lvc:Separator Stroke="{DynamicResource Text}" StrokeThickness="0.5" />
                         </lvc:Axis.Separator>
                     </lvc:Axis>
                 </lvc:CartesianChart.AxisX>
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="{x:Static p:Resources.BalancerPage_VibrationLevelsChart}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding YFormatter}">
+                    <lvc:Axis Title="{x:Static p:Resources.BalancerPage_VibrationLevelsChart}" Foreground="{DynamicResource Text}">
                         <lvc:Axis.Separator>
                             <lvc:Separator Stroke="{DynamicResource Text}" StrokeThickness="0.5" />
                         </lvc:Axis.Separator>

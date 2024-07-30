@@ -1,98 +1,105 @@
-﻿using Advanced_Dynotis_Software.Services.Helpers;
-using Advanced_Dynotis_Software.Views.UserControls;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using System.Windows.Threading;
+using LiveCharts;
+using LiveCharts.Wpf;
 
 namespace Advanced_Dynotis_Software.ViewModels.UserControls
 {
     public class BalancedPropellerTestsChartViewModel : INotifyPropertyChanged
     {
-        private string _balancedPropellerID; // şuan arayüzümde gözlemlediğim pervane  ıd
-        private double _balancedPropellerArea; // şuan arayüzümde gözlemlediğim pervane  boyutu
-        private ObservableCollection<DateTime> _balancingTestDates; // şuan arayüzümde gözlemlediğim pervaneye ait test tarihleri
-        private ObservableCollection<double> _vibrationLevels;// şuan arayüzümde gözlemlediğim pervane testlerine ait titreşim verileri
+        private string _balancedPropellerID;
+        private double _balancedPropellerArea;
+        private ObservableCollection<DateTime> _balancingTestDates;
+        private ObservableCollection<double> _vibrationLevels;
         private InterfaceVariables _interfaceVariables;
-        private DispatcherTimer _interfaceVariablesTimer;
+        private SeriesCollection _seriesCollection;
+        private string[] _testDatesLabels;
+
         public BalancedPropellerTestsChartViewModel(InterfaceVariables interfaceVariables)
         {
             _interfaceVariables = interfaceVariables;
-            _interfaceVariablesTimer = new DispatcherTimer();
-            _interfaceVariablesTimer.Interval = TimeSpan.FromMicroseconds(1);
-            _interfaceVariablesTimer.Tick += InterfaceVariablesTimer_Tick;
-            _interfaceVariablesTimer.Start();
+            _seriesCollection = new SeriesCollection();
 
+            // Subscribe to the PropertyChanged event of InterfaceVariables
+            _interfaceVariables.PropertyChanged += InterfaceVariables_PropertyChanged;
+
+            // Initialize properties with current values
+            UpdatePropertiesFromInterfaceVariables();
+            UpdateChart();
         }
-        private void InterfaceVariablesTimer_Tick(object sender, EventArgs e)
+
+        private void InterfaceVariables_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (_interfaceVariables != null)
+            // Check if any of the relevant properties have changed
+            if (e.PropertyName == nameof(InterfaceVariables.BalancedPropellersID) ||
+                e.PropertyName == nameof(InterfaceVariables.BalancedPropellersArea) ||
+                e.PropertyName == nameof(InterfaceVariables.BalancedPropellersTestDates) ||
+                e.PropertyName == nameof(InterfaceVariables.BalancedPropellersVibrations))
             {
-
-                BalancedPropellerID = _interfaceVariables.BalancedPropellersID;
-                BalancedPropellerArea = _interfaceVariables.BalancedPropellersArea;
-                BalancingTestDates = _interfaceVariables.BalancedPropellersTestDates;
-                VibrationLevels = _interfaceVariables.BalancedPropellersVibrations;
-
-                // Tare değerlerini InterfaceVariables.Instance'da saklayın
-                InterfaceVariables.Instance.BalancedPropellersID = BalancedPropellerID;
-                InterfaceVariables.Instance.BalancedPropellersArea = BalancedPropellerArea;
-                InterfaceVariables.Instance.BalancedPropellersTestDates = BalancingTestDates;
-                InterfaceVariables.Instance.BalancedPropellersVibrations = VibrationLevels;
+                UpdatePropertiesFromInterfaceVariables();
+                UpdateChart();
             }
         }
+
+        private void UpdatePropertiesFromInterfaceVariables()
+        {
+            BalancedPropellerID = _interfaceVariables.BalancedPropellersID;
+            BalancedPropellerArea = _interfaceVariables.BalancedPropellersArea;
+            BalancingTestDates = _interfaceVariables.BalancedPropellersTestDates ?? new ObservableCollection<DateTime>();
+            VibrationLevels = _interfaceVariables.BalancedPropellersVibrations ?? new ObservableCollection<double>();
+        }
+
+        private void UpdateChart()
+        {
+            _seriesCollection.Clear();
+
+            var lineSeries = new LineSeries
+            {
+                Title = "Vibration Levels",
+                Values = new ChartValues<double>(_vibrationLevels)
+            };
+
+            _seriesCollection.Add(lineSeries);
+            TestDatesLabels = _balancingTestDates.Select(date => date.ToString("MM/dd/yyyy")).ToArray();
+        }
+
         public string BalancedPropellerID
         {
             get => _balancedPropellerID;
-            set
-            {
-                if (SetProperty(ref _balancedPropellerID, value))
-                {
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _balancedPropellerID, value);
         }
 
         public double BalancedPropellerArea
         {
             get => _balancedPropellerArea;
-            set
-            {
-                if (SetProperty(ref _balancedPropellerArea, value))
-                {
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _balancedPropellerArea, value);
         }
 
         public ObservableCollection<DateTime> BalancingTestDates
         {
             get => _balancingTestDates;
-            set
-            {
-                if (SetProperty(ref _balancingTestDates, value))
-                {
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _balancingTestDates, value);
         }
 
         public ObservableCollection<double> VibrationLevels
         {
             get => _vibrationLevels;
-            set
-            {
-                if (SetProperty(ref _vibrationLevels, value))
-                {
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _vibrationLevels, value);
+        }
+
+        public SeriesCollection SeriesCollection
+        {
+            get => _seriesCollection;
+            set => SetProperty(ref _seriesCollection, value);
+        }
+
+        public string[] TestDatesLabels
+        {
+            get => _testDatesLabels;
+            set => SetProperty(ref _testDatesLabels, value);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
