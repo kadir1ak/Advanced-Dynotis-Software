@@ -26,6 +26,9 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private InterfaceVariables _interfaceVariables;
         public ObservableCollection<BalanceTestData> BalancingTestDatas { get; set; }
 
+        private bool _isPropellerIDTextBoxReadOnly;
+        private bool _isPropellerAreaTextBoxReadOnly;
+        public ICommand NewCommand { get; }
         public ICommand SaveCommand { get; }
         public ICommand LoadCommand { get; }
         public ICommand DeleteCommand { get; }
@@ -37,7 +40,10 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             _resultPropeller = new BalancedDataset();
             BalancingTestDatas = new ObservableCollection<BalanceTestData>();
 
+            _isPropellerIDTextBoxReadOnly = true;
+            _isPropellerAreaTextBoxReadOnly = true;
 
+            NewCommand = new RelayCommand(param => NewBalancedPropeller());
             SaveCommand = new RelayCommand(param => SaveBalancedPropeller());
             LoadCommand = new RelayCommand(param => LoadBalancedPropeller());
             DeleteCommand = new RelayCommand(param => DeleteBalancedPropeller());
@@ -63,6 +69,24 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             }
         }
 
+        private void NewBalancedPropeller()
+        {
+            try
+            {
+                IsPropellerIDTextBoxReadOnly = false;
+                IsPropellerAreaTextBoxReadOnly = false;
+                BalancedPropellerID = "";
+                BalancedPropellerArea = 0;
+                BalancingTestDates.Clear();
+                VibrationLevels.Clear();
+                BalancingTestDatas.Clear();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error new balanced propeller: {ex.Message}");
+            }
+        }
+
         private void SaveBalancedPropeller()
         {
             try
@@ -83,6 +107,10 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 {
                     SavedPropellers.Add(BalancedPropellerID);
                 }
+                else
+                {
+                    MessageBox.Show("Please enter a different Id");
+                }
             }
             catch (Exception ex)
             {
@@ -94,6 +122,9 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         {
             try
             {
+                IsPropellerIDTextBoxReadOnly = true;
+                IsPropellerAreaTextBoxReadOnly = true;
+
                 var json = File.ReadAllText(Path.Combine("BalancedPropellers", SelectedPropeller + ".json"));
                 var items = JsonConvert.DeserializeObject<BalancedDataset>(json);
                 
@@ -227,6 +258,30 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 _selectedPropeller = value;
                 OnPropertyChanged();
+            }
+        }
+        public bool IsPropellerIDTextBoxReadOnly
+        {
+            get => _isPropellerIDTextBoxReadOnly;
+            set
+            {
+                if (SetProperty(ref _isPropellerIDTextBoxReadOnly, value))
+                {
+                    OnPropertyChanged(nameof(IsPropellerIDTextBoxReadOnly));
+                    CommandManager.InvalidateRequerySuggested();
+                }
+            }
+        }
+        public bool IsPropellerAreaTextBoxReadOnly
+        {
+            get => _isPropellerAreaTextBoxReadOnly;
+            set
+            {
+                if (SetProperty(ref _isPropellerAreaTextBoxReadOnly, value))
+                {
+                    OnPropertyChanged(nameof(IsPropellerAreaTextBoxReadOnly));
+                    CommandManager.InvalidateRequerySuggested();
+                }
             }
         }
 

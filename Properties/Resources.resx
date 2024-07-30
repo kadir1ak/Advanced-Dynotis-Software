@@ -306,6 +306,9 @@
   <data name="BalancerPage_PropellerLoadButton" xml:space="preserve">
     <value>Load</value>
   </data>
+  <data name="BalancerPage_PropellerNewButton" xml:space="preserve">
+    <value>Add New Propeller</value>
+  </data>
   <data name="BalancerPage_PropellerSaveButton" xml:space="preserve">
     <value>Propeller Save</value>
   </data>

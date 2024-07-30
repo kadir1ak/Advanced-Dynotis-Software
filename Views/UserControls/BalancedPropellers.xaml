@@ -42,19 +42,14 @@
 
         <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Left">
             <Label Content="{x:Static p:Resources.BalancerPage_PropellerID}" Margin="5 0 10 0" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{DynamicResource Text}" />
-            <TextBox Text="{Binding BalancedPropellerID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Stretch" MinWidth="100"/>
+            <TextBox Text="{Binding BalancedPropellerID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  IsReadOnly ="{Binding IsPropellerIDTextBoxReadOnly}" 
+                     Margin="0 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Stretch" MinWidth="100"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Left">
             <Label Content="{x:Static p:Resources.BalancerPage_PropellerDiameter}" Margin="5 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{DynamicResource Text}" />
-            <TextBox Text="{Binding BalancedPropellerArea, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-         Style="{StaticResource NumericTextBoxDoubleStyle}" 
-         Margin="5 0 5 0" 
-         VerticalAlignment="Center" 
-         HorizontalAlignment="Left" 
-         Width="68" 
-         FontSize="14" 
-         BorderThickness="1.5">
+            <TextBox Text="{Binding BalancedPropellerArea, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly ="{Binding IsPropellerAreaTextBoxReadOnly}"
+            Style="{StaticResource NumericTextBoxDoubleStyle}" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Width="68" FontSize="14" BorderThickness="1.5">
                 <TextBox.ToolTip>
                     <ToolTip>
                         <ToolTip.Resources>
@@ -69,7 +64,10 @@
             <Label Content="Inch" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Left" Margin="0 0 0 0" VerticalAlignment="Center"/>
         </StackPanel>
 
-        <uc:GeneralButton Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Margin="2 20 2 2" Icon="DownloadSolid" Text="{x:Static p:Resources.BalancerPage_PropellerSaveButton}" Foreground="{DynamicResource Text}" Command="{Binding SaveCommand}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <uc:GeneralButton Grid.Row="1" Grid.Column="1" Margin="5 2 2 2" Icon="PlusSolid" Text="{x:Static p:Resources.BalancerPage_PropellerNewButton}" 
+                          Foreground="{DynamicResource Text}" Command="{Binding NewCommand}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+        <uc:GeneralButton Grid.Row="2" Grid.Column="1" Margin="5 2 2 2" Icon="DownloadSolid" Text="{x:Static p:Resources.BalancerPage_PropellerSaveButton}" 
+                          Foreground="{DynamicResource Text}" Command="{Binding SaveCommand}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
 
         <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid.RowDefinitions>

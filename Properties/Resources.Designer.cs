@@ -628,6 +628,15 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   Add New Propeller benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_PropellerNewButton {
+            get {
+                return ResourceManager.GetString("BalancerPage_PropellerNewButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Propeller Save benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string BalancerPage_PropellerSaveButton {
