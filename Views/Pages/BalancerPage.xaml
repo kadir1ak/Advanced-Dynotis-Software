@@ -444,32 +444,41 @@
 
                                             <!-- @@@@@@@@@@@@@@@    Vibration Levels Chart    @@@@@@@@@@@@@@@ -->
                                             <Grid Grid.Row="1" Grid.Column="0">
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="Auto"/>
-                                                    <RowDefinition Height="*"/>
-                                                </Grid.RowDefinitions>
-                                                <Border Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3 3 0 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                                                    <ContentControl Grid.Row="0" Content="{Binding CurrentBalancerVibrationLevels, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                                        <ContentControl.ContentTemplate>
-                                                            <DataTemplate>
-                                                                <uc:BalancerVibrationLevels HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0" MinHeight="250"/>
-                                                            </DataTemplate>
-                                                        </ContentControl.ContentTemplate>
-                                                    </ContentControl>
-                                                </Border>
+                                                <ContentControl Content="{Binding CurrentBalancedPropellerTestsChart, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                                    <ContentControl.ContentTemplate>
+                                                        <DataTemplate>
+                                                            <uc:BalancedPropellerTestsChart HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0" MinHeight="250"/>
+                                                        </DataTemplate>
+                                                    </ContentControl.ContentTemplate>
+                                                </ContentControl>
                                             </Grid>
 
 
                                             <!-- @@@@@@@@@@@@@@@    Vibration Chart    @@@@@@@@@@@@@@@ -->
-                                            <Grid Grid.Row="1" Grid.Column="2" >
+                                            <Grid Grid.Row="1" Grid.Column="1" >
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="Auto"/>
                                                     <RowDefinition Height="*"/>
                                                 </Grid.RowDefinitions>
-                                                <Border Grid.Row="0" Margin="0 3 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid Grid.Row="0" Grid.RowSpan="2" Grid.Column="0">
+                                                    <ContentControl Content="{Binding CurrentBalancerRoutingStepsVibrationLevels, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                                        <ContentControl.ContentTemplate>
+                                                            <DataTemplate>
+                                                                <uc:BalancerRoutingStepsVibrationLevels HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0" MinHeight="250"/>
+                                                            </DataTemplate>
+                                                        </ContentControl.ContentTemplate>
+                                                    </ContentControl>
+                                                </Grid>
+                                                
+                                                <!--
+                                                <Border Grid.Row="0" Grid.Column="1" Margin="0 3 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
                                                     <TextBlock FontSize="14" Text="{x:Static p:Resources.BalancerPage_PolarVibration}" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                 </Border>
-                                                <Grid Grid.Row="1">
+                                                <Border  Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3 3 3 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
                                                     <ContentControl Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3 3 0 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
                                                         <ContentControl.ContentTemplate>
                                                             <DataTemplate>
@@ -477,7 +486,9 @@
                                                             </DataTemplate>
                                                         </ContentControl.ContentTemplate>
                                                     </ContentControl>
-                                                </Grid>
+                                                </Border>
+                                                -->
+                                                
                                             </Grid>
 
 

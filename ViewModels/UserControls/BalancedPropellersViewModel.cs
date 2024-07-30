@@ -137,6 +137,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 IsPropellerIDTextBoxReadOnly = true;
                 IsPropellerAreaTextBoxReadOnly = true;
 
+
                 var json = File.ReadAllText(Path.Combine("BalancedPropellers", SelectedPropeller + ".json"));
                 var items = JsonConvert.DeserializeObject<BalancedDataset>(json);
                 

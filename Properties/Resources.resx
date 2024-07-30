@@ -195,6 +195,9 @@
   <data name="BalancerPage_BalancingTestDate" xml:space="preserve">
     <value>Test Date</value>
   </data>
+  <data name="BalancerPage_BalancingTestDates" xml:space="preserve">
+    <value>Test Dates</value>
+  </data>
   <data name="BalancerPage_CalculatedValues" xml:space="preserve">
     <value>Calculated Values</value>
   </data>
@@ -359,6 +362,9 @@
   </data>
   <data name="BalancerPage_StopButton" xml:space="preserve">
     <value>Test Stop</value>
+  </data>
+  <data name="BalancerPage_Tests" xml:space="preserve">
+    <value>Tests</value>
   </data>
   <data name="BalancerPage_Text" xml:space="preserve">
     <value>Propeller Balancer</value>

@@ -97,7 +97,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             _progressTimer.Tick += ProgressTimer_Tick;
 
             _pidTimer = new DispatcherTimer();
-            _pidTimer.Interval = TimeSpan.FromMilliseconds(1);
+            _pidTimer.Interval = TimeSpan.FromMilliseconds(500);
             _pidTimer.Tick += PIDTimer_Tick;
 
             _avgTimer = new DispatcherTimer();

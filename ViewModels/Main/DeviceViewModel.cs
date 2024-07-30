@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Advanced_Dynotis_Software.Models.Dynotis;
+using Advanced_Dynotis_Software.ViewModels.Managers;
 using Advanced_Dynotis_Software.ViewModels.Pages;
 using Advanced_Dynotis_Software.ViewModels.UserControls;
 
@@ -66,21 +67,51 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                 }
             }
         }
-
-        private BalancerVibrationLevelsViewModel _currentBalancerVibrationLevels;
-        public BalancerVibrationLevelsViewModel CurrentBalancerVibrationLevels
+        
+        private BalancedPropellerTestsChartViewModel _currentBalancedPropellerTestsChart;
+        public BalancedPropellerTestsChartViewModel CurrentBalancedPropellerTestsChart
         {
-            get => _currentBalancerVibrationLevels;
+            get => _currentBalancedPropellerTestsChart;
             set
             {
-                if (SetProperty(ref _currentBalancerVibrationLevels, value))
+                if (SetProperty(ref _currentBalancedPropellerTestsChart, value))
                 {
-                    if (_currentBalancerVibrationLevels != null)
+                    if (_currentBalancedPropellerTestsChart != null)
                     {
-                        _currentBalancerVibrationLevels.PropertyChanged += (sender, e) =>
+                        _currentBalancedPropellerTestsChart.PropertyChanged += (sender, e) =>
                         {
-                            if (e.PropertyName == nameof(BalancerVibrationLevelsViewModel.HighVibrations) ||
-                                e.PropertyName == nameof(BalancerVibrationLevelsViewModel.BalancerIterationStep))
+                            if (e.PropertyName == nameof(BalancedPropellersViewModel.BalancedPropellerID) ||
+                                e.PropertyName == nameof(BalancedPropellersViewModel.BalancedPropellerArea) ||
+                                e.PropertyName == nameof(BalancedPropellersViewModel.BalancingTestDates) ||
+                                e.PropertyName == nameof(BalancedPropellersViewModel.VibrationLevels))
+                            {
+                                DeviceInterfaceVariables.BalancedPropellersID = _currentBalancedPropellers.BalancedPropellerID;
+                                DeviceInterfaceVariables.BalancedPropellersArea = _currentBalancedPropellers.BalancedPropellerArea;
+                                DeviceInterfaceVariables.BalancedPropellersTestDates = _currentBalancedPropellers.BalancingTestDates;
+                                DeviceInterfaceVariables.BalancedPropellersVibrations = _currentBalancedPropellers.VibrationLevels;
+                                OnPropertyChanged(nameof(DeviceInterfaceVariables));
+                                OnPropertyChanged(nameof(Device.DynotisData));
+                            }
+                        };
+                    }
+                }
+            }
+        }           
+        
+        private BalancerRoutingStepsVibrationLevelsViewModel _currentBalancerRoutingStepsVibrationLevels;
+        public BalancerRoutingStepsVibrationLevelsViewModel CurrentBalancerRoutingStepsVibrationLevels
+        {
+            get => _currentBalancerRoutingStepsVibrationLevels;
+            set
+            {
+                if (SetProperty(ref _currentBalancerRoutingStepsVibrationLevels, value))
+                {
+                    if (_currentBalancerRoutingStepsVibrationLevels != null)
+                    {
+                        _currentBalancerRoutingStepsVibrationLevels.PropertyChanged += (sender, e) =>
+                        {
+                            if (e.PropertyName == nameof(BalancerRoutingStepsVibrationLevelsViewModel.HighVibrations) ||
+                                e.PropertyName == nameof(BalancerRoutingStepsVibrationLevelsViewModel.BalancerIterationStep))
                             {
                                 OnPropertyChanged(nameof(DeviceInterfaceVariables));
                                 OnPropertyChanged(nameof(Device.DynotisData));
@@ -89,8 +120,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                     }
                 }
             }
-        }
-
+        }       
 
         private BalancerRoutingStepsViewModel _currentBalancerRoutingSteps;
         public BalancerRoutingStepsViewModel CurrentBalancerRoutingSteps

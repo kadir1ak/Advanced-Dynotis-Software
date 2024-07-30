@@ -295,6 +295,15 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   Test Dates benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_BalancingTestDates {
+            get {
+                return ResourceManager.GetString("BalancerPage_BalancingTestDates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Calculated Values benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string BalancerPage_CalculatedValues {
@@ -786,6 +795,15 @@ namespace Advanced_Dynotis_Software.Properties {
         public static string BalancerPage_StopButton {
             get {
                 return ResourceManager.GetString("BalancerPage_StopButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Tests benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_Tests {
+            get {
+                return ResourceManager.GetString("BalancerPage_Tests", resourceCulture);
             }
         }
         

@@ -11,7 +11,6 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <oxy:PlotView Height="225" Grid.Column="0" Model="{Binding CartesianPlotModel}" FontSize="12" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
         <oxy:PlotView Height="200" Width="200" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Column="1" Model="{Binding PolarPlotModel}"  FontSize="12"/>
     </Grid>
 </UserControl>

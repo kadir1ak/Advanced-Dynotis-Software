@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Advanced_Dynotis_Software.Views.UserControls
 {
     /// <summary>
-    /// BalancerVibrationLevels.xaml etkileşim mantığı
+    /// BalancerRoutingStepsVibrationLevels.xaml etkileşim mantığı
     /// </summary>
-    public partial class BalancerVibrationLevels : UserControl
+    public partial class BalancerRoutingStepsVibrationLevels : UserControl
     {
-        public BalancerVibrationLevels()
+        public BalancerRoutingStepsVibrationLevels()
         {
             InitializeComponent();
         }
