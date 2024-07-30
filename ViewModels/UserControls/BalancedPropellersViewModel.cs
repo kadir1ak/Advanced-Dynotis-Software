@@ -101,22 +101,34 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
                 var json = JsonConvert.SerializeObject(balancedPropellerData, Formatting.Indented);
                 Directory.CreateDirectory("BalancedPropellers");
-                File.WriteAllText(Path.Combine("BalancedPropellers", BalancedPropellerID + ".json"), json);
+                var filePath = Path.Combine("BalancedPropellers", BalancedPropellerID + ".json");
 
                 if (!SavedPropellers.Contains(BalancedPropellerID))
                 {
+                    File.WriteAllText(filePath, json);
                     SavedPropellers.Add(BalancedPropellerID);
+                }
+                else if (IsPropellerIDTextBoxReadOnly == true)
+                {
+                    var result = MessageBox.Show("The existing record will be overwritten. Are you sure?", "Overwrite Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        File.WriteAllText(filePath, json);
+                        MessageBox.Show("File successfully overwritten.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Please enter a different Id");
+                    MessageBox.Show("Please enter a different ID.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error saving balanced propeller: {ex.Message}");
+                MessageBox.Show($"Error saving balanced propeller: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
 
         private void LoadBalancedPropeller()
         {
@@ -136,9 +148,9 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     
                     BalancedPropellerID = ResultPropeller.PropellerID;
                     BalancedPropellerArea = ResultPropeller.PropellerArea;
-                    BalancingTestDates = ResultPropeller.TestDates;
-                    VibrationLevels = ResultPropeller.Vibrations;
-   
+                    BalancingTestDates = ResultPropeller.TestDates ?? new ObservableCollection<DateTime>();
+                    VibrationLevels = ResultPropeller.Vibrations ?? new ObservableCollection<double>();
+
                     BalancingTestDatas = new ObservableCollection<BalanceTestData>();
                     for (int i = 0; i < BalancingTestDates.Count; i++)
                     {
