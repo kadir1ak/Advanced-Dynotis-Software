@@ -420,15 +420,15 @@
                                                 <Border Grid.Row="0" Margin="0 3 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
                                                     <TextBlock FontSize="14" Text="{x:Static p:Resources.DeviceCard_Vibration}" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                 </Border>
-                                                <Border Grid.Row="1" Margin="10 10 50 10" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}"  HorizontalAlignment="Right" VerticalAlignment="Top">
+                                                <Border Grid.Row="1" Margin="10 10 20 10" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}"  HorizontalAlignment="Right" VerticalAlignment="Top">
                                                     <StackPanel  Orientation="Vertical">
                                                         <StackPanel Orientation="Horizontal">
-                                                            <TextBlock FontSize="14" Text="Max Value:" Margin="0 0 5 0" Foreground="{DynamicResource Text}"/>
-                                                            <TextBlock FontSize="14" Text="{Binding DeviceInterfaceVariables.Vibration, Mode=OneWay, StringFormat={}{0:0.00}}" Foreground="{DynamicResource Text}"/>
+                                                            <TextBlock FontSize="12" Text="Value:" Margin="0 0 5 0" Foreground="{DynamicResource Text}"/>
+                                                            <TextBlock FontSize="12" Text="{Binding DeviceInterfaceVariables.Vibration, Mode=OneWay, StringFormat={}{0:0.00}}" Foreground="{DynamicResource Text}"/>
                                                         </StackPanel>
                                                         <StackPanel Orientation="Horizontal">
-                                                            <TextBlock FontSize="14" Text="Max Value:" Margin="0 0 5 0" Foreground="{DynamicResource Text}"/>
-                                                            <TextBlock FontSize="14" Text="{Binding DeviceInterfaceVariables.HighVibrationAVG, Mode=OneWay, StringFormat={}{0:0.00}}" Foreground="{DynamicResource Text}"/>
+                                                            <TextBlock FontSize="12" Text="Max Value:" Margin="0 0 5 0" Foreground="{DynamicResource Text}"/>
+                                                            <TextBlock FontSize="12" Text="{Binding DeviceInterfaceVariables.HighVibrationAVG, Mode=OneWay, StringFormat={}{0:0.00}}" Foreground="{DynamicResource Text}"/>
                                                         </StackPanel>
                                                     </StackPanel>                       
                                                 </Border>

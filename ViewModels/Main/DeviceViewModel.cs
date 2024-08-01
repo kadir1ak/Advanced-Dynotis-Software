@@ -359,10 +359,53 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                 {
                     await Application.Current.Dispatcher.InvokeAsync(() =>
                     {
+                        
+                        DeviceInterfaceVariables.VibrationBuffer.Add(DeviceInterfaceVariables.Vibration);
+                        if (DeviceInterfaceVariables.VibrationBuffer.Count > 100) 
+                        {
+                            DeviceInterfaceVariables.HighVibrationAVG = CalculateHighVibrations(DeviceInterfaceVariables.VibrationBuffer);
+                            DeviceInterfaceVariables.VibrationBuffer.Clear();
+                        }                        
+
                         DeviceInterfaceVariables.UpdateFrom(latestData);
                     });
                 }
             }
+        }
+
+        private double CalculateHighVibrations(List<double> buffer)
+        {
+            // Buffer içerisindeki en yüksek 10 verinin ortalamasını threshold olarak belirle
+            double threshold = CalculateThreshold(buffer);
+
+            double highVibrations = 0;
+            int highVibrationCount = 0;
+
+            // Yüksek titreşim değerlerinin ortalamasını hesapla
+            foreach (double value in buffer)
+            {
+                if (value > threshold)
+                {
+                    highVibrations += value;
+                    highVibrationCount++;
+                }
+            }
+
+            // Eğer yüksek titreşim bulunamazsa, ortalama 0 olacak
+            if (highVibrationCount > 0)
+            {
+                highVibrations /= highVibrationCount;
+            }
+
+            return highVibrations;
+        }
+        private double CalculateThreshold(List<double> buffer)
+        {
+            // En yüksek 10 değeri bul
+            var topValues = buffer.OrderByDescending(x => x).Take(10);
+            // En yüksek 10 değerin ortalamasını hesapla
+            double threshold = topValues.Average();
+            return threshold;
         }
 
         private async Task UpdateChartLoop(CancellationToken token)

@@ -25,6 +25,7 @@ public class InterfaceVariables : INotifyPropertyChanged
 
         _balancerIterationStep = 0;
         _balancerIterationVibrations = new List<double>();
+        _vibrationBuffer = new List<double>();
 
         TestMode = "fuzzy";
         IsRecording = false;
@@ -67,6 +68,7 @@ public class InterfaceVariables : INotifyPropertyChanged
     private double _vibrationY;
     private double _vibrationZ;
     private double _vibration;
+    private List<double> _vibrationBuffer;
     private double _highVibrationAvg;
     private double _vibrationmV;
     private Unit _windSpeed;
@@ -202,7 +204,12 @@ public class InterfaceVariables : INotifyPropertyChanged
     {
         get => _vibration;
         set => SetProperty(ref _vibration, value);
-    }    
+    }
+    public List<double> VibrationBuffer
+    {
+        get => _vibrationBuffer;
+        set => SetProperty(ref _vibrationBuffer, value);
+    }
     public double HighVibrationAVG
     {
         get => _highVibrationAvg;
@@ -478,7 +485,7 @@ public class InterfaceVariables : INotifyPropertyChanged
     {
         get => _balancerIterationVibrations;
         set => SetProperty(ref _balancerIterationVibrations, value);
-    }
+    }   
 
     public string BalancedPropellersID
     {

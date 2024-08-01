@@ -142,7 +142,7 @@
                     <TextBlock x:Name="WindDirectionValueLabel" Text="{Binding DeviceInterfaceVariables.WindDirection, Mode=OneWay, StringFormat={}{0:0.0}}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <TextBlock x:Name="WindDirectionUnitLabel" Text="°" Width="40" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
- 
+
 
                 <!-- Record  
                 <StackPanel Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -316,22 +316,36 @@
                 <TextBlock FontSize="14" Text="{x:Static p:Resources.DeviceCard_Vibration}" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
             <Border Grid.Row="1" Margin="0 0 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                <lvc:CartesianChart Series="{Binding ChartViewModel.VibrationSeriesCollection}" Margin="2 0 0 2" DisableAnimations="True" DataTooltip="{x:Null}">
-                    <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="{x:Static p:Resources.DeviceCard_ChartTime}" Labels="{Binding ChartViewModel.TimeLabels}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.VibrationXAxisFormatter}">
-                            <lvc:Axis.Separator>
-                                <lvc:Separator Step="{Binding ChartViewModel.VibrationXAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
-                            </lvc:Axis.Separator>
-                        </lvc:Axis>
-                    </lvc:CartesianChart.AxisX>
-                    <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="{x:Static p:Resources.DeviceCard_ChartVibration}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.VibrationYAxisFormatter}">
-                            <lvc:Axis.Separator>
-                                <lvc:Separator Step="{Binding ChartViewModel.VibrationYAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
-                            </lvc:Axis.Separator>
-                        </lvc:Axis>
-                    </lvc:CartesianChart.AxisY>
-                </lvc:CartesianChart>
+                <Grid>
+                    <Border Margin="10 10 20 10" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}"  HorizontalAlignment="Right" VerticalAlignment="Top">
+                        <StackPanel  Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="12" Text="Value:" Margin="0 0 5 0" Foreground="{DynamicResource Text}"/>
+                                <TextBlock FontSize="12" Text="{Binding DeviceInterfaceVariables.Vibration, Mode=OneWay, StringFormat={}{0:0.00}}" Foreground="{DynamicResource Text}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="12" Text="Max Value:" Margin="0 0 5 0" Foreground="{DynamicResource Text}"/>
+                                <TextBlock FontSize="12" Text="{Binding DeviceInterfaceVariables.HighVibrationAVG, Mode=OneWay, StringFormat={}{0:0.00}}" Foreground="{DynamicResource Text}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                    <lvc:CartesianChart Series="{Binding ChartViewModel.VibrationSeriesCollection}" Margin="2 0 0 2" DisableAnimations="True" DataTooltip="{x:Null}">
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Title="{x:Static p:Resources.DeviceCard_ChartTime}" Labels="{Binding ChartViewModel.TimeLabels}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.VibrationXAxisFormatter}">
+                                <lvc:Axis.Separator>
+                                    <lvc:Separator Step="{Binding ChartViewModel.VibrationXAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
+                                </lvc:Axis.Separator>
+                            </lvc:Axis>
+                        </lvc:CartesianChart.AxisX>
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="{x:Static p:Resources.DeviceCard_ChartVibration}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding ChartViewModel.VibrationYAxisFormatter}">
+                                <lvc:Axis.Separator>
+                                    <lvc:Separator Step="{Binding ChartViewModel.VibrationYAxisStep}" Stroke="{DynamicResource ChartSeparator}" StrokeThickness="0.5"/>
+                                </lvc:Axis.Separator>
+                            </lvc:Axis>
+                        </lvc:CartesianChart.AxisY>
+                    </lvc:CartesianChart>
+                </Grid>
             </Border>
         </Grid>
     </Grid>
