@@ -15,7 +15,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Border Grid.Row="0" Grid.Column="0" Margin="3 3 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-            <TextBlock FontSize="14" Text="{x:Static p:Resources.BalancerPage_VibrationLevels}" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock FontSize="14" Text="{x:Static p:Resources.BalancerPage_BalancerIterationVibrationLevels}" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Border>
         <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="3 3 3 3" BorderBrush="{DynamicResource PageBorder}" BorderThickness="1">
             <lvc:CartesianChart Series="{Binding VibrationSeriesCollection}" Margin="0">

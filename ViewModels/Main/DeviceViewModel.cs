@@ -167,10 +167,14 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                         _currentBalancerParameters.PropertyChanged += (sender, e) =>
                         {
                             if (e.PropertyName == nameof(BalancerParametersViewModel.ReferenceMotorSpeed) ||
-                                e.PropertyName == nameof(BalancerParametersViewModel.ReferenceWeight))
+                                e.PropertyName == nameof(BalancerParametersViewModel.ReferenceWeight) ||
+                                e.PropertyName == nameof(BalancerParametersViewModel.BalancerIterationStep) ||
+                                e.PropertyName == nameof(BalancerParametersViewModel.BalancerIterationVibrations))
                             {
                                 DeviceInterfaceVariables.ReferenceMotorSpeed = _currentBalancerParameters.ReferenceMotorSpeed;
                                 DeviceInterfaceVariables.ReferenceWeight = _currentBalancerParameters.ReferenceWeight;
+                                DeviceInterfaceVariables.BalancerIterationStep = _currentBalancerParameters.BalancerIterationStep;
+                                DeviceInterfaceVariables.BalancerIterationVibrations = _currentBalancerParameters.BalancerIterationVibrations;
                                 OnPropertyChanged(nameof(DeviceInterfaceVariables));
                             }
                         };

@@ -19,13 +19,44 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         public SeriesCollection CurrentSeriesCollection { get; private set; }
         public SeriesCollection ThrustSeriesCollection { get; private set; }
         public SeriesCollection TorqueSeriesCollection { get; private set; }
+
         public ObservableCollection<string> TimeLabels { get; private set; }
-        public Func<double, string> XAxisFormatter { get; private set; }
-        public Func<double, string> YAxisFormatter { get; private set; }
 
-        private int seriesBufferSize = 100;
+        public Func<double, string> CurrentXAxisFormatter { get; private set; }
+        public Func<double, string> CurrentYAxisFormatter { get; private set; }   
 
-        const double defaultValue = 100;
+        public Func<double, string> VoltageXAxisFormatter { get; private set; }
+        public Func<double, string> VoltageYAxisFormatter { get; private set; }  
+
+        public Func<double, string> VibrationXAxisFormatter { get; private set; }
+        public Func<double, string> VibrationYAxisFormatter { get; private set; } 
+
+        public Func<double, string> MotorSpeedXAxisFormatter { get; private set; }
+        public Func<double, string> MotorSpeedYAxisFormatter { get; private set; } 
+
+        public Func<double, string> ThrustXAxisFormatter { get; private set; }
+        public Func<double, string> ThrustYAxisFormatter { get; private set; }
+
+        public Func<double, string> TorqueXAxisFormatter { get; private set; }
+        public Func<double, string> TorqueYAxisFormatter { get; private set; }
+
+        public double CurrentYAxisMin { get; private set; }
+        public double CurrentYAxisMax { get; private set; }
+
+        public double VoltageYAxisMin { get; private set; }
+        public double VoltageYAxisMax { get; private set; }
+
+        public double VibrationYAxisMin { get; private set; }
+        public double VibrationYAxisMax { get; private set; }
+
+        public double MotorSpeedYAxisMin { get; private set; }
+        public double MotorSpeedYAxisMax { get; private set; }
+
+        public double ThrustYAxisMin { get; private set; }
+        public double ThrustYAxisMax { get; private set; }
+
+        public double TorqueYAxisMin { get; private set; }
+        public double TorqueYAxisMax { get; private set; }
 
         public double CurrentXAxisStep { get; private set; }
         public double CurrentYAxisStep { get; private set; }
@@ -39,6 +70,11 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         public double ThrustYAxisStep { get; private set; }
         public double TorqueXAxisStep { get; private set; }
         public double TorqueYAxisStep { get; private set; }
+
+        
+        private int seriesBufferSize = 100;
+
+        const double defaultValue = 100;
 
         public ChartViewModel()
         {
@@ -58,8 +94,23 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
 
             InitializeDefaultChartData();
 
-            XAxisFormatter = value => value.ToString("0");
-            YAxisFormatter = value => value.ToString("0.00");
+            CurrentXAxisFormatter = value => value.ToString("0.0");
+            CurrentYAxisFormatter = value => value.ToString("0.00");
+
+            VoltageXAxisFormatter = value => value.ToString("0.0");
+            VoltageYAxisFormatter = value => value.ToString("0.00");
+
+            VibrationXAxisFormatter = value => value.ToString("0.0");
+            VibrationYAxisFormatter = value => value.ToString("0.000");
+
+            MotorSpeedXAxisFormatter = value => value.ToString("0.0");
+            MotorSpeedYAxisFormatter = value => value.ToString("0");
+
+            ThrustXAxisFormatter = value => value.ToString("0.0");
+            ThrustYAxisFormatter = value => value.ToString("0.000");
+
+            TorqueXAxisFormatter = value => value.ToString("0.0");
+            TorqueYAxisFormatter = value => value.ToString("0.000");
         }
 
         private void InitializeDefaultChartData()
@@ -112,6 +163,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             UpdateSeries(ThrustSeriesCollection, data.Thrust.Value);
             UpdateSeries(TorqueSeriesCollection, data.Torque.Value);
             UpdateChartSteps();
+            UpdateChartLimits();
         }
 
 
@@ -127,23 +179,23 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
 
         private void UpdateChartSteps()
         {
-            CurrentXAxisStep = CalculateXAxisStep(CurrentSeriesCollection);
-            CurrentYAxisStep = CalculateYAxisStep(CurrentSeriesCollection);
+            CurrentXAxisStep = ((LineSeries)CurrentSeriesCollection[0]).Values.Count / 6.0;
+            CurrentYAxisStep = (CurrentYAxisMax == CurrentYAxisMin) ? 1 : (CurrentYAxisMax - CurrentYAxisMin) / 10.0;
 
-            VoltageXAxisStep = CalculateXAxisStep(VoltageSeriesCollection);
-            VoltageYAxisStep = CalculateYAxisStep(VoltageSeriesCollection);
+            VoltageXAxisStep = ((LineSeries)VoltageSeriesCollection[0]).Values.Count / 6.0;
+            VoltageYAxisStep = (VoltageYAxisMax == VoltageYAxisMin) ? 1 : (VoltageYAxisMax - VoltageYAxisMin) / 10.0;
 
-            VibrationXAxisStep = CalculateXAxisStep(VibrationSeriesCollection);
-            VibrationYAxisStep = CalculateYAxisStep(VibrationSeriesCollection);
+            MotorSpeedXAxisStep = ((LineSeries)MotorSpeedSeriesCollection[0]).Values.Count / 6.0;
+            MotorSpeedYAxisStep = (MotorSpeedYAxisMax == MotorSpeedYAxisMin) ? 1 : (MotorSpeedYAxisMax - MotorSpeedYAxisMin) / 10.0;
 
-            MotorSpeedXAxisStep = CalculateXAxisStep(MotorSpeedSeriesCollection);
-            MotorSpeedYAxisStep = CalculateYAxisStep(MotorSpeedSeriesCollection);
+            ThrustXAxisStep = ((LineSeries)ThrustSeriesCollection[0]).Values.Count / 6.0;
+            ThrustYAxisStep = (ThrustYAxisMax == ThrustYAxisMin) ? 1 : (ThrustYAxisMax - ThrustYAxisMin) / 10.0;
 
-            ThrustXAxisStep = CalculateXAxisStep(ThrustSeriesCollection);
-            ThrustYAxisStep = CalculateYAxisStep(ThrustSeriesCollection);
+            TorqueXAxisStep = ((LineSeries)TorqueSeriesCollection[0]).Values.Count / 6.0;
+            TorqueYAxisStep = (TorqueYAxisMax == TorqueYAxisMin) ? 1 : (TorqueYAxisMax - TorqueYAxisMin) / 10.0;
 
-            TorqueXAxisStep = CalculateXAxisStep(TorqueSeriesCollection);
-            TorqueYAxisStep = CalculateYAxisStep(TorqueSeriesCollection);
+            VibrationXAxisStep = ((LineSeries)VibrationSeriesCollection[0]).Values.Count / 6.0;
+            VibrationYAxisStep = (VibrationYAxisMax == VibrationYAxisMin) ? 1 : (VibrationYAxisMax - VibrationYAxisMin) / 10.0;
 
             OnPropertyChanged(nameof(CurrentXAxisStep));
             OnPropertyChanged(nameof(CurrentYAxisStep));
@@ -158,18 +210,38 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             OnPropertyChanged(nameof(TorqueXAxisStep));
             OnPropertyChanged(nameof(TorqueYAxisStep));
         }
-        private double CalculateXAxisStep(SeriesCollection seriesCollection)
+        private void UpdateChartLimits()
         {
-            var values = ((LineSeries)seriesCollection[0]).Values;
-            return values.Count / 4.0; // X ekseninde 4 noktaya bölmek için
-        }
+            CurrentYAxisMin = CurrentSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Min() / 2.0;
+            CurrentYAxisMax = Math.Max(CurrentSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Max() * 1.5, 5);
 
-        private double CalculateYAxisStep(SeriesCollection seriesCollection)
-        {
-            var values = ((LineSeries)seriesCollection[0]).Values;
-            var max = values.Cast<double>().Max();
-            var min = values.Cast<double>().Min();
-            return (max == min) ? 1 : (max - min) / 4.0; // Y ekseninde 4 noktaya bölmek için
+            VoltageYAxisMin = VoltageSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Min() / 2.0;
+            VoltageYAxisMax = Math.Max(VoltageSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Max() * 1.5, 10);
+
+            MotorSpeedYAxisMin = MotorSpeedSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Min() / 2.0;
+            MotorSpeedYAxisMax = Math.Max(MotorSpeedSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Max() * 1.5, 1000);
+
+            ThrustYAxisMin = ThrustSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Min() / 2.0;
+            ThrustYAxisMax = Math.Max(ThrustSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Max() * 1.5, 500);
+
+            TorqueYAxisMin = TorqueSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Min() / 2.0;
+            TorqueYAxisMax = Math.Max(TorqueSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Max() * 1.5, 500);
+
+            VibrationYAxisMin = VibrationSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Min() / 2.0;
+            VibrationYAxisMax = Math.Max(VibrationSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Max() * 1.5, 1);
+
+            OnPropertyChanged(nameof(CurrentYAxisMin));
+            OnPropertyChanged(nameof(CurrentYAxisMax));
+            OnPropertyChanged(nameof(VoltageYAxisMin));
+            OnPropertyChanged(nameof(VoltageYAxisMax));
+            OnPropertyChanged(nameof(MotorSpeedYAxisMin));
+            OnPropertyChanged(nameof(MotorSpeedYAxisMax));
+            OnPropertyChanged(nameof(ThrustYAxisMin));
+            OnPropertyChanged(nameof(ThrustYAxisMax));
+            OnPropertyChanged(nameof(TorqueYAxisMin));
+            OnPropertyChanged(nameof(TorqueYAxisMax));     
+            OnPropertyChanged(nameof(VibrationYAxisMin));
+            OnPropertyChanged(nameof(VibrationYAxisMax));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

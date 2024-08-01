@@ -14,7 +14,24 @@ namespace Advanced_Dynotis_Software.Views.UserControls
         {
             InitializeComponent();
         }
+        private void DataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                var grid = (DataGrid)sender;
 
+                if (grid.CurrentColumn is DataGridTextColumn)
+                {
+                    var cellContent = grid.CurrentColumn.GetCellContent(grid.CurrentItem);
+
+                    if (cellContent is TextBox textBox)
+                    {
+                        var bindingExpression = textBox.GetBindingExpression(TextBox.TextProperty);
+                        bindingExpression.UpdateSource();
+                    }
+                }
+            }
+        }
         private void NumericTextBoxDouble_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9.,]+"); // Allow only numbers, dots, and commas

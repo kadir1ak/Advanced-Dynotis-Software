@@ -16,6 +16,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
         private int _referenceMotorSpeed;
         private double _referenceWeight;
+        private int _balancerIterationStep;
+        private List<double> _balancerIterationVibrations;
         private InterfaceVariables _interfaceVariables;
 
         public BalancerParametersViewModel(InterfaceVariables interfaceVariables)
@@ -45,6 +47,31 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 {
                     _interfaceVariables.ReferenceWeight = value;
                     OnPropertyChanged(nameof(ReferenceWeight));
+                }
+            }
+        }
+        public int BalancerIterationStep
+        {
+            get => _balancerIterationStep;
+            set
+            {
+                if (SetProperty(ref _balancerIterationStep, value))
+                {
+                    _interfaceVariables.BalancerIterationStep = value;
+                    OnPropertyChanged(nameof(BalancerIterationStep));
+                }
+            }
+        }
+
+        public List<double> BalancerIterationVibrations
+        {
+            get => _balancerIterationVibrations;
+            set
+            {
+                if (SetProperty(ref _balancerIterationVibrations, value))
+                {
+                    _interfaceVariables.BalancerIterationVibrations = value;
+                    OnPropertyChanged(nameof(BalancerIterationVibrations));
                 }
             }
         }

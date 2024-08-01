@@ -268,6 +268,15 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   Balancer Iteration Vibration Levels benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_BalancerIterationVibrationLevels {
+            get {
+                return ResourceManager.GetString("BalancerPage_BalancerIterationVibrationLevels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Balancing Position benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string BalancerPage_BalancerPosition {

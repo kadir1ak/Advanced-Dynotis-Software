@@ -186,6 +186,9 @@
   <data name="BalancerPage_BalancedPropellersListViewHeader" xml:space="preserve">
     <value>Propellers</value>
   </data>
+  <data name="BalancerPage_BalancerIterationVibrationLevels" xml:space="preserve">
+    <value>Balancer Iteration Vibration Levels</value>
+  </data>
   <data name="BalancerPage_BalancerPosition" xml:space="preserve">
     <value>Balancing Position</value>
   </data>
