@@ -21,6 +21,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         public BalancerParametersViewModel(InterfaceVariables interfaceVariables)
         {
             _interfaceVariables = interfaceVariables;
+            _referenceWeight = 0.05;
         }
         public int ReferenceMotorSpeed
         {

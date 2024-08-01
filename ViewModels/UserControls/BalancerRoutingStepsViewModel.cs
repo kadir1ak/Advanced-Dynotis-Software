@@ -60,7 +60,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             ESCValue = dynotisData.ESCValue;
 
             // Initialize the PID Controller with tuned parameters (Kp, Ki, Kd)
-            _pidController = new PIDController(0.2, 0.01, 0.05, integralMax: 50.0, integralMin: -50.0, alpha: 0.1);
+            _pidController = new PIDController(0.2, 0.01, 0.05);
 
             RunCommand = new RelayCommand(param => Run(), param => IsRunButtonEnabled);
             ApprovalCommand = new RelayCommand(param => Approval(), param => IsApprovalButtonEnabled);
@@ -97,7 +97,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             _progressTimer.Tick += ProgressTimer_Tick;
 
             _pidTimer = new DispatcherTimer();
-            _pidTimer.Interval = TimeSpan.FromMilliseconds(500);
+            _pidTimer.Interval = TimeSpan.FromMilliseconds(50);
             _pidTimer.Tick += PIDTimer_Tick;
 
             _avgTimer = new DispatcherTimer();
@@ -114,6 +114,9 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             }
             else
             {
+                TestTimeCount = 0;
+                MotorReadyTimeCount = 0;
+
                 StatusMessage = Resources.BalancerPage_StatusMessage1;
                 BalancerPage_RunButton = Resources.BalancerPage_RunButton2;
                 ESCStatus = true;
@@ -141,12 +144,13 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     if (TestTimeCount < 100)
                     {
                         StatusMessage = Resources.BalancerPage_StatusMessage3;
-                        BalancerPage_RunButton = Resources.BalancerPage_RunButton3;
                         _avgTimer.Start();
                         TestTimeCount += 5;
                     }
                     else
                     {
+                        BalancerPage_RunButton = Resources.BalancerPage_RunButton3;
+                        IsRunButtonEnabled = true;
                         StatusMessage = "";
                         MotorReadyStatus = false;
                         TestStatus = false;
@@ -196,13 +200,14 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         {
             double speedDifference = Math.Abs(_interfaceVariables.MotorSpeed.Value - _interfaceVariables.ReferenceMotorSpeed);
 
-            if (speedDifference > 50)
+            if (speedDifference > 0)
             {
-                if (speedDifference >= 1000) { smoothTransitionStep = 50; }
-                else if ((speedDifference <= 1000) && (speedDifference > 500)) { smoothTransitionStep = 10; }
-                else if ((speedDifference <= 500) && (speedDifference > 250)) { smoothTransitionStep = 3; }
-                else if ((speedDifference <= 250) && (speedDifference > 100)) { smoothTransitionStep = 2; }
-                else if ((speedDifference <= 100) && (speedDifference > 50)) { smoothTransitionStep = 1; }
+                if (speedDifference >= 500)                                     { smoothTransitionStep = 5; }
+                else if ((speedDifference <= 500) && (speedDifference > 400))   { smoothTransitionStep = 4; }
+                else if ((speedDifference <= 400) && (speedDifference > 300))   { smoothTransitionStep = 3; }
+                else if ((speedDifference <= 300) && (speedDifference > 200))   { smoothTransitionStep = 2; }
+                else if ((speedDifference <= 200) && (speedDifference > 100))   { smoothTransitionStep = 1; }
+                else if ((speedDifference <= 100) && (speedDifference > 50))    { smoothTransitionStep = 0; }
                 else { smoothTransitionStep = 0; }
 
                 if (Math.Abs(currentValue - targetValue) <= smoothTransitionStep)
@@ -243,6 +248,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
         private void Approval()
         {
+            BalancerPage_RunButton = Resources.BalancerPage_RunButton1;
             if (CurrentStepIndex < Steps.Count - 1)
             {
                 CurrentStepIndex++;
@@ -344,7 +350,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     OnPropertyChanged(nameof(StatusMessage));
                 }
             }
-        }        
+        }
         public string BalancerPage_RunButton
         {
             get => _balancerPage_RunButton;
@@ -392,7 +398,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     CommandManager.InvalidateRequerySuggested();
                 }
             }
-        }       
+        }
 
         public bool ESCStatus
         {

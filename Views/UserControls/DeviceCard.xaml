@@ -143,6 +143,13 @@
                     <TextBlock x:Name="WindDirectionUnitLabel" Text="°" Width="40" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
 
+                <!-- Wind Direction -->
+                <StackPanel Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <TextBlock Text="Vibration AVG: " Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Left"/>
+                    <TextBlock Text="{Binding DeviceInterfaceVariables.VibrationAVG, Mode=OneWay, StringFormat={}{0:0.000}}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <TextBlock Text="g" Width="40" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
+                </StackPanel>
+
                 <!-- Record  
                 <StackPanel Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <TextBlock Text="TestMode: " Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>

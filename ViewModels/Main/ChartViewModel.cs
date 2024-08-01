@@ -111,7 +111,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             UpdateSeries(VoltageSeriesCollection, data.Voltage);
             UpdateSeries(ThrustSeriesCollection, data.Thrust.Value);
             UpdateSeries(TorqueSeriesCollection, data.Torque.Value);
-
+            UpdateAVG(data);
             UpdateChartSteps();
         }
 
@@ -158,6 +158,27 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             OnPropertyChanged(nameof(ThrustYAxisStep));
             OnPropertyChanged(nameof(TorqueXAxisStep));
             OnPropertyChanged(nameof(TorqueYAxisStep));
+        }
+        private void UpdateAVG(InterfaceVariables data)
+        {
+            data.VibrationAVG = CalculateAverage(VibrationSeriesCollection);
+            OnPropertyChanged(nameof(data));
+        }
+        public double CalculateAverage(SeriesCollection seriesCollection)
+        {
+            double sum = 0;
+            int count = 0;
+
+            foreach (var series in seriesCollection)
+            {
+                foreach (var value in series.Values)
+                {
+                    sum += (double)value;
+                    count++;
+                }
+            }
+
+            return count > 0 ? sum / count : 0;
         }
 
         private double CalculateXAxisStep(SeriesCollection seriesCollection)

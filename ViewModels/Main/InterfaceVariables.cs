@@ -67,6 +67,7 @@ public class InterfaceVariables : INotifyPropertyChanged
     private double _vibrationY;
     private double _vibrationZ;
     private double _vibration;
+    private double _vibrationAvg;
     public List<double> _highVibrations;
     private double _vibrationmV;
     private Unit _windSpeed;
@@ -201,6 +202,11 @@ public class InterfaceVariables : INotifyPropertyChanged
     {
         get => _vibration;
         set => SetProperty(ref _vibration, value);
+    }    
+    public double VibrationAVG
+    {
+        get => _vibrationAvg;
+        set => SetProperty(ref _vibrationAvg, value);
     }
     public List<double> HighVibrations
     {

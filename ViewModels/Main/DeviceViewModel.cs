@@ -23,7 +23,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         private DynotisData _latestDynotisData;
         private readonly object _dataLock = new();
         private CancellationTokenSource _cancellationTokenSource;
-        private int UpdateTimeMillisecond = 20;
+        private int UpdateTimeMillisecond = 2; // 500 Hz (2ms)
+        private int ChartUpdateTimeMillisecond = 20; // 50 Hz (20ms)
 
         public Dynotis Device
         {
@@ -328,6 +329,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
 
                 InitializeDeviceAsync();
                 Task.Run(() => UpdateDataLoop(_cancellationTokenSource.Token), _cancellationTokenSource.Token);
+                Task.Run(() => UpdateChartLoop(_cancellationTokenSource.Token), _cancellationTokenSource.Token);
             }
         }
 
@@ -354,10 +356,21 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                     await Application.Current.Dispatcher.InvokeAsync(() =>
                     {
                         DeviceInterfaceVariables.UpdateFrom(latestData);
-                        ChartViewModel.UpdateChartData(DeviceInterfaceVariables);
-
                     });
                 }
+            }
+        }
+
+        private async Task UpdateChartLoop(CancellationToken token)
+        {
+            while (!token.IsCancellationRequested)
+            {
+                await Task.Delay(ChartUpdateTimeMillisecond, token);
+
+                await Application.Current.Dispatcher.InvokeAsync(() =>
+                {
+                    ChartViewModel.UpdateChartData(DeviceInterfaceVariables);
+                });
             }
         }
 

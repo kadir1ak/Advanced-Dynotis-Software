@@ -15,7 +15,7 @@ namespace Advanced_Dynotis_Software.Services.Controllers
         private double _previousDerivative;
         private double _alpha; // Smoothing factor for derivative
 
-        public PIDController(double kp, double ki, double kd, double integralMax = 50.0, double integralMin = -50.0, double alpha = 0.1)
+        public PIDController(double kp, double ki, double kd, double integralMax = 50.0, double integralMin = -50.0, double alpha = 0.01)
         {
             Kp = kp;
             Ki = ki;
