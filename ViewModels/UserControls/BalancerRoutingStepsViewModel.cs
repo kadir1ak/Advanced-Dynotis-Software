@@ -49,8 +49,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
         private int smoothTransitionStep;
 
-        private List<double> _vibrationDataBuffer;
-        private List<double> _highVibrations;
+        private List<double> _testVibrationsDataBuffer;
+        private List<double> _testStepsPropellerVibrations;
 
         public BalancerRoutingStepsViewModel(DynotisData dynotisData, InterfaceVariables interfaceVariables)
         {
@@ -79,8 +79,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
             BalancerPage_RunButton = Resources.BalancerPage_RunButton1;
 
-            _vibrationDataBuffer = new List<double>();
-            _highVibrations = new List<double>();
+            _testVibrationsDataBuffer = new List<double>();
+            _testStepsPropellerVibrations = new List<double>();
 
             _currentStepIndex = 0;
             _motorReadyTimeCount = 0;
@@ -150,27 +150,65 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     else
                     {
                         BalancerPage_RunButton = Resources.BalancerPage_RunButton3;
-                        IsRunButtonEnabled = true;
                         StatusMessage = "";
+
+                        IsApprovalButtonEnabled = true;
+                        IsRunButtonEnabled = true;                       
                         MotorReadyStatus = false;
                         TestStatus = false;
-                        ESCStatus = false;
-                        IsApprovalButtonEnabled = true;
+                        ESCStatus = false;                        
                         ESCValue = 800;
+
                         _progressTimer.Stop();
                         _pidTimer.Stop();
-
                         _avgTimer.Stop();
-                        HighVibrations.Add(CalculateAverageOfHighVibrations(VibrationDataBuffer.ToArray()));
-                        VibrationDataBuffer.Clear();
+
+                        TestStepsPropellerVibrations.Add(CalculateHighVibrations(TestVibrationsDataBuffer));
+                        MessageBox.Show(_interfaceVariables.BalancerIterationVibrations.Sum().ToString());
+                        TestVibrationsDataBuffer.Clear();
                     }
                 }
             }
         }
 
+        private double CalculateHighVibrations(List<double> buffer)
+        {
+            // Buffer içerisindeki en yüksek 10 verinin ortalamasını threshold olarak belirle
+            double threshold = CalculateThreshold(buffer);
+
+            double highVibrations = 0;
+            int highVibrationCount = 0;
+
+            // Yüksek titreşim değerlerinin ortalamasını hesapla
+            foreach (double value in buffer)
+            {
+                if (value > threshold)
+                {
+                    highVibrations += value;
+                    highVibrationCount++;
+                }
+            }
+
+            // Eğer yüksek titreşim bulunamazsa, ortalama 0 olacak
+            if (highVibrationCount > 0)
+            {
+                highVibrations /= highVibrationCount;
+            }
+
+            return highVibrations;
+        }
+        private double CalculateThreshold(List<double> buffer)
+        {
+            // En yüksek 10 değeri bul
+            var topValues = buffer.OrderByDescending(x => x).Take(10);
+            // En yüksek 10 değerin ortalamasını hesapla
+            double threshold = topValues.Average();
+            return threshold;
+        }
+
         private void AVGTimer_Tick(object sender, EventArgs e)
         {
-            VibrationDataBuffer.Add(_interfaceVariables.Vibration);
+            TestVibrationsDataBuffer.Add(_interfaceVariables.Vibration);
         }
 
         private void PIDTimer_Tick(object sender, EventArgs e)
@@ -200,14 +238,13 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         {
             double speedDifference = Math.Abs(_interfaceVariables.MotorSpeed.Value - _interfaceVariables.ReferenceMotorSpeed);
 
-            if (speedDifference > 0)
+            if (speedDifference > 50)
             {
-                if (speedDifference >= 500)                                     { smoothTransitionStep = 5; }
-                else if ((speedDifference <= 500) && (speedDifference > 400))   { smoothTransitionStep = 4; }
-                else if ((speedDifference <= 400) && (speedDifference > 300))   { smoothTransitionStep = 3; }
-                else if ((speedDifference <= 300) && (speedDifference > 200))   { smoothTransitionStep = 2; }
-                else if ((speedDifference <= 200) && (speedDifference > 100))   { smoothTransitionStep = 1; }
-                else if ((speedDifference <= 100) && (speedDifference > 50))    { smoothTransitionStep = 0; }
+                if (speedDifference >= 400)                                     { smoothTransitionStep = 5; }
+                else if ((speedDifference <= 400) && (speedDifference > 300))   { smoothTransitionStep = 4; }
+                else if ((speedDifference <= 300) && (speedDifference > 200))   { smoothTransitionStep = 3; }
+                else if ((speedDifference <= 200) && (speedDifference > 100))   { smoothTransitionStep = 2; }
+                else if ((speedDifference <= 100) && (speedDifference > 50))   { smoothTransitionStep = 1; }
                 else { smoothTransitionStep = 0; }
 
                 if (Math.Abs(currentValue - targetValue) <= smoothTransitionStep)
@@ -230,20 +267,6 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 MotorReadyStatus = true;
             }
             return currentValue;
-        }
-
-        public double CalculateAverageOfHighVibrations(double[] vibrationData)
-        {
-            // Genel ortalamayı hesapla
-            double overallAverage = vibrationData.Average();
-
-            // Yüksek gürültü değerlerini belirle (genel ortalamanın %50'sinden fazla olan değerler)
-            var highVibrations = vibrationData.Where(value => value > overallAverage * 1.1);
-
-            // Eğer yüksek gürültü değerleri varsa ortalamasını hesapla, yoksa 0 döner
-            double average = highVibrations.Any() ? highVibrations.Average() : 0;
-
-            return average;
         }
 
         private void Approval()
@@ -426,26 +449,26 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             }
         }
 
-        public List<double> VibrationDataBuffer
+        public List<double> TestVibrationsDataBuffer
         {
-            get => _vibrationDataBuffer;
+            get => _testVibrationsDataBuffer;
             set
             {
-                if (SetProperty(ref _vibrationDataBuffer, value))
+                if (SetProperty(ref _testVibrationsDataBuffer, value))
                 {
-                    OnPropertyChanged(nameof(VibrationDataBuffer));
+                    OnPropertyChanged(nameof(TestVibrationsDataBuffer));
                 }
             }
         }
-        public List<double> HighVibrations
+        public List<double> TestStepsPropellerVibrations
         {
-            get => _highVibrations;
+            get => _testStepsPropellerVibrations;
             set
             {
-                if (SetProperty(ref _highVibrations, value))
+                if (SetProperty(ref _testStepsPropellerVibrations, value))
                 {
-                    _interfaceVariables.HighVibrations = value;
-                    OnPropertyChanged(nameof(HighVibrations));
+                    _interfaceVariables.BalancerIterationVibrations = value;
+                    OnPropertyChanged(nameof(TestStepsPropellerVibrations));
                 }
             }
         }

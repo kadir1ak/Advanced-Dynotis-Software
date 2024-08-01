@@ -23,9 +23,9 @@ public class InterfaceVariables : INotifyPropertyChanged
         _selectedWindSpeedUnitIndex = 0;
         _selectedPressureUnitIndex = 1;
 
-        _highVibrations = new List<double>();
         _balancerIterationStep = 0;
-        
+        _balancerIterationVibrations = new List<double>();
+
         TestMode = "fuzzy";
         IsRecording = false;
         Duration = TimeSpan.Zero;
@@ -67,8 +67,7 @@ public class InterfaceVariables : INotifyPropertyChanged
     private double _vibrationY;
     private double _vibrationZ;
     private double _vibration;
-    private double _vibrationAvg;
-    public List<double> _highVibrations;
+    private double _highVibrationAvg;
     private double _vibrationmV;
     private Unit _windSpeed;
     private double _windDirection;
@@ -110,6 +109,7 @@ public class InterfaceVariables : INotifyPropertyChanged
     private double _balancerWeight;
     private double _balancerPosition;
     private int _balancerIterationStep;
+    private List<double> _balancerIterationVibrations;
     private string _balancedPropellersID;
     private double _balancedPropellersArea;
     private ObservableCollection<DateTime> _balancedPropellersTestDates;
@@ -203,15 +203,10 @@ public class InterfaceVariables : INotifyPropertyChanged
         get => _vibration;
         set => SetProperty(ref _vibration, value);
     }    
-    public double VibrationAVG
+    public double HighVibrationAVG
     {
-        get => _vibrationAvg;
-        set => SetProperty(ref _vibrationAvg, value);
-    }
-    public List<double> HighVibrations
-    {
-        get => _highVibrations;
-        set => SetProperty(ref _highVibrations, value);
+        get => _highVibrationAvg;
+        set => SetProperty(ref _highVibrationAvg, value);
     }
     public double VibrationmV
     {
@@ -478,6 +473,11 @@ public class InterfaceVariables : INotifyPropertyChanged
     {
         get => _balancerIterationStep;
         set => SetProperty(ref _balancerIterationStep, value);
+    }
+    public List<double> BalancerIterationVibrations
+    {
+        get => _balancerIterationVibrations;
+        set => SetProperty(ref _balancerIterationVibrations, value);
     }
 
     public string BalancedPropellersID

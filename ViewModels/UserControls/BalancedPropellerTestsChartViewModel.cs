@@ -16,6 +16,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private ObservableCollection<double> _vibrationLevels;
         private InterfaceVariables _interfaceVariables;
         private SeriesCollection _seriesCollection;
+        public Func<double, string> YFormatter { get; set; }
+
         private string[] _testDatesLabels;
 
         public BalancedPropellerTestsChartViewModel(InterfaceVariables interfaceVariables)
@@ -25,6 +27,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
             // Subscribe to the PropertyChanged event of InterfaceVariables
             _interfaceVariables.PropertyChanged += InterfaceVariables_PropertyChanged;
+
+            YFormatter = value => value.ToString("0.000");
 
             // Initialize properties with current values
             UpdatePropertiesFromInterfaceVariables();

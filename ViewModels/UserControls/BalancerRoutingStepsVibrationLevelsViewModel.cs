@@ -22,27 +22,27 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
             _interfaceVariables.PropertyChanged += InterfaceVariables_PropertyChanged;
 
-            HighVibrations = new List<double>();
+            BalancerIterationVibrations = new List<double>();
             BalancerIterationStep = 0;
 
             VibrationSeriesCollection = new SeriesCollection
-        {
-            new LineSeries
             {
-                Title = "Vibration Levels",
-                Values = new ChartValues<double>(HighVibrations)
-            }
-        };
+                new LineSeries
+                {
+                    Title = "Vibration Levels",
+                    Values = new ChartValues<double>(BalancerIterationVibrations)
+                }
+            };
 
-            XFormatter = value => value.ToString("0.00");
-            YFormatter = value => value.ToString("0");
+            XFormatter = value => value.ToString("0.0");
+            YFormatter = value => value.ToString("0.000");
         }
 
         private void InterfaceVariables_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(InterfaceVariables.HighVibrations))
+            if (e.PropertyName == nameof(InterfaceVariables.BalancerIterationVibrations))
             {
-                HighVibrations = _interfaceVariables.HighVibrations;
+                BalancerIterationVibrations = _interfaceVariables.BalancerIterationVibrations;
                 UpdateVibrationChart();
             }
             else if (e.PropertyName == nameof(InterfaceVariables.BalancerIterationStep))
@@ -52,13 +52,13 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             }
         }
 
-        private List<double> _highVibrations;
-        public List<double> HighVibrations
+        private List<double> _balancerIterationVibrations;
+        public List<double> BalancerIterationVibrations
         {
-            get => _highVibrations;
+            get => _balancerIterationVibrations;
             set
             {
-                if (SetProperty(ref _highVibrations, value))
+                if (SetProperty(ref _balancerIterationVibrations, value))
                 {
                     UpdateVibrationChart();
                 }
@@ -83,7 +83,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 var series = VibrationSeriesCollection[0] as LineSeries;
                 if (series != null)
                 {
-                    series.Values = new ChartValues<double>(HighVibrations);
+                    series.Values = new ChartValues<double>(BalancerIterationVibrations);
                 }
             }
         }
