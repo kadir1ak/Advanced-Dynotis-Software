@@ -28,6 +28,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private ObservableCollection<int> _balancerIterationStepChart;
         private ObservableCollection<double> _balancerIterationVibrationsChart;
 
+        private double _highVibrationAVG;
         private double _testTimeCount;
         private double _motorReadyTimeCount;
         private bool _motorReadyStatus;
@@ -65,7 +66,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             ESCValue = dynotisData.ESCValue;
 
             // Initialize the PID Controller with tuned parameters (Kp, Ki, Kd)
-            _pidController = new PIDController(0.2, 0.01, 0.05);
+            //_pidController = new PIDController(0.2, 0.01, 0.05);
+            _pidController = new PIDController(1.5, 0.03, 0.05);
 
             RunCommand = new RelayCommand(param => Run(), param => IsRunButtonEnabled);
             ApprovalCommand = new RelayCommand(param => Approval(), param => IsApprovalButtonEnabled);
@@ -121,6 +123,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             }
             else
             {
+                TestResult = " ";
                 TestTimeCount = 0;
                 MotorReadyTimeCount = 0;
 
@@ -152,7 +155,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     {
                         StatusMessage = Resources.BalancerPage_StatusMessage3;
                         _avgTimer.Start();
-                        TestTimeCount += 5;
+                        TestTimeCount += 20;
                     }
                     else
                     {
@@ -215,7 +218,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
         private void AVGTimer_Tick(object sender, EventArgs e)
         {
-            TestVibrationsDataBuffer.Add(_interfaceVariables.Vibration);
+            TestVibrationsDataBuffer.Add(_interfaceVariables.Vibration - 0.06);
         }
 
         private void PIDTimer_Tick(object sender, EventArgs e)
@@ -245,14 +248,24 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         {
             double speedDifference = Math.Abs(_interfaceVariables.MotorSpeed.Value - _interfaceVariables.ReferenceMotorSpeed);
 
-            if (speedDifference > 50)
+            if (speedDifference > 10)
             {
+                /*
                 if (speedDifference >= 400)                                     { smoothTransitionStep = 5; }
                 else if ((speedDifference <= 400) && (speedDifference > 300))   { smoothTransitionStep = 4; }
                 else if ((speedDifference <= 300) && (speedDifference > 200))   { smoothTransitionStep = 3; }
                 else if ((speedDifference <= 200) && (speedDifference > 100))   { smoothTransitionStep = 2; }
                 else if ((speedDifference <= 100) && (speedDifference > 50))   { smoothTransitionStep = 1; }
                 else { smoothTransitionStep = 0; }
+
+                */
+                if (speedDifference >= 400) { smoothTransitionStep = 5; }
+                else if ((speedDifference <= 400) && (speedDifference > 300)) { smoothTransitionStep = 4; }
+                else if ((speedDifference <= 300) && (speedDifference > 200)) { smoothTransitionStep = 3; }
+                else if ((speedDifference <= 200) && (speedDifference > 100)) { smoothTransitionStep = 2; }
+                else if ((speedDifference <= 100) && (speedDifference > 10)) { smoothTransitionStep = 1; }
+                else { smoothTransitionStep = 0; }
+
 
                 if (Math.Abs(currentValue - targetValue) <= smoothTransitionStep)
                 {
@@ -268,6 +281,10 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
 
                 MotorReadyStatus = false;
+                if (speedDifference < 80)
+                {
+                    MotorReadyStatus = true;
+                }
             }
             else
             {
@@ -344,6 +361,18 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             }
         }
 
+        public double HighVibrationAVG
+        {
+            get => _highVibrationAVG;
+            set
+            {
+                if (SetProperty(ref _highVibrationAVG, value))
+                {
+                    _interfaceVariables.HighVibrationAVG = value;
+                    OnPropertyChanged(nameof(TestTimeCount));
+                }
+            }
+        }       
         public double TestTimeCount
         {
             get => _testTimeCount;
