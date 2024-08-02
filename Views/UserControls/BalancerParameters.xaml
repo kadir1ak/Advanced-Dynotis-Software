@@ -74,9 +74,9 @@
                       CanUserAddRows="False" CanUserDeleteRows="False" VerticalAlignment="Stretch" 
                       HorizontalAlignment="Stretch" Margin="10" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" 
                       ScrollViewer.HorizontalScrollBarVisibility="Auto" Foreground="{DynamicResource Text}" Background="{DynamicResource Page}">
-            <DataGrid.Columns >
+            <DataGrid.Columns>
                 <DataGridTextColumn Header="Iteration Step" Binding="{Binding IterationStep}" Foreground="{DynamicResource Text}"/>
-                <DataGridTextColumn Header="Vibration" Binding="{Binding Vibrations}"  Foreground="{DynamicResource Text}"/>
+                <DataGridTextColumn Header="Vibration" Binding="{Binding Vibrations}" Foreground="{DynamicResource Text}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
