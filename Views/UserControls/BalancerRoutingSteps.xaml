@@ -83,7 +83,8 @@
         <uc:StatusBar Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Value="{Binding TestTimeCount}" Margin="10 2 10 2"></uc:StatusBar>
 
         <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" Height="28" Content="{Binding StatusMessage}" Margin="0 2 0 2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="DemiBold" Foreground="{DynamicResource Text}"/>
-
+        <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" Height="28" Content="{Binding TestResult}" Margin="0 2 0 2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="DemiBold" Foreground="{DynamicResource Text}"/>
+        
         <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" >
             <icon:PackIconMaterial Kind="ShieldAlert" Foreground="{DynamicResource deviceCardIcon}" Width="20" Height="20" Margin="5 0 0 0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <Label Height="30" Content="{x:Static p:Resources.BalancerPage_WarningMessage}" Margin="5 2 5 2" FontSize="16" FontWeight="DemiBold" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>

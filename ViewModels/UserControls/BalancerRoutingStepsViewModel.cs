@@ -11,6 +11,7 @@ using Advanced_Dynotis_Software.Services.Controllers;
 using Advanced_Dynotis_Software.Services.Helpers;
 using Advanced_Dynotis_Software.Services.Logger;
 using DocumentFormat.OpenXml.Drawing;
+using System.Collections.ObjectModel;
 
 namespace Advanced_Dynotis_Software.ViewModels.UserControls
 {
@@ -24,11 +25,15 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private DispatcherTimer _pidTimer;
         private DispatcherTimer _avgTimer;
 
+        private ObservableCollection<int> _balancerIterationStepChart;
+        private ObservableCollection<double> _balancerIterationVibrationsChart;
+
         private double _testTimeCount;
         private double _motorReadyTimeCount;
         private bool _motorReadyStatus;
         private bool _testReadyStatus;
         private string _statusMessage;
+        private string _testResult;
         private string _balancerPage_RunButton;
 
         public ICommand RunCommand { get; }
@@ -78,9 +83,11 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             };
 
             BalancerPage_RunButton = Resources.BalancerPage_RunButton1;
-
+            TestResult = " ";
             _testVibrationsDataBuffer = new List<double>();
             _testStepsPropellerVibrations = new List<double>();
+            _balancerIterationStepChart = new ObservableCollection<int>();
+            _balancerIterationVibrationsChart = new ObservableCollection<double>();
 
             _currentStepIndex = 0;
             _motorReadyTimeCount = 0;
@@ -164,8 +171,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                         _avgTimer.Stop();
 
                         TestStepsPropellerVibrations.Add(CalculateHighVibrations(TestVibrationsDataBuffer));
-                        MessageBox.Show(_interfaceVariables.BalancerIterationVibrations.Sum().ToString());
-                        TestVibrationsDataBuffer.Clear();
+                        TestResult = "Test Result:" + CalculateHighVibrations(TestVibrationsDataBuffer).ToString("0.000") + "g";
+                    
                     }
                 }
             }
@@ -280,8 +287,15 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 CurrentStepIndex = 0;
             }
-            BalancerIterationStep = CurrentStepIndex;
+            BalancerIterationStepChart.Add(BalancerIterationStep);
+            BalancerIterationVibrationsChart.Add(CalculateHighVibrations(TestVibrationsDataBuffer));
+            TestVibrationsDataBuffer.Clear();
 
+
+            BalancerIterationStep = CurrentStepIndex;
+          
+
+            TestResult = " ";
             IsRunButtonEnabled = true;
             IsApprovalButtonEnabled = false;
             TestTimeCount = 0;
@@ -371,6 +385,17 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 if (SetProperty(ref _statusMessage, value))
                 {
                     OnPropertyChanged(nameof(StatusMessage));
+                }
+            }
+        }     
+        public string TestResult
+        {
+            get => _testResult;
+            set
+            {
+                if (SetProperty(ref _testResult, value))
+                {
+                    OnPropertyChanged(nameof(TestResult));
                 }
             }
         }
@@ -469,6 +494,31 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 {
                     _interfaceVariables.BalancerIterationVibrations = value;
                     OnPropertyChanged(nameof(TestStepsPropellerVibrations));
+                }
+            }
+        }
+                
+        public ObservableCollection<int> BalancerIterationStepChart
+        {
+            get => _balancerIterationStepChart;
+            set
+            {
+                if (SetProperty(ref _balancerIterationStepChart, value))
+                {
+                    _interfaceVariables.BalancerIterationStepChart = value;
+                    OnPropertyChanged(nameof(BalancerIterationStepChart));
+                }
+            }
+        }
+        public ObservableCollection<double> BalancerIterationVibrationsChart
+        {
+            get => _balancerIterationVibrationsChart;
+            set
+            {
+                if (SetProperty(ref _balancerIterationVibrationsChart, value))
+                {
+                    _interfaceVariables.BalancerIterationVibrationsChart = value;
+                    OnPropertyChanged(nameof(BalancerIterationVibrationsChart));
                 }
             }
         }

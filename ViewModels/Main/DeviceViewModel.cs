@@ -138,10 +138,14 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                             if (e.PropertyName == nameof(BalancerRoutingStepsViewModel.BalancerIterationStep) ||
                                 e.PropertyName == nameof(BalancerRoutingStepsViewModel.ESCValue) ||
                                 e.PropertyName == nameof(BalancerRoutingStepsViewModel.ESCStatus) ||
+                                e.PropertyName == nameof(BalancerRoutingStepsViewModel.BalancerIterationStepChart) ||
+                                e.PropertyName == nameof(BalancerRoutingStepsViewModel.BalancerIterationVibrationsChart) ||
                                 e.PropertyName == nameof(BalancerRoutingStepsViewModel.TestStepsPropellerVibrations))
                             {
                                 DeviceInterfaceVariables.BalancerIterationStep = _currentBalancerRoutingSteps.BalancerIterationStep;
                                 DeviceInterfaceVariables.BalancerIterationVibrations = _currentBalancerRoutingSteps.TestStepsPropellerVibrations;
+                                DeviceInterfaceVariables.BalancerIterationStepChart = _currentBalancerRoutingSteps.BalancerIterationStepChart;
+                                DeviceInterfaceVariables.BalancerIterationVibrationsChart = _currentBalancerRoutingSteps.BalancerIterationVibrationsChart;
                                 OnPropertyChanged(nameof(DeviceInterfaceVariables));
 
                                 Device.DynotisData.ESCValue = _currentBalancerRoutingSteps.ESCValue;
@@ -168,13 +172,13 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                         {
                             if (e.PropertyName == nameof(BalancerParametersViewModel.ReferenceMotorSpeed) ||
                                 e.PropertyName == nameof(BalancerParametersViewModel.ReferenceWeight) ||
-                                e.PropertyName == nameof(BalancerParametersViewModel.BalancerIterationStep) ||
-                                e.PropertyName == nameof(BalancerParametersViewModel.BalancerIterationVibrations))
+                                e.PropertyName == nameof(BalancerParametersViewModel.BalancerIterationStepChart) ||
+                                e.PropertyName == nameof(BalancerParametersViewModel.BalancerIterationVibrationsChart))
                             {
                                 DeviceInterfaceVariables.ReferenceMotorSpeed = _currentBalancerParameters.ReferenceMotorSpeed;
                                 DeviceInterfaceVariables.ReferenceWeight = _currentBalancerParameters.ReferenceWeight;
-                                DeviceInterfaceVariables.BalancerIterationStep = _currentBalancerParameters.BalancerIterationStep;
-                                DeviceInterfaceVariables.BalancerIterationVibrations = _currentBalancerParameters.BalancerIterationVibrations;
+                                DeviceInterfaceVariables.BalancerIterationStepChart = _currentBalancerParameters.BalancerIterationStepChart;
+                                DeviceInterfaceVariables.BalancerIterationVibrationsChart = _currentBalancerParameters.BalancerIterationVibrationsChart;
                                 OnPropertyChanged(nameof(DeviceInterfaceVariables));
                             }
                         };
@@ -360,7 +364,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                     await Application.Current.Dispatcher.InvokeAsync(() =>
                     {
                         
-                        DeviceInterfaceVariables.VibrationBuffer.Add(DeviceInterfaceVariables.Vibration);
+                        DeviceInterfaceVariables.VibrationBuffer.Add(Math.Abs(DeviceInterfaceVariables.Vibration));
                         if (DeviceInterfaceVariables.VibrationBuffer.Count > 100) 
                         {
                             DeviceInterfaceVariables.HighVibrationAVG = CalculateHighVibrations(DeviceInterfaceVariables.VibrationBuffer);

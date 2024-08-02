@@ -34,7 +34,7 @@
         </Grid.ColumnDefinitions>
         <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="3 3 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
             <TextBlock FontSize="14" Text="{x:Static p:Resources.BalancerPage_ReferenceValues}" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        </Border>     
+        </Border>
         <Label Grid.Row="1" Grid.Column="0" Content="{x:Static p:Resources.BalancerPage_ReferenceMotorSpeed}" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Left"/>
         <Label Grid.Row="1" Grid.Column="2" Content="{Binding DeviceInterfaceVariables.MotorSpeed.UnitSymbol}" FontSize="14" Foreground="{DynamicResource Text}" HorizontalAlignment="Left"/>
         <!-- Reference Motor Speed TextBox -->
@@ -71,10 +71,9 @@
         </TextBox>
 
         <DataGrid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" ItemsSource="{Binding BalancingIterations}" AutoGenerateColumns="False"
-                      CanUserAddRows="False" CanUserDeleteRows="False" PreviewKeyDown="DataGrid_PreviewKeyDown" VerticalAlignment="Stretch" 
+                      CanUserAddRows="False" CanUserDeleteRows="False" VerticalAlignment="Stretch" 
                       HorizontalAlignment="Stretch" Margin="10" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" 
-                      ScrollViewer.HorizontalScrollBarVisibility="Auto" AlternationCount="{Binding IterationStep.Count}" 
-                      Foreground="#151F2D" Background="{DynamicResource Page}">
+                      ScrollViewer.HorizontalScrollBarVisibility="Auto" Foreground="{DynamicResource Text}" Background="{DynamicResource Page}">
             <DataGrid.Columns >
                 <DataGridTextColumn Header="Iteration Step" Binding="{Binding IterationStep}" Foreground="{DynamicResource Text}"/>
                 <DataGridTextColumn Header="Vibration" Binding="{Binding Vibrations}"  Foreground="{DynamicResource Text}"/>
