@@ -138,12 +138,14 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                             if (e.PropertyName == nameof(BalancerRoutingStepsViewModel.BalancerIterationStep) ||
                                 e.PropertyName == nameof(BalancerRoutingStepsViewModel.ESCValue) ||
                                 e.PropertyName == nameof(BalancerRoutingStepsViewModel.ESCStatus) ||
+                                e.PropertyName == nameof(BalancerRoutingStepsViewModel.HighVibrationAVG) ||
                                 e.PropertyName == nameof(BalancerRoutingStepsViewModel.BalancerIterationStepChart) ||
                                 e.PropertyName == nameof(BalancerRoutingStepsViewModel.BalancerIterationVibrationsChart) ||
                                 e.PropertyName == nameof(BalancerRoutingStepsViewModel.TestStepsPropellerVibrations))
                             {
                                 DeviceInterfaceVariables.BalancerIterationStep = _currentBalancerRoutingSteps.BalancerIterationStep;
                                 DeviceInterfaceVariables.BalancerIterationVibrations = _currentBalancerRoutingSteps.TestStepsPropellerVibrations;
+                                DeviceInterfaceVariables.HighVibrationAVG = _currentBalancerRoutingSteps.HighVibrationAVG;
                                 DeviceInterfaceVariables.BalancerIterationStepChart = _currentBalancerRoutingSteps.BalancerIterationStepChart;
                                 DeviceInterfaceVariables.BalancerIterationVibrationsChart = _currentBalancerRoutingSteps.BalancerIterationVibrationsChart;
                                 OnPropertyChanged(nameof(DeviceInterfaceVariables));

@@ -218,7 +218,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
         private void AVGTimer_Tick(object sender, EventArgs e)
         {
-            TestVibrationsDataBuffer.Add(_interfaceVariables.Vibration - 0.06);
+            TestVibrationsDataBuffer.Add(_interfaceVariables.HighVibrationAVG - 0.06);
         }
 
         private void PIDTimer_Tick(object sender, EventArgs e)
@@ -304,8 +304,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 CurrentStepIndex = 0;
             }
-            BalancerIterationStepChart.Add(BalancerIterationStep);
-            BalancerIterationVibrationsChart.Add(CalculateHighVibrations(TestVibrationsDataBuffer));
+             BalancerIterationVibrationsChart.Add(CalculateHighVibrations(TestVibrationsDataBuffer));
+            BalancerIterationStepChart.Add(BalancerIterationVibrationsChart.Count);
             TestVibrationsDataBuffer.Clear();
 
 
