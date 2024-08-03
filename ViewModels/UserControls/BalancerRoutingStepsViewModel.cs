@@ -12,6 +12,7 @@ using Advanced_Dynotis_Software.Services.Helpers;
 using Advanced_Dynotis_Software.Services.Logger;
 using DocumentFormat.OpenXml.Drawing;
 using System.Collections.ObjectModel;
+using DocumentFormat.OpenXml.Office2016.Excel;
 
 namespace Advanced_Dynotis_Software.ViewModels.UserControls
 {
@@ -41,6 +42,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         public ICommand RunCommand { get; }
         public ICommand ApprovalCommand { get; }
         public ICommand StopCommand { get; }
+        public ICommand NewTestCommand { get; }
 
         private int _balancerIterationStep;
         private int _currentStepIndex;
@@ -73,6 +75,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             RunCommand = new RelayCommand(param => Run(), param => IsRunButtonEnabled);
             ApprovalCommand = new RelayCommand(param => Approval(), param => IsApprovalButtonEnabled);
             StopCommand = new RelayCommand(param => Stop());
+            NewTestCommand = new RelayCommand(param => NewTest());
 
             _steps = new List<string>
             {
@@ -216,22 +219,14 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
             if (speedDifference > 10)
             {
-                /*
+                
                 if (speedDifference >= 400)                                     { smoothTransitionStep = 5; }
                 else if ((speedDifference <= 400) && (speedDifference > 300))   { smoothTransitionStep = 4; }
                 else if ((speedDifference <= 300) && (speedDifference > 200))   { smoothTransitionStep = 3; }
                 else if ((speedDifference <= 200) && (speedDifference > 100))   { smoothTransitionStep = 2; }
-                else if ((speedDifference <= 100) && (speedDifference > 50))   { smoothTransitionStep = 1; }
+                else if ((speedDifference <= 100) && (speedDifference > 50))    { smoothTransitionStep = 1; }
+                else if ((speedDifference <= 50) && (speedDifference > 10))     { smoothTransitionStep = 0; }
                 else { smoothTransitionStep = 0; }
-
-                */
-                if (speedDifference >= 400) { smoothTransitionStep = 5; }
-                else if ((speedDifference <= 400) && (speedDifference > 300)) { smoothTransitionStep = 4; }
-                else if ((speedDifference <= 300) && (speedDifference > 200)) { smoothTransitionStep = 3; }
-                else if ((speedDifference <= 200) && (speedDifference > 100)) { smoothTransitionStep = 2; }
-                else if ((speedDifference <= 100) && (speedDifference > 10)) { smoothTransitionStep = 1; }
-                else { smoothTransitionStep = 0; }
-
 
                 if (Math.Abs(currentValue - targetValue) <= smoothTransitionStep)
                 {
@@ -274,9 +269,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             BalancerIterationStepChart.Add(BalancerIterationVibrationsChart.Count);
             TestVibrationsDataBuffer.Clear();
 
-
             BalancerIterationStep = CurrentStepIndex;
-          
 
             TestResult = " ";
             IsRunButtonEnabled = true;
@@ -287,6 +280,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
         private void Stop()
         {
+            BalancerPage_RunButton = Resources.BalancerPage_RunButton1;
             StatusMessage = "";
             MotorReadyStatus = false;
             TestStatus = false;
@@ -302,6 +296,37 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             MotorReadyTimeCount = 0;
         }
 
+        private void NewTest()
+        {
+            MessageBoxResult result = MessageBox.Show(
+               "Test data will be erased. Are you sure you want to start a new test?",
+               "Confirm New Test",
+               MessageBoxButton.YesNo,
+               MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Yes)
+            {
+                BalancerPage_RunButton = Resources.BalancerPage_RunButton1;
+                StatusMessage = "";
+                TestResult = " ";
+                MotorReadyStatus = false;
+                TestStatus = false;
+                ESCStatus = false;
+                ESCValue = 800;
+                CurrentStepIndex = 0;
+                _progressTimer.Stop();
+                _pidTimer.Stop();
+                _avgTimer.Stop();
+
+                IsRunButtonEnabled = true;
+                IsApprovalButtonEnabled = false;
+                TestTimeCount = 0;
+                MotorReadyTimeCount = 0;
+                TestVibrationsDataBuffer.Clear();
+                BalancerIterationVibrationsChart.Clear();
+                BalancerIterationStepChart.Clear();
+                BalancerIterationStep = 0;
+            }
+        }
         public int CurrentStepIndex
         {
             get => _currentStepIndex;

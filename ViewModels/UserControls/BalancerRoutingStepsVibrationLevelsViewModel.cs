@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using Advanced_Dynotis_Software.Models.Dynotis;
 using Advanced_Dynotis_Software.ViewModels.UserControls;
 using LiveCharts;
+using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 
 namespace Advanced_Dynotis_Software.ViewModels.UserControls
@@ -15,6 +18,9 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private InterfaceVariables _interfaceVariables;
         private DynotisData _dynotisData;
 
+        private int _balancerIterationStep;
+        private ObservableCollection<int> _balancerIterationStepChart;
+        private ObservableCollection<double> _balancerIterationVibrationsChart;
         public BalancerRoutingStepsVibrationLevelsViewModel(DynotisData dynotisData, InterfaceVariables interfaceVariables)
         {
             _interfaceVariables = interfaceVariables;
@@ -22,15 +28,22 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
             _interfaceVariables.PropertyChanged += InterfaceVariables_PropertyChanged;
 
-            BalancerIterationVibrations = new List<double>();
-            BalancerIterationStep = 0;
+            _balancerIterationStep = 0;
+            _balancerIterationStepChart = new ObservableCollection<int>();
+            _balancerIterationVibrationsChart = new ObservableCollection<double>();
+            
 
             VibrationSeriesCollection = new SeriesCollection
             {
                 new LineSeries
                 {
+                    Title = "Vibration 1",
+                    Values = new ChartValues<ObservablePoint>()
+                },
+                new LineSeries
+                {
                     Title = "Vibration Levels",
-                    Values = new ChartValues<double>(BalancerIterationVibrations)
+                    Values = new ChartValues<ObservablePoint>()
                 }
             };
 
@@ -40,36 +53,54 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
         private void InterfaceVariables_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(InterfaceVariables.BalancerIterationVibrations))
-            {
-                BalancerIterationVibrations = _interfaceVariables.BalancerIterationVibrations;
-                UpdateVibrationChart();
-            }
-            else if (e.PropertyName == nameof(InterfaceVariables.BalancerIterationStep))
+            if (e.PropertyName == nameof(InterfaceVariables.BalancerIterationStep) ||
+                e.PropertyName == nameof(InterfaceVariables.BalancerIterationStepChart) ||
+                e.PropertyName == nameof(InterfaceVariables.BalancerIterationVibrationsChart))
             {
                 BalancerIterationStep = _interfaceVariables.BalancerIterationStep;
+                BalancerIterationStepChart = _interfaceVariables.BalancerIterationStepChart;
+                BalancerIterationVibrationsChart = _interfaceVariables.BalancerIterationVibrationsChart;
                 UpdateVibrationChart();
             }
         }
 
-        private List<double> _balancerIterationVibrations;
-        public List<double> BalancerIterationVibrations
+        public ObservableCollection<int> BalancerIterationStepChart
         {
-            get => _balancerIterationVibrations;
+            get => _balancerIterationStepChart;
             set
             {
-                if (SetProperty(ref _balancerIterationVibrations, value))
+                if (SetProperty(ref _balancerIterationStepChart, value))
                 {
+                    OnPropertyChanged(nameof(BalancerIterationStepChart));
                     UpdateVibrationChart();
                 }
             }
         }
 
-        private int _balancerIterationStep;
+        public ObservableCollection<double> BalancerIterationVibrationsChart
+        {
+            get => _balancerIterationVibrationsChart;
+            set
+            {
+                if (SetProperty(ref _balancerIterationVibrationsChart, value))
+                {
+                    OnPropertyChanged(nameof(BalancerIterationVibrationsChart));
+                    UpdateVibrationChart();
+                }
+            }
+        }
+
         public int BalancerIterationStep
         {
             get => _balancerIterationStep;
-            set => SetProperty(ref _balancerIterationStep, value);
+            set
+            {
+                if (SetProperty(ref _balancerIterationStep, value))
+                {
+                    _interfaceVariables.BalancerIterationStep = value;
+                    OnPropertyChanged(nameof(BalancerIterationStep));
+                }
+            }
         }
 
         public SeriesCollection VibrationSeriesCollection { get; set; }
@@ -83,7 +114,15 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 var series = VibrationSeriesCollection[0] as LineSeries;
                 if (series != null)
                 {
-                    series.Values = new ChartValues<double>(BalancerIterationVibrations);
+                    series.Values.Clear();
+
+                    for (int i = 0; i < BalancerIterationStepChart.Count; i++)
+                    {
+                        if (i < BalancerIterationVibrationsChart.Count)
+                        {
+                            series.Values.Add(new ObservablePoint(BalancerIterationStepChart[i], BalancerIterationVibrationsChart[i]));
+                        }
+                    }
                 }
             }
         }
@@ -103,6 +142,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
+
 }
 
 

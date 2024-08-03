@@ -111,9 +111,13 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                     {
                         _currentBalancerRoutingStepsVibrationLevels.PropertyChanged += (sender, e) =>
                         {
-                            if (e.PropertyName == nameof(BalancerRoutingStepsVibrationLevelsViewModel.BalancerIterationVibrations) ||
+                            if (e.PropertyName == nameof(BalancerRoutingStepsVibrationLevelsViewModel.BalancerIterationStepChart) ||
+                                e.PropertyName == nameof(BalancerRoutingStepsVibrationLevelsViewModel.BalancerIterationVibrationsChart) ||
                                 e.PropertyName == nameof(BalancerRoutingStepsVibrationLevelsViewModel.BalancerIterationStep))
                             {
+                                _currentBalancerRoutingStepsVibrationLevels.BalancerIterationStep = DeviceInterfaceVariables.BalancerIterationStep;
+                                _currentBalancerRoutingStepsVibrationLevels.BalancerIterationStepChart = DeviceInterfaceVariables.BalancerIterationStepChart;
+                                _currentBalancerRoutingStepsVibrationLevels.BalancerIterationVibrationsChart = DeviceInterfaceVariables.BalancerIterationVibrationsChart;
                                 OnPropertyChanged(nameof(DeviceInterfaceVariables));
                                 OnPropertyChanged(nameof(Device.DynotisData));
                             }
@@ -180,9 +184,9 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                             {
                                 DeviceInterfaceVariables.ReferenceMotorSpeed = _currentBalancerParameters.ReferenceMotorSpeed;
                                 DeviceInterfaceVariables.ReferenceWeight = _currentBalancerParameters.ReferenceWeight;
-                                DeviceInterfaceVariables.BalancerIterationStep = _currentBalancerParameters.BalancerIterationStep;
-                                DeviceInterfaceVariables.BalancerIterationStepChart = _currentBalancerParameters.BalancerIterationStepChart;
-                                DeviceInterfaceVariables.BalancerIterationVibrationsChart = _currentBalancerParameters.BalancerIterationVibrationsChart;
+                                _currentBalancerParameters.BalancerIterationStep = DeviceInterfaceVariables.BalancerIterationStep;
+                                _currentBalancerParameters.BalancerIterationStepChart = DeviceInterfaceVariables.BalancerIterationStepChart;
+                                _currentBalancerParameters.BalancerIterationVibrationsChart = DeviceInterfaceVariables.BalancerIterationVibrationsChart;
                                 OnPropertyChanged(nameof(DeviceInterfaceVariables));
                             }
                         };

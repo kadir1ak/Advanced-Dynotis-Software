@@ -291,6 +291,9 @@
   <data name="BalancerPage_MotorSpeed" xml:space="preserve">
     <value>Motor Speed</value>
   </data>
+  <data name="BalancerPage_NewTestButton" xml:space="preserve">
+    <value>New Test</value>
+  </data>
   <data name="BalancerPage_Noise" xml:space="preserve">
     <value>Noise (g)</value>
   </data>

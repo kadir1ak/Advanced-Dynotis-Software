@@ -583,6 +583,15 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   New Test benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_NewTestButton {
+            get {
+                return ResourceManager.GetString("BalancerPage_NewTestButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Noise (g) benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string BalancerPage_Noise {

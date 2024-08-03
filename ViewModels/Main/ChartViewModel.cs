@@ -14,6 +14,10 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
     public class ChartViewModel : INotifyPropertyChanged
     {
         public SeriesCollection VibrationSeriesCollection { get; private set; }
+        public SeriesCollection VibrationXSeriesCollection { get; private set; }
+        public SeriesCollection VibrationYSeriesCollection { get; private set; }
+        public SeriesCollection VibrationZSeriesCollection { get; private set; }
+        public SeriesCollection VibrationHighSeriesCollection { get; private set; }
         public SeriesCollection MotorSpeedSeriesCollection { get; private set; }
         public SeriesCollection VoltageSeriesCollection { get; private set; }
         public SeriesCollection CurrentSeriesCollection { get; private set; }
@@ -29,7 +33,15 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         public Func<double, string> VoltageYAxisFormatter { get; private set; }  
 
         public Func<double, string> VibrationXAxisFormatter { get; private set; }
-        public Func<double, string> VibrationYAxisFormatter { get; private set; } 
+        public Func<double, string> VibrationYAxisFormatter { get; private set; }  
+        public Func<double, string> VibrationXXAxisFormatter { get; private set; }
+        public Func<double, string> VibrationXYAxisFormatter { get; private set; }  
+        public Func<double, string> VibrationYXAxisFormatter { get; private set; }
+        public Func<double, string> VibrationYYAxisFormatter { get; private set; } 
+        public Func<double, string> VibrationZXAxisFormatter { get; private set; }
+        public Func<double, string> VibrationZYAxisFormatter { get; private set; }  
+        public Func<double, string> VibrationHighXAxisFormatter { get; private set; }
+        public Func<double, string> VibrationHighYAxisFormatter { get; private set; } 
 
         public Func<double, string> MotorSpeedXAxisFormatter { get; private set; }
         public Func<double, string> MotorSpeedYAxisFormatter { get; private set; } 
@@ -48,6 +60,14 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
 
         public double VibrationYAxisMin { get; private set; }
         public double VibrationYAxisMax { get; private set; }
+        public double VibrationXYAxisMin { get; private set; }
+        public double VibrationXYAxisMax { get; private set; }
+        public double VibrationYYAxisMin { get; private set; }
+        public double VibrationYYAxisMax { get; private set; }
+        public double VibrationZYAxisMin { get; private set; }
+        public double VibrationZYAxisMax { get; private set; }
+        public double VibrationHighYAxisMin { get; private set; }
+        public double VibrationHighYAxisMax { get; private set; }
 
         public double MotorSpeedYAxisMin { get; private set; }
         public double MotorSpeedYAxisMax { get; private set; }
@@ -64,6 +84,14 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         public double VoltageYAxisStep { get; private set; }
         public double VibrationXAxisStep { get; private set; }
         public double VibrationYAxisStep { get; private set; }
+        public double VibrationXXAxisStep { get; private set; }
+        public double VibrationXYAxisStep { get; private set; }
+        public double VibrationYXAxisStep { get; private set; }
+        public double VibrationYYAxisStep { get; private set; }
+        public double VibrationZXAxisStep { get; private set; }
+        public double VibrationZYAxisStep { get; private set; }
+        public double VibrationHighXAxisStep { get; private set; }
+        public double VibrationHighYAxisStep { get; private set; }
         public double MotorSpeedXAxisStep { get; private set; }
         public double MotorSpeedYAxisStep { get; private set; }
         public double ThrustXAxisStep { get; private set; }
@@ -84,6 +112,10 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         private void InitializeCharts()
         {
             VibrationSeriesCollection = CreateSeriesCollection("Vibration", Colors.IndianRed);
+            VibrationXSeriesCollection = CreateSeriesCollection("VibrationX", Colors.IndianRed);
+            VibrationYSeriesCollection = CreateSeriesCollection("VibrationY", Colors.IndianRed);
+            VibrationZSeriesCollection = CreateSeriesCollection("VibrationZ", Colors.IndianRed);
+            VibrationHighSeriesCollection = CreateSeriesCollection("VibrationHigh", Colors.IndianRed);
             CurrentSeriesCollection = CreateSeriesCollection("Current", Colors.DarkOliveGreen);
             MotorSpeedSeriesCollection = CreateSeriesCollection("Motor Speed", Colors.PaleVioletRed);
             VoltageSeriesCollection = CreateSeriesCollection("Voltage", Colors.Orange);
@@ -119,6 +151,10 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             {
                 TimeLabels.Add(i.ToString());
                 UpdateSeries(VibrationSeriesCollection, defaultValue);
+                UpdateSeries(VibrationXSeriesCollection, defaultValue);
+                UpdateSeries(VibrationYSeriesCollection, defaultValue);
+                UpdateSeries(VibrationZSeriesCollection, defaultValue);
+                UpdateSeries(VibrationHighSeriesCollection, defaultValue);
                 UpdateSeries(CurrentSeriesCollection, defaultValue);
                 UpdateSeries(MotorSpeedSeriesCollection, defaultValue);
                 UpdateSeries(VoltageSeriesCollection, defaultValue);
@@ -157,6 +193,10 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             }
             TimeLabels.Add(data.Time.ToString());
             UpdateSeries(VibrationSeriesCollection, data.Vibration);
+            UpdateSeries(VibrationXSeriesCollection, data.VibrationX);
+            UpdateSeries(VibrationYSeriesCollection, data.VibrationY);
+            UpdateSeries(VibrationZSeriesCollection, data.VibrationZ);
+            UpdateSeries(VibrationHighSeriesCollection, data.HighVibration);
             UpdateSeries(CurrentSeriesCollection, data.Current);
             UpdateSeries(MotorSpeedSeriesCollection, data.MotorSpeed.Value);
             UpdateSeries(VoltageSeriesCollection, data.Voltage);
