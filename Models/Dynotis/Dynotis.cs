@@ -302,11 +302,21 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                                 newData.TareTorqueValue = currentData.TareTorqueValue;
                                 newData.TareCurrentValue = currentData.TareCurrentValue;
                                 newData.TareMotorSpeedValue = currentData.TareMotorSpeedValue;
+                                newData.HighVibration = currentData.HighVibration;
+                                newData.DareVibration = currentData.DareVibration;
+                                newData.VibrationBuffer = currentData.VibrationBuffer;
 
                                 DynotisData = newData;
 
-                                //DynotisData.Vibration =  Math.Sqrt(Math.Pow(newData.VibrationX, 2) + Math.Pow(newData.VibrationY, 2) + Math.Pow(newData.VibrationZ, 2));
-                                DynotisData.Vibration = Math.Sqrt(Math.Pow(newData.VibrationY, 2) + Math.Pow(newData.VibrationY, 2)); 
+                                DynotisData.Vibration = Math.Sqrt(Math.Pow(newData.VibrationY, 2));
+
+                                DynotisData.VibrationBuffer.Add(DynotisData.Vibration);
+                                if (DynotisData.VibrationBuffer.Count > 100)
+                                {
+                                    DynotisData.HighVibration = CalculateHighVibrations(DynotisData.VibrationBuffer);
+                                    DynotisData.VibrationBuffer.Clear();
+                                }
+
                                 DynotisData.Power = newData.Current * newData.Voltage;
                                 DynotisData.WindDirection = 275 * newData.Voltage;
                                 DynotisData.AirDensity = 10.0 * newData.Voltage;
@@ -369,6 +379,16 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
             // Eğer '.' karakteri başarısız olursa, ',' karakteri ile deneme yapıyoruz.
             return double.TryParse(value.Replace('.', ','), out result);
+        }
+        private double CalculateHighVibrations(List<double> buffer)
+        {
+            // Buffer'ı sırala ve en büyük 10 değeri al
+            var topValues = buffer.OrderByDescending(x => x).Take(10);
+
+            // En büyük 10 değerin ortalamasını hesapla
+            double highVibrations = topValues.Average();
+
+            return highVibrations;
         }
 
         public void OnPropertyChanged([CallerMemberName] string propertyName = null)

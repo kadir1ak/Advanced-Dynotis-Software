@@ -209,12 +209,7 @@ public class InterfaceVariables : INotifyPropertyChanged
         get => _vibration;
         set => SetProperty(ref _vibration, value);
     }
-    public List<double> VibrationBuffer
-    {
-        get => _vibrationBuffer;
-        set => SetProperty(ref _vibrationBuffer, value);
-    }
-    public double HighVibrationAVG
+    public double HighVibration
     {
         get => _highVibrationAvg;
         set => SetProperty(ref _highVibrationAvg, value);
@@ -540,6 +535,7 @@ public class InterfaceVariables : INotifyPropertyChanged
         VibrationY = data.VibrationY;
         VibrationZ = data.VibrationZ;
         Vibration = data.Vibration;
+        HighVibration = data.HighVibration;
         VibrationmV = data.Vibration*1/128;
         WindSpeed = WindSpeedUnitSet(WindSpeed.Value, WindSpeed.UnitName, WindSpeed.UnitSymbol, data.WindSpeed.Value, data.WindSpeed.UnitName, data.WindSpeed.UnitSymbol);
         WindDirection = data.WindDirection;
@@ -562,7 +558,6 @@ public class InterfaceVariables : INotifyPropertyChanged
         SelectedTemperatureUnitIndex = InterfaceVariables.Instance.SelectedTemperatureUnitIndex;
         SelectedWindSpeedUnitIndex = InterfaceVariables.Instance.SelectedWindSpeedUnitIndex;
         SelectedPressureUnitIndex = InterfaceVariables.Instance.SelectedPressureUnitIndex;
-
     }
     public Unit ThrustTareSet(Unit data)
     {

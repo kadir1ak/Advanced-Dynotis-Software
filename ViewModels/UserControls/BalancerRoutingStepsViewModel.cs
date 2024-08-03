@@ -28,7 +28,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private ObservableCollection<int> _balancerIterationStepChart;
         private ObservableCollection<double> _balancerIterationVibrationsChart;
 
-        private double _highVibrationAVG;
+        private double _highVibration;
+        private double _dareVibration;
         private double _testTimeCount;
         private double _motorReadyTimeCount;
         private bool _motorReadyStatus;
@@ -173,52 +174,17 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                         _pidTimer.Stop();
                         _avgTimer.Stop();
 
-                        TestStepsPropellerVibrations.Add(CalculateHighVibrations(TestVibrationsDataBuffer));
-                        TestResult = "Test Result:" + CalculateHighVibrations(TestVibrationsDataBuffer).ToString("0.000") + "g";
+                        TestStepsPropellerVibrations.Add(TestVibrationsDataBuffer.Average());
+                        TestResult = "Test Result:" + TestVibrationsDataBuffer.Average().ToString("0.000") + "g";
                     
                     }
                 }
             }
         }
 
-        private double CalculateHighVibrations(List<double> buffer)
-        {
-            // Buffer içerisindeki en yüksek 10 verinin ortalamasını threshold olarak belirle
-            double threshold = CalculateThreshold(buffer);
-
-            double highVibrations = 0;
-            int highVibrationCount = 0;
-
-            // Yüksek titreşim değerlerinin ortalamasını hesapla
-            foreach (double value in buffer)
-            {
-                if (value > threshold)
-                {
-                    highVibrations += value;
-                    highVibrationCount++;
-                }
-            }
-
-            // Eğer yüksek titreşim bulunamazsa, ortalama 0 olacak
-            if (highVibrationCount > 0)
-            {
-                highVibrations /= highVibrationCount;
-            }
-
-            return highVibrations;
-        }
-        private double CalculateThreshold(List<double> buffer)
-        {
-            // En yüksek 10 değeri bul
-            var topValues = buffer.OrderByDescending(x => x).Take(10);
-            // En yüksek 10 değerin ortalamasını hesapla
-            double threshold = topValues.Average();
-            return threshold;
-        }
-
         private void AVGTimer_Tick(object sender, EventArgs e)
         {
-            TestVibrationsDataBuffer.Add(_interfaceVariables.HighVibrationAVG - 0.06);
+            TestVibrationsDataBuffer.Add(HighVibration - DareVibration);
         }
 
         private void PIDTimer_Tick(object sender, EventArgs e)
@@ -304,7 +270,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 CurrentStepIndex = 0;
             }
-             BalancerIterationVibrationsChart.Add(CalculateHighVibrations(TestVibrationsDataBuffer));
+            BalancerIterationVibrationsChart.Add(TestVibrationsDataBuffer.Average());
             BalancerIterationStepChart.Add(BalancerIterationVibrationsChart.Count);
             TestVibrationsDataBuffer.Clear();
 
@@ -361,18 +327,29 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             }
         }
 
-        public double HighVibrationAVG
+        public double HighVibration
         {
-            get => _highVibrationAVG;
+            get => _highVibration;
             set
             {
-                if (SetProperty(ref _highVibrationAVG, value))
+                if (SetProperty(ref _highVibration, value))
                 {
-                    _interfaceVariables.HighVibrationAVG = value;
-                    OnPropertyChanged(nameof(TestTimeCount));
+                    OnPropertyChanged(nameof(HighVibration));
                 }
             }
         }       
+        public double DareVibration
+        {
+            get => _dareVibration;
+            set
+            {
+                if (SetProperty(ref _dareVibration, value))
+                {
+                    OnPropertyChanged(nameof(DareVibration));
+                }
+            }
+        }
+        
         public double TestTimeCount
         {
             get => _testTimeCount;
@@ -384,6 +361,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
+
         public double MotorReadyTimeCount
         {
             get => _motorReadyTimeCount;

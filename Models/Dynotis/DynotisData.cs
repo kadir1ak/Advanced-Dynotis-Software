@@ -19,6 +19,11 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             }
         }
 
+        public DynotisData()
+        {
+            _vibrationBuffer = new List<double>();
+        }
+
         private double _time;
         private double _sampleRate;
         private Unit _ambientTemp;
@@ -36,6 +41,9 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         private double _vibrationY;
         private double _vibrationZ;
         private double _vibration;
+        private double _highVibration;
+        private double _dareVibration;
+        private List<double> _vibrationBuffer;
         private Unit _windSpeed;
         private double _windDirection;
         private double _airDensity;
@@ -178,6 +186,21 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         {
             get => _vibration;
             set => SetProperty(ref _vibration, value);
+        }
+        public double HighVibration
+        {
+            get => _highVibration;
+            set => SetProperty(ref _highVibration, value);
+        }      
+        public double DareVibration
+        {
+            get => _dareVibration;
+            set => SetProperty(ref _dareVibration, value);
+        }
+        public List<double> VibrationBuffer
+        {
+            get => _vibrationBuffer;
+            set => SetProperty(ref _vibrationBuffer, value);
         }
 
         public Unit WindSpeed
