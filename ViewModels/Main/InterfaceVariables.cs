@@ -25,7 +25,6 @@ public class InterfaceVariables : INotifyPropertyChanged
 
         _balancerIterationStep = 0;
         _balancerIterationVibrations = new List<double>();
-        _vibrationBuffer = new List<double>();
         _balancerIterationStepChart = new ObservableCollection<int>();
         _balancerIterationVibrationsChart = new ObservableCollection<double>();
 
@@ -69,9 +68,9 @@ public class InterfaceVariables : INotifyPropertyChanged
     private double _vibrationX;
     private double _vibrationY;
     private double _vibrationZ;
+    private double _highVibration;
+    private double _dareVibration;
     private double _vibration;
-    private List<double> _vibrationBuffer;
-    private double _highVibrationAvg;
     private double _vibrationmV;
     private Unit _windSpeed;
     private double _windDirection;
@@ -211,8 +210,13 @@ public class InterfaceVariables : INotifyPropertyChanged
     }
     public double HighVibration
     {
-        get => _highVibrationAvg;
-        set => SetProperty(ref _highVibrationAvg, value);
+        get => _highVibration;
+        set => SetProperty(ref _highVibration, value);
+    }    
+    public double DareVibration
+    {
+        get => _dareVibration;
+        set => SetProperty(ref _dareVibration, value);
     }
     public double VibrationmV
     {
@@ -536,6 +540,7 @@ public class InterfaceVariables : INotifyPropertyChanged
         VibrationZ = data.VibrationZ;
         Vibration = data.Vibration;
         HighVibration = data.HighVibration;
+        DareVibration = data.DareVibration;
         VibrationmV = data.Vibration*1/128;
         WindSpeed = WindSpeedUnitSet(WindSpeed.Value, WindSpeed.UnitName, WindSpeed.UnitSymbol, data.WindSpeed.Value, data.WindSpeed.UnitName, data.WindSpeed.UnitSymbol);
         WindDirection = data.WindDirection;

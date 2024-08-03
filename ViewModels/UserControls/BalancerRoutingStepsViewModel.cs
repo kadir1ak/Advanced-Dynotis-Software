@@ -65,6 +65,9 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         {
             _interfaceVariables = interfaceVariables;
             _dynotisData = dynotisData;
+            // Subscribe to the PropertyChanged event of InterfaceVariables
+            _interfaceVariables.PropertyChanged += InterfaceVariables_PropertyChanged;
+
             ESCStatus = dynotisData.ESCStatus;
             ESCValue = dynotisData.ESCValue;
 
@@ -90,8 +93,10 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
             BalancerPage_RunButton = Resources.BalancerPage_RunButton1;
             TestResult = " ";
+
             _testVibrationsDataBuffer = new List<double>();
             _testStepsPropellerVibrations = new List<double>();
+
             _balancerIterationStepChart = new ObservableCollection<int>();
             _balancerIterationVibrationsChart = new ObservableCollection<double>();
 
@@ -117,6 +122,14 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             _avgTimer.Interval = TimeSpan.FromMilliseconds(1);
             _avgTimer.Tick += AVGTimer_Tick;
 
+        }
+
+        private void InterfaceVariables_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(_interfaceVariables.HighVibration))
+            {
+                HighVibration = _interfaceVariables.HighVibration;
+            }
         }
 
         private void Run()
@@ -151,14 +164,17 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 if (MotorReadyTimeCount < 100)
                 {
                     StatusMessage = Resources.BalancerPage_StatusMessage2;
-                    MotorReadyTimeCount += 20;
+                    MotorReadyTimeCount += 10;
                 }
                 else
                 {
                     if (TestTimeCount < 100)
                     {
                         StatusMessage = Resources.BalancerPage_StatusMessage3;
-                        _avgTimer.Start();
+                        if (_avgTimer.IsEnabled == false)
+                        {
+                            _avgTimer.Start();
+                        }                     
                         TestTimeCount += 20;
                     }
                     else
@@ -173,12 +189,13 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                         ESCStatus = false;                        
                         ESCValue = 800;
 
+                        _avgTimer.Stop();
                         _progressTimer.Stop();
                         _pidTimer.Stop();
-                        _avgTimer.Stop();
+                       
 
                         TestStepsPropellerVibrations.Add(TestVibrationsDataBuffer.Average());
-                        TestResult = "Test Result:" + TestVibrationsDataBuffer.Average().ToString("0.000") + "g";
+                        TestResult = "Test Result: " + TestVibrationsDataBuffer.Average().ToString("0.000") + " g";
                     
                     }
                 }
@@ -187,7 +204,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
         private void AVGTimer_Tick(object sender, EventArgs e)
         {
-            TestVibrationsDataBuffer.Add(HighVibration - DareVibration);
+            TestVibrationsDataBuffer.Add(HighVibration); // - DareVibration);
         }
 
         private void PIDTimer_Tick(object sender, EventArgs e)
@@ -351,29 +368,6 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
-
-        public double HighVibration
-        {
-            get => _highVibration;
-            set
-            {
-                if (SetProperty(ref _highVibration, value))
-                {
-                    OnPropertyChanged(nameof(HighVibration));
-                }
-            }
-        }       
-        public double DareVibration
-        {
-            get => _dareVibration;
-            set
-            {
-                if (SetProperty(ref _dareVibration, value))
-                {
-                    OnPropertyChanged(nameof(DareVibration));
-                }
-            }
-        }
         
         public double TestTimeCount
         {
@@ -505,15 +499,39 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
-
+        public double HighVibration
+        {
+            get => _highVibration;
+            set
+            {
+                if (_highVibration != value)
+                {
+                    _highVibration = value;
+                    OnPropertyChanged(nameof(HighVibration));
+                }
+            }
+        }
+        public double DareVibration
+        {
+            get => _dareVibration;
+            set
+            {
+                if (SetProperty(ref _dareVibration, value))
+                {
+                    _dareVibration = value;
+                    OnPropertyChanged(nameof(DareVibration));
+                }
+            }
+        }
         public List<double> TestVibrationsDataBuffer
         {
             get => _testVibrationsDataBuffer;
             set
             {
-                if (SetProperty(ref _testVibrationsDataBuffer, value))
+                if (_testVibrationsDataBuffer != value)
                 {
-                    OnPropertyChanged(nameof(TestVibrationsDataBuffer));
+                    _testVibrationsDataBuffer = value;
+                    OnPropertyChanged(nameof(TestVibrationsDataBuffer)); ;
                 }
             }
         }

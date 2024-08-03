@@ -297,7 +297,7 @@
                                                 <lvc:AngularGauge Grid.Row="1" Height="150" Width="150" Margin="5 5 0 30"
                                                         Value="{Binding DeviceInterfaceVariables.MotorSpeed.Value}"                
                                                         FromValue="0"
-                                                        ToValue="3000"
+                                                        ToValue="4000"
                                                         TicksStep="100"
                                                         LabelsStep="500"
                                                                     FontSize="10"

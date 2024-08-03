@@ -27,9 +27,9 @@
                     </lvc:Axis>
                 </lvc:CartesianChart.AxisX>
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="{x:Static p:Resources.BalancerPage_VibrationLevelsChart}" Foreground="{DynamicResource Text}" LabelFormatter="{Binding YFormatter}">
+                    <lvc:Axis Title="{x:Static p:Resources.BalancerPage_VibrationLevelsChart}" MinValue="0" Foreground="{DynamicResource Text}" LabelFormatter="{Binding YFormatter}">
                         <lvc:Axis.Separator>
-                            <lvc:Separator Stroke="{DynamicResource Text}" StrokeThickness="0.5" />
+                            <lvc:Separator Stroke="{DynamicResource Text}" StrokeThickness="0.5"/>
                         </lvc:Axis.Separator>
                     </lvc:Axis>
                 </lvc:CartesianChart.AxisY>

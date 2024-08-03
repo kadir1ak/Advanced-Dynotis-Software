@@ -40,7 +40,7 @@
         <!-- Reference Motor Speed TextBox -->
         <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource NumericTextBoxIntStyle}" 
              Text="{Binding ReferenceMotorSpeed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-             FontSize="14" Height="Auto" Width="100" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1.5">
+             FontSize="14" Height="Auto" Width="60" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1.5">
             <TextBox.ToolTip>
                 <ToolTip>
                     <ToolTip.Resources>
@@ -57,7 +57,7 @@
         <!-- Reference Weight TextBox -->
         <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource NumericTextBoxDoubleStyle}" 
              Text="{Binding ReferenceWeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.000}}" 
-             FontSize="14" Height="Auto" Width="100" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1.5">
+             FontSize="14" Height="Auto" Width="60" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1.5">
             <TextBox.ToolTip>
                 <ToolTip>
                     <ToolTip.Resources>
@@ -72,11 +72,18 @@
         <ScrollViewer Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <DataGrid ItemsSource="{Binding BalancingIterations}" AutoGenerateColumns="False"
                       CanUserAddRows="False" CanUserDeleteRows="False" VerticalAlignment="Stretch" Height="200"
-                      HorizontalAlignment="Stretch" Margin="10" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                      HorizontalAlignment="Stretch" Margin="5" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" 
                       ScrollViewer.HorizontalScrollBarVisibility="Auto" Foreground="{DynamicResource Text}" Background="{DynamicResource Page}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Iteration Step" Binding="{Binding IterationStep}" Foreground="{DynamicResource Text}"/>
-                    <DataGridTextColumn Header="Vibration" Binding="{Binding Vibrations}" Foreground="{DynamicResource Text}"/>
+                    <DataGridTextColumn Header="Vibration" Binding="{Binding Vibrations, StringFormat={}{0:0.000}}" Foreground="{DynamicResource Text}"/>
+                    <DataGridTextColumn Header="Unit" Foreground="{DynamicResource Text}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Text" Value="g"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </ScrollViewer>

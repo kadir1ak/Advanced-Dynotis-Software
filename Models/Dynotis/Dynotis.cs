@@ -311,7 +311,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                                 DynotisData.Vibration = Math.Sqrt(Math.Pow(newData.VibrationY, 2));
 
                                 DynotisData.VibrationBuffer.Add(DynotisData.Vibration);
-                                if (DynotisData.VibrationBuffer.Count > 100)
+                                if (DynotisData.VibrationBuffer.Count > 250)
                                 {
                                     DynotisData.HighVibration = CalculateHighVibrations(DynotisData.VibrationBuffer);
                                     DynotisData.VibrationBuffer.Clear();

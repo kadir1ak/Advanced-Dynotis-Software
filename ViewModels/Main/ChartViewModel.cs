@@ -96,7 +96,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         public double TorqueYAxisStep { get; private set; }
 
         
-        private int seriesBufferSize = 100;
+        private int seriesBufferSize = 200;
 
         const double defaultValue = 100;
 

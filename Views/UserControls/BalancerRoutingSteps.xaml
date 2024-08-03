@@ -84,7 +84,7 @@
             </Grid.ColumnDefinitions>
             <uc:GeneralButton Grid.Column="0" Margin="2" Icon="RepeatSolid" Text="{Binding BalancerPage_RunButton}" Command="{Binding RunCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Center" IsEnabled="{Binding IsRunButtonEnabled}" />
             <uc:GeneralButton Grid.Column="1" Margin="2" Icon="CheckToSlotSolid" Text="{x:Static p:Resources.BalancerPage_ApprovalButton}" Command="{Binding ApprovalCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Center" IsEnabled="{Binding IsApprovalButtonEnabled}" />
-            <uc:GeneralButton Grid.Column="2" Margin="2" Icon="BullseyeSolid" Text="{x:Static p:Resources.BalancerPage_StopButton}" Command="{Binding StopCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+            <uc:GeneralButton Grid.Column="2" Margin="2" Icon="CircleStopRegular" Text="{x:Static p:Resources.BalancerPage_StopButton}" Command="{Binding StopCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
             <uc:GeneralButton Grid.Column="3" Margin="2" Icon="PlusSolid" Text="{x:Static p:Resources.BalancerPage_NewTestButton}" Command="{Binding NewTestCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
         </Grid>
 
