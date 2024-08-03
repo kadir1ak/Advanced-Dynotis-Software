@@ -441,6 +441,9 @@
   <data name="DeviceCard_Current" xml:space="preserve">
     <value>Current</value>
   </data>
+  <data name="DeviceCard_HighVibration" xml:space="preserve">
+    <value>High Vibration</value>
+  </data>
   <data name="DeviceCard_MotorSpeed" xml:space="preserve">
     <value>Motor Speed</value>
   </data>
@@ -465,11 +468,20 @@
   <data name="DeviceCard_VibrationX" xml:space="preserve">
     <value>X</value>
   </data>
+  <data name="DeviceCard_VibrationXAxis" xml:space="preserve">
+    <value>Vibration X Axis</value>
+  </data>
   <data name="DeviceCard_VibrationY" xml:space="preserve">
     <value>Y</value>
   </data>
+  <data name="DeviceCard_VibrationYAxis" xml:space="preserve">
+    <value>Vibration Y Axis</value>
+  </data>
   <data name="DeviceCard_VibrationZ" xml:space="preserve">
     <value>Z</value>
+  </data>
+  <data name="DeviceCard_VibrationZAxis" xml:space="preserve">
+    <value>Vibration Z Axis</value>
   </data>
   <data name="DeviceCard_Voltage" xml:space="preserve">
     <value>Voltage</value>

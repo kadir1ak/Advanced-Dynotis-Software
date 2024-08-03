@@ -37,11 +37,6 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 new LineSeries
                 {
-                    Title = "Vibration 1",
-                    Values = new ChartValues<ObservablePoint>()
-                },
-                new LineSeries
-                {
                     Title = "Vibration Levels",
                     Values = new ChartValues<ObservablePoint>()
                 }

@@ -1033,6 +1033,15 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   High Vibration benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceCard_HighVibration {
+            get {
+                return ResourceManager.GetString("DeviceCard_HighVibration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Motor Speed benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string DeviceCard_MotorSpeed {
@@ -1105,6 +1114,15 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   Vibration X Axis benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceCard_VibrationXAxis {
+            get {
+                return ResourceManager.GetString("DeviceCard_VibrationXAxis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Y benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string DeviceCard_VibrationY {
@@ -1114,11 +1132,29 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   Vibration Y Axis benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceCard_VibrationYAxis {
+            get {
+                return ResourceManager.GetString("DeviceCard_VibrationYAxis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Z benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string DeviceCard_VibrationZ {
             get {
                 return ResourceManager.GetString("DeviceCard_VibrationZ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vibration Z Axis benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceCard_VibrationZAxis {
+            get {
+                return ResourceManager.GetString("DeviceCard_VibrationZAxis", resourceCulture);
             }
         }
         
