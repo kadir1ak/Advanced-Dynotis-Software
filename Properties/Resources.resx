@@ -369,6 +369,9 @@
   <data name="BalancerPage_StopButton" xml:space="preserve">
     <value>Test Stop</value>
   </data>
+  <data name="BalancerPage_TareButton" xml:space="preserve">
+    <value>Vibration Tare</value>
+  </data>
   <data name="BalancerPage_Tests" xml:space="preserve">
     <value>Tests</value>
   </data>

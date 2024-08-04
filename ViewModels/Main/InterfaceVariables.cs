@@ -69,7 +69,10 @@ public class InterfaceVariables : INotifyPropertyChanged
     private double _vibrationY;
     private double _vibrationZ;
     private double _highVibration;
-    private double _dareVibration;
+    private double _tareVibration;
+    private double _tareVibrationX;
+    private double _tareVibrationY;
+    private double _tareVibrationZ;
     private double _vibration;
     private double _vibrationmV;
     private Unit _windSpeed;
@@ -213,15 +216,25 @@ public class InterfaceVariables : INotifyPropertyChanged
         get => _highVibration;
         set => SetProperty(ref _highVibration, value);
     }    
-    public double DareVibration
+    public double TareVibration
     {
-        get => _dareVibration;
-        set => SetProperty(ref _dareVibration, value);
-    }
-    public double VibrationmV
+        get => _tareVibration;
+        set => SetProperty(ref _tareVibration, value);
+    }    
+    public double TareVibrationX
     {
-        get => _vibrationmV;
-        set => SetProperty(ref _vibrationmV, value);
+        get => _tareVibrationX;
+        set => SetProperty(ref _tareVibrationX, value);
+    }    
+    public double TareVibrationY
+    {
+        get => _tareVibrationY;
+        set => SetProperty(ref _tareVibrationY, value);
+    }    
+    public double TareVibrationZ
+    {
+        get => _tareVibrationZ;
+        set => SetProperty(ref _tareVibrationZ, value);
     }
 
     public Unit WindSpeed
@@ -535,13 +548,11 @@ public class InterfaceVariables : INotifyPropertyChanged
         Current = CurrentTareSet(data.Current);
         Power = data.Power;
         Pressure = PressureUnitSet(Pressure.Value, Pressure.UnitName, Pressure.UnitSymbol, data.Pressure.Value, data.Pressure.UnitName, data.Pressure.UnitSymbol);
-        VibrationX = data.VibrationX;
-        VibrationY = data.VibrationY;
-        VibrationZ = data.VibrationZ;
-        Vibration = data.Vibration;
-        HighVibration = data.HighVibration;
-        DareVibration = data.DareVibration;
-        VibrationmV = data.Vibration*1/128;
+        VibrationX = data.VibrationX - TareVibrationX; 
+        VibrationY = data.VibrationY - TareVibrationY;
+        VibrationZ = data.VibrationZ - TareVibrationZ;
+        Vibration = data.Vibration - TareVibration;
+        HighVibration = data.HighVibration - TareVibration;
         WindSpeed = WindSpeedUnitSet(WindSpeed.Value, WindSpeed.UnitName, WindSpeed.UnitSymbol, data.WindSpeed.Value, data.WindSpeed.UnitName, data.WindSpeed.UnitSymbol);
         WindDirection = data.WindDirection;
         AirDensity = data.AirDensity;
@@ -563,6 +574,7 @@ public class InterfaceVariables : INotifyPropertyChanged
         SelectedTemperatureUnitIndex = InterfaceVariables.Instance.SelectedTemperatureUnitIndex;
         SelectedWindSpeedUnitIndex = InterfaceVariables.Instance.SelectedWindSpeedUnitIndex;
         SelectedPressureUnitIndex = InterfaceVariables.Instance.SelectedPressureUnitIndex;
+
     }
     public Unit ThrustTareSet(Unit data)
     {

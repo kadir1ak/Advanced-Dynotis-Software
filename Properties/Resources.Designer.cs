@@ -817,6 +817,15 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   Vibration Tare benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_TareButton {
+            get {
+                return ResourceManager.GetString("BalancerPage_TareButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Tests benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string BalancerPage_Tests {

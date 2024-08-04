@@ -1,8 +1,12 @@
 ﻿using Advanced_Dynotis_Software.Models.Dynotis;
+using Advanced_Dynotis_Software.Services.Helpers;
+using Advanced_Dynotis_Software.Services.Logger;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Advanced_Dynotis_Software.ViewModels.UserControls
 {
@@ -14,14 +18,23 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private ObservableCollection<int> _balancerIterationStepChart;
         private ObservableCollection<double> _balancerIterationVibrationsChart;
         private InterfaceVariables _interfaceVariables;
+        private DynotisData _dynotisData;
+
+        private double _tareVibration;
+        private double _tareVibrationX;
+        private double _tareVibrationY;
+        private double _tareVibrationZ;   
 
         private ObservableCollection<BalancerIteration> _balancingIterations;
-
-        public BalancerParametersViewModel(InterfaceVariables interfaceVariables)
+        public ICommand TareCommand { get; }
+        public BalancerParametersViewModel(DynotisData dynotisData, InterfaceVariables interfaceVariables)
         {
             _interfaceVariables = interfaceVariables;
+            _dynotisData = dynotisData;
             // Subscribe to the PropertyChanged event of InterfaceVariables
             _interfaceVariables.PropertyChanged += InterfaceVariables_PropertyChanged;
+
+            TareCommand = new RelayCommand(param => VibrationTare());
 
             _referenceWeight = 0.050; // g
             _balancerIterationStepChart = new ObservableCollection<int>();
@@ -41,7 +54,77 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 UpdateBalancingIterations();
             }
         }
+        private void VibrationTare()
+        {
+            if (_interfaceVariables != null && _dynotisData != null)
+            {
 
+                TareVibration = _dynotisData.TareVibration;
+                TareVibrationX = _dynotisData.TareVibrationX;
+                TareVibrationY = _dynotisData.TareVibrationY;
+                TareVibrationZ = _dynotisData.TareVibrationZ;
+                /*
+                MessageBox.Show($"VibrationTare: {TareVibration} ");
+                MessageBox.Show($"VibrationTareX: {TareVibrationX} ");
+                MessageBox.Show($"VibrationTareY: {TareVibrationY} ");
+                MessageBox.Show($"VibrationTareZ: {TareVibrationZ} ");
+                */
+                // Tare değerlerini InterfaceVariables.Instance'da saklayın
+                //InterfaceVariables.Instance.TareVibration = TareVibration;
+                //InterfaceVariables.Instance.TareVibrationX = TareVibrationX;
+                //InterfaceVariables.Instance.TareVibrationY = TareVibrationY;
+                //InterfaceVariables.Instance.TareVibrationZ = TareVibrationZ;     
+            }
+        }
+
+        public double TareVibration
+        {
+            get => _tareVibration;
+            set
+            {
+                if (SetProperty(ref _tareVibration, value))
+                {
+                    _interfaceVariables.TareVibration = value;
+                    OnPropertyChanged(nameof(TareVibration));
+                }
+            }
+        } 
+        public double TareVibrationX
+        {
+            get => _tareVibrationX;
+            set
+            {
+                if (SetProperty(ref _tareVibrationX, value))
+                {
+                    _interfaceVariables.TareVibrationX = value;
+                    OnPropertyChanged(nameof(TareVibrationX));
+                }
+            }
+        } 
+        public double TareVibrationY
+        {
+            get => _tareVibrationY;
+            set
+            {
+                if (SetProperty(ref _tareVibrationY, value))
+                {
+                    _interfaceVariables.TareVibrationY = value;
+                    OnPropertyChanged(nameof(TareVibrationY));
+                }
+            }
+        } 
+        public double TareVibrationZ
+        {
+            get => _tareVibrationZ;
+            set
+            {
+                if (SetProperty(ref _tareVibrationZ, value))
+                {
+                    _interfaceVariables.TareVibrationZ= value;
+                    OnPropertyChanged(nameof(TareVibrationZ));
+                }
+            }
+        }    
         public int ReferenceMotorSpeed
         {
             get => _referenceMotorSpeed;

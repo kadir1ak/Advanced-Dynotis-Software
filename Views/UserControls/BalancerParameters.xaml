@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
+             xmlns:uc="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
              xmlns:p="clr-namespace:Advanced_Dynotis_Software.Properties"
              mc:Ignorable="d">
     <UserControl.Resources>
@@ -25,6 +26,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -87,5 +89,7 @@
                 </DataGrid.Columns>
             </DataGrid>
         </ScrollViewer>
+        <uc:GeneralButton Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Icon="ScaleBalancedSolid" Text="{x:Static p:Resources.BalancerPage_TareButton}" Command="{Binding TareCommand}" VerticalAlignment="Center" HorizontalAlignment="Center" IsEnabled="{Binding IsRunButtonEnabled}" />
+
     </Grid>
 </UserControl>

@@ -27,7 +27,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Managers
             }
             else
             {
-                var viewModel = new BalancerParametersViewModel(interfaceVariables);
+                var viewModel = new BalancerParametersViewModel(dynotisData, interfaceVariables);
                 _balancerParameters[devicePortName] = viewModel;
                 return viewModel;
             }

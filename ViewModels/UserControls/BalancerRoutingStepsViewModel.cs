@@ -30,7 +30,6 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private ObservableCollection<double> _balancerIterationVibrationsChart;
 
         private double _highVibration;
-        private double _dareVibration;
         private double _testTimeCount;
         private double _motorReadyTimeCount;
         private bool _motorReadyStatus;
@@ -136,7 +135,11 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         {
             if (_interfaceVariables.ReferenceMotorSpeed <= 0)
             {
-                MessageBox.Show("Lütfen değer giriniz");
+                MessageBoxResult result = MessageBox.Show(
+                "Please enter the reference motor speed value!",
+                "Missing Value Warning",
+                MessageBoxButton.OK,
+                MessageBoxImage.Warning);
             }
             else
             {
@@ -508,18 +511,6 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 {
                     _highVibration = value;
                     OnPropertyChanged(nameof(HighVibration));
-                }
-            }
-        }
-        public double DareVibration
-        {
-            get => _dareVibration;
-            set
-            {
-                if (SetProperty(ref _dareVibration, value))
-                {
-                    _dareVibration = value;
-                    OnPropertyChanged(nameof(DareVibration));
                 }
             }
         }

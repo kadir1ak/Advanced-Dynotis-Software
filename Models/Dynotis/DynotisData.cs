@@ -21,7 +21,12 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
         public DynotisData()
         {
+            _bufferCount = 0;
             _vibrationBuffer = new List<double>();
+            _tareVibrationBuffer = new List<double>();
+            _tareVibrationXBuffer = new List<double>();
+            _tareVibrationYBuffer = new List<double>();
+            _tareVibrationZBuffer = new List<double>();
         }
 
         private double _time;
@@ -38,12 +43,21 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         private Unit _pressure;
         private double _humidity;
         private double _vibrationX;
+        private double _vibrationXDare;
         private double _vibrationY;
         private double _vibrationZ;
         private double _vibration;
-        private double _highVibration;
-        private double _dareVibration;
         private List<double> _vibrationBuffer;
+        private int _bufferCount;
+        private double _highVibration;
+        private double _tareVibration;
+        private double _tareVibrationX;
+        private double _tareVibrationY;
+        private double _tareVibrationZ;
+        private List<double> _tareVibrationBuffer;
+        private List<double> _tareVibrationXBuffer;
+        private List<double> _tareVibrationYBuffer;
+        private List<double> _tareVibrationZBuffer;
         private Unit _windSpeed;
         private double _windDirection;
         private double _airDensity;
@@ -192,15 +206,55 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             get => _highVibration;
             set => SetProperty(ref _highVibration, value);
         }      
-        public double DareVibration
+        public double TareVibration
         {
-            get => _dareVibration;
-            set => SetProperty(ref _dareVibration, value);
+            get => _tareVibration;
+            set => SetProperty(ref _tareVibration, value);
+        }
+        public List<double> TareVibrationBuffer
+        {
+            get => _tareVibrationBuffer;
+            set => SetProperty(ref _tareVibrationBuffer, value);
+        }
+        public double TareVibrationX
+        {
+            get => _tareVibrationX;
+            set => SetProperty(ref _tareVibrationX, value);
+        }       
+        public List<double> TareVibrationXBuffer
+        {
+            get => _tareVibrationXBuffer;
+            set => SetProperty(ref _tareVibrationXBuffer, value);
+        }
+        public double TareVibrationY
+        {
+            get => _tareVibrationY;
+            set => SetProperty(ref _tareVibrationY, value);
+        } 
+        public List<double> TareVibrationYBuffer
+        {
+            get => _tareVibrationYBuffer;
+            set => SetProperty(ref _tareVibrationYBuffer, value);
+        }
+        public double TareVibrationZ
+        {
+            get => _tareVibrationZ;
+            set => SetProperty(ref _tareVibrationZ, value);
+        }
+        public List<double> TareVibrationZBuffer
+        {
+            get => _tareVibrationZBuffer;
+            set => SetProperty(ref _tareVibrationZBuffer, value);
         }
         public List<double> VibrationBuffer
         {
             get => _vibrationBuffer;
             set => SetProperty(ref _vibrationBuffer, value);
+        }
+        public int BufferCount
+        {
+            get => _bufferCount;
+            set => SetProperty(ref _bufferCount, value);
         }
 
         public Unit WindSpeed
