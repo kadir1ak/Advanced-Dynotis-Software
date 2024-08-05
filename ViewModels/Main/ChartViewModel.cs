@@ -236,17 +236,17 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             VibrationXAxisStep = ((LineSeries)VibrationSeriesCollection[0]).Values.Count / 6.0;
             VibrationYAxisStep = (VibrationYAxisMax == VibrationYAxisMin) ? 1 : (VibrationYAxisMax - VibrationYAxisMin) / 10.0;
 
-            VibrationXXAxisStep = ((LineSeries)VibrationXSeriesCollection[0]).Values.Count / 1.0;
-            VibrationXYAxisStep = (VibrationXYAxisMax == VibrationXYAxisMin) ? 1 : (VibrationXYAxisMax - VibrationXYAxisMin) / 2.0;
+            VibrationXXAxisStep = ((LineSeries)VibrationXSeriesCollection[0]).Values.Count / 2.0;
+            VibrationXYAxisStep = (VibrationXYAxisMax == VibrationXYAxisMin) ? 1 : (VibrationXYAxisMax - VibrationXYAxisMin) / 3.0;
 
-            VibrationYXAxisStep = ((LineSeries)VibrationYSeriesCollection[0]).Values.Count / 1.0;
-            VibrationYYAxisStep = (VibrationYYAxisMax == VibrationYYAxisMin) ? 1 : (VibrationYYAxisMax - VibrationYYAxisMin) / 2.0;
+            VibrationYXAxisStep = ((LineSeries)VibrationYSeriesCollection[0]).Values.Count / 2.0;
+            VibrationYYAxisStep = (VibrationYYAxisMax == VibrationYYAxisMin) ? 1 : (VibrationYYAxisMax - VibrationYYAxisMin) / 3.0;
 
-            VibrationZXAxisStep = ((LineSeries)VibrationZSeriesCollection[0]).Values.Count / 1.0;
-            VibrationZYAxisStep = (VibrationZYAxisMax == VibrationZYAxisMin) ? 1 : (VibrationZYAxisMax - VibrationZYAxisMin) / 2.0;
+            VibrationZXAxisStep = ((LineSeries)VibrationZSeriesCollection[0]).Values.Count / 2.0;
+            VibrationZYAxisStep = (VibrationZYAxisMax == VibrationZYAxisMin) ? 1 : (VibrationZYAxisMax - VibrationZYAxisMin) / 3.0;
 
-            VibrationHighXAxisStep = ((LineSeries)VibrationHighSeriesCollection[0]).Values.Count / 1.0;
-            VibrationHighYAxisStep = (VibrationHighYAxisMax == VibrationHighYAxisMin) ? 1 : (VibrationHighYAxisMax - VibrationHighYAxisMin) / 2.0;
+            VibrationHighXAxisStep = ((LineSeries)VibrationHighSeriesCollection[0]).Values.Count / 2.0;
+            VibrationHighYAxisStep = (VibrationHighYAxisMax == VibrationHighYAxisMin) ? 1 : (VibrationHighYAxisMax - VibrationHighYAxisMin) / 3.0;
 
             OnPropertyChanged(nameof(CurrentXAxisStep));
             OnPropertyChanged(nameof(CurrentYAxisStep));

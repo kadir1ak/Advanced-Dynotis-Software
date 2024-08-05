@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using Advanced_Dynotis_Software.Models.Dynotis;
 using Advanced_Dynotis_Software.ViewModels.UserControls;
+using DocumentFormat.OpenXml.Drawing.Charts;
 using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
@@ -31,7 +32,9 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             _balancerIterationStep = 0;
             _balancerIterationStepChart = new ObservableCollection<int>();
             _balancerIterationVibrationsChart = new ObservableCollection<double>();
-            
+
+            _maxYAxisValue = 1;
+            _separatorStep = 0.2;
 
             VibrationSeriesCollection = new SeriesCollection
             {
@@ -98,6 +101,19 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             }
         }
 
+        private double _maxYAxisValue;
+        public double MaxYAxisValue
+        {
+            get => _maxYAxisValue;
+            set => SetProperty(ref _maxYAxisValue, value);
+        }
+
+        private double _separatorStep;
+        public double SeparatorStep
+        {
+            get => _separatorStep;
+            set => SetProperty(ref _separatorStep, value);
+        }
         public SeriesCollection VibrationSeriesCollection { get; set; }
         public Func<double, string> XFormatter { get; set; }
         public Func<double, string> YFormatter { get; set; }
@@ -111,13 +127,28 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 {
                     series.Values.Clear();
 
+                    double maxVibrationValue = 0;
                     for (int i = 0; i < BalancerIterationStepChart.Count; i++)
                     {
                         if (i < BalancerIterationVibrationsChart.Count)
                         {
-                            series.Values.Add(new ObservablePoint(BalancerIterationStepChart[i], BalancerIterationVibrationsChart[i]));
+                            var point = new ObservablePoint(BalancerIterationStepChart[i], BalancerIterationVibrationsChart[i]);
+                            series.Values.Add(point);
+                            if (point.Y > maxVibrationValue)
+                            {
+                                maxVibrationValue = point.Y;
+                            }
                         }
                     }
+                    if (maxVibrationValue != 0)
+                    {
+                        // Set the maximum value of the Y axis to double the max vibration value
+                        MaxYAxisValue = maxVibrationValue * 2;
+
+                        // Set the separator step to MaxYAxisValue / 5
+                        SeparatorStep = MaxYAxisValue / 5;
+                    }
+
                 }
             }
         }
