@@ -23,6 +23,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         {
             _bufferCount = 0;
             _highVibrationBuffer = new List<double>();
+            _avgVibrationBuffer = new List<double>();
             _tareVibrationBuffer = new List<double>();
             _tareVibrationXBuffer = new List<double>();
             _tareVibrationYBuffer = new List<double>();
@@ -48,8 +49,10 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         private double _vibrationZ;
         private double _vibration;
         private List<double> _highVibrationBuffer;
+        private List<double> _avgVibrationBuffer;
         private int _bufferCount;
         private double _highVibration;
+        private double _avgVibration;
         private double _tareVibration;
         private double _tareVibrationX;
         private double _tareVibrationY;
@@ -205,6 +208,11 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         {
             get => _highVibration;
             set => SetProperty(ref _highVibration, value);
+        }   
+        public double AVGVibration
+        {
+            get => _avgVibration;
+            set => SetProperty(ref _avgVibration, value);
         }      
         public double TareVibration
         {
@@ -250,6 +258,11 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         {
             get => _highVibrationBuffer;
             set => SetProperty(ref _highVibrationBuffer, value);
+        }      
+        public List<double> AVGVibrationBuffer
+        {
+            get => _avgVibrationBuffer;
+            set => SetProperty(ref _avgVibrationBuffer, value);
         }
         public int BufferCount
         {

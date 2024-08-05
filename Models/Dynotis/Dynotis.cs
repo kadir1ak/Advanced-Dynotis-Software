@@ -304,6 +304,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                                 newData.TareMotorSpeedValue = currentData.TareMotorSpeedValue;
 
                                 newData.HighVibration = currentData.HighVibration;
+                                newData.AVGVibration = currentData.AVGVibration;
                                 newData.TareVibration = currentData.TareVibration;
                                 newData.TareVibrationX = currentData.TareVibrationX;
                                 newData.TareVibrationY = currentData.TareVibrationY;
@@ -312,6 +313,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                                 newData.BufferCount = currentData.BufferCount;
 
                                 newData.HighVibrationBuffer = currentData.HighVibrationBuffer;
+                                newData.AVGVibrationBuffer = currentData.AVGVibrationBuffer;
                                 newData.TareVibrationBuffer = currentData.TareVibrationBuffer;
                                 newData.TareVibrationXBuffer = currentData.TareVibrationXBuffer;
                                 newData.TareVibrationYBuffer = currentData.TareVibrationYBuffer;
@@ -322,12 +324,17 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                                 //DynotisData.VibrationX = Math.Abs(newData.VibrationX);
                                 //DynotisData.VibrationY = Math.Abs(newData.VibrationY);
                                 //DynotisData.VibrationZ = Math.Abs(newData.VibrationZ);
+                                //DynotisData.Vibration = newData.VibrationY;
 
                                 DynotisData.Vibration = Math.Sqrt(Math.Pow(newData.VibrationY, 2));
-     
+                               
 
                                 DynotisData.HighVibrationBuffer.Add(DynotisData.Vibration);
-                                DynotisData.TareVibrationBuffer.Add(DynotisData.Vibration);
+
+                                DynotisData.AVGVibrationBuffer.Add(DynotisData.Vibration);
+
+                                DynotisData.TareVibrationBuffer.Add(DynotisData.Vibration);                                
+
                                 DynotisData.TareVibrationXBuffer.Add(DynotisData.VibrationX);
                                 DynotisData.TareVibrationYBuffer.Add(DynotisData.VibrationY);
                                 DynotisData.TareVibrationZBuffer.Add(DynotisData.VibrationZ);
@@ -339,6 +346,9 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
                                     DynotisData.HighVibration = CalculateHighVibrations(DynotisData.HighVibrationBuffer);
                                     DynotisData.HighVibrationBuffer.Clear();
+
+                                    DynotisData.AVGVibration = DynotisData.AVGVibrationBuffer.Sum() / DynotisData.AVGVibrationBuffer.Count;
+                                    DynotisData.AVGVibrationBuffer.Clear();
 
                                     DynotisData.TareVibration = DynotisData.TareVibrationBuffer.Sum() / DynotisData.TareVibrationBuffer.Count;
                                     DynotisData.TareVibrationBuffer.Clear();
@@ -352,11 +362,15 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                                     DynotisData.TareVibrationZ = DynotisData.TareVibrationZBuffer.Sum() / DynotisData.TareVibrationZBuffer.Count;
                                     DynotisData.TareVibrationZBuffer.Clear();
                                 }
+                                /*
                                 Logger.Log( $"Vibration: {DynotisData.Vibration}," +
                                             $"HighVibration: {DynotisData.HighVibration}," +
+                                            $"AVGVibration: {DynotisData.AVGVibration}," +
                                             $"VibrationX: {DynotisData.VibrationX}," +
                                             $"VibrationY: {DynotisData.VibrationY}," +
                                             $"VibrationZ: {DynotisData.VibrationZ}");
+                                */
+
                                 DynotisData.Power = newData.Current * newData.Voltage;
                                 DynotisData.WindDirection = 275 * newData.Voltage;
                                 DynotisData.AirDensity = 10.0 * newData.Voltage;

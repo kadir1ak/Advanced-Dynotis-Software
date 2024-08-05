@@ -69,6 +69,7 @@ public class InterfaceVariables : INotifyPropertyChanged
     private double _vibrationY;
     private double _vibrationZ;
     private double _highVibration;
+    private double _avgVibration;
     private double _tareVibration;
     private double _tareVibrationX;
     private double _tareVibrationY;
@@ -215,6 +216,11 @@ public class InterfaceVariables : INotifyPropertyChanged
     {
         get => _highVibration;
         set => SetProperty(ref _highVibration, value);
+    }
+    public double AVGVibration
+    {
+        get => _avgVibration;
+        set => SetProperty(ref _avgVibration, value);
     }    
     public double TareVibration
     {
@@ -553,6 +559,7 @@ public class InterfaceVariables : INotifyPropertyChanged
         VibrationZ = data.VibrationZ - TareVibrationZ;
         Vibration = data.Vibration - TareVibration;
         HighVibration = data.HighVibration - TareVibration;
+        AVGVibration = data.AVGVibration - TareVibration;
         WindSpeed = WindSpeedUnitSet(WindSpeed.Value, WindSpeed.UnitName, WindSpeed.UnitSymbol, data.WindSpeed.Value, data.WindSpeed.UnitName, data.WindSpeed.UnitSymbol);
         WindDirection = data.WindDirection;
         AirDensity = data.AirDensity;

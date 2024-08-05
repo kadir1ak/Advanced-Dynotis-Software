@@ -446,11 +446,19 @@
                                                     </lvc:CartesianChart>
                                                 </Border>
                                                 <Border Grid.Row="0" Grid.Column="1" Margin="3 3 10 3" BorderThickness="0" BorderBrush="{DynamicResource PageBorder}"  HorizontalAlignment="Right" VerticalAlignment="Top">
-                                                    <StackPanel  Orientation="Vertical">
-                                                        <StackPanel Orientation="Horizontal">
+                                                    <StackPanel  Orientation="Horizontal">
+                                                        <StackPanel Orientation="Horizontal" Margin="0 0 0 0">
+                                                            <TextBlock Text="V:" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Center"/>
                                                             <TextBlock Text="{Binding DeviceInterfaceVariables.Vibration, Mode=OneWay, StringFormat={}{0:0.000}}" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Center"/>
                                                             <TextBlock Text=" g" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Center"/>
                                                         </StackPanel>
+                                                        <!--
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="V (avg):" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Center"/>
+                                                            <TextBlock Text="{Binding DeviceInterfaceVariables.AVGVibration, Mode=OneWay, StringFormat={}{0:0.000}}" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Center"/>
+                                                            <TextBlock Text=" g" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Center"/>
+                                                        </StackPanel>
+                                                        -->
                                                     </StackPanel>
                                                 </Border>
                                             </Grid>
