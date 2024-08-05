@@ -406,7 +406,7 @@
                                                         </lvc:CartesianChart.AxisY>
                                                     </lvc:CartesianChart>
                                                 </Border>
-                                                <Border Grid.Row="0" Grid.Column="1" Margin="3 3 50 3" BorderThickness="0" BorderBrush="{DynamicResource PageBorder}"  HorizontalAlignment="Right" VerticalAlignment="Top">
+                                                <Border Grid.Row="0" Grid.Column="1" Margin="3 3 10 3" BorderThickness="0" BorderBrush="{DynamicResource PageBorder}"  HorizontalAlignment="Right" VerticalAlignment="Top">
                                                     <StackPanel  Orientation="Vertical">
                                                         <StackPanel Orientation="Horizontal">
                                                             <TextBlock Text="{Binding DeviceInterfaceVariables.MotorSpeed.Value, Mode=OneWay}" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Center"/>
@@ -445,7 +445,7 @@
                                                         </lvc:CartesianChart.AxisY>
                                                     </lvc:CartesianChart>
                                                 </Border>
-                                                <Border Grid.Row="0" Grid.Column="1" Margin="3 3 50 3" BorderThickness="0" BorderBrush="{DynamicResource PageBorder}"  HorizontalAlignment="Right" VerticalAlignment="Top">
+                                                <Border Grid.Row="0" Grid.Column="1" Margin="3 3 10 3" BorderThickness="0" BorderBrush="{DynamicResource PageBorder}"  HorizontalAlignment="Right" VerticalAlignment="Top">
                                                     <StackPanel  Orientation="Vertical">
                                                         <StackPanel Orientation="Horizontal">
                                                             <TextBlock Text="{Binding DeviceInterfaceVariables.Vibration, Mode=OneWay, StringFormat={}{0:0.000}}" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Center"/>
@@ -493,7 +493,7 @@
                                                             </lvc:CartesianChart.AxisY>
                                                         </lvc:CartesianChart>
                                                     </Border>
-                                                    <Border Grid.Row="0" Grid.Column="1" Margin="3 3 30 3" BorderThickness="0" BorderBrush="{DynamicResource PageBorder}"  HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                    <Border Grid.Row="0" Grid.Column="1" Margin="3 3 10 3" BorderThickness="0" BorderBrush="{DynamicResource PageBorder}"  HorizontalAlignment="Right" VerticalAlignment="Center">
                                                         <StackPanel  Orientation="Vertical">
                                                             <StackPanel Orientation="Horizontal">
                                                                 <TextBlock FontSize="14" Text="{Binding DeviceInterfaceVariables.HighVibration, Mode=OneWay, StringFormat={}{0:0.000}}" Margin="0 0 3 0" Foreground="{DynamicResource Text}" HorizontalAlignment="Center"/>
@@ -532,7 +532,7 @@
                                                                 </lvc:CartesianChart.AxisY>
                                                             </lvc:CartesianChart>
                                                         </Border>
-                                                        <Border Grid.Row="0" Grid.Column="1" Margin="3 3 30 3" BorderThickness="0" BorderBrush="{DynamicResource PageBorder}"  HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                        <Border Grid.Row="0" Grid.Column="1" Margin="3 3 10 3" BorderThickness="0" BorderBrush="{DynamicResource PageBorder}"  HorizontalAlignment="Right" VerticalAlignment="Center">
                                                             <StackPanel  Orientation="Vertical">
                                                                 <StackPanel Orientation="Horizontal">
                                                                     <TextBlock FontSize="14" Text="{Binding DeviceInterfaceVariables.VibrationX, Mode=OneWay, StringFormat={}{0:0.000}}" Margin="0 0 3 0" Foreground="{DynamicResource Text}" HorizontalAlignment="Center"/>
@@ -572,7 +572,7 @@
                                                                 </lvc:CartesianChart.AxisY>
                                                             </lvc:CartesianChart>
                                                         </Border>
-                                                    <Border Grid.Row="0" Grid.Column="1" Margin="3 3 30 3" BorderThickness="0" BorderBrush="{DynamicResource PageBorder}"  HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                    <Border Grid.Row="0" Grid.Column="1" Margin="3 3 10 3" BorderThickness="0" BorderBrush="{DynamicResource PageBorder}"  HorizontalAlignment="Right" VerticalAlignment="Center">
                                                         <StackPanel  Orientation="Vertical">
                                                             <StackPanel Orientation="Horizontal">
                                                                 <TextBlock FontSize="14" Text="{Binding DeviceInterfaceVariables.VibrationY, Mode=OneWay, StringFormat={}{0:0.000}}" Margin="0 0 3 0" Foreground="{DynamicResource Text}" HorizontalAlignment="Center"/>
@@ -611,7 +611,7 @@
                                                             </lvc:CartesianChart.AxisY>
                                                         </lvc:CartesianChart>
                                                     </Border>
-                                                    <Border Grid.Row="0" Grid.Column="1" Margin="3 3 30 3" BorderThickness="0" BorderBrush="{DynamicResource PageBorder}"  HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                    <Border Grid.Row="0" Grid.Column="1" Margin="3 3 10 3" BorderThickness="0" BorderBrush="{DynamicResource PageBorder}"  HorizontalAlignment="Right" VerticalAlignment="Center">
                                                         <StackPanel  Orientation="Vertical">
                                                             <StackPanel Orientation="Horizontal">
                                                                 <TextBlock FontSize="14" Text="{Binding DeviceInterfaceVariables.VibrationZ, Mode=OneWay, StringFormat={}{0:0.000}}" Margin="0 0 3 0" Foreground="{DynamicResource Text}" HorizontalAlignment="Center"/>

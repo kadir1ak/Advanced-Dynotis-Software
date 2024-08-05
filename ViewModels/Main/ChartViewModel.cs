@@ -191,10 +191,10 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                 TimeLabels.RemoveAt(0);
             }
             TimeLabels.Add(data.Time.ToString());
-            UpdateSeries(VibrationSeriesCollection, data.Vibration - data.TareVibration);
-            UpdateSeries(VibrationXSeriesCollection, data.VibrationX - data.TareVibrationX);
-            UpdateSeries(VibrationYSeriesCollection, data.VibrationY - data.TareVibrationY);
-            UpdateSeries(VibrationZSeriesCollection, data.VibrationZ - data.TareVibrationZ);
+            UpdateSeries(VibrationSeriesCollection, data.Vibration);
+            UpdateSeries(VibrationXSeriesCollection, data.VibrationX);
+            UpdateSeries(VibrationYSeriesCollection, data.VibrationY);
+            UpdateSeries(VibrationZSeriesCollection, data.VibrationZ);
             UpdateSeries(VibrationHighSeriesCollection, data.HighVibration);
             UpdateSeries(CurrentSeriesCollection, data.Current);
             UpdateSeries(MotorSpeedSeriesCollection, data.MotorSpeed.Value);
