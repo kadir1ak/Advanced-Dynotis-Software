@@ -261,7 +261,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
                     string[] dataParts = indata.Split(',');
 
-                    if (dataParts.Length == 15)
+                    if (dataParts.Length == 16)
                     {
                         var newData = new DynotisData
                         {
@@ -272,14 +272,15 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                             Torque = TryParseDouble(dataParts[4], out double torque) ? new DynotisData.Unit(torque, "Newton millimeter", "N.mm") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
                             MotorSpeed = TryParseDouble(dataParts[5], out double motorSpeed) ? new DynotisData.Unit(motorSpeed, "Revolutions per minute", "RPM") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
                             WindSpeed = TryParseDouble(dataParts[6], out double windSpeed) ? new DynotisData.Unit(windSpeed, "Meters per second", "m/s") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
-                            VibrationX = TryParseDouble(dataParts[7], out double vibrationX) ? vibrationX : double.NaN,
-                            VibrationY = TryParseDouble(dataParts[8], out double vibrationY) ? vibrationY : double.NaN,
-                            VibrationZ = TryParseDouble(dataParts[9], out double vibrationZ) ? vibrationZ : double.NaN,
-                            AmbientTemp = TryParseDouble(dataParts[10], out double ambientTemp) ? new DynotisData.Unit(ambientTemp, "Celsius", "°C") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
-                            MotorTemp = TryParseDouble(dataParts[11], out double motorTemp) ? new DynotisData.Unit(motorTemp, "Celsius", "°C") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
-                            Temperature = TryParseDouble(dataParts[12], out double temp) ? new DynotisData.Unit(temp, "Celsius", "°C") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
-                            Pressure = TryParseDouble(dataParts[13], out double pressure) ? new DynotisData.Unit(pressure, "Pascal", "Pa") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
-                            Humidity = TryParseDouble(dataParts[14], out double humidity) ? humidity : double.NaN
+                            WindDirection = TryParseDouble(dataParts[7], out double windDirection) ? windDirection : double.NaN,
+                            VibrationX = TryParseDouble(dataParts[8], out double vibrationX) ? vibrationX : double.NaN,
+                            VibrationY = TryParseDouble(dataParts[9], out double vibrationY) ? vibrationY : double.NaN,
+                            VibrationZ = TryParseDouble(dataParts[10], out double vibrationZ) ? vibrationZ : double.NaN,
+                            AmbientTemp = TryParseDouble(dataParts[11], out double ambientTemp) ? new DynotisData.Unit(ambientTemp, "Celsius", "°C") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
+                            MotorTemp = TryParseDouble(dataParts[12], out double motorTemp) ? new DynotisData.Unit(motorTemp, "Celsius", "°C") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
+                            Temperature = TryParseDouble(dataParts[13], out double temp) ? new DynotisData.Unit(temp, "Celsius", "°C") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
+                            Pressure = TryParseDouble(dataParts[14], out double pressure) ? new DynotisData.Unit(pressure, "Pascal", "Pa") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
+                            Humidity = TryParseDouble(dataParts[15], out double humidity) ? humidity : double.NaN
                         };
 
                         await Application.Current.Dispatcher.InvokeAsync(() =>
@@ -362,17 +363,9 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                                     DynotisData.TareVibrationZ = DynotisData.TareVibrationZBuffer.Sum() / DynotisData.TareVibrationZBuffer.Count;
                                     DynotisData.TareVibrationZBuffer.Clear();
                                 }
-                                /*
-                                Logger.Log( $"Vibration: {DynotisData.Vibration}," +
-                                            $"HighVibration: {DynotisData.HighVibration}," +
-                                            $"AVGVibration: {DynotisData.AVGVibration}," +
-                                            $"VibrationX: {DynotisData.VibrationX}," +
-                                            $"VibrationY: {DynotisData.VibrationY}," +
-                                            $"VibrationZ: {DynotisData.VibrationZ}");
-                                */
+                                
 
                                 DynotisData.Power = newData.Current * newData.Voltage;
-                                DynotisData.WindDirection = 275 * newData.Voltage;
                                 DynotisData.AirDensity = 10.0 * newData.Voltage;
 
                                 OnPropertyChanged(nameof(DynotisData));
