@@ -144,7 +144,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         {
             while (!_stopRequested)
             {
-                string dataLine = $"{_interfaceVariables.Time},{_interfaceVariables.Current},{_interfaceVariables.Voltage},{_interfaceVariables.Thrust.Value},{_interfaceVariables.Torque.Value},{_interfaceVariables.MotorSpeed.Value},{_interfaceVariables.VibrationX},{_interfaceVariables.VibrationY},{_interfaceVariables.VibrationZ},{_interfaceVariables.AmbientTemp.Value},{_interfaceVariables.MotorTemp.Value},{_interfaceVariables.Pressure.Value},{_interfaceVariables.WindSpeed.Value},{_interfaceVariables.Power},{_interfaceVariables.Vibration},{_interfaceVariables.WindDirection},{_interfaceVariables.AirDensity}";
+                string dataLine = $"{_interfaceVariables.Time},{_interfaceVariables.Current},{_interfaceVariables.Voltage},{_interfaceVariables.Thrust.Value},{_interfaceVariables.Torque.Value},{_interfaceVariables.MotorSpeed.Value},{_interfaceVariables.Vibration.VibrationX},{_interfaceVariables.Vibration.VibrationY},{_interfaceVariables.Vibration.VibrationZ},{_interfaceVariables.AmbientTemp.Value},{_interfaceVariables.MotorTemp.Value},{_interfaceVariables.Pressure.Value},{_interfaceVariables.WindSpeed.Value},{_interfaceVariables.Theoric.Power},{_interfaceVariables.Vibration},{_interfaceVariables.WindDirection},{_interfaceVariables.Theoric.AirDensity}";
                 await _streamWriter.WriteLineAsync(dataLine);
                 await Task.Delay(1); // 1000 Hz frekansla kayıt için 1ms bekle
             }

@@ -6,19 +6,19 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 {
     public class EquipmentParametersViewModel : INotifyPropertyChanged
     {
-        private double _userPropellerArea;
+        private double _userPropellerDiameter;
         private double _userMotorInner;
         private double _userNoLoadCurrents;
         private DynotisData _dynotisData;
 
-        public double UserPropellerArea
+        public double UserPropellerDiameter
         {
-            get => _userPropellerArea;
+            get => _userPropellerDiameter;
             set
             {
-                if (SetProperty(ref _userPropellerArea, value))
+                if (SetProperty(ref _userPropellerDiameter, value))
                 {
-                    _dynotisData.PropellerArea = value;
+                    _dynotisData.PropellerDiameter = value;
                     OnPropertyChanged(nameof(_dynotisData));
                 }
             }
@@ -53,7 +53,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         public EquipmentParametersViewModel(DynotisData dynotisData)
         {
             _dynotisData = dynotisData;
-            UserPropellerArea = dynotisData.PropellerArea;
+            UserPropellerDiameter = dynotisData.PropellerDiameter;
             UserMotorInner = dynotisData.MotorInner;
             UserNoLoadCurrents = dynotisData.NoLoadCurrents;
         }

@@ -1,4 +1,5 @@
 ﻿using Advanced_Dynotis_Software.Services.Logger;
+using LiveCharts.Wpf;
 using System;
 using System.ComponentModel;
 using System.Globalization;
@@ -287,86 +288,11 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                         {
                             lock (_dataLock)
                             {
-                                var currentData = DynotisData;
-                                newData.PropellerArea = currentData.PropellerArea;
-                                newData.MotorInner = currentData.MotorInner;
-                                newData.NoLoadCurrents = currentData.NoLoadCurrents;
-                                newData.ESCValue = currentData.ESCValue;
-                                newData.ESCStatus = currentData.ESCStatus;
-                                newData.TestMode = currentData.TestMode;
-                                newData.FileName = currentData.FileName;
-                                newData.IsRecording = currentData.IsRecording;
-                                newData.BatteryLevel = currentData.BatteryLevel;
-                                newData.MaxCurrent = currentData.MaxCurrent;
-                                newData.SecurityStatus = currentData.SecurityStatus;
-                                newData.TareThrustValue = currentData.TareThrustValue;
-                                newData.TareTorqueValue = currentData.TareTorqueValue;
-                                newData.TareCurrentValue = currentData.TareCurrentValue;
-                                newData.TareMotorSpeedValue = currentData.TareMotorSpeedValue;
+                                TransferStoredData(DynotisData, newData);
 
-                                newData.HighVibration = currentData.HighVibration;
-                                newData.AVGVibration = currentData.AVGVibration;
-                                newData.TareVibration = currentData.TareVibration;
-                                newData.TareVibrationX = currentData.TareVibrationX;
-                                newData.TareVibrationY = currentData.TareVibrationY;
-                                newData.TareVibrationZ = currentData.TareVibrationZ;
+                                VibrationCalculations();
 
-                                newData.BufferCount = currentData.BufferCount;
-
-                                newData.HighVibrationBuffer = currentData.HighVibrationBuffer;
-                                newData.AVGVibrationBuffer = currentData.AVGVibrationBuffer;
-                                newData.TareVibrationBuffer = currentData.TareVibrationBuffer;
-                                newData.TareVibrationXBuffer = currentData.TareVibrationXBuffer;
-                                newData.TareVibrationYBuffer = currentData.TareVibrationYBuffer;
-                                newData.TareVibrationZBuffer = currentData.TareVibrationZBuffer;
-
-                                DynotisData = newData;
-
-                                //DynotisData.VibrationX = Math.Abs(newData.VibrationX);
-                                //DynotisData.VibrationY = Math.Abs(newData.VibrationY);
-                                //DynotisData.VibrationZ = Math.Abs(newData.VibrationZ);
-                                //DynotisData.Vibration = newData.VibrationY;
-
-                                DynotisData.Vibration = Math.Sqrt(Math.Pow(newData.VibrationY, 2));
-                               
-
-                                DynotisData.HighVibrationBuffer.Add(DynotisData.Vibration);
-
-                                DynotisData.AVGVibrationBuffer.Add(DynotisData.Vibration);
-
-                                DynotisData.TareVibrationBuffer.Add(DynotisData.Vibration);                                
-
-                                DynotisData.TareVibrationXBuffer.Add(DynotisData.VibrationX);
-                                DynotisData.TareVibrationYBuffer.Add(DynotisData.VibrationY);
-                                DynotisData.TareVibrationZBuffer.Add(DynotisData.VibrationZ);
-
-                                DynotisData.BufferCount++;
-                                if (DynotisData.BufferCount > 100)
-                                {
-                                    DynotisData.BufferCount = 0;
-
-                                    DynotisData.HighVibration = CalculateHighVibrations(DynotisData.HighVibrationBuffer);
-                                    DynotisData.HighVibrationBuffer.Clear();
-
-                                    DynotisData.AVGVibration = DynotisData.AVGVibrationBuffer.Sum() / DynotisData.AVGVibrationBuffer.Count;
-                                    DynotisData.AVGVibrationBuffer.Clear();
-
-                                    DynotisData.TareVibration = DynotisData.TareVibrationBuffer.Sum() / DynotisData.TareVibrationBuffer.Count;
-                                    DynotisData.TareVibrationBuffer.Clear();
-
-                                    DynotisData.TareVibrationX = DynotisData.TareVibrationXBuffer.Sum() / DynotisData.TareVibrationXBuffer.Count;
-                                    DynotisData.TareVibrationXBuffer.Clear();
-
-                                    DynotisData.TareVibrationY = DynotisData.TareVibrationYBuffer.Sum() / DynotisData.TareVibrationYBuffer.Count;
-                                    DynotisData.TareVibrationYBuffer.Clear();
-
-                                    DynotisData.TareVibrationZ = DynotisData.TareVibrationZBuffer.Sum() / DynotisData.TareVibrationZBuffer.Count;
-                                    DynotisData.TareVibrationZBuffer.Clear();
-                                }
-                                
-
-                                DynotisData.Power = newData.Current * newData.Voltage;
-                                DynotisData.AirDensity = 10.0 * newData.Voltage;
+                                TheoreticalCalculations();                               
 
                                 OnPropertyChanged(nameof(DynotisData));
                             }
@@ -426,6 +352,186 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
             // Eğer '.' karakteri başarısız olursa, ',' karakteri ile deneme yapıyoruz.
             return double.TryParse(value.Replace('.', ','), out result);
+        }
+        private void TransferStoredData(DynotisData currentData, DynotisData newData)
+        {
+            newData.PropellerDiameter = currentData.PropellerDiameter;
+            newData.MotorInner = currentData.MotorInner;
+            newData.NoLoadCurrents = currentData.NoLoadCurrents;
+            newData.ESCValue = currentData.ESCValue;
+            newData.ESCStatus = currentData.ESCStatus;
+            newData.TestMode = currentData.TestMode;
+            newData.FileName = currentData.FileName;
+            newData.IsRecording = currentData.IsRecording;
+            newData.BatteryLevel = currentData.BatteryLevel;
+            newData.MaxCurrent = currentData.MaxCurrent;
+            newData.SecurityStatus = currentData.SecurityStatus;
+            newData.TareThrustValue = currentData.TareThrustValue;
+            newData.TareTorqueValue = currentData.TareTorqueValue;
+            newData.TareCurrentValue = currentData.TareCurrentValue;
+            newData.TareMotorSpeedValue = currentData.TareMotorSpeedValue;
+
+            newData.Vibration.VibrationX = newData.VibrationX;
+            newData.Vibration.VibrationY = newData.VibrationY;
+            newData.Vibration.VibrationZ = newData.VibrationZ;
+
+            newData.Vibration.TareBufferCount = currentData.Vibration.TareBufferCount;
+
+            newData.Vibration.TareVibration = currentData.Vibration.TareVibration;
+            newData.Vibration.TareVibrationBuffer = currentData.Vibration.TareVibrationBuffer;
+
+            newData.Vibration.TareVibrationX = currentData.Vibration.TareVibrationX;
+            newData.Vibration.TareVibrationY = currentData.Vibration.TareVibrationY;
+            newData.Vibration.TareVibrationZ = currentData.Vibration.TareVibrationZ;
+            newData.Vibration.TareVibrationXBuffer = currentData.Vibration.TareVibrationXBuffer;
+            newData.Vibration.TareVibrationYBuffer = currentData.Vibration.TareVibrationYBuffer;
+            newData.Vibration.TareVibrationZBuffer = currentData.Vibration.TareVibrationZBuffer;
+
+            newData.Vibration.HighVibration = currentData.Vibration.HighVibration;
+            newData.Vibration.HighVibrationBuffer = currentData.Vibration.HighVibrationBuffer;
+
+            DynotisData = newData;
+        }
+        private void TheoreticalCalculations()
+        {
+            try
+            {
+                // Propeller Area Calculation
+                if (DynotisData.PropellerDiameter > 0)
+                {
+                    DynotisData.Theoric.PropellerArea = Math.PI * Math.Pow((DynotisData.PropellerDiameter * 0.0254 / 2), 2);
+                }
+                else
+                {
+                    DynotisData.Theoric.PropellerArea = 0;
+                }
+
+                // Rotational Speed Calculation
+                if (DynotisData.MotorSpeed.Value > 0)
+                {
+                    DynotisData.Theoric.RotationalSpeed = 2.0 * Math.PI * DynotisData.MotorSpeed.Value / 60.0;
+                }
+                else
+                {
+                    DynotisData.Theoric.RotationalSpeed = 0;
+                }
+
+                // Power Calculation
+                DynotisData.Theoric.Power = DynotisData.Current * DynotisData.Voltage;
+
+                // Air Density Calculation
+                if (DynotisData.Pressure.Value > 0 && DynotisData.AmbientTemp.Value + DynotisData.TheoricVariables.KelvinConst > 0)
+                {
+                    DynotisData.Theoric.AirDensity = DynotisData.Pressure.Value / (DynotisData.TheoricVariables.AirGasConstant * (DynotisData.AmbientTemp.Value + DynotisData.TheoricVariables.KelvinConst));
+                }
+                else
+                {
+                    DynotisData.Theoric.AirDensity = 0;
+                }
+
+                // Motor Efficiency Calculation
+                if (DynotisData.Voltage > 0 && DynotisData.Current > 0)
+                {
+                    double motorEfficiencyFactor = (1 - DynotisData.Current * (DynotisData.MotorInner / 1000) / DynotisData.Voltage) * (1 - DynotisData.NoLoadCurrents / DynotisData.Current);
+                    DynotisData.Theoric.MotorEfficiency = motorEfficiencyFactor > 0 ? 100.0 * motorEfficiencyFactor : 0;
+                }
+                else
+                {
+                    DynotisData.Theoric.MotorEfficiency = 0;
+                }
+
+                // Propeller Efficiency Calculation
+                if (DynotisData.Theoric.AirDensity > 0 && DynotisData.Theoric.PropellerArea > 0 && DynotisData.Torque.Value > 0 && DynotisData.Theoric.RotationalSpeed > 0)
+                {
+                    double thrustFactor = Math.Sqrt(Math.Pow((DynotisData.Thrust.Value * 0.001 * 9.81), 3) / (2 * DynotisData.Theoric.AirDensity * DynotisData.Theoric.PropellerArea));
+                    DynotisData.Theoric.PropellerEfficiency = 100.0 * thrustFactor / ((DynotisData.Torque.Value / 1000.0) * DynotisData.Theoric.RotationalSpeed);
+                }
+                else
+                {
+                    DynotisData.Theoric.PropellerEfficiency = 0;
+                }
+
+                // PropSysEfficiencyI Calculation
+                if (DynotisData.Theoric.MotorEfficiency > 0)
+                {
+                    DynotisData.Theoric.PropSysEfficiencyI = ((DynotisData.Theoric.MotorEfficiency / 100.0) * DynotisData.TheoricVariables.EscEffConst * DynotisData.Theoric.PropellerEfficiency);
+                }
+                else
+                {
+                    DynotisData.Theoric.PropSysEfficiencyI = 0;
+                }
+
+                // PropSysEfficiencyII Calculation
+                if (DynotisData.Theoric.Power > 0)
+                {
+                    DynotisData.Theoric.PropSysEfficiencyII = DynotisData.Thrust.Value / DynotisData.Theoric.Power;
+                }
+                else
+                {
+                    DynotisData.Theoric.PropSysEfficiencyII = 0;
+                }
+
+                // Ct Calculation
+                if (DynotisData.Theoric.AirDensity > 0 && DynotisData.MotorSpeed.Value > 0 && DynotisData.PropellerDiameter > 0)
+                {
+                    DynotisData.Theoric.Ct = (DynotisData.Thrust.Value * 9.81 * 0.001) / (DynotisData.Theoric.AirDensity * Math.Pow(DynotisData.MotorSpeed.Value / 60, 2) * Math.Pow((DynotisData.PropellerDiameter * 0.0254), 4));
+                }
+                else
+                {
+                    DynotisData.Theoric.Ct = 0;
+                }
+
+                // Cq Calculation
+                if (DynotisData.Theoric.AirDensity > 0 && DynotisData.MotorSpeed.Value > 0 && DynotisData.PropellerDiameter > 0)
+                {
+                    DynotisData.Theoric.Cq = (DynotisData.Torque.Value * 0.001) / (DynotisData.Theoric.AirDensity * Math.Pow((DynotisData.MotorSpeed.Value / 60), 2) * Math.Pow((DynotisData.PropellerDiameter * 0.0254), 5));
+                }
+                else
+                {
+                    DynotisData.Theoric.Cq = 0;
+                }
+
+                // Cp Calculation
+                DynotisData.Theoric.Cp = 2 * Math.PI * DynotisData.Theoric.Cq;
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private void VibrationCalculations()
+        {
+            DynotisData.Vibration.Value = Math.Sqrt(Math.Pow(DynotisData.VibrationY, 2));
+
+            DynotisData.Vibration.HighVibrationBuffer.Add(DynotisData.Vibration.Value);
+
+            DynotisData.Vibration.TareVibrationBuffer.Add(DynotisData.Vibration.Value);
+
+            DynotisData.Vibration.TareVibrationXBuffer.Add(DynotisData.Vibration.VibrationX);
+            DynotisData.Vibration.TareVibrationYBuffer.Add(DynotisData.Vibration.VibrationY);
+            DynotisData.Vibration.TareVibrationZBuffer.Add(DynotisData.Vibration.VibrationZ);
+
+            DynotisData.Vibration.TareBufferCount++;
+            if (DynotisData.Vibration.TareBufferCount > 100)
+            {
+                DynotisData.Vibration.TareBufferCount = 0;
+
+                DynotisData.Vibration.HighVibration = CalculateHighVibrations(DynotisData.Vibration.HighVibrationBuffer);
+                DynotisData.Vibration.HighVibrationBuffer.Clear();
+
+                DynotisData.Vibration.TareVibration = DynotisData.Vibration.TareVibrationBuffer.Sum() / DynotisData.Vibration.TareVibrationBuffer.Count;
+                DynotisData.Vibration.TareVibrationBuffer.Clear();
+
+                DynotisData.Vibration.TareVibrationX = DynotisData.Vibration.TareVibrationXBuffer.Sum() / DynotisData.Vibration.TareVibrationXBuffer.Count;
+                DynotisData.Vibration.TareVibrationXBuffer.Clear();
+
+                DynotisData.Vibration.TareVibrationY = DynotisData.Vibration.TareVibrationYBuffer.Sum() / DynotisData.Vibration.TareVibrationYBuffer.Count;
+                DynotisData.Vibration.TareVibrationYBuffer.Clear();
+
+                DynotisData.Vibration.TareVibrationZ = DynotisData.Vibration.TareVibrationZBuffer.Sum() / DynotisData.Vibration.TareVibrationZBuffer.Count;
+                DynotisData.Vibration.TareVibrationZBuffer.Clear();
+            }
         }
         private double CalculateHighVibrations(List<double> buffer)
         {

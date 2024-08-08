@@ -123,7 +123,7 @@
                 </icon:PackIconMaterial.ToolTip>
             </icon:PackIconMaterial>
             <TextBlock Style="{StaticResource NameLabelStyle}" Text="{x:Static p:Resources.EffVariables_PropulsionSystemEfficiencyI}" />
-            <TextBlock Style="{StaticResource ValueLabelStyle}" Text="0.0" />
+            <TextBlock Style="{StaticResource ValueLabelStyle}" Text="{Binding DeviceInterfaceVariables.Theoric.PropSysEfficiencyI, Mode=OneWay, StringFormat={}{0:0.00}}" />
             <TextBlock Style="{StaticResource UnitLabelStyle}" Text="%" />
         </StackPanel>
 
@@ -135,7 +135,7 @@
                 </icon:PackIconMaterial.ToolTip>
             </icon:PackIconMaterial>
             <TextBlock Style="{StaticResource NameLabelStyle}" Text="{x:Static p:Resources.EffVariables_PropulsionSystemEfficiencyII}" />
-            <TextBlock Style="{StaticResource ValueLabelStyle}" Text="0.0" />
+            <TextBlock Style="{StaticResource ValueLabelStyle}" Text="{Binding DeviceInterfaceVariables.Theoric.PropSysEfficiencyII, Mode=OneWay, StringFormat={}{0:0.00}}" />
             <TextBlock Style="{StaticResource UnitLabelStyle}" Text="g/Watt" />
         </StackPanel>
 
@@ -147,7 +147,7 @@
                 </icon:PackIconMaterial.ToolTip>
             </icon:PackIconMaterial>
             <TextBlock Style="{StaticResource NameLabelStyle}" Text="{x:Static p:Resources.EffVariables_PropellerEfficiency}" />
-            <TextBlock Style="{StaticResource ValueLabelStyle}" Text="0.0" />
+            <TextBlock Style="{StaticResource ValueLabelStyle}" Text="{Binding DeviceInterfaceVariables.Theoric.PropellerEfficiency, Mode=OneWay, StringFormat={}{0:0.00}}" />
             <TextBlock Style="{StaticResource UnitLabelStyle}" Text="%" />
         </StackPanel>
 
@@ -159,7 +159,7 @@
                 </icon:PackIconMaterial.ToolTip>
             </icon:PackIconMaterial>
             <TextBlock Style="{StaticResource NameLabelStyle}" Text="{x:Static p:Resources.EffVariables_MotorEfficiency}" />
-            <TextBlock Style="{StaticResource ValueLabelStyle}" Text="0.0" />
+            <TextBlock Style="{StaticResource ValueLabelStyle}" Text="{Binding DeviceInterfaceVariables.Theoric.MotorEfficiency, Mode=OneWay, StringFormat={}{0:0.00}}" />
             <TextBlock Style="{StaticResource UnitLabelStyle}" Text="%" />
         </StackPanel>
     </Grid>

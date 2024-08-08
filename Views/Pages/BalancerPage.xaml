@@ -326,7 +326,7 @@
 
                                                 <!-- Vibration -->
                                                 <lvc:AngularGauge Grid.Row="2" Height="150" Width="150" Margin="5 25 0 45"
-                                                        Value="{Binding DeviceInterfaceVariables.Vibration}"              
+                                                        Value="{Binding DeviceInterfaceVariables.Vibration.Value}"              
                                                         FromValue="0"
                                                         ToValue="2"
                                                         TicksStep="0.1"
@@ -354,7 +354,7 @@
                                                         </Grid.ColumnDefinitions>
                                                         <icon:PackIconMaterial Grid.Row="0" Grid.Column="0" Kind="Vibrate" Foreground="{DynamicResource deviceCardIcon}" Width="20" Height="20" Margin="2 2 10 2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                                         <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{x:Static p:Resources.DeviceCard_Vibration}" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="25 0 5 0" HorizontalAlignment="Right"/>
-                                                        <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding DeviceInterfaceVariables.Vibration, Mode=OneWay, StringFormat={}{0:0.00}}" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="20 0 5 0" HorizontalAlignment="Left"/>
+                                                        <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding DeviceInterfaceVariables.Vibration.Value, Mode=OneWay, StringFormat={}{0:0.00}}" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="20 0 5 0" HorizontalAlignment="Left"/>
                                                         <TextBlock Grid.Row="1" Grid.Column="1" Text="g" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Left"/>
                                                     </Grid>
                                                 </Border>
@@ -449,7 +449,7 @@
                                                     <StackPanel  Orientation="Horizontal">
                                                         <StackPanel Orientation="Horizontal" Margin="0 0 0 0">
                                                             <TextBlock Text="V:" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Center"/>
-                                                            <TextBlock Text="{Binding DeviceInterfaceVariables.Vibration, Mode=OneWay, StringFormat={}{0:0.000}}" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Center"/>
+                                                            <TextBlock Text="{Binding DeviceInterfaceVariables.Vibration.Value, Mode=OneWay, StringFormat={}{0:0.000}}" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Center"/>
                                                             <TextBlock Text=" g" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Center"/>
                                                         </StackPanel>
                                                         <!--
@@ -504,7 +504,7 @@
                                                     <Border Grid.Row="0" Grid.Column="1" Margin="3 3 10 3" BorderThickness="0" BorderBrush="{DynamicResource PageBorder}"  HorizontalAlignment="Right" VerticalAlignment="Center">
                                                         <StackPanel  Orientation="Vertical">
                                                             <StackPanel Orientation="Horizontal">
-                                                                <TextBlock FontSize="14" Text="{Binding DeviceInterfaceVariables.HighVibration, Mode=OneWay, StringFormat={}{0:0.000}}" Margin="0 0 3 0" Foreground="{DynamicResource Text}" HorizontalAlignment="Center"/>
+                                                                <TextBlock FontSize="14" Text="{Binding DeviceInterfaceVariables.Vibration.HighVibration, Mode=OneWay, StringFormat={}{0:0.000}}" Margin="0 0 3 0" Foreground="{DynamicResource Text}" HorizontalAlignment="Center"/>
                                                                 <TextBlock FontSize="14" Text="g" HorizontalAlignment="Center" Foreground="{DynamicResource Text}"/>
                                                             </StackPanel>
                                                         </StackPanel>
@@ -543,7 +543,7 @@
                                                         <Border Grid.Row="0" Grid.Column="1" Margin="3 3 10 3" BorderThickness="0" BorderBrush="{DynamicResource PageBorder}"  HorizontalAlignment="Right" VerticalAlignment="Center">
                                                             <StackPanel  Orientation="Vertical">
                                                                 <StackPanel Orientation="Horizontal">
-                                                                    <TextBlock FontSize="14" Text="{Binding DeviceInterfaceVariables.VibrationX, Mode=OneWay, StringFormat={}{0:0.000}}" Margin="0 0 3 0" Foreground="{DynamicResource Text}" HorizontalAlignment="Center"/>
+                                                                <TextBlock FontSize="14" Text="{Binding DeviceInterfaceVariables.Vibration.VibrationX, Mode=OneWay, StringFormat={}{0:0.000}}" Margin="0 0 3 0" Foreground="{DynamicResource Text}" HorizontalAlignment="Center"/>
                                                                     <TextBlock FontSize="14" Text="g" HorizontalAlignment="Center" Foreground="{DynamicResource Text}"/>
                                                                 </StackPanel>
                                                             </StackPanel>
@@ -583,7 +583,7 @@
                                                     <Border Grid.Row="0" Grid.Column="1" Margin="3 3 10 3" BorderThickness="0" BorderBrush="{DynamicResource PageBorder}"  HorizontalAlignment="Right" VerticalAlignment="Center">
                                                         <StackPanel  Orientation="Vertical">
                                                             <StackPanel Orientation="Horizontal">
-                                                                <TextBlock FontSize="14" Text="{Binding DeviceInterfaceVariables.VibrationY, Mode=OneWay, StringFormat={}{0:0.000}}" Margin="0 0 3 0" Foreground="{DynamicResource Text}" HorizontalAlignment="Center"/>
+                                                                <TextBlock FontSize="14" Text="{Binding DeviceInterfaceVariables.Vibration.VibrationY, Mode=OneWay, StringFormat={}{0:0.000}}" Margin="0 0 3 0" Foreground="{DynamicResource Text}" HorizontalAlignment="Center"/>
                                                                 <TextBlock FontSize="14" Text="g" HorizontalAlignment="Center" Foreground="{DynamicResource Text}"/>
                                                             </StackPanel>
                                                         </StackPanel>
@@ -622,7 +622,7 @@
                                                     <Border Grid.Row="0" Grid.Column="1" Margin="3 3 10 3" BorderThickness="0" BorderBrush="{DynamicResource PageBorder}"  HorizontalAlignment="Right" VerticalAlignment="Center">
                                                         <StackPanel  Orientation="Vertical">
                                                             <StackPanel Orientation="Horizontal">
-                                                                <TextBlock FontSize="14" Text="{Binding DeviceInterfaceVariables.VibrationZ, Mode=OneWay, StringFormat={}{0:0.000}}" Margin="0 0 3 0" Foreground="{DynamicResource Text}" HorizontalAlignment="Center"/>
+                                                                <TextBlock FontSize="14" Text="{Binding DeviceInterfaceVariables.Vibration.VibrationZ, Mode=OneWay, StringFormat={}{0:0.000}}" Margin="0 0 3 0" Foreground="{DynamicResource Text}" HorizontalAlignment="Center"/>
                                                                 <TextBlock FontSize="14" Text="g" HorizontalAlignment="Center" Foreground="{DynamicResource Text}"/>
                                                             </StackPanel>
                                                         </StackPanel>

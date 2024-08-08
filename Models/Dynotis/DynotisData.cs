@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using static Advanced_Dynotis_Software.Models.Dynotis.DynotisData;
+using static InterfaceVariables;
 
 namespace Advanced_Dynotis_Software.Models.Dynotis
 {
@@ -21,13 +23,8 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
         public DynotisData()
         {
-            _bufferCount = 0;
-            _highVibrationBuffer = new List<double>();
-            _avgVibrationBuffer = new List<double>();
-            _tareVibrationBuffer = new List<double>();
-            _tareVibrationXBuffer = new List<double>();
-            _tareVibrationYBuffer = new List<double>();
-            _tareVibrationZBuffer = new List<double>();
+            _vibrationVariables = new VibrationVariables();
+            _theoricVariables = new TheoricVariables();
         }
 
         private double _time;
@@ -39,44 +36,31 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         private Unit _torque;
         private double _voltage;
         private double _current;
-        private double _power;
         private Unit _temperature;
         private Unit _pressure;
         private double _humidity;
         private double _vibrationX;
-        private double _vibrationXDare;
         private double _vibrationY;
         private double _vibrationZ;
-        private double _vibration;
-        private List<double> _highVibrationBuffer;
-        private List<double> _avgVibrationBuffer;
-        private int _bufferCount;
-        private double _highVibration;
-        private double _avgVibration;
-        private double _tareVibration;
-        private double _tareVibrationX;
-        private double _tareVibrationY;
-        private double _tareVibrationZ;
-        private List<double> _tareVibrationBuffer;
-        private List<double> _tareVibrationXBuffer;
-        private List<double> _tareVibrationYBuffer;
-        private List<double> _tareVibrationZBuffer;
+
         private Unit _windSpeed;
         private double _windDirection;
-        private double _airDensity;
-        private double _propellerArea;
+        private double _propellerDiameter;
         private double _motorInner;
         private double _noLoadCurrents;
         private double _maxCurrent;
         private double _batteryLevel;
-        private bool   _securityStatus;
+        private bool _securityStatus;
         private int _escValue;
-        private bool   _escStatus;
+        private bool _escStatus;
+
+        private VibrationVariables _vibrationVariables;
+        private TheoricVariables _theoricVariables;
 
 
 
         private string _testMode;
-        private bool   _isRecording;        
+        private bool _isRecording;
         private string _fileName;
         private TimeSpan _duration;
 
@@ -160,12 +144,6 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             get => _current;
             set => SetProperty(ref _current, value);
         }
-
-        public double Power
-        {
-            get => _power;
-            set => SetProperty(ref _power, value);
-        }
         public Unit Temperature
         {
             get => _temperature;
@@ -199,77 +177,6 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             set => SetProperty(ref _vibrationZ, value);
         }
 
-        public double Vibration
-        {
-            get => _vibration;
-            set => SetProperty(ref _vibration, value);
-        }
-        public double HighVibration
-        {
-            get => _highVibration;
-            set => SetProperty(ref _highVibration, value);
-        }   
-        public double AVGVibration
-        {
-            get => _avgVibration;
-            set => SetProperty(ref _avgVibration, value);
-        }      
-        public double TareVibration
-        {
-            get => _tareVibration;
-            set => SetProperty(ref _tareVibration, value);
-        }
-        public List<double> TareVibrationBuffer
-        {
-            get => _tareVibrationBuffer;
-            set => SetProperty(ref _tareVibrationBuffer, value);
-        }
-        public double TareVibrationX
-        {
-            get => _tareVibrationX;
-            set => SetProperty(ref _tareVibrationX, value);
-        }       
-        public List<double> TareVibrationXBuffer
-        {
-            get => _tareVibrationXBuffer;
-            set => SetProperty(ref _tareVibrationXBuffer, value);
-        }
-        public double TareVibrationY
-        {
-            get => _tareVibrationY;
-            set => SetProperty(ref _tareVibrationY, value);
-        } 
-        public List<double> TareVibrationYBuffer
-        {
-            get => _tareVibrationYBuffer;
-            set => SetProperty(ref _tareVibrationYBuffer, value);
-        }
-        public double TareVibrationZ
-        {
-            get => _tareVibrationZ;
-            set => SetProperty(ref _tareVibrationZ, value);
-        }
-        public List<double> TareVibrationZBuffer
-        {
-            get => _tareVibrationZBuffer;
-            set => SetProperty(ref _tareVibrationZBuffer, value);
-        }
-        public List<double> HighVibrationBuffer
-        {
-            get => _highVibrationBuffer;
-            set => SetProperty(ref _highVibrationBuffer, value);
-        }      
-        public List<double> AVGVibrationBuffer
-        {
-            get => _avgVibrationBuffer;
-            set => SetProperty(ref _avgVibrationBuffer, value);
-        }
-        public int BufferCount
-        {
-            get => _bufferCount;
-            set => SetProperty(ref _bufferCount, value);
-        }
-
         public Unit WindSpeed
         {
             get => _windSpeed;
@@ -282,16 +189,11 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             set => SetProperty(ref _windDirection, value);
         }
 
-        public double AirDensity
-        {
-            get => _airDensity;
-            set => SetProperty(ref _airDensity, value);
-        }
 
-        public double PropellerArea
+        public double PropellerDiameter
         {
-            get => _propellerArea;
-            set => SetProperty(ref _propellerArea, value);
+            get => _propellerDiameter;
+            set => SetProperty(ref _propellerDiameter, value);
         }
 
         public double MotorInner
@@ -335,6 +237,16 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             get => _escStatus;
             set => SetProperty(ref _escStatus, value);
         }
+        public VibrationVariables Vibration
+        {
+            get => _vibrationVariables;
+            set => SetProperty(ref _vibrationVariables, value);
+        }     
+        public TheoricVariables Theoric
+        {
+            get => _theoricVariables;
+            set => SetProperty(ref _theoricVariables, value);
+        }
 
         public bool IsRecording
         {
@@ -346,12 +258,12 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         {
             get => _testMode;
             set => SetProperty(ref _testMode, value);
-        }        
+        }
         public string FileName
         {
             get => _fileName;
             set => SetProperty(ref _fileName, value);
-        }        
+        }
         public TimeSpan Duration
         {
             get => _duration;
@@ -371,6 +283,242 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             field = value;
             OnPropertyChanged(propertyName);
             return true;
+        }
+
+        public class VibrationVariables : INotifyPropertyChanged
+        {
+            public VibrationVariables()
+            {
+                _tareBufferCount = 0;
+
+                _tareVibrationBuffer = new List<double>();
+                _tareVibrationXBuffer = new List<double>();
+                _tareVibrationYBuffer = new List<double>();
+                _tareVibrationZBuffer = new List<double>();
+
+                _highVibrationBuffer = new List<double>();
+            }
+
+            private double _value;
+
+            private double _vibrationX;
+            private double _vibrationY;
+            private double _vibrationZ;
+
+            private int _tareBufferCount;
+            private double _tareVibration;
+            private List<double> _tareVibrationBuffer;
+            private double _tareVibrationX;
+            private List<double> _tareVibrationXBuffer;
+            private double _tareVibrationY;
+            private List<double> _tareVibrationYBuffer;
+            private double _tareVibrationZ;
+            private List<double> _tareVibrationZBuffer;
+
+            private double _highVibration;
+            private List<double> _highVibrationBuffer;
+
+            public double Value
+            {
+                get => _value;
+                set => SetProperty(ref _value, value);
+            }
+
+            public double VibrationX
+            {
+                get => _vibrationX;
+                set => SetProperty(ref _vibrationX, value);
+            }
+
+            public double VibrationY
+            {
+                get => _vibrationY;
+                set => SetProperty(ref _vibrationY, value);
+            }
+
+            public double VibrationZ
+            {
+                get => _vibrationZ;
+                set => SetProperty(ref _vibrationZ, value);
+            }
+
+            public int TareBufferCount
+            {
+                get => _tareBufferCount;
+                set => SetProperty(ref _tareBufferCount, value);
+            }
+
+            public double TareVibration
+            {
+                get => _tareVibration;
+                set => SetProperty(ref _tareVibration, value);
+            }
+
+            public List<double> TareVibrationBuffer
+            {
+                get => _tareVibrationBuffer;
+                set => SetProperty(ref _tareVibrationBuffer, value);
+            }
+
+            public double TareVibrationX
+            {
+                get => _tareVibrationX;
+                set => SetProperty(ref _tareVibrationX, value);
+            }
+
+            public List<double> TareVibrationXBuffer
+            {
+                get => _tareVibrationXBuffer;
+                set => SetProperty(ref _tareVibrationXBuffer, value);
+            }
+
+            public double TareVibrationY
+            {
+                get => _tareVibrationY;
+                set => SetProperty(ref _tareVibrationY, value);
+            }
+
+            public List<double> TareVibrationYBuffer
+            {
+                get => _tareVibrationYBuffer;
+                set => SetProperty(ref _tareVibrationYBuffer, value);
+            }
+
+            public double TareVibrationZ
+            {
+                get => _tareVibrationZ;
+                set => SetProperty(ref _tareVibrationZ, value);
+            }
+
+            public List<double> TareVibrationZBuffer
+            {
+                get => _tareVibrationZBuffer;
+                set => SetProperty(ref _tareVibrationZBuffer, value);
+            }
+
+            public double HighVibration
+            {
+                get => _highVibration;
+                set => SetProperty(ref _highVibration, value);
+            }
+
+            public List<double> HighVibrationBuffer
+            {
+                get => _highVibrationBuffer;
+                set => SetProperty(ref _highVibrationBuffer, value);
+            }
+
+            public event PropertyChangedEventHandler PropertyChanged;
+
+            protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+
+            protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+            {
+                if (Equals(field, value)) return false;
+                field = value;
+                OnPropertyChanged(propertyName);
+                return true;
+            }
+        }
+        public class TheoricVariables : INotifyPropertyChanged
+        {
+            public const double AirGasConstant = 287.058; // Individual Gas Constant - R Unit: [J/kg K]
+            public const double EscEffConst = 0.95;
+            public const double KelvinConst = 273.15;
+            private static double _propellerArea;
+            private static double _rotationalSpeed;
+            private static double _power;
+            private static double _airDensity;
+            private static double _propellerEfficiency;
+            private static double _propSysEfficiencyI;
+            private static double _propSysEfficiencyII;
+            private static double _motorEfficiency;
+            private static double _ct;
+            private static double _cq;
+            private static double _cp;
+
+            public double PropellerArea
+            {
+                get => _propellerArea;
+                set => SetProperty(ref _propellerArea, value);
+            }
+
+            public double RotationalSpeed
+            {
+                get => _rotationalSpeed;
+                set => SetProperty(ref _rotationalSpeed, value);
+            }
+
+            public double Power
+            {
+                get => _power;
+                set => SetProperty(ref _power, value);
+            }
+            public double AirDensity
+            {
+                get => _airDensity;
+                set => SetProperty(ref _airDensity, value);
+            }
+
+            public double PropellerEfficiency
+            {
+                get => _propellerEfficiency;
+                set => SetProperty(ref _propellerEfficiency, value);
+            }
+
+            public double PropSysEfficiencyI
+            {
+                get => _propSysEfficiencyI;
+                set => SetProperty(ref _propSysEfficiencyI, value);
+            }
+
+            public double PropSysEfficiencyII
+            {
+                get => _propSysEfficiencyII;
+                set => SetProperty(ref _propSysEfficiencyII, value);
+            }
+
+            public double MotorEfficiency
+            {
+                get => _motorEfficiency;
+                set => SetProperty(ref _motorEfficiency, value);
+            }
+
+            public double Ct
+            {
+                get => _ct;
+                set => SetProperty(ref _ct, value);
+            }
+
+            public double Cq
+            {
+                get => _cq;
+                set => SetProperty(ref _cq, value);
+            }
+
+            public double Cp
+            {
+                get => _cp;
+                set => SetProperty(ref _cp, value);
+            }
+
+            public event PropertyChangedEventHandler PropertyChanged;
+
+            protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+
+            protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+            {
+                if (Equals(field, value)) return false;
+                field = value;
+                OnPropertyChanged(propertyName);
+                return true;
+            }
         }
     }
 }

@@ -23,6 +23,9 @@ public class InterfaceVariables : INotifyPropertyChanged
         _selectedWindSpeedUnitIndex = 0;
         _selectedPressureUnitIndex = 1;
 
+        _vibrationVariables = new VibrationVariables();
+        _theoricVariables = new TheoricVariables();
+
         _balancerIterationStep = 0;
         _balancerIterationVibrations = new List<double>();
         _balancerIterationStepChart = new ObservableCollection<int>();
@@ -63,24 +66,14 @@ public class InterfaceVariables : INotifyPropertyChanged
     private Unit _torque;
     private double _voltage;
     private double _current;
-    private double _power;
     private Unit _pressure;
-    private double _vibrationX;
-    private double _vibrationY;
-    private double _vibrationZ;
-    private double _highVibration;
-    private double _avgVibration;
-    private double _tareVibration;
-    private double _tareVibrationX;
-    private double _tareVibrationY;
-    private double _tareVibrationZ;
-    private double _vibration;
-    private double _vibrationmV;
     private Unit _windSpeed;
     private double _windDirection;
-    private double _airDensity;
 
-    private double _propellerArea;
+    private VibrationVariables _vibrationVariables; 
+    private TheoricVariables _theoricVariables;
+ 
+    private double _propellerDiameter;
     private double _motorInner;
     private double _noLoadCurrents;
     private double _maxCurrent;
@@ -176,11 +169,15 @@ public class InterfaceVariables : INotifyPropertyChanged
         get => _current;
         set => SetProperty(ref _current, value);
     }
-
-    public double Power
+    public VibrationVariables Vibration
     {
-        get => _power;
-        set => SetProperty(ref _power, value);
+        get => _vibrationVariables;
+        set => SetProperty(ref _vibrationVariables, value);
+    } 
+    public TheoricVariables Theoric
+    {
+        get => _theoricVariables;
+        set => SetProperty(ref _theoricVariables, value);
     }
 
     public Unit Pressure
@@ -188,61 +185,7 @@ public class InterfaceVariables : INotifyPropertyChanged
         get => _pressure;
         set => SetProperty(ref _pressure, value);
     }
-
-    public double VibrationX
-    {
-        get => _vibrationX;
-        set => SetProperty(ref _vibrationX, value);
-    }
-
-    public double VibrationY
-    {
-        get => _vibrationY;
-        set => SetProperty(ref _vibrationY, value);
-    }
-
-    public double VibrationZ
-    {
-        get => _vibrationZ;
-        set => SetProperty(ref _vibrationZ, value);
-    }
-
-    public double Vibration
-    {
-        get => _vibration;
-        set => SetProperty(ref _vibration, value);
-    }
-    public double HighVibration
-    {
-        get => _highVibration;
-        set => SetProperty(ref _highVibration, value);
-    }
-    public double AVGVibration
-    {
-        get => _avgVibration;
-        set => SetProperty(ref _avgVibration, value);
-    }    
-    public double TareVibration
-    {
-        get => _tareVibration;
-        set => SetProperty(ref _tareVibration, value);
-    }    
-    public double TareVibrationX
-    {
-        get => _tareVibrationX;
-        set => SetProperty(ref _tareVibrationX, value);
-    }    
-    public double TareVibrationY
-    {
-        get => _tareVibrationY;
-        set => SetProperty(ref _tareVibrationY, value);
-    }    
-    public double TareVibrationZ
-    {
-        get => _tareVibrationZ;
-        set => SetProperty(ref _tareVibrationZ, value);
-    }
-
+    
     public Unit WindSpeed
     {
         get => _windSpeed;
@@ -255,16 +198,10 @@ public class InterfaceVariables : INotifyPropertyChanged
         set => SetProperty(ref _windDirection, value);
     }
 
-    public double AirDensity
+    public double PropellerDiameter
     {
-        get => _airDensity;
-        set => SetProperty(ref _airDensity, value);
-    }
-
-    public double PropellerArea
-    {
-        get => _propellerArea;
-        set => SetProperty(ref _propellerArea, value);
+        get => _propellerDiameter;
+        set => SetProperty(ref _propellerDiameter, value);
     }
 
     public double MotorInner
@@ -552,18 +489,20 @@ public class InterfaceVariables : INotifyPropertyChanged
         Torque = TorqueTareSet(TorqueUnitSet(Torque.Value, Torque.UnitName, Torque.UnitSymbol, data.Torque.Value, data.Torque.UnitName, data.Torque.UnitSymbol));
         Voltage = data.Voltage;
         Current = CurrentTareSet(data.Current);
-        Power = data.Power;
         Pressure = PressureUnitSet(Pressure.Value, Pressure.UnitName, Pressure.UnitSymbol, data.Pressure.Value, data.Pressure.UnitName, data.Pressure.UnitSymbol);
-        VibrationX = data.VibrationX - TareVibrationX; 
-        VibrationY = data.VibrationY - TareVibrationY;
-        VibrationZ = data.VibrationZ - TareVibrationZ;
-        Vibration = data.Vibration - TareVibration;
-        HighVibration = data.HighVibration - TareVibration;
-        AVGVibration = data.AVGVibration - TareVibration;
+        Vibration.VibrationX = data.Vibration.VibrationX - Vibration.TareVibrationX;
+        Vibration.VibrationY = data.Vibration.VibrationY - Vibration.TareVibrationY;
+        Vibration.VibrationZ = data.Vibration.VibrationZ - Vibration.TareVibrationZ;
+        Vibration.Value = data.Vibration.Value - Vibration.TareVibration;
+        Vibration.HighVibration = data.Vibration.HighVibration - Vibration.TareVibration;
+        Vibration.TareCurrentVibration = data.Vibration.TareVibration;
+        Vibration.TareCurrentVibrationX = data.Vibration.TareVibrationX;
+        Vibration.TareCurrentVibrationY = data.Vibration.TareVibrationY;
+        Vibration.TareCurrentVibrationZ = data.Vibration.TareVibrationZ;
+
         WindSpeed = WindSpeedUnitSet(WindSpeed.Value, WindSpeed.UnitName, WindSpeed.UnitSymbol, data.WindSpeed.Value, data.WindSpeed.UnitName, data.WindSpeed.UnitSymbol);
         WindDirection = data.WindDirection;
-        AirDensity = data.AirDensity;
-        PropellerArea = data.PropellerArea;
+        PropellerDiameter = data.PropellerDiameter;
         MotorInner = data.MotorInner;
         NoLoadCurrents = data.NoLoadCurrents;
         MaxCurrent = data.MaxCurrent;
@@ -571,6 +510,18 @@ public class InterfaceVariables : INotifyPropertyChanged
         SecurityStatus = data.SecurityStatus;
         ESCValue = data.ESCValue;
         ESCStatus = data.ESCStatus;
+
+        Theoric.PropellerArea = data.Theoric.PropellerArea;
+        Theoric.RotationalSpeed = data.Theoric.RotationalSpeed;
+        Theoric.Power = data.Theoric.Power;
+        Theoric.AirDensity = data.Theoric.AirDensity;
+        Theoric.PropellerEfficiency = data.Theoric.PropellerEfficiency;
+        Theoric.PropSysEfficiencyI = data.Theoric.PropSysEfficiencyI;
+        Theoric.PropSysEfficiencyII = data.Theoric.PropSysEfficiencyII;
+        Theoric.MotorEfficiency = data.Theoric.MotorEfficiency;
+        Theoric.Ct = data.Theoric.Ct;
+        Theoric.Cq = data.Theoric.Cq;
+        Theoric.Cp = data.Theoric.Cp;
 
         // Ensure your values ​​are protected
         SelectedIsTurkishChecked = InterfaceVariables.Instance.SelectedIsTurkishChecked;
@@ -931,5 +882,218 @@ public class InterfaceVariables : INotifyPropertyChanged
         field = value;
         OnPropertyChanged(propertyName);
         return true;
+    }
+
+    public class VibrationVariables : INotifyPropertyChanged
+    {
+        public VibrationVariables()
+        {
+            // Varsayılan değerlerle başlatma kodları buraya eklenebilir.
+        }
+
+        private double _value;
+
+        private double _vibrationX;
+        private double _vibrationY;
+        private double _vibrationZ;
+
+        private double _tareVibration;
+        private double _tareVibrationX;
+        private double _tareVibrationY;
+        private double _tareVibrationZ;
+
+        private double _tareCurrentVibration;
+        private double _tareCurrentVibrationX;
+        private double _tareCurrentVibrationY;
+        private double _tareCurrentVibrationZ;
+
+        private double _highVibration;
+
+        public double Value
+        {
+            get => _value;
+            set => SetProperty(ref _value, value);
+        }
+
+        public double VibrationX
+        {
+            get => _vibrationX;
+            set => SetProperty(ref _vibrationX, value);
+        }
+
+        public double VibrationY
+        {
+            get => _vibrationY;
+            set => SetProperty(ref _vibrationY, value);
+        }
+
+        public double VibrationZ
+        {
+            get => _vibrationZ;
+            set => SetProperty(ref _vibrationZ, value);
+        }
+
+        public double TareVibration
+        {
+            get => _tareVibration;
+            set => SetProperty(ref _tareVibration, value);
+        }
+
+        public double TareVibrationX
+        {
+            get => _tareVibrationX;
+            set => SetProperty(ref _tareVibrationX, value);
+        }
+
+        public double TareVibrationY
+        {
+            get => _tareVibrationY;
+            set => SetProperty(ref _tareVibrationY, value);
+        }
+
+        public double TareVibrationZ
+        {
+            get => _tareVibrationZ;
+            set => SetProperty(ref _tareVibrationZ, value);
+        }
+
+        public double TareCurrentVibration
+        {
+            get => _tareCurrentVibration;
+            set => SetProperty(ref _tareCurrentVibration, value);
+        }
+
+        public double TareCurrentVibrationX
+        {
+            get => _tareCurrentVibrationX;
+            set => SetProperty(ref _tareCurrentVibrationX, value);
+        }
+
+        public double TareCurrentVibrationY
+        {
+            get => _tareCurrentVibrationY;
+            set => SetProperty(ref _tareCurrentVibrationY, value);
+        }
+
+        public double TareCurrentVibrationZ
+        {
+            get => _tareCurrentVibrationZ;
+            set => SetProperty(ref _tareCurrentVibrationZ, value);
+        }
+
+        public double HighVibration
+        {
+            get => _highVibration;
+            set => SetProperty(ref _highVibration, value);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (Equals(field, value)) return false;
+            field = value;
+            OnPropertyChanged(propertyName);
+            return true;
+        }
+    }
+    public class TheoricVariables : INotifyPropertyChanged
+    {
+        private static double _propellerArea;
+        private static double _rotationalSpeed;
+        private static double _power;
+        private static double _airDensity;
+        private static double _propellerEfficiency;
+        private static double _propSysEfficiencyI;
+        private static double _propSysEfficiencyII;
+        private static double _motorEfficiency;
+        private static double _ct;
+        private static double _cq;
+        private static double _cp;
+
+        public double PropellerArea
+        {
+            get => _propellerArea;
+            set => SetProperty(ref _propellerArea, value);
+        }
+
+        public double RotationalSpeed
+        {
+            get => _rotationalSpeed;
+            set => SetProperty(ref _rotationalSpeed, value);
+        }
+
+        public double Power
+        {
+            get => _power;
+            set => SetProperty(ref _power, value);
+        }
+        public double AirDensity
+        {
+            get => _airDensity;
+            set => SetProperty(ref _airDensity, value);
+        }
+
+        public double PropellerEfficiency
+        {
+            get => _propellerEfficiency;
+            set => SetProperty(ref _propellerEfficiency, value);
+        }
+
+        public double PropSysEfficiencyI
+        {
+            get => _propSysEfficiencyI;
+            set => SetProperty(ref _propSysEfficiencyI, value);
+        }
+
+        public double PropSysEfficiencyII
+        {
+            get => _propSysEfficiencyII;
+            set => SetProperty(ref _propSysEfficiencyII, value);
+        }
+
+        public double MotorEfficiency
+        {
+            get => _motorEfficiency;
+            set => SetProperty(ref _motorEfficiency, value);
+        }
+
+        public double Ct
+        {
+            get => _ct;
+            set => SetProperty(ref _ct, value);
+        }
+
+        public double Cq
+        {
+            get => _cq;
+            set => SetProperty(ref _cq, value);
+        }
+
+        public double Cp
+        {
+            get => _cp;
+            set => SetProperty(ref _cp, value);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (Equals(field, value)) return false;
+            field = value;
+            OnPropertyChanged(propertyName);
+            return true;
+        }
     }
 }

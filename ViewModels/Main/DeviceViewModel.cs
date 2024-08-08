@@ -23,7 +23,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         private DynotisData _latestDynotisData;
         private readonly object _dataLock = new();
         private CancellationTokenSource _cancellationTokenSource;
-        private int UpdateTimeMillisecond = 2; // 500 Hz (2ms)
+        private int UpdateTimeMillisecond = 10; // 100 Hz (10ms)
         private int ChartUpdateTimeMillisecond = 20; // 50 Hz (20ms)
 
         public Dynotis Device
@@ -153,7 +153,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                                 DeviceInterfaceVariables.BalancerIterationVibrationsChart = _currentBalancerRoutingSteps.BalancerIterationVibrationsChart;
                                 OnPropertyChanged(nameof(DeviceInterfaceVariables));
 
-                                _currentBalancerRoutingSteps.HighVibration = DeviceInterfaceVariables.HighVibration;
+                                _currentBalancerRoutingSteps.HighVibration = DeviceInterfaceVariables.Vibration.HighVibration;
 
                                 Device.DynotisData.ESCValue = _currentBalancerRoutingSteps.ESCValue;
                                 Device.DynotisData.ESCStatus = _currentBalancerRoutingSteps.ESCStatus;
@@ -193,10 +193,10 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                                 _currentBalancerParameters.BalancerIterationStep = DeviceInterfaceVariables.BalancerIterationStep;
                                 _currentBalancerParameters.BalancerIterationStepChart = DeviceInterfaceVariables.BalancerIterationStepChart;
                                 _currentBalancerParameters.BalancerIterationVibrationsChart = DeviceInterfaceVariables.BalancerIterationVibrationsChart;
-                                DeviceInterfaceVariables.TareVibration = _currentBalancerParameters.TareVibration;
-                                DeviceInterfaceVariables.TareVibrationX = _currentBalancerParameters.TareVibrationX;
-                                DeviceInterfaceVariables.TareVibrationY = _currentBalancerParameters.TareVibrationY;
-                                DeviceInterfaceVariables.TareVibrationZ = _currentBalancerParameters.TareVibrationZ;
+                                DeviceInterfaceVariables.Vibration.TareVibration = _currentBalancerParameters.TareVibration;
+                                DeviceInterfaceVariables.Vibration.TareVibrationX = _currentBalancerParameters.TareVibrationX;
+                                DeviceInterfaceVariables.Vibration.TareVibrationY = _currentBalancerParameters.TareVibrationY;
+                                DeviceInterfaceVariables.Vibration.TareVibrationZ = _currentBalancerParameters.TareVibrationZ;
                                 OnPropertyChanged(nameof(DeviceInterfaceVariables));
                             }
                         };
@@ -275,11 +275,11 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                     {
                         _currentEquipmentParameters.PropertyChanged += (sender, e) =>
                         {
-                            if (e.PropertyName == nameof(EquipmentParametersViewModel.UserPropellerArea) ||
+                            if (e.PropertyName == nameof(EquipmentParametersViewModel.UserPropellerDiameter) ||
                                 e.PropertyName == nameof(EquipmentParametersViewModel.UserMotorInner) ||
                                 e.PropertyName == nameof(EquipmentParametersViewModel.UserNoLoadCurrents))
                             {
-                                Device.DynotisData.PropellerArea = _currentEquipmentParameters.UserPropellerArea;
+                                Device.DynotisData.PropellerDiameter = _currentEquipmentParameters.UserPropellerDiameter;
                                 Device.DynotisData.MotorInner = _currentEquipmentParameters.UserMotorInner;
                                 Device.DynotisData.NoLoadCurrents = _currentEquipmentParameters.UserNoLoadCurrents;
                                 OnPropertyChanged(nameof(Device.DynotisData));

@@ -125,9 +125,9 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
         private void InterfaceVariables_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(_interfaceVariables.HighVibration))
+            if (e.PropertyName == nameof(_interfaceVariables.Vibration.HighVibration))
             {
-                HighVibration = _interfaceVariables.HighVibration;
+                HighVibration = _interfaceVariables.Vibration.HighVibration;
             }
         }
 

@@ -58,22 +58,10 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         {
             if (_interfaceVariables != null && _dynotisData != null)
             {
-
-                TareVibration = _dynotisData.TareVibration;
-                TareVibrationX = _dynotisData.TareVibrationX;
-                TareVibrationY = _dynotisData.TareVibrationY;
-                TareVibrationZ = _dynotisData.TareVibrationZ;
-                /*
-                MessageBox.Show($"VibrationTare: {TareVibration} ");
-                MessageBox.Show($"VibrationTareX: {TareVibrationX} ");
-                MessageBox.Show($"VibrationTareY: {TareVibrationY} ");
-                MessageBox.Show($"VibrationTareZ: {TareVibrationZ} ");
-                */
-                // Tare değerlerini InterfaceVariables.Instance'da saklayın
-                //InterfaceVariables.Instance.TareVibration = TareVibration;
-                //InterfaceVariables.Instance.TareVibrationX = TareVibrationX;
-                //InterfaceVariables.Instance.TareVibrationY = TareVibrationY;
-                //InterfaceVariables.Instance.TareVibrationZ = TareVibrationZ;     
+                TareVibration = _interfaceVariables.Vibration.TareCurrentVibration;
+                TareVibrationX = _interfaceVariables.Vibration.TareCurrentVibrationX;
+                TareVibrationY = _interfaceVariables.Vibration.TareCurrentVibrationY;
+                TareVibrationZ = _interfaceVariables.Vibration.TareCurrentVibrationZ;
             }
         }
 
@@ -84,7 +72,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 if (SetProperty(ref _tareVibration, value))
                 {
-                    _interfaceVariables.TareVibration = value;
+                    _interfaceVariables.Vibration.TareVibration = value;
                     OnPropertyChanged(nameof(TareVibration));
                 }
             }
@@ -96,7 +84,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 if (SetProperty(ref _tareVibrationX, value))
                 {
-                    _interfaceVariables.TareVibrationX = value;
+                    _interfaceVariables.Vibration.TareVibrationX = value;
                     OnPropertyChanged(nameof(TareVibrationX));
                 }
             }
@@ -108,7 +96,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 if (SetProperty(ref _tareVibrationY, value))
                 {
-                    _interfaceVariables.TareVibrationY = value;
+                    _interfaceVariables.Vibration.TareVibrationY = value;
                     OnPropertyChanged(nameof(TareVibrationY));
                 }
             }
@@ -120,7 +108,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 if (SetProperty(ref _tareVibrationZ, value))
                 {
-                    _interfaceVariables.TareVibrationZ= value;
+                    _interfaceVariables.Vibration.TareVibrationZ = value;
                     OnPropertyChanged(nameof(TareVibrationZ));
                 }
             }

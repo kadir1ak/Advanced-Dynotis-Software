@@ -76,7 +76,7 @@
                     <icon:PackIconMaterial Kind="Vibrate" Foreground="{DynamicResource deviceCardIcon}" Width="20" Height="20" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     <TextBlock x:Name="VibrationNameLabel" Text="{x:Static p:Resources.DeviceCard_Vibration}" Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Left"/>
                     <TextBlock Text=":" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
-                    <TextBlock x:Name="VibrationValueLabel" Text="{Binding DeviceInterfaceVariables.Vibration, Mode=OneWay, StringFormat={}{0:0.00}}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <TextBlock x:Name="VibrationValueLabel" Text="{Binding DeviceInterfaceVariables.Vibration.Value, Mode=OneWay, StringFormat={}{0:0.00}}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <TextBlock x:Name="VibrationUnitLabel" Text="g" Width="40" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
 
@@ -94,7 +94,7 @@
                     <icon:PackIconMaterial Kind="WeatherFog" Foreground="{DynamicResource deviceCardIcon}" Width="20" Height="20" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     <TextBlock x:Name="AirDensityNameLabel" Text="{x:Static p:Resources.DeviceCard_AirDensity}" Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Left"/>
                     <TextBlock Text=":" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
-                    <TextBlock x:Name="AirDensityValueLabel" Text="{Binding DeviceInterfaceVariables.AirDensity, Mode=OneWay, StringFormat={}{0:0.00}}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <TextBlock x:Name="AirDensityValueLabel" Text="{Binding DeviceInterfaceVariables.Theoric.AirDensity, Mode=OneWay, StringFormat={}{0:0.00}}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <TextBlock x:Name="AirDensityUnitLabel" Text="kg/m³" Width="40" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
 
@@ -121,7 +121,7 @@
                     <icon:PackIconMaterial Kind="LightningBolt" Foreground="{DynamicResource deviceCardIcon}" Width="20" Height="20" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     <TextBlock x:Name="PowerNameLabel" Text="{x:Static p:Resources.DeviceCard_Power}" Width="100" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="5 0 5 0" HorizontalAlignment="Left"/>
                     <TextBlock Text=":" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
-                    <TextBlock x:Name="PowerValueLabel" Text="{Binding DeviceInterfaceVariables.Power, Mode=OneWay, StringFormat={}{0:0.00}}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
+                    <TextBlock x:Name="PowerValueLabel" Text="{Binding DeviceInterfaceVariables.Theoric.Power, Mode=OneWay, StringFormat={}{0:0.00}}" Width="80" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 5 0" HorizontalAlignment="Right"/>
                     <TextBlock x:Name="PowerUnitLabel" Text="Watt" Width="40" Height="20" FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" Margin="0 0 0 0" HorizontalAlignment="Right"/>
                 </StackPanel>
 
@@ -320,12 +320,8 @@
                     <Border Margin="10 10 20 10" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}"  HorizontalAlignment="Right" VerticalAlignment="Top">
                         <StackPanel  Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock FontSize="12" Text="Value:" Margin="0 0 5 0" Foreground="{DynamicResource Text}"/>
-                                <TextBlock FontSize="12" Text="{Binding DeviceInterfaceVariables.Vibration, Mode=OneWay, StringFormat={}{0:0.000}}" Foreground="{DynamicResource Text}"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock FontSize="12" Text="Max Value:" Margin="0 0 5 0" Foreground="{DynamicResource Text}"/>
-                                <TextBlock FontSize="12" Text="{Binding DeviceInterfaceVariables.HighVibration, Mode=OneWay, StringFormat={}{0:0.000}}" Foreground="{DynamicResource Text}"/>
+                                <TextBlock FontSize="12" Text="Max:" Margin="0 0 5 0" Foreground="{DynamicResource Text}"/>
+                                <TextBlock FontSize="12" Text="{Binding DeviceInterfaceVariables.Vibration.HighVibration, Mode=OneWay, StringFormat={}{0:0.000}}" Foreground="{DynamicResource Text}"/>
                             </StackPanel>
                         </StackPanel>
                     </Border>
