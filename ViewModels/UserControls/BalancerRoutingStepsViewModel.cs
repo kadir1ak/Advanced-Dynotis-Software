@@ -1,18 +1,15 @@
-﻿using System;
+﻿using Advanced_Dynotis_Software.Models.Dynotis;
+using Advanced_Dynotis_Software.Services.Controllers;
+using Advanced_Dynotis_Software.Services.Helpers;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Threading;
-using Advanced_Dynotis_Software.Properties;
-using Advanced_Dynotis_Software.Models.Dynotis;
-using Advanced_Dynotis_Software.Services.Controllers;
-using Advanced_Dynotis_Software.Services.Helpers;
-using Advanced_Dynotis_Software.Services.Logger;
-using DocumentFormat.OpenXml.Drawing;
-using System.Collections.ObjectModel;
-using DocumentFormat.OpenXml.Office2016.Excel;
 
 namespace Advanced_Dynotis_Software.ViewModels.UserControls
 {
@@ -20,198 +17,284 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
     {
         private InterfaceVariables _interfaceVariables;
         private DynotisData _dynotisData;
-        private PIDController _pidController;
 
-        private DispatcherTimer _progressTimer;
-        private DispatcherTimer _pidTimer;
-        private DispatcherTimer _avgTimer;
-
-        private ObservableCollection<int> _balancerIterationStepChart;
-        private ObservableCollection<double> _balancerIterationVibrationsChart;
-
-        private double _highVibration;
+        // Counts
         private double _testTimeCount;
         private double _motorReadyTimeCount;
+
+        // Status 
         private bool _motorReadyStatus;
         private bool _testReadyStatus;
+
+        // Steps Buttons
+        public ICommand RepeatStepButtonCommand { get; }
+        public ICommand ApprovalStepButtonCommand { get; }
+        public ICommand NextStepButtonCommand { get; }
+
+        private Visibility _repeatStepButtonVisibility;
+        private Visibility _approvalStepButtonVisibility;
+        private Visibility _nextStepButtonVisibility;
+
+        // Main Buttons
+        public ICommand RunButtonCommand { get; }
+        public ICommand StopButtonCommand { get; }
+        public ICommand NewBalanceTestButtonCommand { get; }
+
+        private bool _runButtonIsEnabled;
+
+        //StatusBar
+        private double _testTimeStatusBar;
+
         private string _statusMessage;
         private string _testResult;
-        private string _balancerPage_RunButton;
 
-        public ICommand RunCommand { get; }
-        public ICommand ApprovalCommand { get; }
-        public ICommand StopCommand { get; }
-        public ICommand NewTestCommand { get; }
-
+        //Iteration
+        private string _iterationHeader;
+        private string _iteration;
         private int _balancerIterationStep;
         private int _currentStepIndex;
+        public List<string> IterationHeaders { get; set; }
+        public List<string> Iterations { get; set; }
 
-        private readonly List<string> _steps;
-        public List<string> Steps => _steps;
-
-        public string IterationHeader {  get; set; }
-        public string Iteration {  get; set; }
-
-        private bool _isRunButtonEnabled;
-        private bool _isApprovalButtonEnabled;
-
+        //ESC
         private bool _escStatus;
         private int _escValue;
 
+        //PID
         private int smoothTransitionStep;
+        private PIDController _pidController;
+        private DispatcherTimer _pidTimer;
 
+        //Progress Bar Time
+        private DispatcherTimer _progressTimer;
+
+        //AVG
+        private DispatcherTimer _avgTimer;
+        private double _highVibration;
         private List<double> _testVibrationsDataBuffer;
         private List<double> _testStepsPropellerVibrations;
 
+        //StepChart
+        private ObservableCollection<int> _balancerIterationStepChart;
+        private ObservableCollection<double> _balancerIterationVibrationsChart;
+
+        // Step Indicators
+        private ObservableCollection<Brush> _stepIndicators;
+
+        // Constructor
         public BalancerRoutingStepsViewModel(DynotisData dynotisData, InterfaceVariables interfaceVariables)
         {
             _interfaceVariables = interfaceVariables;
             _dynotisData = dynotisData;
-            // Subscribe to the PropertyChanged event of InterfaceVariables
+
             _interfaceVariables.PropertyChanged += InterfaceVariables_PropertyChanged;
 
-            ESCStatus = dynotisData.ESCStatus;
-            ESCValue = dynotisData.ESCValue;
+            TestVibrationsDataBuffer = new List<double>();
+            TestStepsPropellerVibrations = new List<double>();
+            BalancerIterationStepChart = new ObservableCollection<int>();
+            BalancerIterationVibrationsChart = new ObservableCollection<double>();
 
-            // Initialize the PID Controller with tuned parameters (Kp, Ki, Kd)
-            //_pidController = new PIDController(0.2, 0.01, 0.05);
+
+            // Initialize PID Controller
             _pidController = new PIDController(1.5, 0.03, 0.05);
 
-            RunCommand = new RelayCommand(param => Run(), param => IsRunButtonEnabled);
-            ApprovalCommand = new RelayCommand(param => Approval(), param => IsApprovalButtonEnabled);
-            StopCommand = new RelayCommand(param => Stop());
-            NewTestCommand = new RelayCommand(param => NewTest());
+            RunButtonCommand = new RelayCommand(param => RunCommand());
+            StopButtonCommand = new RelayCommand(param => StopCommand());
+            NewBalanceTestButtonCommand = new RelayCommand(param => NewTestCommand());
 
-            IterationHeader = "Cihazın Hazırlanması";
-            Iteration = "\r\n" + "1.) Cihazın uygun şekilde sabitleyiniz. " +
-                        "\r\n" + "Çevresel dengesizlik veya belirsizliğe sebep olabilecek koşullardan arındırdığınızdan emin olunuz. " +
-                        "\r\n" + "2.) Motor montajını yapınız. " +
-                        "\r\n" + "3.) Elektronik bağlantıları kontrol ediniz. ";
+            RepeatStepButtonCommand = new RelayCommand(param => RepeatStepCommand());
+            ApprovalStepButtonCommand = new RelayCommand(param => ApprovalCommand());
+            NextStepButtonCommand = new RelayCommand(param => NextStepCommand());
 
-            _steps = new List<string>
+            IterationHeaders = new List<string>
             {
-                Resources.BalancerPage_Group1,
-                Resources.BalancerPage_Group2,
-                Resources.BalancerPage_Group3,
-                Resources.BalancerPage_Group4,
-                Resources.BalancerPage_Group5,
-                Resources.BalancerPage_Group6,
-                Resources.BalancerPage_Group7,
+                "Welcome Balancer Test",
+                "Cihazın Hazırlanması",
+                "Cihaz Bağlantısının ve Arayüz Parametrelerinin Ayarlanması",
+                "Ortam Titreşimlerinin Hesaplanması ve Filtrelenmesi\r\n(Dara İşlemi)",
+                "Motor Titreşimin Hesaplanması",
+                "Pervane Montajı",
+                "Pervane Titreşimin Hesaplanması",
+                "Birim Referans Düzeltici Ağırlık Değerinin Pervane Boyutuna Göre Hesaplanması",
+                "Pervanenin Her İki Kanadına Birim Referans Düzeltici Ağırlığın Eklenmesi",
+                "Düzeltici Ağırlık Değerinin ve Düzeltici Yönün Hesaplanması",
+                "Tayin Edilen Yöne Düzeltici Ağırlığın Eklenmesi"
             };
 
-            BalancerPage_RunButton = Resources.BalancerPage_RunButton1;
-            TestResult = " ";
+            StepIndicators = new ObservableCollection<Brush>();
+            for (int i = 0; i < IterationHeaders.Count; i++)
+            {
+                StepIndicators.Add((SolidColorBrush)Application.Current.Resources["BalancerRoutingStepsPassive"]);
+            }
 
-            _testVibrationsDataBuffer = new List<double>();
-            _testStepsPropellerVibrations = new List<double>();
-
-            _balancerIterationStepChart = new ObservableCollection<int>();
-            _balancerIterationVibrationsChart = new ObservableCollection<double>();
-
-            _currentStepIndex = 0;
-            _motorReadyTimeCount = 0;
-            _testTimeCount = 0;
-            _isRunButtonEnabled = true;
-            _isApprovalButtonEnabled = false;
-            _testReadyStatus = false;
-            _motorReadyStatus = false;
-
-            smoothTransitionStep = 0;
-
-            _progressTimer = new DispatcherTimer();
-            _progressTimer.Interval = TimeSpan.FromSeconds(1);
+            _progressTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(1)
+            };
             _progressTimer.Tick += ProgressTimer_Tick;
 
-            _pidTimer = new DispatcherTimer();
-            _pidTimer.Interval = TimeSpan.FromMilliseconds(50);
+            _pidTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(50)
+            };
             _pidTimer.Tick += PIDTimer_Tick;
 
-            _avgTimer = new DispatcherTimer();
-            _avgTimer.Interval = TimeSpan.FromMilliseconds(1);
+            _avgTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(1)
+            };
             _avgTimer.Tick += AVGTimer_Tick;
 
+            BalanceTestInitialConfig();
         }
 
-        private void InterfaceVariables_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void BalanceTestInitialConfig()
         {
-            if (e.PropertyName == nameof(_interfaceVariables.Vibration.HighVibration))
+            // 1. Step
+            IterationHeader = IterationHeaders[0];
+            Iteration = "";
+
+            // Counts Zero
+            TestTimeCount = 0;
+            MotorReadyTimeCount = 0;
+            TestTimeStatusBar = 0;
+
+            BalancerIterationStep = 0;
+            CurrentStepIndex = 0;
+
+            ESCValue = 0;
+
+            // Clear Buffer
+            TestVibrationsDataBuffer.Clear();
+            TestStepsPropellerVibrations.Clear();
+            BalancerIterationStepChart.Clear();
+            BalancerIterationVibrationsChart.Clear();
+
+            // Buttons Visibility
+            RepeatStepButtonVisibility = Visibility.Hidden;
+            ApprovalStepButtonVisibility = Visibility.Hidden;
+            NextStepButtonVisibility = Visibility.Hidden;
+
+            // Status False
+            MotorReadyStatus = false;
+            TestReadyStatus = false;
+            ESCStatus = false;
+
+            // Status True
+            RunButtonIsEnabled = true;
+
+            // Output Message Clear
+            StatusMessage = "";
+            TestResult = "";
+
+            // Timers Stop
+            _progressTimer.Stop();
+            _pidTimer.Stop();
+            _avgTimer.Stop();
+
+            // Indicators Clear
+            for (int i = 0; i < IterationHeaders.Count; i++)
             {
-                HighVibration = _interfaceVariables.Vibration.HighVibration;
+                StepIndicators[i] = (SolidColorBrush)Application.Current.Resources["BalancerRoutingStepsPassive"];
             }
+
         }
 
-        private void Run()
+        private void RunCommand()
         {
-            if (_interfaceVariables.ReferenceMotorSpeed <= 0)
+            if (_interfaceVariables.ReferenceMotorSpeed <= 0 && _interfaceVariables.ReferencePropelleDiameter <= 0)
             {
                 MessageBoxResult result = MessageBox.Show(
-                "Please enter the reference motor speed value!",
+                "Please enter the reference motor speed value and propelle parameters!",
                 "Missing Value Warning",
                 MessageBoxButton.OK,
                 MessageBoxImage.Warning);
             }
             else
             {
-                TestResult = " ";
-                TestTimeCount = 0;
-                MotorReadyTimeCount = 0;
+                NextStepCommand();
+                RunButtonIsEnabled = false;
+                RepeatStepButtonVisibility = Visibility.Hidden;
+                ApprovalStepButtonVisibility = Visibility.Hidden;
+                NextStepButtonVisibility = Visibility.Visible;
+            }            
+        }
+        private void StopCommand()
+        {
 
-                StatusMessage = Resources.BalancerPage_StatusMessage1;
-                BalancerPage_RunButton = Resources.BalancerPage_RunButton2;
-                ESCStatus = true;
-                ESCValue = 800; // Başlangıç değeri olarak 800 µs kullanıyoruz
-                _pidController.Reset();
+        }
 
-                IsRunButtonEnabled = false;
-                IsApprovalButtonEnabled = false;
-                _progressTimer.Start();
-                _pidTimer.Start();
+        private void NewTestCommand()
+        {
+            MessageBoxResult result = MessageBox.Show(
+               "Test data will be erased. Are you sure you want to start a new test?",
+               "Confirm New Test",
+               MessageBoxButton.YesNo,
+               MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Yes)
+            {
+                BalanceTestInitialConfig();
+            }
+        }
+
+        private void RepeatStepCommand()
+        {
+
+        }
+        private void ApprovalCommand()
+        {
+
+        }
+        private void NextStepCommand()
+        {
+            if (_interfaceVariables.ReferenceMotorSpeed <= 0 && _interfaceVariables.ReferencePropelleDiameter <= 0)
+            {
+                MessageBoxResult result = MessageBox.Show(
+                "Please enter the reference motor speed value and propelle parameters!",
+                "Missing Value Warning",
+                MessageBoxButton.OK,
+                MessageBoxImage.Warning);
+            }
+            else
+            {
+                if (CurrentStepIndex < IterationHeaders.Count - 1)
+                {
+                    CurrentStepIndex++;
+
+                    // Genişletilmiş Algoritma formülünü yazacağım.
+
+                    IterationHeader = IterationHeaders[CurrentStepIndex];
+                    // Adım geçişlerinde renk güncellemeleri yapılıyor
+                    StepIndicators[CurrentStepIndex] = (SolidColorBrush)Application.Current.Resources["BalancerRoutingStepsActive"];
+                    for (int i = 1; i < CurrentStepIndex; i++)
+                    {
+                        StepIndicators[i] = (SolidColorBrush)Application.Current.Resources["BalancerRoutingStepsOK"];
+                    }
+                }
+                else
+                {
+                    BalancingTestFinished();
+                }
+            }
+        }
+        private void BalancingTestFinished()
+        {
+            MessageBoxResult result = MessageBox.Show(
+               "Balancing Test Finished?",
+               "Confirm Test Finished",
+               MessageBoxButton.YesNo,
+               MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Yes)
+            {
+                BalanceTestInitialConfig();
+                RunButtonIsEnabled = false;
+                IterationHeader = "Balancing Test Finished";
             }
         }
 
         private void ProgressTimer_Tick(object sender, EventArgs e)
         {
-            if (MotorReadyStatus)
-            {
-                if (MotorReadyTimeCount < 100)
-                {
-                    StatusMessage = Resources.BalancerPage_StatusMessage2;
-                    MotorReadyTimeCount += 10;
-                }
-                else
-                {
-                    if (TestTimeCount < 100)
-                    {
-                        StatusMessage = Resources.BalancerPage_StatusMessage3;
-                        if (_avgTimer.IsEnabled == false)
-                        {
-                            _avgTimer.Start();
-                        }                     
-                        TestTimeCount += 20;
-                    }
-                    else
-                    {
-                        BalancerPage_RunButton = Resources.BalancerPage_RunButton3;
-                        StatusMessage = "";
 
-                        IsApprovalButtonEnabled = true;
-                        IsRunButtonEnabled = true;                       
-                        MotorReadyStatus = false;
-                        TestStatus = false;
-                        ESCStatus = false;                        
-                        ESCValue = 800;
-
-                        _avgTimer.Stop();
-                        _progressTimer.Stop();
-                        _pidTimer.Stop();
-                       
-
-                        TestStepsPropellerVibrations.Add(TestVibrationsDataBuffer.Average());
-                        TestResult = "Test Result: " + TestVibrationsDataBuffer.Average().ToString("0.000") + " g";
-                    
-                    }
-                }
-            }
         }
 
         private void AVGTimer_Tick(object sender, EventArgs e)
@@ -225,21 +308,16 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             double pidOutput = _pidController.Calculate(_interfaceVariables.ReferenceMotorSpeed, currentSpeed);
 
             // PID çıktısını 800-2200 aralığına uyarlama
-            pidOutput = MapToESCValue(pidOutput);
-
-            pidOutput = Math.Clamp(pidOutput, 800, 2200);
-
-            ESCValue = SmoothTransition(ESCValue, (int)pidOutput);
-        }
-
-        private double MapToESCValue(double pidOutput)
-        {
             // PID çıktısını 0-100 aralığından 800-2200 aralığına dönüştürme
             double minOutput = 0;
             double maxOutput = 100;
             double minESC = 800;
             double maxESC = 2200;
-            return (pidOutput - minOutput) * (maxESC - minESC) / (maxOutput - minOutput) + minESC;
+            pidOutput = (pidOutput - minOutput) * (maxESC - minESC) / (maxOutput - minOutput) + minESC;
+
+            pidOutput = Math.Clamp(pidOutput, 800, 2200);
+
+            ESCValue = SmoothTransition(ESCValue, (int)pidOutput);
         }
 
         private int SmoothTransition(int currentValue, int targetValue)
@@ -248,13 +326,13 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
             if (speedDifference > 10)
             {
-                
-                if (speedDifference >= 400)                                     { smoothTransitionStep = 5; }
-                else if ((speedDifference <= 400) && (speedDifference > 300))   { smoothTransitionStep = 4; }
-                else if ((speedDifference <= 300) && (speedDifference > 200))   { smoothTransitionStep = 3; }
-                else if ((speedDifference <= 200) && (speedDifference > 100))   { smoothTransitionStep = 2; }
-                else if ((speedDifference <= 100) && (speedDifference > 50))    { smoothTransitionStep = 1; }
-                else if ((speedDifference <= 50) && (speedDifference > 10))     { smoothTransitionStep = 0; }
+
+                if (speedDifference >= 400) { smoothTransitionStep = 5; }
+                else if ((speedDifference <= 400) && (speedDifference > 300)) { smoothTransitionStep = 4; }
+                else if ((speedDifference <= 300) && (speedDifference > 200)) { smoothTransitionStep = 3; }
+                else if ((speedDifference <= 200) && (speedDifference > 100)) { smoothTransitionStep = 2; }
+                else if ((speedDifference <= 100) && (speedDifference > 50)) { smoothTransitionStep = 1; }
+                else if ((speedDifference <= 50) && (speedDifference > 10)) { smoothTransitionStep = 0; }
                 else { smoothTransitionStep = 0; }
 
                 if (Math.Abs(currentValue - targetValue) <= smoothTransitionStep)
@@ -283,77 +361,33 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             return currentValue;
         }
 
-        private void Approval()
+        private void InterfaceVariables_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            BalancerPage_RunButton = Resources.BalancerPage_RunButton1;
-            if (CurrentStepIndex < Steps.Count - 1)
+            if (e.PropertyName == nameof(_interfaceVariables.Vibration.HighVibration))
             {
-                CurrentStepIndex++;
+                HighVibration = _interfaceVariables.Vibration.HighVibration;
             }
-            else
+        }
+        public string IterationHeader
+        {
+            get => _iterationHeader;
+            set
             {
-                CurrentStepIndex = 0;
+                if (SetProperty(ref _iterationHeader, value))
+                {
+                    OnPropertyChanged(nameof(IterationHeader));
+                }
             }
-            BalancerIterationVibrationsChart.Add(TestVibrationsDataBuffer.Average());
-            BalancerIterationStepChart.Add(BalancerIterationVibrationsChart.Count);
-            TestVibrationsDataBuffer.Clear();
-
-            BalancerIterationStep = CurrentStepIndex;
-
-            TestResult = " ";
-            IsRunButtonEnabled = true;
-            IsApprovalButtonEnabled = false;
-            TestTimeCount = 0;
-            MotorReadyTimeCount = 0;
         }
-
-        private void Stop()
+        public string Iteration
         {
-            BalancerPage_RunButton = Resources.BalancerPage_RunButton1;
-            StatusMessage = "";
-            MotorReadyStatus = false;
-            TestStatus = false;
-            ESCStatus = false;
-            ESCValue = 800;
-            _progressTimer.Stop();
-            _pidTimer.Stop();
-            _avgTimer.Stop();
-
-            IsRunButtonEnabled = true;
-            IsApprovalButtonEnabled = false;
-            TestTimeCount = 0;
-            MotorReadyTimeCount = 0;
-        }
-
-        private void NewTest()
-        {
-            MessageBoxResult result = MessageBox.Show(
-               "Test data will be erased. Are you sure you want to start a new test?",
-               "Confirm New Test",
-               MessageBoxButton.YesNo,
-               MessageBoxImage.Warning);
-            if (result == MessageBoxResult.Yes)
+            get => _iteration;
+            set
             {
-                BalancerPage_RunButton = Resources.BalancerPage_RunButton1;
-                StatusMessage = "";
-                TestResult = " ";
-                MotorReadyStatus = false;
-                TestStatus = false;
-                ESCStatus = false;
-                ESCValue = 800;
-                CurrentStepIndex = 0;
-                _progressTimer.Stop();
-                _pidTimer.Stop();
-                _avgTimer.Stop();
-
-                IsRunButtonEnabled = true;
-                IsApprovalButtonEnabled = false;
-                TestTimeCount = 0;
-                MotorReadyTimeCount = 0;
-                TestVibrationsDataBuffer.Clear();
-                BalancerIterationVibrationsChart.Clear();
-                BalancerIterationStepChart.Clear();
-                BalancerIterationStep = 0;
+                if (SetProperty(ref _iteration, value))
+                {
+                    OnPropertyChanged(nameof(Iteration));
+                }
             }
         }
         public int CurrentStepIndex
@@ -380,7 +414,18 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
-        
+
+        public double TestTimeStatusBar
+        {
+            get => _testTimeStatusBar;
+            set
+            {
+                if (SetProperty(ref _testTimeStatusBar, value))
+                {
+                    OnPropertyChanged(nameof(TestTimeStatusBar));
+                }
+            }
+        }
         public double TestTimeCount
         {
             get => _testTimeCount;
@@ -404,14 +449,47 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
-        public bool TestStatus
+        public bool TestReadyStatus
         {
             get => _testReadyStatus;
             set
             {
                 if (SetProperty(ref _testReadyStatus, value))
                 {
-                    OnPropertyChanged(nameof(TestStatus));
+                    OnPropertyChanged(nameof(TestReadyStatus));
+                }
+            }
+        }
+        public Visibility RepeatStepButtonVisibility
+        {
+            get => _repeatStepButtonVisibility;
+            set
+            {
+                if (SetProperty(ref _repeatStepButtonVisibility, value))
+                {
+                    OnPropertyChanged(nameof(RepeatStepButtonVisibility));
+                }
+            }
+        }
+        public Visibility ApprovalStepButtonVisibility
+        {
+            get => _approvalStepButtonVisibility;
+            set
+            {
+                if (SetProperty(ref _approvalStepButtonVisibility, value))
+                {
+                    OnPropertyChanged(nameof(ApprovalStepButtonVisibility));
+                }
+            }
+        }
+        public Visibility NextStepButtonVisibility
+        {
+            get => _nextStepButtonVisibility;
+            set
+            {
+                if (SetProperty(ref _nextStepButtonVisibility, value))
+                {
+                    OnPropertyChanged(nameof(NextStepButtonVisibility));
                 }
             }
         }
@@ -425,7 +503,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     OnPropertyChanged(nameof(StatusMessage));
                 }
             }
-        }     
+        }
         public string TestResult
         {
             get => _testResult;
@@ -434,17 +512,6 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 if (SetProperty(ref _testResult, value))
                 {
                     OnPropertyChanged(nameof(TestResult));
-                }
-            }
-        }
-        public string BalancerPage_RunButton
-        {
-            get => _balancerPage_RunButton;
-            set
-            {
-                if (SetProperty(ref _balancerPage_RunButton, value))
-                {
-                    OnPropertyChanged(nameof(BalancerPage_RunButton));
                 }
             }
         }
@@ -459,29 +526,14 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
-
-        public bool IsRunButtonEnabled
+        public bool RunButtonIsEnabled
         {
-            get => _isRunButtonEnabled;
+            get => _runButtonIsEnabled;
             set
             {
-                if (SetProperty(ref _isRunButtonEnabled, value))
+                if (SetProperty(ref _runButtonIsEnabled, value))
                 {
-                    OnPropertyChanged(nameof(IsRunButtonEnabled));
-                    CommandManager.InvalidateRequerySuggested();
-                }
-            }
-        }
-
-        public bool IsApprovalButtonEnabled
-        {
-            get => _isApprovalButtonEnabled;
-            set
-            {
-                if (SetProperty(ref _isApprovalButtonEnabled, value))
-                {
-                    OnPropertyChanged(nameof(IsApprovalButtonEnabled));
-                    CommandManager.InvalidateRequerySuggested();
+                    OnPropertyChanged(nameof(RunButtonIsEnabled));
                 }
             }
         }
@@ -511,6 +563,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
+
         public double HighVibration
         {
             get => _highVibration;
@@ -547,7 +600,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
-                
+
         public ObservableCollection<int> BalancerIterationStepChart
         {
             get => _balancerIterationStepChart;
@@ -572,6 +625,19 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
+
+        public ObservableCollection<Brush> StepIndicators
+        {
+            get => _stepIndicators;
+            set
+            {
+                if (SetProperty(ref _stepIndicators, value))
+                {
+                    OnPropertyChanged(nameof(StepIndicators));
+                }
+            }
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 

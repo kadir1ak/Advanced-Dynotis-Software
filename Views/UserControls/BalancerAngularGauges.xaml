@@ -30,7 +30,7 @@
             FontSize="10"
             NeedleFill="#FF106086" 
             Foreground="{DynamicResource Text}"                                           
-            Wedge="270" SectionsInnerRadius="0.98" InputScope="Digits">
+            Wedge="270" SectionsInnerRadius="0.99" InputScope="Digits" TicksForeground="{DynamicResource Text}">
                 <lvc:AngularGauge.Sections>
                     <lvc:AngularSection FromValue="0" ToValue="5000" Fill="{DynamicResource AngularGaugeMotorSpeed}"/>
                 </lvc:AngularGauge.Sections>
@@ -65,7 +65,7 @@
             NeedleFill="#FF106086" 
 
             Foreground="{DynamicResource Text}"                                           
-            Wedge="270" InputScope="Digits" SectionsInnerRadius="0.88">
+            Wedge="270" InputScope="Digits" SectionsInnerRadius="0.94" TicksForeground="{DynamicResource Text}">
                 <lvc:AngularGauge.Sections>
                     <lvc:AngularSection FromValue="0" ToValue="0.1" Fill="#7FDBB6"/>
                     <lvc:AngularSection FromValue="0.1" ToValue="0.5" Fill="#FFA726" InputScope="Number"/>
