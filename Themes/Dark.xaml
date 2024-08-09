@@ -67,4 +67,8 @@
     <SolidColorBrush Color="White" x:Key="Line"/>
     <SolidColorBrush Color="#151F2D" x:Key="BalancerRoutingStepsListBoxText"/>
 
+    <!-- AngularGauge -->
+    <SolidColorBrush Color="#FFDE3A2A" x:Key="AngularGaugeMotorSpeed"/>
+
+    
 </ResourceDictionary>

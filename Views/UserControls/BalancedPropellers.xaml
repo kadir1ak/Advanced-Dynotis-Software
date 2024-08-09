@@ -48,7 +48,7 @@
 
         <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Left">
             <Label Content="{x:Static p:Resources.BalancerPage_PropellerDiameter}" Margin="5 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{DynamicResource Text}" />
-            <TextBox Text="{Binding BalancedPropellerArea, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly ="{Binding IsPropellerAreaTextBoxReadOnly}"
+            <TextBox Text="{Binding BalancedPropellerDiameter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly ="{Binding IsPropellerDiameterTextBoxReadOnly}"
             Style="{StaticResource NumericTextBoxDoubleStyle}" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Width="68" FontSize="14" BorderThickness="1.5">
                 <TextBox.ToolTip>
                     <ToolTip>

@@ -53,12 +53,12 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                         _currentBalancedPropellers.PropertyChanged += (sender, e) =>
                         {
                             if (e.PropertyName == nameof(BalancedPropellersViewModel.BalancedPropellerID) ||
-                                e.PropertyName == nameof(BalancedPropellersViewModel.BalancedPropellerArea) ||
+                                e.PropertyName == nameof(BalancedPropellersViewModel.BalancedPropellerDiameter) ||
                                 e.PropertyName == nameof(BalancedPropellersViewModel.BalancingTestDates) ||
                                 e.PropertyName == nameof(BalancedPropellersViewModel.VibrationLevels))
                             {
                                 DeviceInterfaceVariables.BalancedPropellersID = _currentBalancedPropellers.BalancedPropellerID;
-                                DeviceInterfaceVariables.BalancedPropellersArea = _currentBalancedPropellers.BalancedPropellerArea;
+                                DeviceInterfaceVariables.BalancedPropellersDiameter = _currentBalancedPropellers.BalancedPropellerDiameter;
                                 DeviceInterfaceVariables.BalancedPropellersTestDates = _currentBalancedPropellers.BalancingTestDates;
                                 DeviceInterfaceVariables.BalancedPropellersVibrations = _currentBalancedPropellers.VibrationLevels;
                                 OnPropertyChanged(nameof(DeviceInterfaceVariables));
@@ -82,12 +82,12 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                         _currentBalancedPropellerTestsChart.PropertyChanged += (sender, e) =>
                         {
                             if (e.PropertyName == nameof(BalancedPropellersViewModel.BalancedPropellerID) ||
-                                e.PropertyName == nameof(BalancedPropellersViewModel.BalancedPropellerArea) ||
+                                e.PropertyName == nameof(BalancedPropellersViewModel.BalancedPropellerDiameter) ||
                                 e.PropertyName == nameof(BalancedPropellersViewModel.BalancingTestDates) ||
                                 e.PropertyName == nameof(BalancedPropellersViewModel.VibrationLevels))
                             {
                                 DeviceInterfaceVariables.BalancedPropellersID = _currentBalancedPropellers.BalancedPropellerID;
-                                DeviceInterfaceVariables.BalancedPropellersArea = _currentBalancedPropellers.BalancedPropellerArea;
+                                DeviceInterfaceVariables.BalancedPropellersDiameter = _currentBalancedPropellers.BalancedPropellerDiameter;
                                 DeviceInterfaceVariables.BalancedPropellersTestDates = _currentBalancedPropellers.BalancingTestDates;
                                 DeviceInterfaceVariables.BalancedPropellersVibrations = _currentBalancedPropellers.VibrationLevels;
                                 OnPropertyChanged(nameof(DeviceInterfaceVariables));

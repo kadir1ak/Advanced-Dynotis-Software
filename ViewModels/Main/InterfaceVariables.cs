@@ -105,7 +105,7 @@ public class InterfaceVariables : INotifyPropertyChanged
 
     private int _referenceMotorSpeed;
     private double _referenceWeight;
-    private double _referencePropellerArea;
+    private double _referencePropellerDiameter;
     private double _balancerWeight;
     private double _balancerPosition;
     private int _balancerIterationStep;
@@ -113,7 +113,7 @@ public class InterfaceVariables : INotifyPropertyChanged
     private ObservableCollection<int> _balancerIterationStepChart;
     private ObservableCollection<double> _balancerIterationVibrationsChart;
     private string _balancedPropellersID;
-    private double _balancedPropellersArea;
+    private double _balancedPropellersDiameter;
     private ObservableCollection<DateTime> _balancedPropellersTestDates;
     private ObservableCollection<double> _balancedPropellersVibrations;
     public double Time
@@ -419,10 +419,10 @@ public class InterfaceVariables : INotifyPropertyChanged
         get => _referenceWeight;
         set => SetProperty(ref _referenceWeight, value);
     }   
-    public double ReferencePropellerArea
+    public double ReferencePropelleDiameter
     {
-        get => _referencePropellerArea;
-        set => SetProperty(ref _referencePropellerArea, value);
+        get => _referencePropellerDiameter;
+        set => SetProperty(ref _referencePropellerDiameter, value);
     }
 
     public double BalancerWeight
@@ -461,10 +461,10 @@ public class InterfaceVariables : INotifyPropertyChanged
         get => _balancedPropellersID;
         set => SetProperty(ref _balancedPropellersID, value);
     }
-    public double BalancedPropellersArea
+    public double BalancedPropellersDiameter
     {
-        get => _balancedPropellersArea;
-        set => SetProperty(ref _balancedPropellersArea, value);
+        get => _balancedPropellersDiameter;
+        set => SetProperty(ref _balancedPropellersDiameter, value);
     }
     public ObservableCollection<DateTime> BalancedPropellersTestDates
     {

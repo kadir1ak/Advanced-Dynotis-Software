@@ -39,7 +39,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         {
             // Check if any of the relevant properties have changed
             if (e.PropertyName == nameof(InterfaceVariables.BalancedPropellersID) ||
-                e.PropertyName == nameof(InterfaceVariables.BalancedPropellersArea) ||
+                e.PropertyName == nameof(InterfaceVariables.BalancedPropellersDiameter) ||
                 e.PropertyName == nameof(InterfaceVariables.BalancedPropellersTestDates) ||
                 e.PropertyName == nameof(InterfaceVariables.BalancedPropellersVibrations))
             {
@@ -51,7 +51,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private void UpdatePropertiesFromInterfaceVariables()
         {
             BalancedPropellerID = _interfaceVariables.BalancedPropellersID;
-            BalancedPropellerArea = _interfaceVariables.BalancedPropellersArea;
+            BalancedPropellerArea = _interfaceVariables.BalancedPropellersDiameter;
             BalancingTestDates = _interfaceVariables.BalancedPropellersTestDates ?? new ObservableCollection<DateTime>();
             VibrationLevels = _interfaceVariables.BalancedPropellersVibrations ?? new ObservableCollection<double>();
         }

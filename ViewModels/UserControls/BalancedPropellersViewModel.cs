@@ -15,7 +15,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
     public class BalancedPropellersViewModel : INotifyPropertyChanged
     {
         private string _balancedPropellerID; // şuan arayüzümde gözlemlediğim pervane  ıd
-        private double _balancedPropellerArea; // şuan arayüzümde gözlemlediğim pervane  boyutu
+        private double _balancedPropellerDiameter; // şuan arayüzümde gözlemlediğim pervane  boyutu
         private ObservableCollection<DateTime> _balancingTestDates; // şuan arayüzümde gözlemlediğim pervaneye ait test tarihleri
         private ObservableCollection<double> _vibrationLevels;// şuan arayüzümde gözlemlediğim pervane testlerine ait titreşim verileri
 
@@ -27,7 +27,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         public ObservableCollection<BalanceTestData> BalancingTestDatas { get; set; }
 
         private bool _isPropellerIDTextBoxReadOnly;
-        private bool _isPropellerAreaTextBoxReadOnly;
+        private bool _isPropellerDiameterTextBoxReadOnly;
         public ICommand NewCommand { get; }
         public ICommand SaveCommand { get; }
         public ICommand LoadCommand { get; }
@@ -41,7 +41,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             BalancingTestDatas = new ObservableCollection<BalanceTestData>();
 
             _isPropellerIDTextBoxReadOnly = true;
-            _isPropellerAreaTextBoxReadOnly = true;
+            _isPropellerDiameterTextBoxReadOnly = true;
 
             NewCommand = new RelayCommand(param => NewBalancedPropeller());
             SaveCommand = new RelayCommand(param => SaveBalancedPropeller());
@@ -74,9 +74,9 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             try
             {
                 IsPropellerIDTextBoxReadOnly = false;
-                IsPropellerAreaTextBoxReadOnly = false;
+                IsPropellerDiameterTextBoxReadOnly = false;
                 BalancedPropellerID = "";
-                BalancedPropellerArea = 0;
+                BalancedPropellerDiameter = 0;
                 BalancingTestDates.Clear();
                 VibrationLevels.Clear();
                 BalancingTestDatas.Clear();
@@ -94,7 +94,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 var balancedPropellerData = new BalancedDataset
                 {
                     PropellerID = BalancedPropellerID,
-                    PropellerArea = BalancedPropellerArea,
+                    PropellerDiameter = BalancedPropellerDiameter,
                     TestDates = BalancingTestDates,
                     Vibrations = VibrationLevels
                 };
@@ -135,7 +135,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             try
             {
                 IsPropellerIDTextBoxReadOnly = true;
-                IsPropellerAreaTextBoxReadOnly = true;
+                IsPropellerDiameterTextBoxReadOnly = true;
 
 
                 var json = File.ReadAllText(Path.Combine("BalancedPropellers", SelectedPropeller + ".json"));
@@ -148,7 +148,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     //Verileri ViewModel alanlarına aktar
                     
                     BalancedPropellerID = ResultPropeller.PropellerID;
-                    BalancedPropellerArea = ResultPropeller.PropellerArea;
+                    BalancedPropellerDiameter = ResultPropeller.PropellerDiameter;
                     BalancingTestDates = ResultPropeller.TestDates ?? new ObservableCollection<DateTime>();
                     VibrationLevels = ResultPropeller.Vibrations ?? new ObservableCollection<double>();
 
@@ -209,12 +209,12 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             }
         }
 
-        public double BalancedPropellerArea
+        public double BalancedPropellerDiameter
         {
-            get => _balancedPropellerArea;
+            get => _balancedPropellerDiameter;
             set
             {
-                if (SetProperty(ref _balancedPropellerArea, value))
+                if (SetProperty(ref _balancedPropellerDiameter, value))
                 {
                     OnPropertyChanged();
                 }
@@ -285,14 +285,14 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
-        public bool IsPropellerAreaTextBoxReadOnly
+        public bool IsPropellerDiameterTextBoxReadOnly
         {
-            get => _isPropellerAreaTextBoxReadOnly;
+            get => _isPropellerDiameterTextBoxReadOnly;
             set
             {
-                if (SetProperty(ref _isPropellerAreaTextBoxReadOnly, value))
+                if (SetProperty(ref _isPropellerDiameterTextBoxReadOnly, value))
                 {
-                    OnPropertyChanged(nameof(IsPropellerAreaTextBoxReadOnly));
+                    OnPropertyChanged(nameof(IsPropellerDiameterTextBoxReadOnly));
                     CommandManager.InvalidateRequerySuggested();
                 }
             }
@@ -321,7 +321,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
     public class BalancedDataset : INotifyPropertyChanged
     {
         private string _propellerID;
-        private double _propellerArea;
+        private double _propellerDiameter;
         private ObservableCollection<DateTime> _testDates;
         private ObservableCollection<double> _vibrations;
 
@@ -337,12 +337,12 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
-        public double PropellerArea
+        public double PropellerDiameter
         {
-            get => _propellerArea;
+            get => _propellerDiameter;
             set
             {
-                if (SetProperty(ref _propellerArea, value))
+                if (SetProperty(ref _propellerDiameter, value))
                 {
 
                     OnPropertyChanged();
