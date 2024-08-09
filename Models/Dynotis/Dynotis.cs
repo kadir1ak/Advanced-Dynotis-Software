@@ -269,8 +269,8 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                             Time = TryParseDouble(dataParts[0], out double time) ? time : double.NaN,
                             Current = TryParseDouble(dataParts[1], out double current) ? current : double.NaN,
                             Voltage = TryParseDouble(dataParts[2], out double voltage) ? voltage : double.NaN,
-                            Thrust = TryParseDouble(dataParts[3], out double thrust) ? new DynotisData.Unit(thrust, "Gram-force", "gf") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
-                            Torque = TryParseDouble(dataParts[4], out double torque) ? new DynotisData.Unit(torque, "Newton millimeter", "N.mm") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
+                            Thrust = TryParseDouble(dataParts[3], out double thrust) ? new DynotisData.Unit(Math.Abs(thrust), "Gram-force", "gf") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
+                            Torque = TryParseDouble(dataParts[4], out double torque) ? new DynotisData.Unit(Math.Abs(torque), "Newton millimeter", "N.mm") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
                             MotorSpeed = TryParseDouble(dataParts[5], out double motorSpeed) ? new DynotisData.Unit(motorSpeed, "Revolutions per minute", "RPM") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
                             WindSpeed = TryParseDouble(dataParts[6], out double windSpeed) ? new DynotisData.Unit(windSpeed, "Meters per second", "m/s") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
                             WindDirection = TryParseDouble(dataParts[7], out double windDirection) ? windDirection : double.NaN,
@@ -469,6 +469,26 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 else
                 {
                     DynotisData.Theoric.PropSysEfficiencyII = 0;
+                }
+
+                // IPS Calculation
+                if (DynotisData.Vibration.Value > 0 && DynotisData.MotorSpeed.Value > 0)
+                {// MAX yaz.
+                    DynotisData.Theoric.IPS = (3685.1) * (DynotisData.Vibration.Value) / (DynotisData.MotorSpeed.Value);
+                }
+                else
+                {
+                    DynotisData.Theoric.IPS = 0;
+                }
+
+                // J Calculation
+                if (DynotisData.Theoric.AirDensity > 0 && DynotisData.PropellerDiameter > 0 && DynotisData.MotorSpeed.Value > 0)
+                {
+                    DynotisData.Theoric.J = (DynotisData.Theoric.AirDensity) / (DynotisData.MotorSpeed.Value / 60.0) * (DynotisData.PropellerDiameter * 0.0254);
+                }
+                else
+                {
+                    DynotisData.Theoric.J = 0;
                 }
 
                 // Ct Calculation

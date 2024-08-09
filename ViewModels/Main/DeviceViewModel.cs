@@ -393,10 +393,21 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             {
                 await Task.Delay(ChartUpdateTimeMillisecond, token);
 
-                await Application.Current.Dispatcher.InvokeAsync(() =>
+                // Veriler DynotisData dan alınacak şekilde düzenlenecek!
+                DynotisData latestData;
+                lock (_dataLock)
                 {
-                    ChartViewModel.UpdateChartData(DeviceInterfaceVariables);
-                });
+                    latestData = _latestDynotisData;
+                    _latestDynotisData = null;
+                }
+
+                if (latestData != null)
+                {
+                    await Application.Current.Dispatcher.InvokeAsync(() =>
+                    {
+                        ChartViewModel.UpdateChartData(latestData,DeviceInterfaceVariables);
+                    });
+                }
             }
         }
 

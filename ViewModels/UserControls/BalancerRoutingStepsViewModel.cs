@@ -49,6 +49,9 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private readonly List<string> _steps;
         public List<string> Steps => _steps;
 
+        public string IterationHeader {  get; set; }
+        public string Iteration {  get; set; }
+
         private bool _isRunButtonEnabled;
         private bool _isApprovalButtonEnabled;
 
@@ -78,6 +81,12 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             ApprovalCommand = new RelayCommand(param => Approval(), param => IsApprovalButtonEnabled);
             StopCommand = new RelayCommand(param => Stop());
             NewTestCommand = new RelayCommand(param => NewTest());
+
+            IterationHeader = "Cihazın Hazırlanması";
+            Iteration = "\r\n" + "1.) Cihazın uygun şekilde sabitleyiniz. " +
+                        "\r\n" + "Çevresel dengesizlik veya belirsizliğe sebep olabilecek koşullardan arındırdığınızdan emin olunuz. " +
+                        "\r\n" + "2.) Motor montajını yapınız. " +
+                        "\r\n" + "3.) Elektronik bağlantıları kontrol ediniz. ";
 
             _steps = new List<string>
             {

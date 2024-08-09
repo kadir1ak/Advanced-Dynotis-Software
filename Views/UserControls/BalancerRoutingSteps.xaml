@@ -1,17 +1,91 @@
 ﻿<UserControl x:Class="Advanced_Dynotis_Software.Views.UserControls.BalancerRoutingSteps"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
-             xmlns:p="clr-namespace:Advanced_Dynotis_Software.Properties"
-             xmlns:uc="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
-             xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks">
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
+                xmlns:p="clr-namespace:Advanced_Dynotis_Software.Properties"
+                xmlns:uc="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"       
+                xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                xmlns:helpers="clr-namespace:Advanced_Dynotis_Software.Services.Helpers">
+    <UserControl.Resources>
+        <!-- Diğer kaynaklar -->
+
+        <!-- StepButton için özelleştirilebilir stil -->
+        <Style x:Key="StepButtonStyle" TargetType="{x:Type helpers:StepButton}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type helpers:StepButton}">
+                        <Grid>
+                            <Ellipse x:Name="ellipse" Fill="{TemplateBinding EllipseColor}" Width="20" Height="20"/>
+                            <icon:PackIconFontAwesome x:Name="icon" 
+                                              Width="12" 
+                                              Height="12" 
+                                              HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center" 
+                                              Foreground="{TemplateBinding IconColor}"
+                                              Kind="{TemplateBinding IconKind}"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <!-- Mouse Enter -->
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ellipse" 
+                                                 Storyboard.TargetProperty="Width" 
+                                                 To="25" 
+                                                 Duration="0:0:0.2"/>
+                                        <DoubleAnimation Storyboard.TargetName="ellipse" 
+                                                 Storyboard.TargetProperty="Height" 
+                                                 To="25" 
+                                                 Duration="0:0:0.2"/>
+                                        <DoubleAnimation Storyboard.TargetName="icon" 
+                                                 Storyboard.TargetProperty="Width" 
+                                                 To="15" 
+                                                 Duration="0:0:0.2"/>
+                                        <DoubleAnimation Storyboard.TargetName="icon" 
+                                                 Storyboard.TargetProperty="Height" 
+                                                 To="15" 
+                                                 Duration="0:0:0.2"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+
+                            <!-- Mouse Leave -->
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ellipse" 
+                                                 Storyboard.TargetProperty="Width" 
+                                                 To="20" 
+                                                 Duration="0:0:0.2"/>
+                                        <DoubleAnimation Storyboard.TargetName="ellipse" 
+                                                 Storyboard.TargetProperty="Height" 
+                                                 To="20" 
+                                                 Duration="0:0:0.2"/>
+                                        <DoubleAnimation Storyboard.TargetName="icon" 
+                                                 Storyboard.TargetProperty="Width" 
+                                                 To="12" 
+                                                 Duration="0:0:0.2"/>
+                                        <DoubleAnimation Storyboard.TargetName="icon" 
+                                                 Storyboard.TargetProperty="Height" 
+                                                 To="12" 
+                                                 Duration="0:0:0.2"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
     <Grid Background="{DynamicResource Page}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -22,63 +96,246 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
+
         <ScrollViewer Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="{DynamicResource Page}">
-            <ListBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="175" Margin="10 3 0 0" ItemsSource="{Binding Steps}" SelectedIndex="{Binding CurrentStepIndex}" 
-                     FontSize="14" FontFamily="Yu Gothic UI Semilight" Foreground="{DynamicResource Text}" BorderBrush="Transparent" Background="{DynamicResource Page}" >
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding}" Background="{DynamicResource Page}" TextWrapping="Wrap" TextAlignment="Left"/>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </ScrollViewer>
-        <!--
-        <Border Grid.Row="0" Grid.Column="4" Width="125" Height="125" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="3 3 3 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-            <Grid Margin="5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto" MinWidth="100"/>
                 </Grid.ColumnDefinitions>
-                
-                <Image Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="12" Margin="0" Source="{DynamicResource MotorAndPropellerImage}" Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Opacity="0.75"/>
-               
-        -->
-                
-                <!-- Grid çizgilerini belli etmek için Border kullanımı -->
-        <!--
-                <Border Grid.Column="0" Grid.Row="0" Height="25" VerticalAlignment="Top" Margin="0 10 0 0" BorderBrush="{DynamicResource Line}" BorderThickness="0.2" Opacity="0.75"/>
-                <Border Grid.Column="1" Grid.Row="0" Height="25" VerticalAlignment="Top" Margin="0 10 0 0" BorderBrush="{DynamicResource Line}" BorderThickness="0.2" Opacity="0.75"/>
-                <Border Grid.Column="2" Grid.Row="0" Height="25" VerticalAlignment="Top" Margin="0 10 0 0" BorderBrush="{DynamicResource Line}" BorderThickness="0.2" Opacity="0.75"/>
-                <Border Grid.Column="3" Grid.Row="0" Height="25" VerticalAlignment="Top" Margin="0 10 0 0" BorderBrush="{DynamicResource Line}" BorderThickness="0.2" Opacity="0.75"/>
-                <Border Grid.Column="4" Grid.Row="0" Height="25" VerticalAlignment="Top" Margin="0 10 0 0" BorderBrush="{DynamicResource Line}" BorderThickness="0.2" Opacity="0.75"/>
-                <Border Grid.Column="5" Grid.Row="0" Height="25" VerticalAlignment="Top" Margin="0 10 0 0" BorderBrush="{DynamicResource Line}" BorderThickness="0.2" Opacity="0.75"/>
-                <Border Grid.Column="6" Grid.Row="0" Height="25" VerticalAlignment="Top" Margin="0 10 0 0" BorderBrush="{DynamicResource Line}" BorderThickness="0.2" Opacity="0.75"/>
-                <Border Grid.Column="7" Grid.Row="0" Height="25" VerticalAlignment="Top" Margin="0 10 0 0" BorderBrush="{DynamicResource Line}" BorderThickness="0.2" Opacity="0.75"/>
-                <Border Grid.Column="8" Grid.Row="0" Height="25" VerticalAlignment="Top" Margin="0 10 0 0" BorderBrush="{DynamicResource Line}" BorderThickness="0.2" Opacity="0.75"/>
-                <Border Grid.Column="9" Grid.Row="0" Height="25" VerticalAlignment="Top" Margin="0 10 0 0" BorderBrush="{DynamicResource Line}" BorderThickness="0.2" Opacity="0.75"/>
-                <Border Grid.Column="10" Grid.Row="0" Height="25" VerticalAlignment="Top" Margin="0 10 0 0" BorderBrush="{DynamicResource Line}" BorderThickness="0.2" Opacity="0.75"/>
-                <Border Grid.Column="11" Grid.Row="0" Height="25" VerticalAlignment="Top" Margin="0 10 0 0" BorderBrush="{DynamicResource Line}" BorderThickness="0.2" Opacity="0.75"/>
+
+                <!-- Step Indicator -->
+                <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="3">
+                    <Grid>
+                        <Ellipse Fill="{DynamicResource BalancerRoutingStepsOK}" Width="20" Height="20" Stroke="{DynamicResource BalancerRoutingStepsIconBorder}"/>
+                        <!-- Icon -->
+                        <icon:PackIconFontAwesome Kind="_1Solid" 
+                                              Width="12" 
+                                              Height="12" 
+                                              HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center" 
+                                              Foreground="{DynamicResource BalancerRoutingStepsIcon}"/>
+                    </Grid>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0 10 0 10">
+                        <Ellipse Width="3" Height="3" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" />
+                        <Ellipse Width="4" Height="4" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 0 0"/>
+                        <Ellipse Width="5" Height="5" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 0 0"/>
+                        <Ellipse Width="4" Height="4" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 2 0"/>
+                        <Ellipse Width="3" Height="3" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" />
+                    </StackPanel>
+                    <Grid>
+                        <Ellipse Fill="{DynamicResource BalancerRoutingStepsActive}" Width="20" Height="20" Stroke="{DynamicResource BalancerRoutingStepsIconBorder}"/>
+                        <!-- Icon -->
+                        <icon:PackIconFontAwesome Kind="_2Solid" 
+                            Width="12" 
+                            Height="12" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center" 
+                            Foreground="{DynamicResource BalancerRoutingStepsIcon}"/>
+                    </Grid>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0 10 0 10">
+                        <Ellipse Width="3" Height="3" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" />
+                        <Ellipse Width="4" Height="4" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 0 0"/>
+                        <Ellipse Width="5" Height="5" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 0 0"/>
+                        <Ellipse Width="4" Height="4" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 2 0"/>
+                        <Ellipse Width="3" Height="3" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" />
+                    </StackPanel>
+                    <Grid>
+                        <Ellipse Fill="{DynamicResource BalancerRoutingStepsPassive}" Width="20" Height="20" Stroke="{DynamicResource BalancerRoutingStepsIconBorder}"/>
+                        <!-- Icon -->
+                        <icon:PackIconFontAwesome Kind="_3Solid" 
+                            Width="12" 
+                            Height="12" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center" 
+                            Foreground="{DynamicResource BalancerRoutingStepsIcon}"/>
+                    </Grid>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0 10 0 10">
+                        <Ellipse Width="3" Height="3" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" />
+                        <Ellipse Width="4" Height="4" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 0 0"/>
+                        <Ellipse Width="5" Height="5" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 0 0"/>
+                        <Ellipse Width="4" Height="4" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 2 0"/>
+                        <Ellipse Width="3" Height="3" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" />
+                    </StackPanel>
+                    <Grid>
+                        <Ellipse Fill="{DynamicResource BalancerRoutingStepsPassive}" Width="20" Height="20" Stroke="{DynamicResource BalancerRoutingStepsIconBorder}"/>
+                        <!-- Icon -->
+                        <icon:PackIconFontAwesome Kind="_4Solid" 
+                            Width="12" 
+                            Height="12" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center" 
+                            Foreground="{DynamicResource BalancerRoutingStepsIcon}"/>
+                    </Grid>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0 10 0 10">
+                        <Ellipse Width="3" Height="3" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" />
+                        <Ellipse Width="4" Height="4" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 0 0"/>
+                        <Ellipse Width="5" Height="5" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 0 0"/>
+                        <Ellipse Width="4" Height="4" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 2 0"/>
+                        <Ellipse Width="3" Height="3" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" />
+                    </StackPanel>
+                    <Grid>
+                        <Ellipse Fill="{DynamicResource BalancerRoutingStepsPassive}" Width="20" Height="20" Stroke="{DynamicResource BalancerRoutingStepsIconBorder}"/>
+                        <!-- Icon -->
+                        <icon:PackIconFontAwesome Kind="_5Solid" 
+                            Width="12" 
+                            Height="12" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center" 
+                            Foreground="{DynamicResource BalancerRoutingStepsIcon}"/>
+                    </Grid>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0 10 0 10">
+                        <Ellipse Width="3" Height="3" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" />
+                        <Ellipse Width="4" Height="4" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 0 0"/>
+                        <Ellipse Width="5" Height="5" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 0 0"/>
+                        <Ellipse Width="4" Height="4" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 2 0"/>
+                        <Ellipse Width="3" Height="3" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" />
+                    </StackPanel>
+                    <Grid>
+                        <Ellipse Fill="{DynamicResource BalancerRoutingStepsPassive}" Width="20" Height="20" Stroke="{DynamicResource BalancerRoutingStepsIconBorder}"/>
+                        <!-- Icon -->
+                        <icon:PackIconFontAwesome Kind="_6Solid" 
+                            Width="12" 
+                            Height="12" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center" 
+                            Foreground="{DynamicResource BalancerRoutingStepsIcon}"/>
+                    </Grid>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0 10 0 10">
+                        <Ellipse Width="3" Height="3" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" />
+                        <Ellipse Width="4" Height="4" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 0 0"/>
+                        <Ellipse Width="5" Height="5" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 0 0"/>
+                        <Ellipse Width="4" Height="4" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 2 0"/>
+                        <Ellipse Width="3" Height="3" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" />
+                    </StackPanel>
+                    <Grid>
+                        <Ellipse Fill="{DynamicResource BalancerRoutingStepsPassive}" Width="20" Height="20" Stroke="{DynamicResource BalancerRoutingStepsIconBorder}"/>
+                        <!-- Icon -->
+                        <icon:PackIconFontAwesome Kind="_7Solid" 
+                            Width="12" 
+                            Height="12" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center" 
+                            Foreground="{DynamicResource BalancerRoutingStepsIcon}"/>
+                    </Grid>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0 10 0 10">
+                        <Ellipse Width="3" Height="3" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" />
+                        <Ellipse Width="4" Height="4" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 0 0"/>
+                        <Ellipse Width="5" Height="5" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 0 0"/>
+                        <Ellipse Width="4" Height="4" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 2 0"/>
+                        <Ellipse Width="3" Height="3" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" />
+                    </StackPanel>
+                    <Grid>
+                        <Ellipse Fill="{DynamicResource BalancerRoutingStepsPassive}" Width="20" Height="20" Stroke="{DynamicResource BalancerRoutingStepsIconBorder}"/>
+                        <!-- Icon -->
+                        <icon:PackIconFontAwesome Kind="_8Solid" 
+                            Width="12" 
+                            Height="12" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center" 
+                            Foreground="{DynamicResource BalancerRoutingStepsIcon}"/>
+                    </Grid>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0 10 0 10">
+                        <Ellipse Width="3" Height="3" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" />
+                        <Ellipse Width="4" Height="4" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 0 0"/>
+                        <Ellipse Width="5" Height="5" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 0 0"/>
+                        <Ellipse Width="4" Height="4" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 2 0"/>
+                        <Ellipse Width="3" Height="3" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" />
+                    </StackPanel>
+                    <Grid>
+                        <Ellipse Fill="{DynamicResource BalancerRoutingStepsPassive}" Width="20" Height="20" Stroke="{DynamicResource BalancerRoutingStepsIconBorder}"/>
+                        <!-- Icon -->
+                        <icon:PackIconFontAwesome Kind="_9Solid" 
+                            Width="12" 
+                            Height="12" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center" 
+                            Foreground="{DynamicResource BalancerRoutingStepsIcon}"/>
+                    </Grid>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0 10 0 10">
+                        <Ellipse Width="3" Height="3" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" />
+                        <Ellipse Width="4" Height="4" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 0 0"/>
+                        <Ellipse Width="5" Height="5" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 0 0"/>
+                        <Ellipse Width="4" Height="4" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 2 0"/>
+                        <Ellipse Width="3" Height="3" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" />
+                    </StackPanel>
+                    <Grid>
+                        <Ellipse Fill="{DynamicResource BalancerRoutingStepsPassive}" Width="20" Height="20" Stroke="{DynamicResource BalancerRoutingStepsIconBorder}"/>
+                        <!-- Icon -->
+                        <StackPanel Orientation="Horizontal">
+                            <icon:PackIconFontAwesome Kind="_1Solid" 
+                            Width="12" 
+                            Height="12" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center" 
+                            Foreground="{DynamicResource BalancerRoutingStepsIcon}"/>
+                            <icon:PackIconFontAwesome Kind="_0Solid" Margin="-5 0 0 0"
+                            Width="12" 
+                            Height="12" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center" 
+                            Foreground="{DynamicResource BalancerRoutingStepsIcon}"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+
+                <StackPanel  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Width="500" Margin="0 10 0 0" VerticalAlignment="Top" HorizontalAlignment="Center">
+                    <TextBlock Text="{Binding IterationHeader}" Background="{DynamicResource Page}" TextWrapping="Wrap" FontSize="16" FontWeight="DemiBold" Foreground="{DynamicResource Text}" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </StackPanel>
+
+                <StackPanel  Grid.Row="2" Grid.Column="0" Width="500" Margin="50 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                    <TextBlock Text="{Binding Iteration}" Background="{DynamicResource Page}" TextWrapping="Wrap" TextAlignment="Left" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="2" Grid.RowSpan="3" Grid.Column="1" Margin="3 0 3 0" VerticalAlignment="Bottom" HorizontalAlignment="Left">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" MinHeight="35"/>
+                            <RowDefinition Height="Auto" MinHeight="35"/>
+                            <RowDefinition Height="Auto" MinHeight="35"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" MinWidth="30"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- İlk Buton -->
+                        <helpers:StepButton Grid.Row="0" Grid.Column="0" Command="{Binding RunCommand}" Style="{StaticResource StepButtonStyle}"
+                          EllipseColor="{DynamicResource BalancerRoutingStepsEllipseColor1}"   
+                          IconKind="{x:Static icon:PackIconFontAwesomeKind.RepeatSolid}" 
+                          IconColor="{DynamicResource BalancerRoutingStepsIcon}" />
+                        <Label Grid.Row="0" Grid.Column="1" Content="Testi Tekrarla" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+                        <!-- İkinci Buton -->
+                        <helpers:StepButton Grid.Row="1" Grid.Column="0" Command="{Binding RunCommand}" Style="{StaticResource StepButtonStyle}"
+                          EllipseColor="{DynamicResource BalancerRoutingStepsEllipseColor0}"   
+                          IconKind="{x:Static icon:PackIconFontAwesomeKind.CheckToSlotSolid}" 
+                          IconColor="{DynamicResource BalancerRoutingStepsIcon}" />
+                        <Label Grid.Row="1" Grid.Column="1" Content="Onayla" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
 
-                <icon:PackIconMaterial Grid.Column="1" Grid.Row="0" Height="8" Width="8" Kind="Brightness1" Foreground="OrangeRed" Margin="0 18 0 0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <!-- Üçüncü Buton -->
+                        <helpers:StepButton Grid.Row="2" Grid.Column="0" Command="{Binding RunCommand}" Style="{StaticResource StepButtonStyle}"
+                          EllipseColor="{DynamicResource BalancerRoutingStepsEllipseColor2}"   
+                          IconKind="{x:Static icon:PackIconFontAwesomeKind.ArrowRightFromBracketSolid}" 
+                          IconColor="{DynamicResource BalancerRoutingStepsIcon}" />
+                        <Label Grid.Row="2" Grid.Column="1" Content="Diğer Adıma Geç" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+
+                    </Grid> 
+                </StackPanel>
 
             </Grid>
-        </Border>
-        -->
+        </ScrollViewer>
 
-        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" HorizontalAlignment="Center" VerticalAlignment="Center" >
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -91,14 +348,15 @@
             <uc:GeneralButton Grid.Column="3" Margin="2" Icon="PlusSolid" Text="{x:Static p:Resources.BalancerPage_NewTestButton}" Command="{Binding NewTestCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
         </Grid>
 
-        <uc:StatusBar Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Value="{Binding TestTimeCount}" Margin="10 2 10 2"></uc:StatusBar>
+        <uc:StatusBar Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Value="{Binding TestTimeCount}" Margin="10 2 10 2" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
 
-        <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" Height="28" Content="{Binding StatusMessage}" Margin="0 2 0 2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="DemiBold" Foreground="{DynamicResource Text}"/>
-        <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" Height="28" Content="{Binding TestResult}" Margin="0 2 0 2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="DemiBold" Foreground="{DynamicResource Text}"/>
-        
-        <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" >
+        <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" Height="28" Content="{Binding StatusMessage}" Margin="0 2 0 2" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="14" FontWeight="DemiBold" Foreground="{DynamicResource Text}"/>
+        <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" Height="28" Content="{Binding TestResult}" Margin="0 2 0 2" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="14" FontWeight="DemiBold" Foreground="{DynamicResource Text}"/>
+
+ 
+        <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
             <icon:PackIconMaterial Kind="ShieldAlert" Foreground="{DynamicResource deviceCardIcon}" Width="20" Height="20" Margin="5 0 0 0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <Label Height="30" Content="{x:Static p:Resources.BalancerPage_WarningMessage}" Margin="5 2 5 2" FontSize="16" FontWeight="DemiBold" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Text="{x:Static p:Resources.BalancerPage_WarningMessage}" Background="{DynamicResource Page}" TextWrapping="Wrap" FontSize="16" FontWeight="DemiBold" Foreground="{DynamicResource Text}" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </StackPanel>
     </Grid>
 </UserControl>

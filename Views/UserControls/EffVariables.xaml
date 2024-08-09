@@ -108,59 +108,121 @@
     </UserControl.Resources>
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-        <!-- 1. Değişken -->
-        <StackPanel Style="{StaticResource StackPanelStyle}" Grid.Row="0">
-            <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="PlaylistMinus" ToolTipService.InitialShowDelay="2">
-                <icon:PackIconMaterial.ToolTip>
-                    <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate1}"/>
-                </icon:PackIconMaterial.ToolTip>
-            </icon:PackIconMaterial>
-            <TextBlock Style="{StaticResource NameLabelStyle}" Text="{x:Static p:Resources.EffVariables_PropulsionSystemEfficiencyI}" />
-            <TextBlock Style="{StaticResource ValueLabelStyle}" Text="{Binding DeviceInterfaceVariables.Theoric.PropSysEfficiencyI, Mode=OneWay, StringFormat={}{0:0.00}}" />
-            <TextBlock Style="{StaticResource UnitLabelStyle}" Text="%" />
-        </StackPanel>
+            <!-- 1. Değişken -->
+            <StackPanel Style="{StaticResource StackPanelStyle}" Grid.Row="0">
+                <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="PlaylistMinus" ToolTipService.InitialShowDelay="2">
+                    <icon:PackIconMaterial.ToolTip>
+                        <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate1}"/>
+                    </icon:PackIconMaterial.ToolTip>
+                </icon:PackIconMaterial>
+                <TextBlock Style="{StaticResource NameLabelStyle}" Text="{x:Static p:Resources.EffVariables_PropulsionSystemEfficiencyI}" />
+                <TextBlock Style="{StaticResource ValueLabelStyle}" Text="{Binding DeviceInterfaceVariables.Theoric.PropSysEfficiencyI, Mode=OneWay, StringFormat={}{0:0.00}}" />
+                <TextBlock Style="{StaticResource UnitLabelStyle}" Text="%" />
+            </StackPanel>
 
-        <!-- 2. Değişken -->
-        <StackPanel Style="{StaticResource StackPanelStyle}" Grid.Row="1">
-            <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="PlaylistMinus" ToolTipService.InitialShowDelay="2">
-                <icon:PackIconMaterial.ToolTip>
-                    <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate2}"/>
-                </icon:PackIconMaterial.ToolTip>
-            </icon:PackIconMaterial>
-            <TextBlock Style="{StaticResource NameLabelStyle}" Text="{x:Static p:Resources.EffVariables_PropulsionSystemEfficiencyII}" />
-            <TextBlock Style="{StaticResource ValueLabelStyle}" Text="{Binding DeviceInterfaceVariables.Theoric.PropSysEfficiencyII, Mode=OneWay, StringFormat={}{0:0.00}}" />
-            <TextBlock Style="{StaticResource UnitLabelStyle}" Text="g/Watt" />
-        </StackPanel>
+            <!-- 2. Değişken -->
+            <StackPanel Style="{StaticResource StackPanelStyle}" Grid.Row="1">
+                <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="PlaylistMinus" ToolTipService.InitialShowDelay="2">
+                    <icon:PackIconMaterial.ToolTip>
+                        <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate2}"/>
+                    </icon:PackIconMaterial.ToolTip>
+                </icon:PackIconMaterial>
+                <TextBlock Style="{StaticResource NameLabelStyle}" Text="{x:Static p:Resources.EffVariables_PropulsionSystemEfficiencyII}" />
+                <TextBlock Style="{StaticResource ValueLabelStyle}" Text="{Binding DeviceInterfaceVariables.Theoric.PropSysEfficiencyII, Mode=OneWay, StringFormat={}{0:0.00}}" />
+                <TextBlock Style="{StaticResource UnitLabelStyle}" Text="g/Watt" />
+            </StackPanel>
 
-        <!-- 3. Değişken -->
-        <StackPanel Style="{StaticResource StackPanelStyle}" Grid.Row="2">
-            <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="PlaylistMinus" ToolTipService.InitialShowDelay="2">
-                <icon:PackIconMaterial.ToolTip>
-                    <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate3}"/>
-                </icon:PackIconMaterial.ToolTip>
-            </icon:PackIconMaterial>
-            <TextBlock Style="{StaticResource NameLabelStyle}" Text="{x:Static p:Resources.EffVariables_PropellerEfficiency}" />
-            <TextBlock Style="{StaticResource ValueLabelStyle}" Text="{Binding DeviceInterfaceVariables.Theoric.PropellerEfficiency, Mode=OneWay, StringFormat={}{0:0.00}}" />
-            <TextBlock Style="{StaticResource UnitLabelStyle}" Text="%" />
-        </StackPanel>
+            <!-- 3. Değişken -->
+            <StackPanel Style="{StaticResource StackPanelStyle}" Grid.Row="2">
+                <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="PlaylistMinus" ToolTipService.InitialShowDelay="2">
+                    <icon:PackIconMaterial.ToolTip>
+                        <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate3}"/>
+                    </icon:PackIconMaterial.ToolTip>
+                </icon:PackIconMaterial>
+                <TextBlock Style="{StaticResource NameLabelStyle}" Text="{x:Static p:Resources.EffVariables_PropellerEfficiency}" />
+                <TextBlock Style="{StaticResource ValueLabelStyle}" Text="{Binding DeviceInterfaceVariables.Theoric.PropellerEfficiency, Mode=OneWay, StringFormat={}{0:0.00}}" />
+                <TextBlock Style="{StaticResource UnitLabelStyle}" Text="%" />
+            </StackPanel>
 
-        <!-- 4. Değişken -->
-        <StackPanel Style="{StaticResource StackPanelStyle}" Grid.Row="3">
-            <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="PlaylistMinus" ToolTipService.InitialShowDelay ="2">
-                <icon:PackIconMaterial.ToolTip>
-                    <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate4}"/>
-                </icon:PackIconMaterial.ToolTip>
-            </icon:PackIconMaterial>
-            <TextBlock Style="{StaticResource NameLabelStyle}" Text="{x:Static p:Resources.EffVariables_MotorEfficiency}" />
-            <TextBlock Style="{StaticResource ValueLabelStyle}" Text="{Binding DeviceInterfaceVariables.Theoric.MotorEfficiency, Mode=OneWay, StringFormat={}{0:0.00}}" />
-            <TextBlock Style="{StaticResource UnitLabelStyle}" Text="%" />
-        </StackPanel>
+            <!-- 4. Değişken -->
+            <StackPanel Style="{StaticResource StackPanelStyle}" Grid.Row="3">
+                <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="PlaylistMinus" ToolTipService.InitialShowDelay ="2">
+                    <icon:PackIconMaterial.ToolTip>
+                        <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate4}"/>
+                    </icon:PackIconMaterial.ToolTip>
+                </icon:PackIconMaterial>
+                <TextBlock Style="{StaticResource NameLabelStyle}" Text="{x:Static p:Resources.EffVariables_MotorEfficiency}" />
+                <TextBlock Style="{StaticResource ValueLabelStyle}" Text="{Binding DeviceInterfaceVariables.Theoric.MotorEfficiency, Mode=OneWay, StringFormat={}{0:0.00}}" />
+                <TextBlock Style="{StaticResource UnitLabelStyle}" Text="%" />
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- 1. Değişken -->
+            <StackPanel Style="{StaticResource StackPanelStyle}" Grid.Row="0">
+                <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="PlaylistMinus" ToolTipService.InitialShowDelay="2">
+                    <icon:PackIconMaterial.ToolTip>
+                        <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate1}"/>
+                    </icon:PackIconMaterial.ToolTip>
+                </icon:PackIconMaterial>
+                <TextBlock Style="{StaticResource NameLabelStyle}" Text="{x:Static p:Resources.EffVariables_J}" />
+                <TextBlock Style="{StaticResource ValueLabelStyle}" Text="{Binding DeviceInterfaceVariables.Theoric.J, Mode=OneWay, StringFormat={}{0:0.00}}" />
+            </StackPanel>
+
+            <!-- 2. Değişken -->
+            <StackPanel Style="{StaticResource StackPanelStyle}" Grid.Row="1">
+                <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="PlaylistMinus" ToolTipService.InitialShowDelay="2">
+                    <icon:PackIconMaterial.ToolTip>
+                        <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate1}"/>
+                    </icon:PackIconMaterial.ToolTip>
+                </icon:PackIconMaterial>
+                <TextBlock Style="{StaticResource NameLabelStyle}" Text="{x:Static p:Resources.EffVariables_Ct}" />
+                <TextBlock Style="{StaticResource ValueLabelStyle}" Text="{Binding DeviceInterfaceVariables.Theoric.Ct, Mode=OneWay, StringFormat={}{0:0.00}}" />
+            </StackPanel>
+
+            <!-- 3. Değişken -->
+            <StackPanel Style="{StaticResource StackPanelStyle}" Grid.Row="2">
+                <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="PlaylistMinus" ToolTipService.InitialShowDelay="2">
+                    <icon:PackIconMaterial.ToolTip>
+                        <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate1}"/>
+                    </icon:PackIconMaterial.ToolTip>
+                </icon:PackIconMaterial>
+                <TextBlock Style="{StaticResource NameLabelStyle}" Text="{x:Static p:Resources.EffVariables_Cp}" />
+                <TextBlock Style="{StaticResource ValueLabelStyle}" Text="{Binding DeviceInterfaceVariables.Theoric.Cp, Mode=OneWay, StringFormat={}{0:0.00}}" />
+            </StackPanel>
+
+            <!-- 4. Değişken -->
+            <StackPanel Style="{StaticResource StackPanelStyle}" Grid.Row="3">
+                <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="PlaylistMinus" ToolTipService.InitialShowDelay="2">
+                    <icon:PackIconMaterial.ToolTip>
+                        <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate1}"/>
+                    </icon:PackIconMaterial.ToolTip>
+                </icon:PackIconMaterial>
+                <TextBlock Style="{StaticResource NameLabelStyle}" Text="{x:Static p:Resources.EffVariables_Cq}" />
+                <TextBlock Style="{StaticResource ValueLabelStyle}" Text="{Binding DeviceInterfaceVariables.Theoric.Cq, Mode=OneWay, StringFormat={}{0:0.00}}" />
+            </StackPanel>
+        </Grid>
     </Grid>
+    
+   
 </UserControl>

@@ -570,6 +570,18 @@
   <data name="DeviceMiniCard_WorkingStatus" xml:space="preserve">
     <value>Working Status:</value>
   </data>
+  <data name="EffVariables_Cp" xml:space="preserve">
+    <value>Power Coefficient (Cp)</value>
+  </data>
+  <data name="EffVariables_Cq" xml:space="preserve">
+    <value>Torque Coefficient (Cq)</value>
+  </data>
+  <data name="EffVariables_Ct" xml:space="preserve">
+    <value>Thrust Coefficient (Ct)</value>
+  </data>
+  <data name="EffVariables_J" xml:space="preserve">
+    <value>Advanced Ratio (J)</value>
+  </data>
   <data name="EffVariables_MotorEfficiency" xml:space="preserve">
     <value>Motor Efficiency</value>
   </data>

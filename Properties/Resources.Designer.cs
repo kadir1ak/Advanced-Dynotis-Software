@@ -1420,6 +1420,42 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   Power Coefficient (Cp) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string EffVariables_Cp {
+            get {
+                return ResourceManager.GetString("EffVariables_Cp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Torque Coefficient (Cq) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string EffVariables_Cq {
+            get {
+                return ResourceManager.GetString("EffVariables_Cq", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Thrust Coefficient (Ct) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string EffVariables_Ct {
+            get {
+                return ResourceManager.GetString("EffVariables_Ct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Advanced Ratio (J) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string EffVariables_J {
+            get {
+                return ResourceManager.GetString("EffVariables_J", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Motor Efficiency benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string EffVariables_MotorEfficiency {

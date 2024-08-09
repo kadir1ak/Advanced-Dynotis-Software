@@ -68,9 +68,18 @@
     <BitmapImage x:Key="MotorAndPropellerImage" UriSource="pack://application:,,,/Documents/Images/Motor_and_Propeller.png"/>
     <SolidColorBrush Color="#151F2D" x:Key="Line"/>
     <SolidColorBrush Color="#151F2D" x:Key="BalancerRoutingStepsListBoxText"/>
+    <SolidColorBrush Color="#3A9FF3" x:Key="BalancerRoutingStepsIconBorder"/>
+    <SolidColorBrush Color="#FF3AF389" x:Key="BalancerRoutingStepsActive"/>
+    <SolidColorBrush Color="White" x:Key="BalancerRoutingStepsPassive"/>
+    <SolidColorBrush Color="#3A9FF3" x:Key="BalancerRoutingStepsOK"/>
+    <SolidColorBrush Color="#151F2D" x:Key="BalancerRoutingStepsIcon"/>
+    <SolidColorBrush Color="#FF3AF389" x:Key="BalancerRoutingStepsEllipseColor0"/>
+    <SolidColorBrush Color="#FFFF662D" x:Key="BalancerRoutingStepsEllipseColor1"/>
+    <SolidColorBrush Color="White" x:Key="BalancerRoutingStepsEllipseColor2"/>
+
+    
 
     <!-- AngularGauge -->
-    <SolidColorBrush Color="#7FDBB6" x:Key="AngularGaugeMotorSpeed"/>
-
+    <SolidColorBrush Color="#FFFF662D" x:Key="AngularGaugeMotorSpeed"/>
 
 </ResourceDictionary>

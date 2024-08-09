@@ -262,8 +262,8 @@
                                                 <ColumnDefinition Width="*" MinWidth="655" MaxWidth="655"/>
                                             </Grid.ColumnDefinitions>
                                             <Grid.RowDefinitions>
-                                                <RowDefinition Height="*" MinHeight="200" MaxHeight="400"/>
-                                                <RowDefinition Height="*" MinHeight="200" MaxHeight="400"/>
+                                                <RowDefinition Height="*" MinHeight="200" MaxHeight="250"/>
+                                                <RowDefinition Height="*" MinHeight="200" MaxHeight="250"/>
                                             </Grid.RowDefinitions>
 
 

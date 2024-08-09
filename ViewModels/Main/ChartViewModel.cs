@@ -184,23 +184,23 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             };
         }
 
-        public void UpdateChartData(InterfaceVariables data)
+        public void UpdateChartData(DynotisData data, InterfaceVariables interfaceData)
         {
             if (TimeLabels.Count >= seriesBufferSize)
             {
                 TimeLabels.RemoveAt(0);
             }
-            TimeLabels.Add(data.Time.ToString());
-            UpdateSeries(VibrationSeriesCollection, data.Vibration.Value);
-            UpdateSeries(VibrationXSeriesCollection, data.Vibration.VibrationX);
-            UpdateSeries(VibrationYSeriesCollection, data.Vibration.VibrationY);
-            UpdateSeries(VibrationZSeriesCollection, data.Vibration.VibrationZ);
-            UpdateSeries(VibrationHighSeriesCollection, data.Vibration.HighVibration);
-            UpdateSeries(CurrentSeriesCollection, data.Current);
-            UpdateSeries(MotorSpeedSeriesCollection, data.MotorSpeed.Value);
-            UpdateSeries(VoltageSeriesCollection, data.Voltage);
-            UpdateSeries(ThrustSeriesCollection, data.Thrust.Value);
-            UpdateSeries(TorqueSeriesCollection, data.Torque.Value);
+            TimeLabels.Add(interfaceData.Time.ToString());
+            UpdateSeries(VibrationSeriesCollection, interfaceData.Vibration.Value);
+            UpdateSeries(VibrationXSeriesCollection, interfaceData.Vibration.VibrationX);
+            UpdateSeries(VibrationYSeriesCollection, interfaceData.Vibration.VibrationY);
+            UpdateSeries(VibrationZSeriesCollection, interfaceData.Vibration.VibrationZ);
+            UpdateSeries(VibrationHighSeriesCollection, interfaceData.Vibration.HighVibration);
+            UpdateSeries(CurrentSeriesCollection, interfaceData.Current);
+            UpdateSeries(MotorSpeedSeriesCollection, interfaceData.MotorSpeed.Value);
+            UpdateSeries(VoltageSeriesCollection, interfaceData.Voltage);
+            UpdateSeries(ThrustSeriesCollection, interfaceData.Thrust.Value);
+            UpdateSeries(TorqueSeriesCollection, interfaceData.Torque.Value);
             UpdateChartSteps();
             UpdateChartLimits();
         }

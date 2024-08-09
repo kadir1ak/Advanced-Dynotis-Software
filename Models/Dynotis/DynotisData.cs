@@ -436,9 +436,11 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             private static double _propSysEfficiencyI;
             private static double _propSysEfficiencyII;
             private static double _motorEfficiency;
-            private static double _ct;
-            private static double _cq;
-            private static double _cp;
+            private static double _ips; // Vibration - inches per second
+            private static double _j;   // Advance Ratio
+            private static double _ct;  // Thrust Coefficient
+            private static double _cq;  // Torque Coefficient 
+            private static double _cp;  // Power Coefficient
 
             public double PropellerArea
             {
@@ -487,6 +489,16 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 set => SetProperty(ref _motorEfficiency, value);
             }
 
+            public double J
+            {
+                get => _j;
+                set => SetProperty(ref _j, value);
+            }
+            public double IPS
+            {
+                get => _ips;
+                set => SetProperty(ref _ips, value);
+            }
             public double Ct
             {
                 get => _ct;
