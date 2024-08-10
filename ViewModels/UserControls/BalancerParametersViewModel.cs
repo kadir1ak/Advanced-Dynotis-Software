@@ -13,7 +13,12 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
     public class BalancerParametersViewModel : INotifyPropertyChanged
     {
         private int _referenceMotorSpeed;
-        private double _referenceWeight;
+        private double _referencePropellerDiameter;
+        private double _unitTapeSize;
+        private double _equalizerTapeSize;
+        private string _equalizerDirection;
+        private string _motorSpeedUnitSymbol;
+
         private int _balancerIterationStep;
         private ObservableCollection<int> _balancerIterationStepChart;
         private ObservableCollection<double> _balancerIterationVibrationsChart;
@@ -36,7 +41,6 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
             TareCommand = new RelayCommand(param => VibrationTare());
 
-            _referenceWeight = 0.050; // g
             _balancerIterationStepChart = new ObservableCollection<int>();
             _balancerIterationVibrationsChart = new ObservableCollection<double>();
             _balancingIterations = new ObservableCollection<BalancerIteration>();
@@ -46,11 +50,14 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         {
             if (e.PropertyName == nameof(_interfaceVariables.BalancerIterationStep) ||
                 e.PropertyName == nameof(_interfaceVariables.BalancerIterationStepChart) ||
+                e.PropertyName == nameof(_interfaceVariables.ReferencePropellerDiameter) ||
                 e.PropertyName == nameof(_interfaceVariables.BalancerIterationVibrationsChart))
             {
                 BalancerIterationStep = _interfaceVariables.BalancerIterationStep;
                 BalancerIterationStepChart = _interfaceVariables.BalancerIterationStepChart;
                 BalancerIterationVibrationsChart = _interfaceVariables.BalancerIterationVibrationsChart;
+                MotorSpeedUnitSymbol = _interfaceVariables.MotorSpeed.UnitSymbol;
+                ReferencePropellerDiameter = _interfaceVariables.ReferencePropellerDiameter;
                 UpdateBalancingIterations();
             }
         }
@@ -125,19 +132,65 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
-
-        public double ReferenceWeight
+        public double ReferencePropellerDiameter
         {
-            get => _referenceWeight;
+            get => _referencePropellerDiameter;
             set
             {
-                if (SetProperty(ref _referenceWeight, value))
+                if (SetProperty(ref _referencePropellerDiameter, value))
                 {
-                    _interfaceVariables.ReferenceWeight = value;
-                    OnPropertyChanged(nameof(ReferenceWeight));
+                    _interfaceVariables.ReferencePropellerDiameter = value;
+                    OnPropertyChanged(nameof(ReferencePropellerDiameter));
                 }
             }
-        }      
+        }
+        public double UnitTapeSize
+        {
+            get => _unitTapeSize;
+            set
+            {
+                if (SetProperty(ref _unitTapeSize, value))
+                {
+                    _interfaceVariables.UnitTapeSize = value;
+                    OnPropertyChanged(nameof(UnitTapeSize));
+                }
+            }
+        }
+        public double EqualizerTapeSize
+        {
+            get => _equalizerTapeSize;
+            set
+            {
+                if (SetProperty(ref _equalizerTapeSize, value))
+                {
+                    _interfaceVariables.EqualizerTapeSize = value;
+                    OnPropertyChanged(nameof(EqualizerTapeSize));
+                }
+            }
+        }
+        public string EqualizerDirection
+        {
+            get => _equalizerDirection;
+            set
+            {
+                if (SetProperty(ref _equalizerDirection, value))
+                {
+                    _interfaceVariables.EqualizerDirection = value;
+                    OnPropertyChanged(nameof(EqualizerDirection));
+                }
+            }
+        }
+        public string MotorSpeedUnitSymbol
+        {
+            get => _motorSpeedUnitSymbol;
+            set
+            {
+                if (SetProperty(ref _motorSpeedUnitSymbol, value))
+                {
+                    OnPropertyChanged(nameof(MotorSpeedUnitSymbol));
+                }
+            }
+        }
         public int BalancerIterationStep
         {
             get => _balancerIterationStep;
@@ -209,10 +262,6 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             // Notify that the BalancingIterations collection has been updated
             OnPropertyChanged(nameof(BalancingIterations));
         }
-
-
-
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 

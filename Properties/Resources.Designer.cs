@@ -772,6 +772,15 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   Set Reference Values benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_SetReferenceValues {
+            get {
+                return ResourceManager.GetString("BalancerPage_SetReferenceValues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Motor Speed ​​Control is Provided benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string BalancerPage_StatusMessage1 {

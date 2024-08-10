@@ -354,6 +354,9 @@
   <data name="BalancerPage_SaveButton" xml:space="preserve">
     <value>Record</value>
   </data>
+  <data name="BalancerPage_SetReferenceValues" xml:space="preserve">
+    <value>Set Reference Values</value>
+  </data>
   <data name="BalancerPage_StatusMessage1" xml:space="preserve">
     <value>Motor Speed ​​Control is Provided</value>
   </data>

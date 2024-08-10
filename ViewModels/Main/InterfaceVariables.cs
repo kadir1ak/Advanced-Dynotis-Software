@@ -87,9 +87,11 @@ public class InterfaceVariables : INotifyPropertyChanged
     private string _fileName;
     private TimeSpan _duration;
 
-    private double _stationaryDeviceVibration;         // Cihazın durağan haldeki titreşimi
-    private double _runningMotorVibration;             // Motor çalışır haldeki titreşimi
-    private double _runningPropollerVibration;         // Pervane çalışır haldeki titreşim değeri
+    private double _stationaryDeviceVibration;          // Cihazın durağan haldeki titreşimi
+    private double _runningMotorVibration;              // Motor çalışır haldeki titreşimi
+    private double _runningPropollerVibration;          // Pervane çalışır haldeki titreşim değeri
+    private double _onePropollerVibration;              // Pervane birim referans bant ile ilk kanat titreşim değeri
+    private double _twoPropollerVibration;              // Pervane birim referans bant ile ikinci kanat titreşim değeri
 
     private double _tareTorqueBaseValue;
     private double _tareThrustBaseValue;
@@ -107,10 +109,10 @@ public class InterfaceVariables : INotifyPropertyChanged
     private bool _selectedIsEnglishChecked;
 
     private int _referenceMotorSpeed;
-    private double _referenceWeight;
     private double _referencePropellerDiameter;
-    private double _balancerWeight;
-    private double _balancerPosition;
+    private double _unitTapeSize;
+    private double _equalizerTapeSize;
+    private string _equalizerDirection;
     private int _balancerIterationStep;
     private List<double> _balancerIterationVibrations;
     private ObservableCollection<int> _balancerIterationStepChart;
@@ -286,6 +288,16 @@ public class InterfaceVariables : INotifyPropertyChanged
         get => _runningPropollerVibration;
         set => SetProperty(ref _runningPropollerVibration, value);
     }
+    public double OnePropollerVibration
+    {
+        get => _onePropollerVibration;
+        set => SetProperty(ref _onePropollerVibration, value);
+    }
+    public double TwoPropollerVibration
+    {
+        get => _twoPropollerVibration;
+        set => SetProperty(ref _twoPropollerVibration, value);
+    }
 
     public double TareTorqueBaseValue
     {
@@ -433,27 +445,27 @@ public class InterfaceVariables : INotifyPropertyChanged
         get => _referenceMotorSpeed;
         set => SetProperty(ref _referenceMotorSpeed, value);
     }
-    public double ReferenceWeight
-    {
-        get => _referenceWeight;
-        set => SetProperty(ref _referenceWeight, value);
-    }   
-    public double ReferencePropelleDiameter
+    public double ReferencePropellerDiameter
     {
         get => _referencePropellerDiameter;
         set => SetProperty(ref _referencePropellerDiameter, value);
+    }    
+    public double UnitTapeSize
+    {
+        get => UnitTapeSize;
+        set => SetProperty(ref _unitTapeSize, value);
+    }
+    public double EqualizerTapeSize
+    {
+        get => _equalizerTapeSize;
+        set => SetProperty(ref _equalizerTapeSize, value);
+    }
+    public string EqualizerDirection
+    {
+        get => _equalizerDirection;
+        set => SetProperty(ref _equalizerDirection, value);
     }
 
-    public double BalancerWeight
-    {
-        get => _balancerWeight;
-        set => SetProperty(ref _balancerWeight, value);
-    }   
-    public double BalancerPosition
-    {
-        get => _balancerPosition;
-        set => SetProperty(ref _balancerPosition, value);
-    }    
     public int BalancerIterationStep
     {
         get => _balancerIterationStep;

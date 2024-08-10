@@ -1,7 +1,10 @@
 ﻿using Advanced_Dynotis_Software.Models.Dynotis;
 using Advanced_Dynotis_Software.Services.Controllers;
 using Advanced_Dynotis_Software.Services.Helpers;
+using DocumentFormat.OpenXml.InkML;
+using DocumentFormat.OpenXml.Math;
 using DocumentFormat.OpenXml.Presentation;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
@@ -59,13 +62,20 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private int _iterationStepIndex;
 
         // Vibration Value
-        private double _stationaryDeviceVibration;         // Cihazın durağan haldeki titreşimi
-        private double _runningMotorVibration;             // Motor çalışır haldeki titreşimi
-        private double _runningPropollerVibration;         // Pervane çalışır haldeki titreşim değeri
+        private double _stationaryDeviceVibration;          // Cihazın durağan haldeki titreşimi
+        private double _runningMotorVibration;              // Motor çalışır haldeki titreşimi
+        private double _runningPropollerVibration;          // Pervane çalışır haldeki titreşim değeri
+        private double _onePropollerVibration;              // Pervane birim referans bant ile ilk kanat titreşim değeri
+        private double _twoPropollerVibration;              // Pervane birim referans bant ile ikinci kanat titreşim değeri
         private double _tareVibration;
         private double _tareVibrationX;
         private double _tareVibrationY;
         private double _tareVibrationZ;
+
+        // Referans Değerler
+        private double _unitTapeSize;
+        private double _equalizerTapeSize;
+        private string _equalizerDirection;
 
         //ESC
         private bool _escStatus;
@@ -83,6 +93,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private DispatcherTimer HighVibrationDataCollectionTimer;
         private double _highVibration;
         private List<double> _vibrationsDataBuffer;
+
         // Propeller Vibration 
         private List<double> _testStepsPropellerVibrations;
 
@@ -91,7 +102,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private ObservableCollection<double> _balancerIterationVibrationsChart;
 
         // Step Indicators
-        private ObservableCollection<Brush> _stepIndicators;
+        private ObservableCollection<System.Windows.Media.Brush> _stepIndicators;
 
         // Constructor
         public BalancerRoutingStepsViewModel(DynotisData dynotisData, InterfaceVariables interfaceVariables)
@@ -122,10 +133,11 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             IterationSteps = IterationStep.IterationSteps;
 
             // Initialize step indicators
-            StepIndicators = new ObservableCollection<Brush>();
+            StepIndicators = new ObservableCollection<System.Windows.Media.Brush>();
             for (int i = 0; i < IterationSteps.Count; i++)
             {
-                StepIndicators.Add((SolidColorBrush)Application.Current.Resources["BalancerRoutingStepsPassive"]);
+                // Inside your constructor or other methods
+                StepIndicators.Add((System.Windows.Media.SolidColorBrush)Application.Current.Resources["BalancerRoutingStepsPassive"]);
             }
 
             BalancerProgressTimer = new DispatcherTimer
@@ -242,7 +254,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
         private void NextStepCommand()
         {
-            if (_interfaceVariables.ReferenceMotorSpeed <= 0 && _interfaceVariables.ReferencePropelleDiameter <= 0)
+            if (_interfaceVariables.ReferenceMotorSpeed <= 0 && _interfaceVariables.ReferencePropellerDiameter <= 0)
             {
                 MessageBox.Show("Please enter the reference motor speed value and propeller parameters!", "Missing Value Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
@@ -258,7 +270,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 case 0: // Run Button
                     {
-                        if (_interfaceVariables.ReferenceMotorSpeed <= 0 || _interfaceVariables.ReferencePropelleDiameter <= 0)
+                        if (_interfaceVariables.ReferenceMotorSpeed <= 0 || _interfaceVariables.ReferencePropellerDiameter <= 0)
                         {
                             MessageBoxResult result = MessageBox.Show(
                             "Please enter the reference motor speed value and propelle parameters!",
@@ -421,39 +433,95 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
                     }
                     break;
-                case 7:
+                case 7: // Birim Referans Bant Uzunluğunun Hesaplanması
                     {
                         IterationHeader = IterationSteps[HeaderStepIndex].Header;
                         Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
                         StepIndicatorSet(HeaderStepIndex);
-
-                        if (IterationStepIndex < IterationSteps[HeaderStepIndex].Steps.Count - 1) { IterationStepIndex++;}  else{ HeaderStepIndex++; IterationStepIndex = 0; }
-                      
-
+                        double D = _interfaceVariables.ReferencePropellerDiameter;
+                        UnitTapeSize = D switch
+                        {
+                            >= 5 and < 10 => 20, // mm
+                            >= 10 and < 20 => 40, // mm
+                            >= 20 and < 30 => 60, // mm
+                            >= 30 and < 40 => 80, // mm
+                            _ => 0 // default case if none of the ranges match
+                        };
+                        Iteration = Iteration + "\r\n" + "Unit Tape Size: " + UnitTapeSize.ToString();
+                        if (IterationStepIndex < IterationSteps[HeaderStepIndex].Steps.Count - 1) { IterationStepIndex++; } else { HeaderStepIndex++; IterationStepIndex = 0; }
 
                     }
                     break;
-                case 8:
+                case 8: // Pervanenin Her İki Kanadına Birim Referans Bantın Eklenmesi
                     {
                         IterationHeader = IterationSteps[HeaderStepIndex].Header;
                         Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
                         StepIndicatorSet(HeaderStepIndex);
-
-                        if (IterationStepIndex < IterationSteps[HeaderStepIndex].Steps.Count - 1) { IterationStepIndex++;}  else{ HeaderStepIndex++; IterationStepIndex = 0; }
-                       
-
+                        switch (IterationStepIndex)
+                        {
+                            case 2: // İlk kanat için hesaplama başlatılıyor
+                                {
+                                    BalancerProgressTimer.Start();
+                                    PIDTimer.Start();
+                                    // Set Buttons Visibility
+                                    RepeatStepButtonVisibility = Visibility.Hidden;
+                                    ApprovalStepButtonVisibility = Visibility.Hidden;
+                                    NextStepButtonVisibility = Visibility.Hidden;
+                                }
+                                break;
+                            case 5:  // ikinci kanat için hesaplama başlatılıyor
+                                {
+                                    BalancerProgressTimer.Start();
+                                    PIDTimer.Start();
+                                    // Set Buttons Visibility
+                                    RepeatStepButtonVisibility = Visibility.Hidden;
+                                    ApprovalStepButtonVisibility = Visibility.Hidden;
+                                    NextStepButtonVisibility = Visibility.Hidden;
+                                }
+                                break;
+                            case 6:  // Sonuçlar değerlendiriliyor 
+                                {
+                                    // Set Buttons Visibility
+                                    RepeatStepButtonVisibility = Visibility.Visible;
+                                    ApprovalStepButtonVisibility = Visibility.Visible;
+                                    NextStepButtonVisibility = Visibility.Hidden;
+                                }
+                                break;
+                            default:
+                                {
+                                    if (IterationStepIndex < IterationSteps[HeaderStepIndex].Steps.Count - 1) { IterationStepIndex++; } else { HeaderStepIndex++; IterationStepIndex = 0; }
+                                }
+                                break;
+                        }
 
                     }
                     break;
-                case 9:
+                case 9: // Düzeltici Bant Uzunluğunun Hesaplanması ve Düzeltici Yönün Belirlenmesi
                     {
                         IterationHeader = IterationSteps[HeaderStepIndex].Header;
                         Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
                         StepIndicatorSet(HeaderStepIndex);
 
-                        if (IterationStepIndex < IterationSteps[HeaderStepIndex].Steps.Count - 1) { IterationStepIndex++;}  else{ HeaderStepIndex++; IterationStepIndex = 0; }
-                    
+                        // hesaplama yapılıyor 
+                        double Ratio = 0;
+                        if (OnePropollerVibration <= TwoPropollerVibration) 
+                        {
+                            EqualizerDirection = "One";
+                            Ratio = ((RunningPropollerVibration - OnePropollerVibration) / RunningPropollerVibration);
+                        }
+                        else
+                        {
+                            EqualizerDirection = "Two";
+                            Ratio = ((RunningPropollerVibration - TwoPropollerVibration) / RunningPropollerVibration);
+                        }
 
+                        EqualizerTapeSize = UnitTapeSize * (1/ Ratio) - 1; // (-1) şuan var olan bantı temsil ediyor.
+
+
+                        Iteration = Iteration + "\r\n" + 
+                                   "Equalizer Tape Size: " + EqualizerTapeSize.ToString() + "\r\n" +
+                                   "Equalizer Direction: " + EqualizerDirection;
+                        if (IterationStepIndex < IterationSteps[HeaderStepIndex].Steps.Count - 1) { IterationStepIndex++; } else { HeaderStepIndex++; IterationStepIndex = 0; }
 
                     }
                     break;
@@ -464,9 +532,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                         StepIndicatorSet(HeaderStepIndex);
 
                         if (IterationStepIndex < IterationSteps[HeaderStepIndex].Steps.Count - 1) { IterationStepIndex++;}  else{ HeaderStepIndex++; IterationStepIndex = 0; }
-                      
-
-
+                   
                     }
                     break;
                 case 11:
@@ -488,14 +554,14 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         }
         private void StepIndicatorSet(int index)
         {
-            StepIndicators[index] = (SolidColorBrush)Application.Current.Resources["BalancerRoutingStepsActive"];
+            StepIndicators[index] = (System.Windows.Media.SolidColorBrush)Application.Current.Resources["BalancerRoutingStepsActive"];
             for (int i = 0; i < index; i++)
             {
-                StepIndicators[i] = (SolidColorBrush)Application.Current.Resources["BalancerRoutingStepsOK"];
+                StepIndicators[i] = (System.Windows.Media.SolidColorBrush)Application.Current.Resources["BalancerRoutingStepsOK"];
             }
             for (int i = index + 1; i < IterationSteps.Count; i++)
             {
-                StepIndicators[i] = (SolidColorBrush)Application.Current.Resources["BalancerRoutingStepsPassive"];
+                StepIndicators[i] = (System.Windows.Media.SolidColorBrush)Application.Current.Resources["BalancerRoutingStepsPassive"];
             }
         }
         private void CalculateVibrationTare()
@@ -518,12 +584,22 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private void CalculateRunningMotorVibration(List<double> DataBuffer)
         {
             RunningMotorVibration = DataBuffer.Sum() / DataBuffer.Count;
-            MessageBox.Show("Motor titreşim değeri alındı.", "Motor Titreşimi", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("Motor titreşim değeri hesaplandı.", "Motor Titreşimi", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         private void CalculateRunningPropollerVibration(List<double> DataBuffer)
         {
             RunningPropollerVibration = DataBuffer.Sum() / DataBuffer.Count;
-            MessageBox.Show("Pervane titreşim değeri alındı.", "Pervane Titreşimi", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("Pervane titreşim değeri hesaplandı.", "Pervane Titreşimi", MessageBoxButton.OK, MessageBoxImage.Information);
+        }      
+        private void CalculateOnePropollerVibration(List<double> DataBuffer)
+        {
+            OnePropollerVibration = DataBuffer.Sum() / DataBuffer.Count;
+            MessageBox.Show("Pervanin ilk kanat titreşim değeri hesaplandı.", "İlk Kanat Titreşimi", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+        private void CalculateTwoPropollerVibration(List<double> DataBuffer)
+        {
+            TwoPropollerVibration = DataBuffer.Sum() / DataBuffer.Count;
+            MessageBox.Show("Pervanin ikinci kanat titreşim değeri hesaplandı.", "İkinci Kanat Titreşimi", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void MotorStop()
@@ -594,7 +670,6 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                 HighVibrationDataCollectionTimer.Start();
                                 if (TestTimeStatusBar > 50 * 2) // 5 Sn
                                 {
-
                                     HighVibrationDataCollectionTimer.Stop();
                                     BalancerProgressTimer.Stop();
                                     MotorStop();                                    
@@ -638,7 +713,6 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                 HighVibrationDataCollectionTimer.Start();
                                 if (TestTimeStatusBar > 50 * 2) // 5 Sn
                                 {
-
                                     HighVibrationDataCollectionTimer.Stop();
                                     BalancerProgressTimer.Stop();
                                     MotorStop();
@@ -649,6 +723,58 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                         case 1:
                                             {
                                                 CalculateRunningPropollerVibration(VibrationsDataBuffer);
+                                                // Set Buttons Visibility
+                                                RepeatStepButtonVisibility = Visibility.Hidden;
+                                                ApprovalStepButtonVisibility = Visibility.Hidden;
+                                                NextStepButtonVisibility = Visibility.Visible;
+                                            }
+                                            break;
+                                    }
+                                    IterationStepIndex++;
+                                    BalancingIteration();
+                                }
+                                else
+                                {
+                                    TestTimeStatusBar += 2;
+                                }
+
+                            }
+                            else
+                            {
+                                TestTimeCount++;
+                            }
+                        }
+                    }
+                    break;
+                case 8: // Pervanenin Her İki Kanadına Birim Referans Bantın Eklenmesi
+                    {
+                        if (MotorReadyStatus) // Motor Hazırsa
+                        {
+                            if (TestTimeCount >= 50) // 5 Sn
+                            {
+
+                                HighVibrationDataCollectionTimer.Start();
+                                if (TestTimeStatusBar > 50 * 2) // 5 Sn
+                                {
+                                    HighVibrationDataCollectionTimer.Stop();
+                                    BalancerProgressTimer.Stop();
+                                    MotorStop();
+                                    TestTimeCount = 0;
+                                    TestTimeStatusBar = 0;
+                                    switch (IterationStepIndex)
+                                    {
+                                        case 2:
+                                            {
+                                                CalculateOnePropollerVibration(VibrationsDataBuffer);
+                                                // Set Buttons Visibility
+                                                RepeatStepButtonVisibility = Visibility.Hidden;
+                                                ApprovalStepButtonVisibility = Visibility.Hidden;
+                                                NextStepButtonVisibility = Visibility.Visible;
+                                            }
+                                            break;
+                                        case 5:
+                                            {
+                                                CalculateTwoPropollerVibration(VibrationsDataBuffer);
                                                 // Set Buttons Visibility
                                                 RepeatStepButtonVisibility = Visibility.Hidden;
                                                 ApprovalStepButtonVisibility = Visibility.Hidden;
@@ -1012,6 +1138,30 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
+        public double OnePropollerVibration
+        {
+            get => _onePropollerVibration;
+            set
+            {
+                if (SetProperty(ref _onePropollerVibration, value))
+                {
+                    _interfaceVariables.OnePropollerVibration = value;
+                    OnPropertyChanged(nameof(OnePropollerVibration));
+                }
+            }
+        }
+        public double TwoPropollerVibration
+        {
+            get => _twoPropollerVibration;
+            set
+            {
+                if (SetProperty(ref _twoPropollerVibration, value))
+                {
+                    _interfaceVariables.TwoPropollerVibration = value;
+                    OnPropertyChanged(nameof(TwoPropollerVibration));
+                }
+            }
+        }
         public double TareVibration
         {
             get => _tareVibration;
@@ -1057,6 +1207,42 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 {
                     _interfaceVariables.Vibration.TareVibrationZ = value;
                     OnPropertyChanged(nameof(TareVibrationZ));
+                }
+            }
+        }      
+        public double UnitTapeSize
+        {
+            get => _unitTapeSize;
+            set
+            {
+                if (SetProperty(ref _unitTapeSize, value))
+                {
+                    //_interfaceVariables.UnitTapeSize = value;
+                    OnPropertyChanged(nameof(UnitTapeSize));
+                }
+            }
+        }     
+        public double EqualizerTapeSize
+        {
+            get => _equalizerTapeSize;
+            set
+            {
+                if (SetProperty(ref _equalizerTapeSize, value))
+                {
+                    //_interfaceVariables.EqualizerTapeSize = value;
+                    OnPropertyChanged(nameof(EqualizerTapeSize));
+                }
+            }
+        }        
+        public string EqualizerDirection
+        {
+            get => _equalizerDirection;
+            set
+            {
+                if (SetProperty(ref _equalizerDirection, value))
+                {
+                    //_interfaceVariables.EqualizerTapeSize = value;
+                    OnPropertyChanged(nameof(EqualizerDirection));
                 }
             }
         }
@@ -1113,7 +1299,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             }
         }
 
-        public ObservableCollection<Brush> StepIndicators
+        public ObservableCollection<System.Windows.Media.Brush> StepIndicators
         {
             get => _stepIndicators;
             set
@@ -1180,7 +1366,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 },
                 new IterationStep // 3
                 {
-                    Header = "Ortam Titreşimlerinin Hesaplanması ve Filtrelenmesi (Dara İşlemi)",
+                    Header = "Ortam Titreşimlerinin Hesaplanması",
                     Steps = new List<string> 
                     {
                         "Dara değeri hesaplanacak cihazına müdahale etmeyiniz.",
@@ -1220,23 +1406,52 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 },
                 new IterationStep // 7
                 {
-                    Header = "Birim Referans Düzeltici Ağırlık Değerinin Pervane Boyutuna Göre Hesaplanması",
-                    Steps = new List<string> { "Step 7.0", "Step 7.1", "Step 7.2" }
+                    Header = "Birim Referans Bant Uzunluğunun Hesaplanması",
+                    Steps = new List<string>
+                    {
+                        "Birim referans bant uzunluğu hesaplandı.",
+                    }
                 },
                 new IterationStep // 8
                 {
-                    Header = "Pervanenin Her İki Kanadına Birim Referans Düzeltici Ağırlığın Eklenmesi",
-                    Steps = new List<string> { "Step 8.0", "Step 8.1" }
+                    Header = "Pervanenin Her İki Kanadına Birim Referans Bantın Eklenmesi",
+                    Steps = new List<string>
+                    {
+                        "Önerilen birim referans uzunluğundaki bandı, pervanenin herhangi bir kanadının merkezden itibaren yarıçapının yaklaşık %25-30'una denk gelecek şekilde yapıştırınız.",
+                        "Pervane titreşim değeri hesaplanacak cihazına müdahale etmeyiniz.",
+                        "Pervanenin titreşim değeri hesaplanıyor.",
+                        "Aynı bandı çıkarıp, pervanenin diğer bir kanadına merkezden itibaren yarıçapının yaklaşık %25-30'una denk gelecek şekilde yapıştırınız.",
+                        "Pervane titreşim değeri hesaplanacak cihazına müdahale etmeyiniz.",
+                        "Pervanenin titreşim değeri hesaplanıyor.",
+                        "Sonuçları kontrol ediniz."
+                    }
                 },
                 new IterationStep // 9
                 {
-                    Header = "Düzeltici Ağırlık Değerinin ve Düzeltici Yönün Hesaplanması",
-                    Steps = new List<string> { "Step 9.0", "Step 9.1" }
+                    Header = "Düzeltici Bant Uzunluğunun Hesaplanması ve Düzeltici Yönün Belirlenmesi",
+                    Steps = new List<string>
+                    {
+                        "Düzeltici yönü ve bant uzunluğunun hesaplandı."
+                    }
                 },
                 new IterationStep // 10
                 {
-                    Header = "Tayin Edilen Yöne Düzeltici Ağırlığın Eklenmesi",
-                    Steps = new List<string> { "Step 10.0", "Step 10.1" }
+                    Header = "Belirlenmiş Yöne Düzeltici Bantın Eklenmesi",
+                    Steps = new List<string> 
+                    {                   
+                        "Hesaplanan düzeltici bantı, aerodinamik yapıyı bozmayacak şekilde referans bantın olduğu bölgeye yapıştırınız.",
+                        "Pervane titreşim değeri hesaplanacak cihazına müdahale etmeyiniz.",
+                        "Pervanenin titreşim değeri hesaplanıyor.",
+                        "Sonuçları kontrol ediniz.",
+                    }
+                },
+                new IterationStep // 11
+                {
+                    Header = "Sonuç ve Değerlendirme",
+                    Steps = new List<string>
+                    {
+                        "Sonuçlar.",
+                    }
                 }
             };
         }
