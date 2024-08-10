@@ -87,6 +87,9 @@ public class InterfaceVariables : INotifyPropertyChanged
     private string _fileName;
     private TimeSpan _duration;
 
+    private double _stationaryDeviceVibration;         // Cihazın durağan haldeki titreşimi
+    private double _runningMotorVibration;             // Motor çalışır haldeki titreşimi
+    private double _runningPropollerVibration;         // Pervane çalışır haldeki titreşim değeri
 
     private double _tareTorqueBaseValue;
     private double _tareThrustBaseValue;
@@ -266,6 +269,22 @@ public class InterfaceVariables : INotifyPropertyChanged
     {
         get => _duration;
         set => SetProperty(ref _duration, value);
+    }
+
+    public double StationaryDeviceVibration
+    {
+        get => _stationaryDeviceVibration;
+        set => SetProperty(ref _stationaryDeviceVibration, value);
+    }
+    public double RunningMotorVibration
+    {
+        get => _runningMotorVibration;
+        set => SetProperty(ref _runningMotorVibration, value);
+    }
+    public double RunningPropollerVibration
+    {
+        get => _runningPropollerVibration;
+        set => SetProperty(ref _runningPropollerVibration, value);
     }
 
     public double TareTorqueBaseValue

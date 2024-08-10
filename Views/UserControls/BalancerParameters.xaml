@@ -72,7 +72,8 @@
                 </DataGrid.Columns>
             </DataGrid>
         </ScrollViewer>
+        <!--
         <uc:GeneralButton Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Icon="ScaleBalancedSolid" Text="{x:Static p:Resources.BalancerPage_TareButton}" Command="{Binding TareCommand}" VerticalAlignment="Center" HorizontalAlignment="Center" IsEnabled="{Binding IsRunButtonEnabled}" />
-
+        -->
     </Grid>
 </UserControl>
