@@ -49,12 +49,12 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private string _testResult;
 
         //Iteration
+        private List<IterationStep> _iterationSteps;
         private string _iterationHeader;
         private string _iteration;
         private int _balancerIterationStep;
-        private int _currentStepIndex;
-        public List<string> IterationHeaders { get; set; }
-        public List<string> Iterations { get; set; }
+        private int _headerStepIndex;
+        private int _iterationStepIndex;
 
         //ESC
         private bool _escStatus;
@@ -94,7 +94,6 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             BalancerIterationStepChart = new ObservableCollection<int>();
             BalancerIterationVibrationsChart = new ObservableCollection<double>();
 
-
             // Initialize PID Controller
             _pidController = new PIDController(1.5, 0.03, 0.05);
 
@@ -106,23 +105,13 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             ApprovalStepButtonCommand = new RelayCommand(param => ApprovalCommand());
             NextStepButtonCommand = new RelayCommand(param => NextStepCommand());
 
-            IterationHeaders = new List<string>
-            {
-                "Welcome Balancer Test",
-                "Cihazın Hazırlanması",
-                "Cihaz Bağlantısının ve Arayüz Parametrelerinin Ayarlanması",
-                "Ortam Titreşimlerinin Hesaplanması ve Filtrelenmesi\r\n(Dara İşlemi)",
-                "Motor Titreşimin Hesaplanması",
-                "Pervane Montajı",
-                "Pervane Titreşimin Hesaplanması",
-                "Birim Referans Düzeltici Ağırlık Değerinin Pervane Boyutuna Göre Hesaplanması",
-                "Pervanenin Her İki Kanadına Birim Referans Düzeltici Ağırlığın Eklenmesi",
-                "Düzeltici Ağırlık Değerinin ve Düzeltici Yönün Hesaplanması",
-                "Tayin Edilen Yöne Düzeltici Ağırlığın Eklenmesi"
-            };
+            // Initialize the IterationSteps with static data
+            IterationStep.Init(); // Initialize the static data
+            IterationSteps = IterationStep.IterationSteps;
 
+            // Initialize step indicators
             StepIndicators = new ObservableCollection<Brush>();
-            for (int i = 0; i < IterationHeaders.Count; i++)
+            for (int i = 0; i < IterationSteps.Count; i++)
             {
                 StepIndicators.Add((SolidColorBrush)Application.Current.Resources["BalancerRoutingStepsPassive"]);
             }
@@ -150,78 +139,59 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
         private void BalanceTestInitialConfig()
         {
-            // 1. Step
-            IterationHeader = IterationHeaders[0];
+            // Set the first iteration header and clear iteration steps
+            IterationHeader = IterationSteps[0].Header;
             Iteration = "";
 
-            // Counts Zero
+            // Reset Counts and Status
             TestTimeCount = 0;
             MotorReadyTimeCount = 0;
             TestTimeStatusBar = 0;
 
             BalancerIterationStep = 0;
-            CurrentStepIndex = 0;
+            HeaderStepIndex = 0;
+            IterationStepIndex = 0;
 
             ESCValue = 0;
 
-            // Clear Buffer
+            // Clear Buffers and Charts
             TestVibrationsDataBuffer.Clear();
             TestStepsPropellerVibrations.Clear();
             BalancerIterationStepChart.Clear();
             BalancerIterationVibrationsChart.Clear();
 
-            // Buttons Visibility
+            // Set Buttons Visibility
             RepeatStepButtonVisibility = Visibility.Hidden;
             ApprovalStepButtonVisibility = Visibility.Hidden;
             NextStepButtonVisibility = Visibility.Hidden;
 
-            // Status False
+            // Set Status Flags
             MotorReadyStatus = false;
             TestReadyStatus = false;
             ESCStatus = false;
-
-            // Status True
             RunButtonIsEnabled = true;
 
-            // Output Message Clear
+            // Clear Output Messages
             StatusMessage = "";
             TestResult = "";
 
-            // Timers Stop
+            // Stop all timers
             _progressTimer.Stop();
             _pidTimer.Stop();
             _avgTimer.Stop();
 
-            // Indicators Clear
-            for (int i = 0; i < IterationHeaders.Count; i++)
-            {
-                StepIndicators[i] = (SolidColorBrush)Application.Current.Resources["BalancerRoutingStepsPassive"];
-            }
-
+            // Reset Step Indicators
+            StepIndicatorSet(0);
         }
 
         private void RunCommand()
         {
-            if (_interfaceVariables.ReferenceMotorSpeed <= 0 && _interfaceVariables.ReferencePropelleDiameter <= 0)
-            {
-                MessageBoxResult result = MessageBox.Show(
-                "Please enter the reference motor speed value and propelle parameters!",
-                "Missing Value Warning",
-                MessageBoxButton.OK,
-                MessageBoxImage.Warning);
-            }
-            else
-            {
-                NextStepCommand();
-                RunButtonIsEnabled = false;
-                RepeatStepButtonVisibility = Visibility.Hidden;
-                ApprovalStepButtonVisibility = Visibility.Hidden;
-                NextStepButtonVisibility = Visibility.Visible;
-            }            
+            BalancingIteration();
         }
+
         private void StopCommand()
         {
-
+            // Stop logic implementation here
         }
 
         private void NewTestCommand()
@@ -239,51 +209,179 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
         private void RepeatStepCommand()
         {
-
+            // Logic for repeating the current step
         }
+
         private void ApprovalCommand()
         {
-
+            // Logic for approving the current step
         }
+
         private void NextStepCommand()
         {
             if (_interfaceVariables.ReferenceMotorSpeed <= 0 && _interfaceVariables.ReferencePropelleDiameter <= 0)
             {
-                MessageBoxResult result = MessageBox.Show(
-                "Please enter the reference motor speed value and propelle parameters!",
-                "Missing Value Warning",
-                MessageBoxButton.OK,
-                MessageBoxImage.Warning);
+                MessageBox.Show("Please enter the reference motor speed value and propeller parameters!", "Missing Value Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
-                if (CurrentStepIndex < IterationHeaders.Count - 1)
-                {
-                    CurrentStepIndex++;
+                BalancingIteration();
+            }
+        }
 
-                    // Genişletilmiş Algoritma formülünü yazacağım.
-
-                    IterationHeader = IterationHeaders[CurrentStepIndex];
-                    // Adım geçişlerinde renk güncellemeleri yapılıyor
-                    StepIndicators[CurrentStepIndex] = (SolidColorBrush)Application.Current.Resources["BalancerRoutingStepsActive"];
-                    for (int i = 1; i < CurrentStepIndex; i++)
+        private void BalancingIteration()
+        {
+            switch (HeaderStepIndex)
+            {
+                case 0: // Run Button
                     {
-                        StepIndicators[i] = (SolidColorBrush)Application.Current.Resources["BalancerRoutingStepsOK"];
+                        if (_interfaceVariables.ReferenceMotorSpeed <= 0 && _interfaceVariables.ReferencePropelleDiameter <= 0)
+                        {
+                            MessageBoxResult result = MessageBox.Show(
+                            "Please enter the reference motor speed value and propelle parameters!",
+                            "Missing Value Warning",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning);
+                        }
+                        else
+                        {
+                            RunButtonIsEnabled = false;
+                            RepeatStepButtonVisibility = Visibility.Hidden;
+                            ApprovalStepButtonVisibility = Visibility.Hidden;
+                            NextStepButtonVisibility = Visibility.Visible;
+                            HeaderStepIndex++;
+                            BalancingIteration();
+                        }
                     }
-                }
-                else
-                {
-                    BalancingTestFinished();
-                }
+                    break;
+                case 1:
+                    {
+                        IterationHeader = IterationSteps[HeaderStepIndex].Header;
+                        Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
+                        StepIndicatorSet(HeaderStepIndex);
+
+                        if (IterationStepIndex < IterationSteps[HeaderStepIndex].Steps.Count - 1) { IterationStepIndex++;}  else{ HeaderStepIndex++; IterationStepIndex = 0; }
+                        
+
+
+                    }
+                    break;
+                case 2:
+                    {
+                        IterationHeader = IterationSteps[HeaderStepIndex].Header;
+                        Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
+                        StepIndicatorSet(HeaderStepIndex);
+
+                        if (IterationStepIndex < IterationSteps[HeaderStepIndex].Steps.Count - 1) { IterationStepIndex++;}  else{ HeaderStepIndex++; IterationStepIndex = 0; }
+                        
+                    }
+                    break;
+                case 3:
+                    {
+                        IterationHeader = IterationSteps[HeaderStepIndex].Header;
+                        Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
+                        StepIndicatorSet(HeaderStepIndex);
+
+                        if (IterationStepIndex < IterationSteps[HeaderStepIndex].Steps.Count - 1) { IterationStepIndex++;}  else{ HeaderStepIndex++; IterationStepIndex = 0; }
+                        
+
+
+                    }
+                    break;
+                case 4:
+                    {
+                        IterationHeader = IterationSteps[HeaderStepIndex].Header;
+                        Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
+                        StepIndicatorSet(HeaderStepIndex);
+
+                        if (IterationStepIndex < IterationSteps[HeaderStepIndex].Steps.Count - 1) { IterationStepIndex++;}  else{ HeaderStepIndex++; IterationStepIndex = 0; }
+                       
+
+
+                    }
+                    break;
+                case 5:
+                    {
+                        IterationHeader = IterationSteps[HeaderStepIndex].Header;
+                        Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
+                        StepIndicatorSet(HeaderStepIndex);
+
+                        if (IterationStepIndex < IterationSteps[HeaderStepIndex].Steps.Count - 1) { IterationStepIndex++;}  else{ HeaderStepIndex++; IterationStepIndex = 0; }
+                       
+
+
+                    }
+                    break;
+                case 6:
+                    {
+                        IterationHeader = IterationSteps[HeaderStepIndex].Header;
+                        Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
+                        StepIndicatorSet(HeaderStepIndex);
+
+                        if (IterationStepIndex < IterationSteps[HeaderStepIndex].Steps.Count - 1) { IterationStepIndex++;}  else{ HeaderStepIndex++; IterationStepIndex = 0; }
+                     
+
+
+                    }
+                    break;
+                case 7:
+                    {
+                        IterationHeader = IterationSteps[HeaderStepIndex].Header;
+                        Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
+                        StepIndicatorSet(HeaderStepIndex);
+
+                        if (IterationStepIndex < IterationSteps[HeaderStepIndex].Steps.Count - 1) { IterationStepIndex++;}  else{ HeaderStepIndex++; IterationStepIndex = 0; }
+                      
+
+
+                    }
+                    break;
+                case 8:
+                    {
+                        IterationHeader = IterationSteps[HeaderStepIndex].Header;
+                        Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
+                        StepIndicatorSet(HeaderStepIndex);
+
+                        if (IterationStepIndex < IterationSteps[HeaderStepIndex].Steps.Count - 1) { IterationStepIndex++;}  else{ HeaderStepIndex++; IterationStepIndex = 0; }
+                       
+
+
+                    }
+                    break;
+                case 9:
+                    {
+                        IterationHeader = IterationSteps[HeaderStepIndex].Header;
+                        Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
+                        StepIndicatorSet(HeaderStepIndex);
+
+                        if (IterationStepIndex < IterationSteps[HeaderStepIndex].Steps.Count - 1) { IterationStepIndex++;}  else{ HeaderStepIndex++; IterationStepIndex = 0; }
+                    
+
+
+                    }
+                    break;
+                case 10:
+                    {
+                        IterationHeader = IterationSteps[HeaderStepIndex].Header;
+                        Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
+                        StepIndicatorSet(HeaderStepIndex);
+
+                        if (IterationStepIndex < IterationSteps[HeaderStepIndex].Steps.Count - 1) { IterationStepIndex++;}  else{ HeaderStepIndex++; IterationStepIndex = 0; }
+                      
+
+
+                    }
+                    break;
+                case 11:
+                    {
+                        BalancingTestFinished();
+                    }
+                    break;
             }
         }
         private void BalancingTestFinished()
         {
-            MessageBoxResult result = MessageBox.Show(
-               "Balancing Test Finished?",
-               "Confirm Test Finished",
-               MessageBoxButton.YesNo,
-               MessageBoxImage.Warning);
+            MessageBoxResult result = MessageBox.Show("Balancing Test Finished?", "Confirm Test Finished", MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (result == MessageBoxResult.Yes)
             {
                 BalanceTestInitialConfig();
@@ -291,15 +389,26 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 IterationHeader = "Balancing Test Finished";
             }
         }
-
+        private void StepIndicatorSet(int index)
+        {
+            StepIndicators[index] = (SolidColorBrush)Application.Current.Resources["BalancerRoutingStepsActive"];
+            for (int i = 0; i < index; i++)
+            {
+                StepIndicators[i] = (SolidColorBrush)Application.Current.Resources["BalancerRoutingStepsOK"];
+            }
+            for (int i = index + 1; i < IterationSteps.Count; i++)
+            {
+                StepIndicators[i] = (SolidColorBrush)Application.Current.Resources["BalancerRoutingStepsPassive"];
+            }
+        }
         private void ProgressTimer_Tick(object sender, EventArgs e)
         {
-
+            // Timer logic implementation here
         }
 
         private void AVGTimer_Tick(object sender, EventArgs e)
         {
-            TestVibrationsDataBuffer.Add(HighVibration); // - DareVibration);
+            TestVibrationsDataBuffer.Add(HighVibration);
         }
 
         private void PIDTimer_Tick(object sender, EventArgs e)
@@ -307,8 +416,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             double currentSpeed = _interfaceVariables.MotorSpeed.Value;
             double pidOutput = _pidController.Calculate(_interfaceVariables.ReferenceMotorSpeed, currentSpeed);
 
-            // PID çıktısını 800-2200 aralığına uyarlama
-            // PID çıktısını 0-100 aralığından 800-2200 aralığına dönüştürme
+            // Map PID output to ESC range
             double minOutput = 0;
             double maxOutput = 100;
             double minESC = 800;
@@ -326,38 +434,26 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
             if (speedDifference > 10)
             {
-
                 if (speedDifference >= 400) { smoothTransitionStep = 5; }
-                else if ((speedDifference <= 400) && (speedDifference > 300)) { smoothTransitionStep = 4; }
-                else if ((speedDifference <= 300) && (speedDifference > 200)) { smoothTransitionStep = 3; }
-                else if ((speedDifference <= 200) && (speedDifference > 100)) { smoothTransitionStep = 2; }
-                else if ((speedDifference <= 100) && (speedDifference > 50)) { smoothTransitionStep = 1; }
-                else if ((speedDifference <= 50) && (speedDifference > 10)) { smoothTransitionStep = 0; }
+                else if (speedDifference > 300) { smoothTransitionStep = 4; }
+                else if (speedDifference > 200) { smoothTransitionStep = 3; }
+                else if (speedDifference > 100) { smoothTransitionStep = 2; }
+                else if (speedDifference > 50) { smoothTransitionStep = 1; }
                 else { smoothTransitionStep = 0; }
 
                 if (Math.Abs(currentValue - targetValue) <= smoothTransitionStep)
                 {
                     return targetValue;
                 }
-                if (currentValue < targetValue)
-                {
-                    currentValue = Math.Min(currentValue + smoothTransitionStep, targetValue);
-                }
-                else if (currentValue > targetValue)
-                {
-                    currentValue = Math.Max(currentValue - smoothTransitionStep, targetValue);
-                }
 
-                MotorReadyStatus = false;
-                if (speedDifference < 80)
-                {
-                    MotorReadyStatus = true;
-                }
+                currentValue += currentValue < targetValue ? smoothTransitionStep : -smoothTransitionStep;
+                MotorReadyStatus = speedDifference < 80;
             }
             else
             {
                 MotorReadyStatus = true;
             }
+
             return currentValue;
         }
 
@@ -368,6 +464,19 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 HighVibration = _interfaceVariables.Vibration.HighVibration;
             }
         }
+
+        public List<IterationStep> IterationSteps
+        {
+            get => _iterationSteps;
+            set
+            {
+                if (SetProperty(ref _iterationSteps, value))
+                {
+                    OnPropertyChanged(nameof(IterationSteps));
+                }
+            }
+        }
+
         public string IterationHeader
         {
             get => _iterationHeader;
@@ -379,6 +488,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
+
         public string Iteration
         {
             get => _iteration;
@@ -390,14 +500,26 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
-        public int CurrentStepIndex
+
+        public int HeaderStepIndex
         {
-            get => _currentStepIndex;
+            get => _headerStepIndex;
             set
             {
-                if (SetProperty(ref _currentStepIndex, value))
+                if (SetProperty(ref _headerStepIndex, value))
                 {
-                    OnPropertyChanged(nameof(CurrentStepIndex));
+                    OnPropertyChanged(nameof(HeaderStepIndex));
+                }
+            }
+        }
+        public int IterationStepIndex
+        {
+            get => _iterationStepIndex;
+            set
+            {
+                if (SetProperty(ref _iterationStepIndex, value))
+                {
+                    OnPropertyChanged(nameof(IterationStepIndex));
                 }
             }
         }
@@ -426,6 +548,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
+
         public double TestTimeCount
         {
             get => _testTimeCount;
@@ -449,6 +572,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
+
         public bool TestReadyStatus
         {
             get => _testReadyStatus;
@@ -460,6 +584,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
+
         public Visibility RepeatStepButtonVisibility
         {
             get => _repeatStepButtonVisibility;
@@ -471,6 +596,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
+
         public Visibility ApprovalStepButtonVisibility
         {
             get => _approvalStepButtonVisibility;
@@ -482,6 +608,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
+
         public Visibility NextStepButtonVisibility
         {
             get => _nextStepButtonVisibility;
@@ -493,6 +620,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
+
         public string StatusMessage
         {
             get => _statusMessage;
@@ -504,6 +632,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
+
         public string TestResult
         {
             get => _testResult;
@@ -515,6 +644,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
+
         public bool MotorReadyStatus
         {
             get => _motorReadyStatus;
@@ -526,6 +656,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
+
         public bool RunButtonIsEnabled
         {
             get => _runButtonIsEnabled;
@@ -576,6 +707,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
+
         public List<double> TestVibrationsDataBuffer
         {
             get => _testVibrationsDataBuffer;
@@ -584,10 +716,11 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 if (_testVibrationsDataBuffer != value)
                 {
                     _testVibrationsDataBuffer = value;
-                    OnPropertyChanged(nameof(TestVibrationsDataBuffer)); ;
+                    OnPropertyChanged(nameof(TestVibrationsDataBuffer));
                 }
             }
         }
+
         public List<double> TestStepsPropellerVibrations
         {
             get => _testStepsPropellerVibrations;
@@ -613,6 +746,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
+
         public ObservableCollection<double> BalancerIterationVibrationsChart
         {
             get => _balancerIterationVibrationsChart;
@@ -638,7 +772,6 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             }
         }
 
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
@@ -652,6 +785,78 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    public class IterationStep
+    {
+        public string Header { get; set; }
+        public List<string> Steps { get; set; }
+
+        // Static list to hold iteration steps
+        public static List<IterationStep> IterationSteps { get; private set; }
+
+        // Static initializer for the default steps
+        public static void Init()
+        {
+            IterationSteps = new List<IterationStep>
+            {
+                new IterationStep
+                {
+                    Header = "Welcome Balancer Test",
+                    Steps = new List<string> {}
+                },
+                new IterationStep
+                {
+                    Header = "Cihazın Hazırlanması",
+                    Steps = new List<string> { "Step 1.0", "Step 1.1", "Step 1.2" }
+                },
+                new IterationStep
+                {
+                    Header = "Cihaz Bağlantısının ve Arayüz Parametrelerinin Ayarlanması",
+                    Steps = new List<string> { "Step 2.0", "Step 2.1", "Step 2.2", "Step 2.3", "Step 2.4", "Step 2.5" }
+                },
+                new IterationStep
+                {
+                    Header = "Ortam Titreşimlerinin Hesaplanması ve Filtrelenmesi (Dara İşlemi)",
+                    Steps = new List<string> { "Step 3.0", "Step 3.1", "Step 3.2", "Step 3.3", "Step 3.4" }
+                },
+                new IterationStep
+                {
+                    Header = "Motor Titreşimin Hesaplanması",
+                    Steps = new List<string> { "Step 4.0", "Step 4.1" }
+                },
+                new IterationStep
+                {
+                    Header = "Pervane Montajı",
+                    Steps = new List<string> { "Step 5.0", "Step 5.1" }
+                },
+                new IterationStep
+                {
+                    Header = "Pervane Titreşimin Hesaplanması",
+                    Steps = new List<string> { "Step 6.0", "Step 6.1" }
+                },
+                new IterationStep
+                {
+                    Header = "Birim Referans Düzeltici Ağırlık Değerinin Pervane Boyutuna Göre Hesaplanması",
+                    Steps = new List<string> { "Step 7.0", "Step 7.1", "Step 7.2" }
+                },
+                new IterationStep
+                {
+                    Header = "Pervanenin Her İki Kanadına Birim Referans Düzeltici Ağırlığın Eklenmesi",
+                    Steps = new List<string> { "Step 8.0", "Step 8.1" }
+                },
+                new IterationStep
+                {
+                    Header = "Düzeltici Ağırlık Değerinin ve Düzeltici Yönün Hesaplanması",
+                    Steps = new List<string> { "Step 9.0", "Step 9.1" }
+                },
+                new IterationStep
+                {
+                    Header = "Tayin Edilen Yöne Düzeltici Ağırlığın Eklenmesi",
+                    Steps = new List<string> { "Step 10.0", "Step 10.1" }
+                }
+            };
         }
     }
 }
