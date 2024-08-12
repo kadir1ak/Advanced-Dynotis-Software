@@ -39,6 +39,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private Visibility _repeatStepButtonVisibility;
         private Visibility _approvalStepButtonVisibility;
         private Visibility _nextStepButtonVisibility;
+        private Visibility _runButtonVisibility;
 
         // Main Buttons
         public ICommand RunButtonCommand { get; }
@@ -62,11 +63,12 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private int _iterationStepIndex;
 
         // Vibration Value
-        private double _stationaryDeviceVibration;          // Cihazın durağan haldeki titreşimi
-        private double _runningMotorVibration;              // Motor çalışır haldeki titreşimi
-        private double _runningPropollerVibration;          // Pervane çalışır haldeki titreşim değeri
-        private double _onePropollerVibration;              // Pervane birim referans bant ile ilk kanat titreşim değeri
-        private double _twoPropollerVibration;              // Pervane birim referans bant ile ikinci kanat titreşim değeri
+        private double _deviceBaseStaticVibration;          // Cihazın durağan haldeki titreşimi
+        private double _motorBaseRunningVibration;              // Motor çalışır haldeki titreşimi
+        private double _propellerBaseRunningVibration;          // Pervane çalışır haldeki titreşim değeri
+        private double _balancedPropellerRunningVibration;          // Pervane çalışır haldeki titreşim değeri
+        private double _firstBladeVibration;               // Pervane birim referans bant ile ilk kanat titreşim değeri
+        private double _secondBladeVibration;              // Pervane birim referans bant ile ikinci kanat titreşim değeri
         private double _tareVibration;
         private double _tareVibrationX;
         private double _tareVibrationY;
@@ -188,6 +190,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             RepeatStepButtonVisibility = Visibility.Hidden;
             ApprovalStepButtonVisibility = Visibility.Hidden;
             NextStepButtonVisibility = Visibility.Hidden;
+            RunButtonVisibility = Visibility.Visible;
 
             // Set Status Flags
             MotorReadyStatus = false;
@@ -284,6 +287,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                             RepeatStepButtonVisibility = Visibility.Hidden;
                             ApprovalStepButtonVisibility = Visibility.Hidden;
                             NextStepButtonVisibility = Visibility.Visible;
+                            RunButtonVisibility = Visibility.Hidden;
                             HeaderStepIndex++;
                             BalancingIteration();
                         }
@@ -338,6 +342,10 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                 break;
                             case 4:  // Sonuçlar değerlendiriliyor
                                 {
+                                     Iteration = Iteration + "\r\n" +
+                                    "Device Base Vibration: " + DeviceBaseStaticVibration.ToString("0.000") + " g";
+                                    BalancerIterationVibrationsChart.Add(DeviceBaseStaticVibration);
+                                    BalancerIterationStepChart.Add(1);
                                     // Set Buttons Visibility
                                     RepeatStepButtonVisibility = Visibility.Visible;
                                     ApprovalStepButtonVisibility = Visibility.Visible;
@@ -372,6 +380,10 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                 break;
                             case 2:  // Sonuçlar değerlendiriliyor 
                                 {
+                                    Iteration = Iteration + "\r\n" +
+                                    "Motor Base Vibration: " + MotorBaseRunningVibration.ToString("0.000") + " g";
+                                    BalancerIterationVibrationsChart.Add(MotorBaseRunningVibration);
+                                    BalancerIterationStepChart.Add(2);
                                     // Set Buttons Visibility
                                     RepeatStepButtonVisibility = Visibility.Visible;
                                     ApprovalStepButtonVisibility = Visibility.Visible;
@@ -418,6 +430,10 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                 break;
                             case 2:  // Sonuçlar değerlendiriliyor 
                                 {
+                                    Iteration = Iteration + "\r\n" +
+                                    "Propeller Base Vibration: " + PropellerBaseRunningVibration.ToString("0.000") + " g";
+                                    BalancerIterationVibrationsChart.Add(PropellerBaseRunningVibration);
+                                    BalancerIterationStepChart.Add(3);
                                     // Set Buttons Visibility
                                     RepeatStepButtonVisibility = Visibility.Visible;
                                     ApprovalStepButtonVisibility = Visibility.Visible;
@@ -447,7 +463,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                             >= 30 and < 40 => 80, // mm
                             _ => 0 // default case if none of the ranges match
                         };
-                        Iteration = Iteration + "\r\n" + "Unit Tape Size: " + UnitTapeSize.ToString();
+                        Iteration = Iteration + "\r\n" + "Unit Tape Size: " + UnitTapeSize.ToString() + " mm";
                         if (IterationStepIndex < IterationSteps[HeaderStepIndex].Steps.Count - 1) { IterationStepIndex++; } else { HeaderStepIndex++; IterationStepIndex = 0; }
 
                     }
@@ -481,6 +497,13 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                 break;
                             case 6:  // Sonuçlar değerlendiriliyor 
                                 {
+                                    Iteration = Iteration + "\r\n" +
+                                    "First Blade Vibration: " + FirstBladeVibration.ToString("0.000") + " g" + "\r\n" +
+                                    "Second Blade Vibration: " + SecondBladeVibration.ToString("0.000") + " g";
+                                    BalancerIterationVibrationsChart.Add(FirstBladeVibration);
+                                    BalancerIterationStepChart.Add(4);
+                                    BalancerIterationVibrationsChart.Add(SecondBladeVibration);
+                                    BalancerIterationStepChart.Add(5);
                                     // Set Buttons Visibility
                                     RepeatStepButtonVisibility = Visibility.Visible;
                                     ApprovalStepButtonVisibility = Visibility.Visible;
@@ -502,37 +525,66 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                         Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
                         StepIndicatorSet(HeaderStepIndex);
 
-                        // hesaplama yapılıyor 
+                        // Hesaplama yapılıyor 
                         double Ratio = 0;
-                        if (OnePropollerVibration <= TwoPropollerVibration) 
+                        if (FirstBladeVibration <= SecondBladeVibration) 
                         {
-                            EqualizerDirection = "One";
-                            Ratio = ((RunningPropollerVibration - OnePropollerVibration) / RunningPropollerVibration);
+                            EqualizerDirection = "First Blade";
+                            Ratio = ((PropellerBaseRunningVibration - FirstBladeVibration) / PropellerBaseRunningVibration);
                         }
                         else
                         {
-                            EqualizerDirection = "Two";
-                            Ratio = ((RunningPropollerVibration - TwoPropollerVibration) / RunningPropollerVibration);
+                            EqualizerDirection = "Second Blade";
+                            Ratio = ((PropellerBaseRunningVibration - SecondBladeVibration) / PropellerBaseRunningVibration);
                         }
 
                         EqualizerTapeSize = UnitTapeSize * (1/ Ratio) - 1; // (-1) şuan var olan bantı temsil ediyor.
 
 
                         Iteration = Iteration + "\r\n" + 
-                                   "Equalizer Tape Size: " + EqualizerTapeSize.ToString() + "\r\n" +
+                                   "Equalizer Tape Size: " + EqualizerTapeSize.ToString() + " mm" + "\r\n" +
                                    "Equalizer Direction: " + EqualizerDirection;
                         if (IterationStepIndex < IterationSteps[HeaderStepIndex].Steps.Count - 1) { IterationStepIndex++; } else { HeaderStepIndex++; IterationStepIndex = 0; }
 
                     }
                     break;
-                case 10:
+                case 10: // Belirlenmiş Yöne Düzeltici Bantın Eklenmesi
                     {
                         IterationHeader = IterationSteps[HeaderStepIndex].Header;
                         Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
                         StepIndicatorSet(HeaderStepIndex);
 
-                        if (IterationStepIndex < IterationSteps[HeaderStepIndex].Steps.Count - 1) { IterationStepIndex++;}  else{ HeaderStepIndex++; IterationStepIndex = 0; }
-                   
+                        switch (IterationStepIndex)
+                        {
+                            case 2: // Denegelenmiş sistem için titreşim değeri hesaplanıyor.
+                                {
+                                    BalancerProgressTimer.Start();
+                                    PIDTimer.Start();
+                                    // Set Buttons Visibility
+                                    RepeatStepButtonVisibility = Visibility.Hidden;
+                                    ApprovalStepButtonVisibility = Visibility.Hidden;
+                                    NextStepButtonVisibility = Visibility.Hidden;
+                                }
+                                break;
+                            case 3:  // Sonuçlar değerlendiriliyor 
+                                {
+
+                                    Iteration = Iteration + "\r\n" +
+                                    "Balanced Propeller Vibration: " + BalancedPropellerRunningVibration.ToString();
+                                    BalancerIterationVibrationsChart.Add(BalancedPropellerRunningVibration);
+                                    BalancerIterationStepChart.Add(6);
+                                    // Set Buttons Visibility
+                                    RepeatStepButtonVisibility = Visibility.Visible;
+                                    ApprovalStepButtonVisibility = Visibility.Visible;
+                                    NextStepButtonVisibility = Visibility.Hidden;
+                                }
+                                break;
+                            default:
+                                {
+                                    if (IterationStepIndex < IterationSteps[HeaderStepIndex].Steps.Count - 1) { IterationStepIndex++; } else { HeaderStepIndex++; IterationStepIndex = 0; }
+                                }
+                                break;
+                        }
                     }
                     break;
                 case 11:
@@ -576,29 +628,34 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             }
         }
 
-        private void CalculateStationaryDeviceVibration(List<double> DataBuffer)
+        private void CalculateDeviceBaseStaticVibrationVibration(List<double> DataBuffer)
         {
-            StationaryDeviceVibration = DataBuffer.Sum() / DataBuffer.Count;
+            DeviceBaseStaticVibration = DataBuffer.Sum() / DataBuffer.Count;
             MessageBox.Show("Sabit cihaz titreşimi alındı.", "Sabit Cihaz Titreşimi", MessageBoxButton.OK, MessageBoxImage.Information);
         }
-        private void CalculateRunningMotorVibration(List<double> DataBuffer)
+        private void CalculateMotorBaseRunningVibration(List<double> DataBuffer)
         {
-            RunningMotorVibration = DataBuffer.Sum() / DataBuffer.Count;
+            MotorBaseRunningVibration = DataBuffer.Sum() / DataBuffer.Count;
             MessageBox.Show("Motor titreşim değeri hesaplandı.", "Motor Titreşimi", MessageBoxButton.OK, MessageBoxImage.Information);
         }
-        private void CalculateRunningPropollerVibration(List<double> DataBuffer)
+        private void CalculatePropellerBaseRunningVibration(List<double> DataBuffer)
         {
-            RunningPropollerVibration = DataBuffer.Sum() / DataBuffer.Count;
+            PropellerBaseRunningVibration = DataBuffer.Sum() / DataBuffer.Count;
             MessageBox.Show("Pervane titreşim değeri hesaplandı.", "Pervane Titreşimi", MessageBoxButton.OK, MessageBoxImage.Information);
-        }      
-        private void CalculateOnePropollerVibration(List<double> DataBuffer)
+        }        
+        private void CalculateBalancedPropellerRunningVibration(List<double> DataBuffer)
         {
-            OnePropollerVibration = DataBuffer.Sum() / DataBuffer.Count;
+            BalancedPropellerRunningVibration = DataBuffer.Sum() / DataBuffer.Count;
+            MessageBox.Show("Dengeli pervane titreşim değeri hesaplandı.", "Dengeli Pervane Titreşimi", MessageBoxButton.OK, MessageBoxImage.Information);
+        }      
+        private void CalculateFirstBladeVibration(List<double> DataBuffer)
+        {
+            FirstBladeVibration = DataBuffer.Sum() / DataBuffer.Count;
             MessageBox.Show("Pervanin ilk kanat titreşim değeri hesaplandı.", "İlk Kanat Titreşimi", MessageBoxButton.OK, MessageBoxImage.Information);
         }
-        private void CalculateTwoPropollerVibration(List<double> DataBuffer)
+        private void CalculateSecondBladeVibration(List<double> DataBuffer)
         {
-            TwoPropollerVibration = DataBuffer.Sum() / DataBuffer.Count;
+            SecondBladeVibration = DataBuffer.Sum() / DataBuffer.Count;
             MessageBox.Show("Pervanin ikinci kanat titreşim değeri hesaplandı.", "İkinci Kanat Titreşimi", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
@@ -632,6 +689,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                     case 1:
                                         {
                                             CalculateVibrationTare();
+                                            VibrationsDataBuffer.Clear();
                                             // Set Buttons Visibility
                                             RepeatStepButtonVisibility = Visibility.Hidden;
                                             ApprovalStepButtonVisibility = Visibility.Hidden;
@@ -640,7 +698,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                         break;
                                     case 3:
                                         {
-                                            CalculateStationaryDeviceVibration(VibrationsDataBuffer);
+                                            CalculateDeviceBaseStaticVibrationVibration(VibrationsDataBuffer);
+                                            VibrationsDataBuffer.Clear();
                                         }
                                         break;
                                 }
@@ -679,7 +738,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                     {
                                         case 1:
                                             {
-                                                CalculateRunningMotorVibration(VibrationsDataBuffer);
+                                                CalculateMotorBaseRunningVibration(VibrationsDataBuffer);
+                                                VibrationsDataBuffer.Clear();
                                                 // Set Buttons Visibility
                                                 RepeatStepButtonVisibility = Visibility.Hidden;
                                                 ApprovalStepButtonVisibility = Visibility.Hidden;
@@ -722,7 +782,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                     {
                                         case 1:
                                             {
-                                                CalculateRunningPropollerVibration(VibrationsDataBuffer);
+                                                CalculatePropellerBaseRunningVibration(VibrationsDataBuffer);
+                                                VibrationsDataBuffer.Clear();
                                                 // Set Buttons Visibility
                                                 RepeatStepButtonVisibility = Visibility.Hidden;
                                                 ApprovalStepButtonVisibility = Visibility.Hidden;
@@ -765,7 +826,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                     {
                                         case 2:
                                             {
-                                                CalculateOnePropollerVibration(VibrationsDataBuffer);
+                                                CalculateFirstBladeVibration(VibrationsDataBuffer);
+                                                VibrationsDataBuffer.Clear();
                                                 // Set Buttons Visibility
                                                 RepeatStepButtonVisibility = Visibility.Hidden;
                                                 ApprovalStepButtonVisibility = Visibility.Hidden;
@@ -774,7 +836,52 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                             break;
                                         case 5:
                                             {
-                                                CalculateTwoPropollerVibration(VibrationsDataBuffer);
+                                                CalculateSecondBladeVibration(VibrationsDataBuffer);
+                                                VibrationsDataBuffer.Clear();
+                                                // Set Buttons Visibility
+                                                RepeatStepButtonVisibility = Visibility.Hidden;
+                                                ApprovalStepButtonVisibility = Visibility.Hidden;
+                                                NextStepButtonVisibility = Visibility.Visible;
+                                            }
+                                            break;
+                                    }
+                                    IterationStepIndex++;
+                                    BalancingIteration();
+                                }
+                                else
+                                {
+                                    TestTimeStatusBar += 2;
+                                }
+
+                            }
+                            else
+                            {
+                                TestTimeCount++;
+                            }
+                        }
+                    }
+                    break;
+                case 10: // Belirlenmiş Yöne Düzeltici Bantın Eklenmesi
+                    {
+                        if (MotorReadyStatus) // Motor Hazırsa
+                        {
+                            if (TestTimeCount >= 50) // 5 Sn
+                            {
+
+                                HighVibrationDataCollectionTimer.Start();
+                                if (TestTimeStatusBar > 50 * 2) // 5 Sn
+                                {
+                                    HighVibrationDataCollectionTimer.Stop();
+                                    BalancerProgressTimer.Stop();
+                                    MotorStop();
+                                    TestTimeCount = 0;
+                                    TestTimeStatusBar = 0;
+                                    switch (IterationStepIndex)
+                                    {
+                                        case 1:
+                                            {
+                                                CalculateBalancedPropellerRunningVibration(VibrationsDataBuffer);
+                                                VibrationsDataBuffer.Clear();
                                                 // Set Buttons Visibility
                                                 RepeatStepButtonVisibility = Visibility.Hidden;
                                                 ApprovalStepButtonVisibility = Visibility.Hidden;
@@ -1014,6 +1121,17 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     OnPropertyChanged(nameof(NextStepButtonVisibility));
                 }
             }
+        }    
+        public Visibility RunButtonVisibility
+        {
+            get => _runButtonVisibility;
+            set
+            {
+                if (SetProperty(ref _runButtonVisibility, value))
+                {
+                    OnPropertyChanged(nameof(RunButtonVisibility));
+                }
+            }
         }
 
         public string StatusMessage
@@ -1097,68 +1215,80 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 if (_highVibration != value)
                 {
-                    _highVibration = value;
+                    _interfaceVariables.Vibration.HighVibration = value;
                     OnPropertyChanged(nameof(HighVibration));
                 }
             }
         }      
-        public double StationaryDeviceVibration
+        public double DeviceBaseStaticVibration
         {
-            get => _stationaryDeviceVibration;
+            get => _deviceBaseStaticVibration;
             set
             {
-                if (SetProperty(ref _stationaryDeviceVibration, value))
+                if (SetProperty(ref _deviceBaseStaticVibration, value))
                 {
-                    _interfaceVariables.StationaryDeviceVibration = value;
-                    OnPropertyChanged(nameof(StationaryDeviceVibration));
+                    _interfaceVariables.DeviceBaseStaticVibration = value;
+                    OnPropertyChanged(nameof(DeviceBaseStaticVibration));
                 }
             }
         }     
-        public double RunningMotorVibration
+        public double MotorBaseRunningVibration
         {
-            get => _runningMotorVibration;
+            get => _motorBaseRunningVibration;
             set
             {
-                if (SetProperty(ref _runningMotorVibration, value))
+                if (SetProperty(ref _motorBaseRunningVibration, value))
                 {
-                    _interfaceVariables.RunningMotorVibration = value;
-                    OnPropertyChanged(nameof(RunningMotorVibration));
+                    _interfaceVariables.MotorBaseRunningVibration = value;
+                    OnPropertyChanged(nameof(MotorBaseRunningVibration));
                 }
             }
         }      
-        public double RunningPropollerVibration
+        public double PropellerBaseRunningVibration
         {
-            get => _runningPropollerVibration;
+            get => _propellerBaseRunningVibration;
             set
             {
-                if (SetProperty(ref _runningPropollerVibration, value))
+                if (SetProperty(ref _propellerBaseRunningVibration, value))
                 {
-                    _interfaceVariables.RunningPropollerVibration = value;
-                    OnPropertyChanged(nameof(RunningPropollerVibration));
+                    _interfaceVariables.PropellerBaseRunningVibration = value;
+                    OnPropertyChanged(nameof(PropellerBaseRunningVibration));
+                }
+            }
+        }      
+        public double BalancedPropellerRunningVibration
+        {
+            get => _balancedPropellerRunningVibration;
+            set
+            {
+                if (SetProperty(ref _balancedPropellerRunningVibration, value))
+                {
+                    _interfaceVariables.BalancedPropellerRunningVibration = value;
+                    OnPropertyChanged(nameof(BalancedPropellerRunningVibration));
                 }
             }
         }
-        public double OnePropollerVibration
+        public double FirstBladeVibration
         {
-            get => _onePropollerVibration;
+            get => _firstBladeVibration;
             set
             {
-                if (SetProperty(ref _onePropollerVibration, value))
+                if (SetProperty(ref _firstBladeVibration, value))
                 {
-                    _interfaceVariables.OnePropollerVibration = value;
-                    OnPropertyChanged(nameof(OnePropollerVibration));
+                    _interfaceVariables.FirstBladeVibration = value;
+                    OnPropertyChanged(nameof(FirstBladeVibration));
                 }
             }
         }
-        public double TwoPropollerVibration
+        public double SecondBladeVibration
         {
-            get => _twoPropollerVibration;
+            get => _secondBladeVibration;
             set
             {
-                if (SetProperty(ref _twoPropollerVibration, value))
+                if (SetProperty(ref _secondBladeVibration, value))
                 {
-                    _interfaceVariables.TwoPropollerVibration = value;
-                    OnPropertyChanged(nameof(TwoPropollerVibration));
+                    _interfaceVariables.SecondBladeVibration = value;
+                    OnPropertyChanged(nameof(SecondBladeVibration));
                 }
             }
         }
@@ -1217,7 +1347,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 if (SetProperty(ref _unitTapeSize, value))
                 {
-                    //_interfaceVariables.UnitTapeSize = value;
+                    _interfaceVariables.UnitTapeSize = value;
                     OnPropertyChanged(nameof(UnitTapeSize));
                 }
             }
@@ -1229,7 +1359,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 if (SetProperty(ref _equalizerTapeSize, value))
                 {
-                    //_interfaceVariables.EqualizerTapeSize = value;
+                    _interfaceVariables.EqualizerTapeSize = value;
                     OnPropertyChanged(nameof(EqualizerTapeSize));
                 }
             }
@@ -1241,7 +1371,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 if (SetProperty(ref _equalizerDirection, value))
                 {
-                    //_interfaceVariables.EqualizerTapeSize = value;
+                    _interfaceVariables.EqualizerDirection = value;
                     OnPropertyChanged(nameof(EqualizerDirection));
                 }
             }
@@ -1410,6 +1540,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     Steps = new List<string>
                     {
                         "Birim referans bant uzunluğu hesaplandı.",
+                        "Lütfen standart elektrik bandı kullanın veya genişliği 15-20 mm arasında olan bir bant kullanın."
                     }
                 },
                 new IterationStep // 8

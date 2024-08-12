@@ -144,11 +144,12 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                                 e.PropertyName == nameof(BalancerRoutingStepsViewModel.BalancerIterationStepChart) ||
                                 e.PropertyName == nameof(BalancerRoutingStepsViewModel.BalancerIterationVibrationsChart) ||
                                 e.PropertyName == nameof(BalancerRoutingStepsViewModel.TestStepsPropellerVibrations) ||
-                                e.PropertyName == nameof(BalancerRoutingStepsViewModel.StationaryDeviceVibration) ||
-                                e.PropertyName == nameof(BalancerRoutingStepsViewModel.RunningMotorVibration) ||
-                                e.PropertyName == nameof(BalancerRoutingStepsViewModel.RunningPropollerVibration) ||
-                                e.PropertyName == nameof(BalancerRoutingStepsViewModel.OnePropollerVibration) ||
-                                e.PropertyName == nameof(BalancerRoutingStepsViewModel.TwoPropollerVibration) ||
+                                e.PropertyName == nameof(BalancerRoutingStepsViewModel.DeviceBaseStaticVibration) ||
+                                e.PropertyName == nameof(BalancerRoutingStepsViewModel.MotorBaseRunningVibration) ||
+                                e.PropertyName == nameof(BalancerRoutingStepsViewModel.PropellerBaseRunningVibration) ||
+                                e.PropertyName == nameof(BalancerRoutingStepsViewModel.BalancedPropellerRunningVibration) ||
+                                e.PropertyName == nameof(BalancerRoutingStepsViewModel.FirstBladeVibration) ||
+                                e.PropertyName == nameof(BalancerRoutingStepsViewModel.SecondBladeVibration) ||
                                 e.PropertyName == nameof(BalancerRoutingStepsViewModel.TareVibration) ||
                                 e.PropertyName == nameof(BalancerRoutingStepsViewModel.TareVibrationX) ||
                                 e.PropertyName == nameof(BalancerRoutingStepsViewModel.TareVibrationY) ||
@@ -161,11 +162,12 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                                 DeviceInterfaceVariables.BalancerIterationVibrations = _currentBalancerRoutingSteps.TestStepsPropellerVibrations;
                                 DeviceInterfaceVariables.BalancerIterationStepChart = _currentBalancerRoutingSteps.BalancerIterationStepChart;
                                 DeviceInterfaceVariables.BalancerIterationVibrationsChart = _currentBalancerRoutingSteps.BalancerIterationVibrationsChart;
-                                DeviceInterfaceVariables.StationaryDeviceVibration = _currentBalancerRoutingSteps.StationaryDeviceVibration;
-                                DeviceInterfaceVariables.RunningMotorVibration = _currentBalancerRoutingSteps.RunningMotorVibration;
-                                DeviceInterfaceVariables.RunningPropollerVibration = _currentBalancerRoutingSteps.RunningPropollerVibration;
-                                DeviceInterfaceVariables.OnePropollerVibration = _currentBalancerRoutingSteps.OnePropollerVibration;
-                                DeviceInterfaceVariables.TwoPropollerVibration = _currentBalancerRoutingSteps.TwoPropollerVibration;
+                                DeviceInterfaceVariables.DeviceBaseStaticVibration = _currentBalancerRoutingSteps.DeviceBaseStaticVibration;
+                                DeviceInterfaceVariables.MotorBaseRunningVibration = _currentBalancerRoutingSteps.MotorBaseRunningVibration;
+                                DeviceInterfaceVariables.PropellerBaseRunningVibration = _currentBalancerRoutingSteps.PropellerBaseRunningVibration;
+                                DeviceInterfaceVariables.BalancedPropellerRunningVibration = _currentBalancerRoutingSteps.BalancedPropellerRunningVibration;
+                                DeviceInterfaceVariables.FirstBladeVibration = _currentBalancerRoutingSteps.FirstBladeVibration;
+                                DeviceInterfaceVariables.SecondBladeVibration = _currentBalancerRoutingSteps.SecondBladeVibration;
                                 DeviceInterfaceVariables.Vibration.TareVibration = _currentBalancerRoutingSteps.TareVibration;
                                 DeviceInterfaceVariables.Vibration.TareVibrationX = _currentBalancerRoutingSteps.TareVibrationX;
                                 DeviceInterfaceVariables.Vibration.TareVibrationY = _currentBalancerRoutingSteps.TareVibrationY;
@@ -213,7 +215,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                                 DeviceInterfaceVariables.ReferenceMotorSpeed = _currentBalancerParameters.ReferenceMotorSpeed;
                                 _currentBalancerParameters.ReferencePropellerDiameter = DeviceInterfaceVariables.ReferencePropellerDiameter;
                                 DeviceInterfaceVariables.UnitTapeSize = _currentBalancerParameters.UnitTapeSize;
-                                DeviceInterfaceVariables.EqualizerTapeSize = _currentBalancerParameters.EqualizerTapeSize;
+                                DeviceInterfaceVariables.EqualizerDirection = _currentBalancerParameters.EqualizerDirection;
                                 DeviceInterfaceVariables.EqualizerTapeSize = _currentBalancerParameters.EqualizerTapeSize;                                
                                 _currentBalancerParameters.BalancerIterationStep = DeviceInterfaceVariables.BalancerIterationStep;
                                 _currentBalancerParameters.BalancerIterationStepChart = DeviceInterfaceVariables.BalancerIterationStepChart;

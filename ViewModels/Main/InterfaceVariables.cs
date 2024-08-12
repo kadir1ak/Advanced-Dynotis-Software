@@ -87,11 +87,12 @@ public class InterfaceVariables : INotifyPropertyChanged
     private string _fileName;
     private TimeSpan _duration;
 
-    private double _stationaryDeviceVibration;          // Cihazın durağan haldeki titreşimi
-    private double _runningMotorVibration;              // Motor çalışır haldeki titreşimi
-    private double _runningPropollerVibration;          // Pervane çalışır haldeki titreşim değeri
-    private double _onePropollerVibration;              // Pervane birim referans bant ile ilk kanat titreşim değeri
-    private double _twoPropollerVibration;              // Pervane birim referans bant ile ikinci kanat titreşim değeri
+    private double _deviceBaseStaticVibration;          // Cihazın durağan haldeki titreşimi
+    private double _motorBaseRunningVibration;              // Motor çalışır haldeki titreşimi
+    private double _propellerBaseRunningVibration;          // Pervane çalışır haldeki titreşim değeri
+    private double _balancedPropellerRunningVibration;        // Dengeli pervane çalışır haldeki titreşim değeri
+    private double _firstBladeVibration;               // Pervane birim referans bant ile ilk kanat titreşim değeri
+    private double _secondBladeVibration;              // Pervane birim referans bant ile ikinci kanat titreşim değeri
 
     private double _tareTorqueBaseValue;
     private double _tareThrustBaseValue;
@@ -273,30 +274,35 @@ public class InterfaceVariables : INotifyPropertyChanged
         set => SetProperty(ref _duration, value);
     }
 
-    public double StationaryDeviceVibration
+    public double DeviceBaseStaticVibration
     {
-        get => _stationaryDeviceVibration;
-        set => SetProperty(ref _stationaryDeviceVibration, value);
+        get => _deviceBaseStaticVibration;
+        set => SetProperty(ref _deviceBaseStaticVibration, value);
     }
-    public double RunningMotorVibration
+    public double MotorBaseRunningVibration
     {
-        get => _runningMotorVibration;
-        set => SetProperty(ref _runningMotorVibration, value);
+        get => _motorBaseRunningVibration;
+        set => SetProperty(ref _motorBaseRunningVibration, value);
     }
-    public double RunningPropollerVibration
+    public double PropellerBaseRunningVibration
     {
-        get => _runningPropollerVibration;
-        set => SetProperty(ref _runningPropollerVibration, value);
+        get => _propellerBaseRunningVibration;
+        set => SetProperty(ref _propellerBaseRunningVibration, value);
+    }   
+    public double BalancedPropellerRunningVibration
+    {
+        get => _balancedPropellerRunningVibration;
+        set => SetProperty(ref _balancedPropellerRunningVibration, value);
     }
-    public double OnePropollerVibration
+    public double FirstBladeVibration
     {
-        get => _onePropollerVibration;
-        set => SetProperty(ref _onePropollerVibration, value);
+        get => _firstBladeVibration;
+        set => SetProperty(ref _firstBladeVibration, value);
     }
-    public double TwoPropollerVibration
+    public double SecondBladeVibration
     {
-        get => _twoPropollerVibration;
-        set => SetProperty(ref _twoPropollerVibration, value);
+        get => _secondBladeVibration;
+        set => SetProperty(ref _secondBladeVibration, value);
     }
 
     public double TareTorqueBaseValue
@@ -452,7 +458,7 @@ public class InterfaceVariables : INotifyPropertyChanged
     }    
     public double UnitTapeSize
     {
-        get => UnitTapeSize;
+        get => _unitTapeSize;
         set => SetProperty(ref _unitTapeSize, value);
     }
     public double EqualizerTapeSize
