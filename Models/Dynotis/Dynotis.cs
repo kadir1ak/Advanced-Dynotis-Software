@@ -1,4 +1,5 @@
 ﻿using Advanced_Dynotis_Software.Services.Logger;
+using Irony.Parsing;
 using LiveCharts.Wpf;
 using System;
 using System.ComponentModel;
@@ -9,12 +10,15 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace Advanced_Dynotis_Software.Models.Dynotis
 {
     public class Dynotis : INotifyPropertyChanged, IDisposable
     {
         private readonly object _dataLock = new object();
+        bool deviceInfoReceived = false;
+        private ManualResetEventSlim _dataReceivedEvent = new ManualResetEventSlim(false);
 
         public readonly SerialPort Port;
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
@@ -169,12 +173,12 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                     {
                         _cancellationTokenSource = new CancellationTokenSource();
                     }
-                    await StartReceivingDataAsync();
+                    await DeviceDataReceivedAsync(_cancellationTokenSource.Token);
                 }
                 catch (Exception ex)
                 {
                     Logger.Log($"Failed to open port: {ex.Message}");
-                    Error = $"Failed to open port: {ex.Message}"; // Kullanıcıya hata mesajı gösterme
+                    Error = $"Failed to open port: {ex.Message}";
                 }
             }
         }
@@ -191,30 +195,20 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 catch (Exception ex)
                 {
                     Logger.Log($"Failed to close port: {ex.Message}");
-                    Error = $"Failed to close port: {ex.Message}"; // Kullanıcıya hata mesajı gösterme
+                    Error = $"Failed to close port: {ex.Message}";
                 }
             }
         }
 
-        private async Task StartReceivingDataAsync()
-        {
-            await Task.Run(async () =>
-            {
-                await WaitForKeyMessageAsync(_cancellationTokenSource.Token);
-            });
-        }
-
-        private async Task WaitForKeyMessageAsync(CancellationToken token)
+        private async Task DeviceDataReceivedAsync(CancellationToken token)
         {
             try
             {
-                bool deviceInfoReceived = false;
-
+                // Cihaz Tanımalama Alanı
                 while (!token.IsCancellationRequested && Port.IsOpen && !deviceInfoReceived)
                 {
-                    string indata = await ReadLineAsync(Port, token);
+                    string indata = await Task.Run(() => Port.ReadExisting(), token);
                     Logger.Log($"Received data: {indata}");
-
                     if (indata.Contains("Semai Aviation Ltd."))
                     {
                         string[] parts = indata.Split(';');
@@ -236,32 +230,22 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                             {
                                 deviceInfoReceived = true;
                                 Mode = "2";
-                                await WriteLineAsync(Port, $"Device_Status:{Mode};ESC:{DynotisData.ESCValue};", token);
-                                await DeviceDataReceivedAsync(token);
+                                await Task.Run(() => Port.WriteLine($"Device_Status:{Mode};ESC:{DynotisData.ESCValue};"), token);
+                               // await WriteLineAsync(Port, $"Device_Status:{Mode};ESC:{DynotisData.ESCValue};", token);                               
                             }
                         }
+                        else
+                        {
+                            deviceInfoReceived = false;
+                        }
                     }
-
-                    await Task.Delay(1);
+                    await Task.Delay(100);
                 }
-            }
-            catch (Exception ex)
-            {
-                Logger.Log($"An error occurred: {ex.Message}");
-            }
-        }
-
-        private async Task DeviceDataReceivedAsync(CancellationToken token)
-        {
-            try
-            {
+                // Cihazdan Sensör Verilerini Ayrıştırma Alanı
                 while (!token.IsCancellationRequested && Port.IsOpen)
                 {
-                    string indata = await ReadLineAsync(Port, token);
-                    //Logger.Log($"Received data: {indata}");
-
+                    string indata = await Task.Run(() => Port.ReadExisting(), token);
                     string[] dataParts = indata.Split(',');
-
                     if (dataParts.Length == 16)
                     {
                         var newData = new DynotisData
@@ -298,14 +282,9 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                             }
                         });
 
-
-                        await WriteLineAsync(Port, $"Device_Status:{Mode};ESC:{DynotisData.ESCValue};", token);
+                        await Task.Run(() => Port.WriteLine($"Device_Status:{Mode};ESC:{DynotisData.ESCValue};"), token);
+                       // await WriteLineAsync(Port, $"Device_Status:{Mode};ESC:{DynotisData.ESCValue};", token);
                     }
-                    else
-                    {
-                        //Logger.Log($"Unexpected data format: {indata}");
-                    }
-
                     await Task.Delay(1);
                 }
             }
@@ -314,79 +293,6 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 Logger.Log($"An error occurred: {ex.Message}");
             }
         }
-        /*
-        private async Task<string> ReadLineAsync(SerialPort port, CancellationToken token)
-        {
-            try
-            {
-                StringBuilder builder = new StringBuilder();
-                byte[] buffer = new byte[1];
-
-                while (true)
-                {
-                    token.ThrowIfCancellationRequested();
-
-                    // ReadAsync, okunan byte sayısını döner. Bu sayı 1 ya da 0 olabilir.
-                    int byteRead = await port.BaseStream.ReadAsync(buffer, 0, 1, token);
-
-                    if (byteRead == 1)
-                    {
-                        char c = Encoding.UTF8.GetChars(buffer)[0];
-                        if (c == '\n')
-                            break;
-
-                        builder.Append(c);
-                    }
-                }
-                return builder.ToString();
-            }
-            catch (Exception ex)
-            {
-                Logger.Log($"ReadLine error: {ex.Message}");
-                throw;
-            }
-        }
-
-        private async Task WriteLineAsync(SerialPort port, string message, CancellationToken token)
-        {
-            try
-            {
-                byte[] buffer = Encoding.UTF8.GetBytes(message + "\r\n");
-                await port.BaseStream.WriteAsync(buffer, 0, buffer.Length, token);
-            }
-            catch (Exception ex)
-            {
-                Logger.Log($"WriteLine error: {ex.Message}");
-                throw;
-            }
-        }
-        */
-        private async Task<string> ReadLineAsync(SerialPort port, CancellationToken token)
-        {
-            try
-            {
-                return await Task.Run(() => port.ReadExisting(), token);
-            }
-            catch (Exception ex)
-            {
-                Logger.Log($"ReadLine error: {ex.Message}");
-                throw;
-            }
-        }
-
-        private async Task WriteLineAsync(SerialPort port, string message, CancellationToken token)
-        {
-            try
-            {
-                await Task.Run(() => port.WriteLine(message), token);
-            }
-            catch (Exception ex)
-            {
-                Logger.Log($"WriteLine error: {ex.Message}");
-                throw;
-            }
-        }
-
 
         public static bool TryParseDouble(string value, out double result)
         {
@@ -399,6 +305,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             // Eğer '.' karakteri başarısız olursa, ',' karakteri ile deneme yapıyoruz.
             return double.TryParse(value.Replace('.', ','), out result);
         }
+
         private void TransferStoredData(DynotisData currentData, DynotisData newData)
         {
             newData.PropellerDiameter = currentData.PropellerDiameter;
@@ -435,9 +342,11 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
             newData.Vibration.HighVibration = currentData.Vibration.HighVibration;
             newData.Vibration.HighVibrationBuffer = currentData.Vibration.HighVibrationBuffer;
-
+          
             DynotisData = newData;
         }
+
+           
         private void TheoreticalCalculations()
         {
             try
@@ -454,6 +363,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 {
                     DynotisData.Theoric.RotationalSpeed = 2.0 * Math.PI * DynotisData.MotorSpeed.Value / 60.0;
                 }
+
                 // Power Calculation
                 DynotisData.Theoric.Power = DynotisData.Current * DynotisData.Voltage;
 
@@ -463,6 +373,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                     DynotisData.Theoric.AirDensity = DynotisData.Pressure.Value /
                         (DynotisData.TheoricVariables.AirGasConstant * (DynotisData.AmbientTemp.Value + DynotisData.TheoricVariables.KelvinConst));
                 }
+
                 // Motor Efficiency Calculation
                 if (DynotisData.Voltage > 0 && DynotisData.Current > 0)
                 {
@@ -470,6 +381,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                     double motorEfficiencyFactor = (1 - voltageDrop / DynotisData.Voltage) * (1 - DynotisData.NoLoadCurrents / DynotisData.Current);
                     DynotisData.Theoric.MotorEfficiency = motorEfficiencyFactor > 0 ? 100.0 * motorEfficiencyFactor : 0;
                 }
+
                 // Propeller Efficiency Calculation
                 if (DynotisData.Theoric.AirDensity > 0 && DynotisData.Theoric.PropellerArea > 0 && DynotisData.Torque.Value > 0 && DynotisData.Theoric.RotationalSpeed > 0)
                 {
@@ -477,27 +389,36 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                         (2 * DynotisData.Theoric.AirDensity * DynotisData.Theoric.PropellerArea));
                     DynotisData.Theoric.PropellerEfficiency = 100.0 * thrustFactor / ((DynotisData.Torque.Value / 1000.0) * DynotisData.Theoric.RotationalSpeed);
                 }
+
                 // PropSysEfficiencyI Calculation
                 if (DynotisData.Theoric.MotorEfficiency > 0)
                 {
                     DynotisData.Theoric.PropSysEfficiencyI = (DynotisData.Theoric.MotorEfficiency / 100.0) *
                         DynotisData.TheoricVariables.EscEffConst * DynotisData.Theoric.PropellerEfficiency;
                 }
+
                 // PropSysEfficiencyII Calculation
                 if (DynotisData.Theoric.Power > 0)
                 {
                     DynotisData.Theoric.PropSysEfficiencyII = DynotisData.Thrust.Value / DynotisData.Theoric.Power;
                 }
+
                 // IPS Calculation
                 if (DynotisData.Vibration.Value > 0 && DynotisData.MotorSpeed.Value > 0)
                 {
                     DynotisData.Theoric.IPS = (3685.1) * (DynotisData.Vibration.HighVibration) / (DynotisData.MotorSpeed.Value);
                 }
+                else
+                {
+                    DynotisData.Theoric.IPS = 0;
+                }
+
                 // J Calculation
                 if (DynotisData.Theoric.AirDensity > 0 && DynotisData.PropellerDiameter > 0 && DynotisData.MotorSpeed.Value > 0)
                 {
                     DynotisData.Theoric.J = (DynotisData.Theoric.AirDensity) / (DynotisData.MotorSpeed.Value / 60.0) * (DynotisData.PropellerDiameter * 0.0254);
                 }
+
                 // Ct Calculation   
                 // Cq Calculation 
                 if (DynotisData.Theoric.AirDensity > 0 && DynotisData.MotorSpeed.Value > 0 && DynotisData.PropellerDiameter > 0)
@@ -531,7 +452,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
             DynotisData.Vibration.TareBufferCount++;
 
-            if (DynotisData.Vibration.TareBufferCount > 100)
+            if (DynotisData.Vibration.TareBufferCount > 25)
             {
                 DynotisData.Vibration.TareBufferCount = 0;
 
@@ -564,13 +485,11 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
         private double CalculateHighVibrations(List<double> buffer)
         {
-            // Buffer'ı sırala ve en büyük 10 değeri al
-            var topValues = buffer.OrderByDescending(x => x).Take(10);
+            // Buffer'ı sırala ve en büyük 2 değeri al
+            var topValues = buffer.OrderByDescending(x => x).Take(2);
 
-            // En büyük 10 değerin ortalamasını hesapla
-            double highVibrations = topValues.Average();
-
-            return highVibrations;
+            // En büyük 2 değerin ortalamasını hesapla
+            return topValues.Average();
         }
 
         public void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -586,6 +505,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             }
             Port.Dispose();
             _cancellationTokenSource?.Dispose();
+            _dataReceivedEvent?.Dispose();
         }
     }
 }
