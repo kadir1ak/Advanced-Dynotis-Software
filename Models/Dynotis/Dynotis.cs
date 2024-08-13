@@ -242,7 +242,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                         }
                     }
 
-                    await Task.Delay(100);
+                    await Task.Delay(1);
                 }
             }
             catch (Exception ex)
@@ -269,8 +269,8 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                             Time = TryParseDouble(dataParts[0], out double time) ? time : double.NaN,
                             Current = TryParseDouble(dataParts[1], out double current) ? current : double.NaN,
                             Voltage = TryParseDouble(dataParts[2], out double voltage) ? voltage : double.NaN,
-                            Thrust = TryParseDouble(dataParts[3], out double thrust) ? new DynotisData.Unit(Math.Abs(thrust), "Gram-force", "gf") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
-                            Torque = TryParseDouble(dataParts[4], out double torque) ? new DynotisData.Unit(Math.Abs(torque), "Newton millimeter", "N.mm") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
+                            Thrust = TryParseDouble(dataParts[3], out double thrust) ? new DynotisData.Unit(thrust, "Gram-force", "gf") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
+                            Torque = TryParseDouble(dataParts[4], out double torque) ? new DynotisData.Unit(torque, "Newton millimeter", "N.mm") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
                             MotorSpeed = TryParseDouble(dataParts[5], out double motorSpeed) ? new DynotisData.Unit(motorSpeed, "Revolutions per minute", "RPM") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
                             WindSpeed = TryParseDouble(dataParts[6], out double windSpeed) ? new DynotisData.Unit(windSpeed, "Meters per second", "m/s") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
                             WindDirection = TryParseDouble(dataParts[7], out double windDirection) ? windDirection : double.NaN,
@@ -292,7 +292,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
                                 VibrationCalculations();
 
-                                TheoreticalCalculations();                               
+                                TheoreticalCalculations();
 
                                 OnPropertyChanged(nameof(DynotisData));
                             }
@@ -314,7 +314,53 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 Logger.Log($"An error occurred: {ex.Message}");
             }
         }
+        /*
+        private async Task<string> ReadLineAsync(SerialPort port, CancellationToken token)
+        {
+            try
+            {
+                StringBuilder builder = new StringBuilder();
+                byte[] buffer = new byte[1];
 
+                while (true)
+                {
+                    token.ThrowIfCancellationRequested();
+
+                    // ReadAsync, okunan byte sayısını döner. Bu sayı 1 ya da 0 olabilir.
+                    int byteRead = await port.BaseStream.ReadAsync(buffer, 0, 1, token);
+
+                    if (byteRead == 1)
+                    {
+                        char c = Encoding.UTF8.GetChars(buffer)[0];
+                        if (c == '\n')
+                            break;
+
+                        builder.Append(c);
+                    }
+                }
+                return builder.ToString();
+            }
+            catch (Exception ex)
+            {
+                Logger.Log($"ReadLine error: {ex.Message}");
+                throw;
+            }
+        }
+
+        private async Task WriteLineAsync(SerialPort port, string message, CancellationToken token)
+        {
+            try
+            {
+                byte[] buffer = Encoding.UTF8.GetBytes(message + "\r\n");
+                await port.BaseStream.WriteAsync(buffer, 0, buffer.Length, token);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log($"WriteLine error: {ex.Message}");
+                throw;
+            }
+        }
+        */
         private async Task<string> ReadLineAsync(SerialPort port, CancellationToken token)
         {
             try
@@ -333,7 +379,6 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             try
             {
                 await Task.Run(() => port.WriteLine(message), token);
-                //Logger.Log($"Transmit data: {message}");
             }
             catch (Exception ex)
             {
@@ -341,6 +386,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 throw;
             }
         }
+
 
         public static bool TryParseDouble(string value, out double result)
         {
@@ -399,11 +445,8 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 // Propeller Area Calculation
                 if (DynotisData.PropellerDiameter > 0)
                 {
-                    DynotisData.Theoric.PropellerArea = Math.PI * Math.Pow((DynotisData.PropellerDiameter * 0.0254 / 2), 2);
-                }
-                else
-                {
-                    DynotisData.Theoric.PropellerArea = 0;
+                    double diameterInMeters = DynotisData.PropellerDiameter * 0.0254;
+                    DynotisData.Theoric.PropellerArea = Math.PI * Math.Pow(diameterInMeters / 2, 2);
                 }
 
                 // Rotational Speed Calculation
@@ -411,121 +454,75 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 {
                     DynotisData.Theoric.RotationalSpeed = 2.0 * Math.PI * DynotisData.MotorSpeed.Value / 60.0;
                 }
-                else
-                {
-                    DynotisData.Theoric.RotationalSpeed = 0;
-                }
-
                 // Power Calculation
                 DynotisData.Theoric.Power = DynotisData.Current * DynotisData.Voltage;
 
                 // Air Density Calculation
                 if (DynotisData.Pressure.Value > 0 && DynotisData.AmbientTemp.Value + DynotisData.TheoricVariables.KelvinConst > 0)
                 {
-                    DynotisData.Theoric.AirDensity = DynotisData.Pressure.Value / (DynotisData.TheoricVariables.AirGasConstant * (DynotisData.AmbientTemp.Value + DynotisData.TheoricVariables.KelvinConst));
+                    DynotisData.Theoric.AirDensity = DynotisData.Pressure.Value /
+                        (DynotisData.TheoricVariables.AirGasConstant * (DynotisData.AmbientTemp.Value + DynotisData.TheoricVariables.KelvinConst));
                 }
-                else
-                {
-                    DynotisData.Theoric.AirDensity = 0;
-                }
-
                 // Motor Efficiency Calculation
                 if (DynotisData.Voltage > 0 && DynotisData.Current > 0)
                 {
-                    double motorEfficiencyFactor = (1 - DynotisData.Current * (DynotisData.MotorInner / 1000) / DynotisData.Voltage) * (1 - DynotisData.NoLoadCurrents / DynotisData.Current);
+                    double voltageDrop = DynotisData.Current * (DynotisData.MotorInner / 1000);
+                    double motorEfficiencyFactor = (1 - voltageDrop / DynotisData.Voltage) * (1 - DynotisData.NoLoadCurrents / DynotisData.Current);
                     DynotisData.Theoric.MotorEfficiency = motorEfficiencyFactor > 0 ? 100.0 * motorEfficiencyFactor : 0;
                 }
-                else
-                {
-                    DynotisData.Theoric.MotorEfficiency = 0;
-                }
-
                 // Propeller Efficiency Calculation
                 if (DynotisData.Theoric.AirDensity > 0 && DynotisData.Theoric.PropellerArea > 0 && DynotisData.Torque.Value > 0 && DynotisData.Theoric.RotationalSpeed > 0)
                 {
-                    double thrustFactor = Math.Sqrt(Math.Pow((DynotisData.Thrust.Value * 0.001 * 9.81), 3) / (2 * DynotisData.Theoric.AirDensity * DynotisData.Theoric.PropellerArea));
+                    double thrustFactor = Math.Sqrt(Math.Pow((DynotisData.Thrust.Value * 0.001 * 9.81), 3) /
+                        (2 * DynotisData.Theoric.AirDensity * DynotisData.Theoric.PropellerArea));
                     DynotisData.Theoric.PropellerEfficiency = 100.0 * thrustFactor / ((DynotisData.Torque.Value / 1000.0) * DynotisData.Theoric.RotationalSpeed);
                 }
-                else
-                {
-                    DynotisData.Theoric.PropellerEfficiency = 0;
-                }
-
                 // PropSysEfficiencyI Calculation
                 if (DynotisData.Theoric.MotorEfficiency > 0)
                 {
-                    DynotisData.Theoric.PropSysEfficiencyI = ((DynotisData.Theoric.MotorEfficiency / 100.0) * DynotisData.TheoricVariables.EscEffConst * DynotisData.Theoric.PropellerEfficiency);
+                    DynotisData.Theoric.PropSysEfficiencyI = (DynotisData.Theoric.MotorEfficiency / 100.0) *
+                        DynotisData.TheoricVariables.EscEffConst * DynotisData.Theoric.PropellerEfficiency;
                 }
-                else
-                {
-                    DynotisData.Theoric.PropSysEfficiencyI = 0;
-                }
-
                 // PropSysEfficiencyII Calculation
                 if (DynotisData.Theoric.Power > 0)
                 {
                     DynotisData.Theoric.PropSysEfficiencyII = DynotisData.Thrust.Value / DynotisData.Theoric.Power;
                 }
-                else
-                {
-                    DynotisData.Theoric.PropSysEfficiencyII = 0;
-                }
-
                 // IPS Calculation
                 if (DynotisData.Vibration.Value > 0 && DynotisData.MotorSpeed.Value > 0)
-                {// MAX yaz.
-                    DynotisData.Theoric.IPS = (3685.1) * (DynotisData.Vibration.Value) / (DynotisData.MotorSpeed.Value);
-                }
-                else
                 {
-                    DynotisData.Theoric.IPS = 0;
+                    DynotisData.Theoric.IPS = (3685.1) * (DynotisData.Vibration.HighVibration) / (DynotisData.MotorSpeed.Value);
                 }
-
                 // J Calculation
                 if (DynotisData.Theoric.AirDensity > 0 && DynotisData.PropellerDiameter > 0 && DynotisData.MotorSpeed.Value > 0)
                 {
                     DynotisData.Theoric.J = (DynotisData.Theoric.AirDensity) / (DynotisData.MotorSpeed.Value / 60.0) * (DynotisData.PropellerDiameter * 0.0254);
                 }
-                else
-                {
-                    DynotisData.Theoric.J = 0;
-                }
-
-                // Ct Calculation
+                // Ct Calculation   
+                // Cq Calculation 
                 if (DynotisData.Theoric.AirDensity > 0 && DynotisData.MotorSpeed.Value > 0 && DynotisData.PropellerDiameter > 0)
                 {
-                    DynotisData.Theoric.Ct = (DynotisData.Thrust.Value * 9.81 * 0.001) / (DynotisData.Theoric.AirDensity * Math.Pow(DynotisData.MotorSpeed.Value / 60, 2) * Math.Pow((DynotisData.PropellerDiameter * 0.0254), 4));
-                }
-                else
-                {
-                    DynotisData.Theoric.Ct = 0;
-                }
+                    double motorSpeedSquared = Math.Pow(DynotisData.MotorSpeed.Value / 60, 2);
+                    double diameterToTheFourth = Math.Pow(DynotisData.PropellerDiameter * 0.0254, 4);
+                    DynotisData.Theoric.Ct = (DynotisData.Thrust.Value * 9.81 * 0.001) /
+                        (DynotisData.Theoric.AirDensity * motorSpeedSquared * diameterToTheFourth);
 
-                // Cq Calculation
-                if (DynotisData.Theoric.AirDensity > 0 && DynotisData.MotorSpeed.Value > 0 && DynotisData.PropellerDiameter > 0)
-                {
-                    DynotisData.Theoric.Cq = (DynotisData.Torque.Value * 0.001) / (DynotisData.Theoric.AirDensity * Math.Pow((DynotisData.MotorSpeed.Value / 60), 2) * Math.Pow((DynotisData.PropellerDiameter * 0.0254), 5));
+                    DynotisData.Theoric.Cq = (DynotisData.Torque.Value * 0.001) /
+                        (DynotisData.Theoric.AirDensity * motorSpeedSquared * Math.Pow(DynotisData.PropellerDiameter * 0.0254, 5));
+                    // Cp Calculation
+                    DynotisData.Theoric.Cp = 2 * Math.PI * DynotisData.Theoric.Cq;
                 }
-                else
-                {
-                    DynotisData.Theoric.Cq = 0;
-                }
-
-                // Cp Calculation
-                DynotisData.Theoric.Cp = 2 * Math.PI * DynotisData.Theoric.Cq;
             }
             catch (Exception ex)
             {
-
+                Logger.Log($"An error occurred during theoretical calculations: {ex.Message}");
             }
         }
 
         private void VibrationCalculations()
         {
-            DynotisData.Vibration.Value = Math.Sqrt(Math.Pow(DynotisData.VibrationY, 2));
-
+            DynotisData.Vibration.Value = Math.Abs(DynotisData.VibrationY);
             DynotisData.Vibration.HighVibrationBuffer.Add(DynotisData.Vibration.Value);
-
             DynotisData.Vibration.TareVibrationBuffer.Add(DynotisData.Vibration.Value);
 
             DynotisData.Vibration.TareVibrationXBuffer.Add(DynotisData.Vibration.VibrationX);
@@ -533,6 +530,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             DynotisData.Vibration.TareVibrationZBuffer.Add(DynotisData.Vibration.VibrationZ);
 
             DynotisData.Vibration.TareBufferCount++;
+
             if (DynotisData.Vibration.TareBufferCount > 100)
             {
                 DynotisData.Vibration.TareBufferCount = 0;
@@ -540,19 +538,30 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 DynotisData.Vibration.HighVibration = CalculateHighVibrations(DynotisData.Vibration.HighVibrationBuffer);
                 DynotisData.Vibration.HighVibrationBuffer.Clear();
 
-                DynotisData.Vibration.TareVibration = DynotisData.Vibration.TareVibrationBuffer.Sum() / DynotisData.Vibration.TareVibrationBuffer.Count;
+                DynotisData.Vibration.TareVibration = CalculateAverage(DynotisData.Vibration.TareVibrationBuffer);
                 DynotisData.Vibration.TareVibrationBuffer.Clear();
 
-                DynotisData.Vibration.TareVibrationX = DynotisData.Vibration.TareVibrationXBuffer.Sum() / DynotisData.Vibration.TareVibrationXBuffer.Count;
+                DynotisData.Vibration.TareVibrationX = CalculateAverage(DynotisData.Vibration.TareVibrationXBuffer);
                 DynotisData.Vibration.TareVibrationXBuffer.Clear();
 
-                DynotisData.Vibration.TareVibrationY = DynotisData.Vibration.TareVibrationYBuffer.Sum() / DynotisData.Vibration.TareVibrationYBuffer.Count;
+                DynotisData.Vibration.TareVibrationY = CalculateAverage(DynotisData.Vibration.TareVibrationYBuffer);
                 DynotisData.Vibration.TareVibrationYBuffer.Clear();
 
-                DynotisData.Vibration.TareVibrationZ = DynotisData.Vibration.TareVibrationZBuffer.Sum() / DynotisData.Vibration.TareVibrationZBuffer.Count;
+                DynotisData.Vibration.TareVibrationZ = CalculateAverage(DynotisData.Vibration.TareVibrationZBuffer);
                 DynotisData.Vibration.TareVibrationZBuffer.Clear();
             }
         }
+
+        private double CalculateAverage(List<double> buffer)
+        {
+            double sum = 0;
+            foreach (var value in buffer)
+            {
+                sum += value;
+            }
+            return buffer.Count > 0 ? sum / buffer.Count : 0;
+        }
+
         private double CalculateHighVibrations(List<double> buffer)
         {
             // Buffer'ı sırala ve en büyük 10 değeri al
