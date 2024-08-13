@@ -140,6 +140,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                     {
                         _currentBalancerRoutingSteps.PropertyChanged += (sender, e) =>
                         {
+
                             if (e.PropertyName == nameof(BalancerRoutingStepsViewModel.BalancerIterationStep) ||                                
                                 e.PropertyName == nameof(BalancerRoutingStepsViewModel.BalancerIterationStepChart) ||
                                 e.PropertyName == nameof(BalancerRoutingStepsViewModel.BalancerIterationVibrationsChart) ||
@@ -158,6 +159,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                                 e.PropertyName == nameof(BalancerRoutingStepsViewModel.ESCStatus) ||
                                 e.PropertyName == nameof(BalancerRoutingStepsViewModel.HighVibration))
                             {
+
                                 DeviceInterfaceVariables.BalancerIterationStep = _currentBalancerRoutingSteps.BalancerIterationStep;
                                 DeviceInterfaceVariables.BalancerIterationVibrations = _currentBalancerRoutingSteps.TestStepsPropellerVibrations;
                                 DeviceInterfaceVariables.BalancerIterationStepChart = _currentBalancerRoutingSteps.BalancerIterationStepChart;
@@ -172,9 +174,11 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                                 DeviceInterfaceVariables.Vibration.TareVibrationX = _currentBalancerRoutingSteps.TareVibrationX;
                                 DeviceInterfaceVariables.Vibration.TareVibrationY = _currentBalancerRoutingSteps.TareVibrationY;
                                 DeviceInterfaceVariables.Vibration.TareVibrationZ = _currentBalancerRoutingSteps.TareVibrationZ;
-                                OnPropertyChanged(nameof(DeviceInterfaceVariables));
-
+                               
                                 _currentBalancerRoutingSteps.HighVibration = DeviceInterfaceVariables.Vibration.HighVibration;
+
+
+                                OnPropertyChanged(nameof(DeviceInterfaceVariables));
 
                                 Device.DynotisData.ESCValue = _currentBalancerRoutingSteps.ESCValue;
                                 Device.DynotisData.ESCStatus = _currentBalancerRoutingSteps.ESCStatus;

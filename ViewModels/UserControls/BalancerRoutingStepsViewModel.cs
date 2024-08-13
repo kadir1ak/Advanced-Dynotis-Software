@@ -95,6 +95,9 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private DispatcherTimer HighVibrationDataCollectionTimer;
         private double _highVibration;
         private List<double> _vibrationsDataBuffer;
+        private readonly object _balancerProgressTimerLock = new object();
+        private readonly object _highVibrationDataCollectionTimerLock = new object();
+        private readonly object _pidTimerLock = new object();
 
         // Propeller Vibration 
         private List<double> _testStepsPropellerVibrations;
@@ -167,7 +170,11 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         {
             // Set the first iteration header and clear iteration steps
             IterationHeader = IterationSteps[0].Header;
-            Iteration = "";
+            Iteration = IterationSteps[0].Steps[0] + "\r\n" +
+                        IterationSteps[0].Steps[1] + "\r\n" +
+                        IterationSteps[0].Steps[2] + "\r\n" +
+                        IterationSteps[0].Steps[3] + "\r\n" +
+                        IterationSteps[0].Steps[4] ;
 
             // Reset Counts and Status
             TestTimeCount = 0;
@@ -293,7 +300,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                         }
                     }
                     break;
-                case 1:// Cihazın Hazırlanması
+                case 1:// Pervane Balans Sistemi Başlangıç ve Önerileri
                     {
                         IterationHeader = IterationSteps[HeaderStepIndex].Header;
                         Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
@@ -305,16 +312,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
                     }
                     break;
-                case 2: // Cihaz verilerin ayarlanması
-                    {
-                        IterationHeader = IterationSteps[HeaderStepIndex].Header;
-                        Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
-                        StepIndicatorSet(HeaderStepIndex);
-                        if (IterationStepIndex < IterationSteps[HeaderStepIndex].Steps.Count - 1) { IterationStepIndex++;}  else{ HeaderStepIndex++; IterationStepIndex = 0; }
-                        
-                    }
-                    break;
-                case 3: // Ortam Titreşimlerinin Hesaplanması
+                case 2: // Ortam Titreşimlerinin Hesaplanması
                     {
                         IterationHeader = IterationSteps[HeaderStepIndex].Header;
                         Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
@@ -360,7 +358,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                         }
                     }
                     break;
-                case 4: // Motor Titreşimlerinin Hesaplanması
+                case 3: // Motor Titreşimlerinin Hesaplanması
                     {
                         IterationHeader = IterationSteps[HeaderStepIndex].Header;
                         Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
@@ -400,7 +398,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
                     }
                     break;
-                case 5: // Pervane Montajı
+                case 4: // Pervane Montajı
                     {
                         IterationHeader = IterationSteps[HeaderStepIndex].Header;
                         Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
@@ -410,7 +408,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
                     }
                     break;
-                case 6: // Pervane Titreşimlerinin Hesaplanması
+                case 5: // Pervane Titreşimlerinin Hesaplanması
                     {
                         IterationHeader = IterationSteps[HeaderStepIndex].Header;
                         Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
@@ -449,7 +447,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
                     }
                     break;
-                case 7: // Birim Referans Bant Uzunluğunun Hesaplanması
+                case 6: // Birim Referans Bant Uzunluğunun Hesaplanması
                     {
                         IterationHeader = IterationSteps[HeaderStepIndex].Header;
                         Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
@@ -468,7 +466,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
                     }
                     break;
-                case 8: // Pervanenin Her İki Kanadına Birim Referans Bantın Eklenmesi
+                case 7: // Pervanenin Her İki Kanadına Birim Referans Bantın Eklenmesi
                     {
                         IterationHeader = IterationSteps[HeaderStepIndex].Header;
                         Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
@@ -519,7 +517,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
                     }
                     break;
-                case 9: // Düzeltici Bant Uzunluğunun Hesaplanması ve Düzeltici Yönün Belirlenmesi
+                case 8: // Düzeltici Bant Uzunluğunun Hesaplanması ve Düzeltici Yönün Belirlenmesi
                     {
                         IterationHeader = IterationSteps[HeaderStepIndex].Header;
                         Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
@@ -548,7 +546,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
                     }
                     break;
-                case 10: // Belirlenmiş Yöne Düzeltici Bantın Eklenmesi
+                case 9: // Belirlenmiş Yöne Düzeltici Bantın Eklenmesi
                     {
                         IterationHeader = IterationSteps[HeaderStepIndex].Header;
                         Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
@@ -587,7 +585,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                         }
                     }
                     break;
-                case 11:
+                case 10:
                     {
                         BalancingTestFinished();
                     }
@@ -668,10 +666,11 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         }
         private void BalancerProgressTimer_Tick(object sender, EventArgs e)
         {
-           
-            switch (HeaderStepIndex)
+            lock (_balancerProgressTimerLock)
             {
-                case 3: // Ortam Titreşimlerinin Hesaplanması
+                switch (HeaderStepIndex)
+            {
+                case 2: // Ortam Titreşimlerinin Hesaplanması
                     {
                         if (TestTimeCount >= 20) // 2 Sn
                         {
@@ -719,7 +718,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
                     }
                     break;
-                case 4: // Motor Titreşimlerinin Hesaplanması
+                case 3: // Motor Titreşimlerinin Hesaplanması
                     {
                         if(MotorReadyStatus) // Motor Hazırsa
                         {
@@ -763,7 +762,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                         }
                     }
                     break;
-                case 6: // Pervane Titreşimlerinin Hesaplanması
+                case 5: // Pervane Titreşimlerinin Hesaplanması
                     {
                         if (MotorReadyStatus) // Motor Hazırsa
                         {
@@ -807,7 +806,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                         }
                     }
                     break;
-                case 8: // Pervanenin Her İki Kanadına Birim Referans Bantın Eklenmesi
+                case 7: // Pervanenin Her İki Kanadına Birim Referans Bantın Eklenmesi
                     {
                         if (MotorReadyStatus) // Motor Hazırsa
                         {
@@ -861,7 +860,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                         }
                     }
                     break;
-                case 10: // Belirlenmiş Yöne Düzeltici Bantın Eklenmesi
+                case 9: // Belirlenmiş Yöne Düzeltici Bantın Eklenmesi
                     {
                         if (MotorReadyStatus) // Motor Hazırsa
                         {
@@ -906,28 +905,35 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     }
                     break;
             }
+            }
         }
 
         private void HighVibrationDataCollectionTimer_Tick(object sender, EventArgs e)
         {
-            VibrationsDataBuffer.Add(HighVibration);
+            lock (_highVibrationDataCollectionTimerLock)
+            {
+                VibrationsDataBuffer.Add(HighVibration);
+            }           
         }
 
         private void PIDTimer_Tick(object sender, EventArgs e)
         {
-            double currentSpeed = _interfaceVariables.MotorSpeed.Value;
-            double pidOutput = PIDController.Calculate(_interfaceVariables.ReferenceMotorSpeed, currentSpeed);
+            lock (_pidTimerLock)
+            {
+                double currentSpeed = _interfaceVariables.MotorSpeed.Value;
+                double pidOutput = PIDController.Calculate(_interfaceVariables.ReferenceMotorSpeed, currentSpeed);
 
-            // Map PID output to ESC range
-            double minOutput = 0;
-            double maxOutput = 100;
-            double minESC = 800;
-            double maxESC = 2200;
-            pidOutput = (pidOutput - minOutput) * (maxESC - minESC) / (maxOutput - minOutput) + minESC;
+                // Map PID output to ESC range
+                double minOutput = 0;
+                double maxOutput = 100;
+                double minESC = 800;
+                double maxESC = 2200;
+                pidOutput = (pidOutput - minOutput) * (maxESC - minESC) / (maxOutput - minOutput) + minESC;
 
-            pidOutput = Math.Clamp(pidOutput, 800, 2200);
+                pidOutput = Math.Clamp(pidOutput, 800, 2200);
 
-            ESCValue = SmoothTransition(ESCValue, (int)pidOutput);
+                ESCValue = SmoothTransition(ESCValue, (int)pidOutput);
+            }
         }
 
         private int SmoothTransition(int currentValue, int targetValue)
@@ -1215,47 +1221,54 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 if (_highVibration != value)
                 {
+                    _highVibration = value;
                     _interfaceVariables.Vibration.HighVibration = value;
                     OnPropertyChanged(nameof(HighVibration));
                 }
             }
-        }      
+        }
         public double DeviceBaseStaticVibration
         {
             get => _deviceBaseStaticVibration;
             set
             {
-                if (SetProperty(ref _deviceBaseStaticVibration, value))
+                if (_deviceBaseStaticVibration != value)
                 {
+                    _deviceBaseStaticVibration = value;
                     _interfaceVariables.DeviceBaseStaticVibration = value;
                     OnPropertyChanged(nameof(DeviceBaseStaticVibration));
                 }
             }
-        }     
+        }
+
         public double MotorBaseRunningVibration
         {
             get => _motorBaseRunningVibration;
             set
             {
-                if (SetProperty(ref _motorBaseRunningVibration, value))
+                if (_motorBaseRunningVibration != value)
                 {
+                    _motorBaseRunningVibration = value;
                     _interfaceVariables.MotorBaseRunningVibration = value;
                     OnPropertyChanged(nameof(MotorBaseRunningVibration));
                 }
             }
-        }      
+        }
+
         public double PropellerBaseRunningVibration
         {
             get => _propellerBaseRunningVibration;
             set
             {
-                if (SetProperty(ref _propellerBaseRunningVibration, value))
+                if (_propellerBaseRunningVibration != value)
                 {
+                    _propellerBaseRunningVibration = value;
                     _interfaceVariables.PropellerBaseRunningVibration = value;
                     OnPropertyChanged(nameof(PropellerBaseRunningVibration));
                 }
             }
-        }      
+        }
+
         public double BalancedPropellerRunningVibration
         {
             get => _balancedPropellerRunningVibration;
@@ -1472,29 +1485,25 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 new IterationStep // 0
                 {
-                    Header = "Pervane Dengeleyici",
-                    Steps = new List<string> {}
-                },
-                new IterationStep // 1
-                {
                     Header = "Cihazın Hazırlanması",
                     Steps = new List<string> 
                     {
-                        "Cihazı uygun şekilde sabitleyiniz. Çevresel dengesizlik veya belirsizliğe sebep olabilecek koşullardan arındırdığınızdan emin olunuz. ",
-                        "Motor montajını yapınız.",
-                        "Elektronik bağlantıları kontrol ediniz."
+                        "1.) Cihazı uygun şekilde sabitleyiniz. Çevresel dengesizlik veya belirsizliğe sebep olabilecek koşullardan arındırdığınızdan emin olunuz. ",
+                        "2.) Motor montajını yapınız.",
+                        "3.) Elektronik bağlantıları kontrol ediniz.",
+                        "4.) Pervane verileri ayarlayınız.",
+                        "5.) Referans motor hızı ayarlayınız."
+                    }
+                },
+                new IterationStep // 1
+                {
+                    Header = "Pervane Balans Sistemi Başlangıç ve Önerileri",
+                    Steps = new List<string> 
+                    {
+                        "Pervane balans sistemi başlangıç ve önerileri.",
                     }
                 },
                 new IterationStep // 2
-                {
-                    Header = "Cihaz Bağlantısının ve Arayüz Parametrelerinin Ayarlanması",
-                    Steps = new List<string> 
-                    {
-                        "Pervane verileri ayarlandı.",
-                        "Referans motor hızı ayarlandı."
-                    }
-                },
-                new IterationStep // 3
                 {
                     Header = "Ortam Titreşimlerinin Hesaplanması",
                     Steps = new List<string> 
@@ -1506,7 +1515,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                         "Sonuçları kontrol ediniz."
                     }
                 },
-                new IterationStep // 4
+                new IterationStep // 3
                 {
                     Header = "Motor Titreşimin Hesaplanması",
                     Steps = new List<string>
@@ -1516,7 +1525,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                         "Sonuçları kontrol ediniz."
                     }
                 },
-                new IterationStep // 5
+                new IterationStep // 4
                 {
                     Header = "Pervane Montajı",
                     Steps = new List<string> 
@@ -1524,7 +1533,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                         "Pervane montajını yapınız."
                     }
                 },
-                new IterationStep // 6
+                new IterationStep // 5
                 {
                     Header = "Pervane Titreşimin Hesaplanması",
                     Steps = new List<string>
@@ -1534,7 +1543,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                         "Sonuçları kontrol ediniz."
                     }
                 },
-                new IterationStep // 7
+                new IterationStep // 6
                 {
                     Header = "Birim Referans Bant Uzunluğunun Hesaplanması",
                     Steps = new List<string>
@@ -1543,7 +1552,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                         "Lütfen standart elektrik bandı kullanın veya genişliği 15-20 mm arasında olan bir bant kullanın."
                     }
                 },
-                new IterationStep // 8
+                new IterationStep // 7
                 {
                     Header = "Pervanenin Her İki Kanadına Birim Referans Bantın Eklenmesi",
                     Steps = new List<string>
@@ -1557,7 +1566,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                         "Sonuçları kontrol ediniz."
                     }
                 },
-                new IterationStep // 9
+                new IterationStep // 8
                 {
                     Header = "Düzeltici Bant Uzunluğunun Hesaplanması ve Düzeltici Yönün Belirlenmesi",
                     Steps = new List<string>
@@ -1565,7 +1574,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                         "Düzeltici yönü ve bant uzunluğunun hesaplandı."
                     }
                 },
-                new IterationStep // 10
+                new IterationStep // 9
                 {
                     Header = "Belirlenmiş Yöne Düzeltici Bantın Eklenmesi",
                     Steps = new List<string> 
@@ -1576,7 +1585,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                         "Sonuçları kontrol ediniz.",
                     }
                 },
-                new IterationStep // 11
+                new IterationStep // 10
                 {
                     Header = "Sonuç ve Değerlendirme",
                     Steps = new List<string>

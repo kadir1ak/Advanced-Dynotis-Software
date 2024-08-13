@@ -25,12 +25,13 @@ public class InterfaceVariables : INotifyPropertyChanged
 
         _vibrationVariables = new VibrationVariables();
         _theoricVariables = new TheoricVariables();
-
+ 
         _balancerIterationStep = 0;
         _balancerIterationVibrations = new List<double>();
         _balancerIterationStepChart = new ObservableCollection<int>();
         _balancerIterationVibrationsChart = new ObservableCollection<double>();
-
+        _balancedPropellersVibrations = new ObservableCollection<double>();
+        _balancedPropellersTestDates = new ObservableCollection<DateTime>();
         TestMode = "fuzzy";
         IsRecording = false;
         Duration = TimeSpan.Zero;
