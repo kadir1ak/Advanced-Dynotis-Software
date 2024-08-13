@@ -14,8 +14,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
     {
         private int _referenceMotorSpeed;
         private double _referencePropellerDiameter;
-        private double _unitTapeSize;
-        private double _equalizerTapeSize;
+        private double _equalizerTapeCoefficient;
         private string _equalizerDirection;
         private string _motorSpeedUnitSymbol;
 
@@ -144,27 +143,15 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
-        public double UnitTapeSize
+        public double EqualizerTapeCoefficient
         {
-            get => _unitTapeSize;
+            get => _equalizerTapeCoefficient;
             set
             {
-                if (SetProperty(ref _unitTapeSize, value))
+                if (SetProperty(ref _equalizerTapeCoefficient, value))
                 {
-                    _interfaceVariables.UnitTapeSize = value;
-                    OnPropertyChanged(nameof(UnitTapeSize));
-                }
-            }
-        }
-        public double EqualizerTapeSize
-        {
-            get => _equalizerTapeSize;
-            set
-            {
-                if (SetProperty(ref _equalizerTapeSize, value))
-                {
-                    _interfaceVariables.EqualizerTapeSize = value;
-                    OnPropertyChanged(nameof(EqualizerTapeSize));
+                    _interfaceVariables.EqualizerTapeCoefficient = value;
+                    OnPropertyChanged(nameof(EqualizerTapeCoefficient));
                 }
             }
         }

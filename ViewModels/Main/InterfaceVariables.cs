@@ -112,8 +112,7 @@ public class InterfaceVariables : INotifyPropertyChanged
 
     private int _referenceMotorSpeed;
     private double _referencePropellerDiameter;
-    private double _unitTapeSize;
-    private double _equalizerTapeSize;
+    private double _equalizerTapeCoefficient;
     private string _equalizerDirection;
     private int _balancerIterationStep;
     private List<double> _balancerIterationVibrations;
@@ -457,15 +456,10 @@ public class InterfaceVariables : INotifyPropertyChanged
         get => _referencePropellerDiameter;
         set => SetProperty(ref _referencePropellerDiameter, value);
     }    
-    public double UnitTapeSize
+    public double EqualizerTapeCoefficient
     {
-        get => _unitTapeSize;
-        set => SetProperty(ref _unitTapeSize, value);
-    }
-    public double EqualizerTapeSize
-    {
-        get => _equalizerTapeSize;
-        set => SetProperty(ref _equalizerTapeSize, value);
+        get => _equalizerTapeCoefficient;
+        set => SetProperty(ref _equalizerTapeCoefficient, value);
     }
     public string EqualizerDirection
     {

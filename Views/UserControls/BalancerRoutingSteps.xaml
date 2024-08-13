@@ -85,7 +85,7 @@
     </UserControl.Resources>
     <Grid Background="{DynamicResource Page}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" MinHeight="250"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -101,13 +101,12 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*" MinHeight="50"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto" MinWidth="100"/>
                 </Grid.ColumnDefinitions>
 
                 <!-- Step Indicator -->
@@ -241,73 +240,62 @@
                             VerticalAlignment="Center" 
                             Foreground="{DynamicResource BalancerRoutingStepsIcon}"/>
                     </Grid>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0 10 0 10">
-                        <Ellipse Width="3" Height="3" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" />
-                        <Ellipse Width="4" Height="4" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 0 0"/>
-                        <Ellipse Width="5" Height="5" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 0 0"/>
-                        <Ellipse Width="4" Height="4" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 2 0"/>
-                        <Ellipse Width="3" Height="3" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" />
-                    </StackPanel>
-                    <Grid>
-                        <Ellipse Fill="{Binding StepIndicators[9]}" Width="20" Height="20" Stroke="{DynamicResource BalancerRoutingStepsIconBorder}"/>
-                        <!-- Icon -->
-                        <icon:PackIconFontAwesome Kind="_9Solid" 
-                            Width="12" 
-                            Height="12" 
-                            HorizontalAlignment="Center" 
-                            VerticalAlignment="Center" 
-                            Foreground="{DynamicResource BalancerRoutingStepsIcon}"/>
-                    </Grid>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0 10 0 10">
-                        <Ellipse Width="3" Height="3" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" />
-                        <Ellipse Width="4" Height="4" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 0 0"/>
-                        <Ellipse Width="5" Height="5" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 0 0"/>
-                        <Ellipse Width="4" Height="4" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" Margin="2 0 2 0"/>
-                        <Ellipse Width="3" Height="3" Fill="{DynamicResource BalancerRoutingStepsListBoxText}" />
-                    </StackPanel>
-                    <Grid>
-                        <Ellipse Fill="{Binding StepIndicators[10]}" Width="20" Height="20" Stroke="{DynamicResource BalancerRoutingStepsIconBorder}"/>
-                        <!-- Icon -->
-                        <StackPanel Orientation="Horizontal">
-                            <icon:PackIconFontAwesome Kind="_1Solid" 
-                            Width="12" 
-                            Height="12" 
-                            HorizontalAlignment="Center" 
-                            VerticalAlignment="Center" 
-                            Foreground="{DynamicResource BalancerRoutingStepsIcon}"/>
-                            <icon:PackIconFontAwesome Kind="_0Solid" Margin="-5 0 0 0"
-                            Width="12" 
-                            Height="12" 
-                            HorizontalAlignment="Center" 
-                            VerticalAlignment="Center" 
-                            Foreground="{DynamicResource BalancerRoutingStepsIcon}"/>
-                        </StackPanel>
-                    </Grid>
                 </StackPanel>
 
-                <StackPanel  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Width="500" Margin="0 10 0 0" VerticalAlignment="Top" HorizontalAlignment="Center">
+                <StackPanel  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Width="500" Margin="0 5 0 5" VerticalAlignment="Top" HorizontalAlignment="Center">
                     <TextBlock Text="{Binding IterationHeader}" Background="{DynamicResource Page}" TextWrapping="Wrap" FontSize="16" FontWeight="DemiBold" Foreground="{DynamicResource Text}" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </StackPanel>
 
-                <StackPanel  Grid.Row="2" Grid.Column="0" Width="500" Margin="50 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
-                    <TextBlock Text="{Binding Iteration}" Background="{DynamicResource Page}" TextWrapping="Wrap" TextAlignment="Left" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+                <StackPanel  Grid.Row="2" Grid.Column="0" Width="500" Margin="0 10 0 0" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                    <TextBlock Text="{Binding Iteration}" FontSize="14" Background="{DynamicResource Page}" TextWrapping="Wrap" TextAlignment="Left" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+                    <Grid Grid.Row="0" Grid.Column="1" Margin="0 0 5 0" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="{Binding RecommendedTableVisibility}">
+                        <!-- Define the rows and columns -->
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Header -->
+                        <TextBlock Text="Propeller Diameter" Grid.Row="0" Grid.Column="0" FontWeight="Bold" Margin="1 1 10 1"/>
+                        <TextBlock Text="Recommended initial tape length" Grid.Row="0" Grid.Column="1" FontWeight="Bold" Margin="1"/>
+
+                        <!-- Row 1 -->
+                        <TextBlock Text="5-10in" Grid.Row="1" Grid.Column="0" Margin="1" HorizontalAlignment="Center"/>
+                        <TextBlock Text="20 mm" Grid.Row="1" Grid.Column="1" Margin="1" HorizontalAlignment="Center"/>
+
+                        <!-- Row 2 -->
+                        <TextBlock Text="10-20in" Grid.Row="2" Grid.Column="0" Margin="1" HorizontalAlignment="Center"/>
+                        <TextBlock Text="40 mm" Grid.Row="2" Grid.Column="1" Margin="1" HorizontalAlignment="Center"/>
+
+                        <!-- Row 3 -->
+                        <TextBlock Text="20-30in" Grid.Row="3" Grid.Column="0" Margin="1" HorizontalAlignment="Center"/>
+                        <TextBlock Text="60 mm" Grid.Row="3" Grid.Column="1" Margin="1" HorizontalAlignment="Center"/>
+
+                        <!-- Row 4 -->
+                        <TextBlock Text="30-40in" Grid.Row="4" Grid.Column="0" Margin="1" HorizontalAlignment="Center"/>
+                        <TextBlock Text="80 mm" Grid.Row="4" Grid.Column="1" Margin="1" HorizontalAlignment="Center"/>
+                    </Grid>
                 </StackPanel>
 
-                <StackPanel  Grid.Row="3" Grid.Column="0" Width="500" Orientation="Vertical" Margin="50 0 0 0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
-                    <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" Height="28" Content="{Binding TestStatusMessage}" Margin="0 2 0 2" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="14" FontWeight="DemiBold" Foreground="{DynamicResource Text}"/>
-                    <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" Height="28" Content="{Binding TestResult}" Margin="0 2 0 2" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="14" FontWeight="DemiBold" Foreground="{DynamicResource Text}"/>
-                </StackPanel>
-
-                <StackPanel Grid.Row="1" Grid.RowSpan="4" Grid.Column="1" Margin="3 0 3 0" VerticalAlignment="Bottom" HorizontalAlignment="Left">
+                <StackPanel Grid.Row="3" Grid.Column="0" Margin="3 0 50 0" VerticalAlignment="Top" HorizontalAlignment="Right">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" MinHeight="30"/>
-                            <RowDefinition Height="Auto" MinHeight="30"/>
-                            <RowDefinition Height="Auto" MinHeight="30"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" MinWidth="25"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
                         <!-- İlk Buton -->
@@ -315,22 +303,22 @@
                           EllipseColor="{DynamicResource BalancerRoutingStepsEllipseColor1}" HorizontalAlignment="Center" VerticalAlignment="Center"   
                           IconKind="{x:Static icon:PackIconFontAwesomeKind.RepeatSolid}" 
                           IconColor="{DynamicResource BalancerRoutingStepsIcon}" Visibility="{Binding RepeatStepButtonVisibility}"/>
-                        <Label Grid.Row="0" Grid.Column="1" Content="Testi Tekrarla" FontSize="14" Visibility="{Binding RepeatStepButtonVisibility}" Margin="-3 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        <Label Grid.Row="0" Grid.Column="1" Content="Testi Tekrarla" FontSize="14" Visibility="{Binding RepeatStepButtonVisibility}" Margin="-3 0 5 0" HorizontalAlignment="Left" VerticalAlignment="Top" />
 
                         <!-- İkinci Buton -->
-                        <helpers:StepButton Grid.Row="1" Grid.Column="0" Command="{Binding ApprovalStepButtonCommand}" Style="{StaticResource StepButtonStyle}"
+                        <helpers:StepButton Grid.Row="0" Grid.Column="2" Command="{Binding ApprovalStepButtonCommand}" Style="{StaticResource StepButtonStyle}"
                           EllipseColor="{DynamicResource BalancerRoutingStepsEllipseColor0}" HorizontalAlignment="Center" VerticalAlignment="Center"      
                           IconKind="{x:Static icon:PackIconFontAwesomeKind.CheckToSlotSolid}" 
                           IconColor="{DynamicResource BalancerRoutingStepsIcon}" Visibility="{Binding ApprovalStepButtonVisibility}"/>
-                        <Label Grid.Row="1" Grid.Column="1" Content="Onayla" FontSize="14" Visibility="{Binding ApprovalStepButtonVisibility}" Margin="-3 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label Grid.Row="0" Grid.Column="3" Content="Onayla" FontSize="14" Visibility="{Binding ApprovalStepButtonVisibility}" Margin="-3 0 5 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
 
                         <!-- Üçüncü Buton -->
-                        <helpers:StepButton Grid.Row="2" Grid.Column="0" Command="{Binding NextStepButtonCommand}" Style="{StaticResource StepButtonStyle}"
+                        <helpers:StepButton Grid.Row="0" Grid.Column="4" Command="{Binding NextStepButtonCommand}" Style="{StaticResource StepButtonStyle}"
                           EllipseColor="{DynamicResource BalancerRoutingStepsEllipseColor2}" HorizontalAlignment="Center" VerticalAlignment="Center"      
                           IconKind="{x:Static icon:PackIconFontAwesomeKind.ArrowRightFromBracketSolid}" 
                           IconColor="{DynamicResource BalancerRoutingStepsIcon}" Visibility="{Binding NextStepButtonVisibility}"/>
-                        <Label Grid.Row="2" Grid.Column="1" Content="Diğer Adıma Geç" FontSize="14" Visibility="{Binding NextStepButtonVisibility}" Margin="-3 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label Grid.Row="0" Grid.Column="5" Content="Diğer Adıma Geç" FontSize="14" Visibility="{Binding NextStepButtonVisibility}" Margin="-3 0 5 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
 
                     </Grid> 

@@ -205,8 +205,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                         {
                             if (e.PropertyName == nameof(BalancerParametersViewModel.ReferenceMotorSpeed) ||
                                 e.PropertyName == nameof(BalancerParametersViewModel.ReferencePropellerDiameter) ||
-                                e.PropertyName == nameof(BalancerParametersViewModel.UnitTapeSize) ||
-                                e.PropertyName == nameof(BalancerParametersViewModel.EqualizerTapeSize) ||
+                                e.PropertyName == nameof(BalancerParametersViewModel.EqualizerTapeCoefficient) ||
                                 e.PropertyName == nameof(BalancerParametersViewModel.EqualizerDirection) ||
                                 e.PropertyName == nameof(BalancerParametersViewModel.BalancerIterationStep) ||
                                 e.PropertyName == nameof(BalancerParametersViewModel.BalancerIterationStepChart) ||
@@ -218,9 +217,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                             {
                                 DeviceInterfaceVariables.ReferenceMotorSpeed = _currentBalancerParameters.ReferenceMotorSpeed;
                                 _currentBalancerParameters.ReferencePropellerDiameter = DeviceInterfaceVariables.ReferencePropellerDiameter;
-                                DeviceInterfaceVariables.UnitTapeSize = _currentBalancerParameters.UnitTapeSize;
                                 DeviceInterfaceVariables.EqualizerDirection = _currentBalancerParameters.EqualizerDirection;
-                                DeviceInterfaceVariables.EqualizerTapeSize = _currentBalancerParameters.EqualizerTapeSize;                                
+                                DeviceInterfaceVariables.EqualizerTapeCoefficient = _currentBalancerParameters.EqualizerTapeCoefficient;                                
                                 _currentBalancerParameters.BalancerIterationStep = DeviceInterfaceVariables.BalancerIterationStep;
                                 _currentBalancerParameters.BalancerIterationStepChart = DeviceInterfaceVariables.BalancerIterationStepChart;
                                 _currentBalancerParameters.BalancerIterationVibrationsChart = DeviceInterfaceVariables.BalancerIterationVibrationsChart;
