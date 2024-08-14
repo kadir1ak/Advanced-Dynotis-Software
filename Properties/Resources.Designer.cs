@@ -880,6 +880,15 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   Vibration (IPS) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_VibrationLevelsChartIPS {
+            get {
+                return ResourceManager.GetString("BalancerPage_VibrationLevelsChartIPS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   When the test starts, be careful about your distance from the propeller; it may crash. benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string BalancerPage_WarningMessage {
@@ -1029,6 +1038,15 @@ namespace Advanced_Dynotis_Software.Properties {
         public static string DeviceCard_ChartVibration {
             get {
                 return ResourceManager.GetString("DeviceCard_ChartVibration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vibration (IPS) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DeviceCard_ChartVibrationIPS {
+            get {
+                return ResourceManager.GetString("DeviceCard_ChartVibrationIPS", resourceCulture);
             }
         }
         

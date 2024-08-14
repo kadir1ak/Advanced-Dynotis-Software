@@ -297,6 +297,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 _tareVibrationZBuffer = new List<double>();
 
                 _highVibrationBuffer = new List<double>();
+                _highIPSVibrationBuffer = new List<double>();
             }
 
             private double _value;
@@ -316,7 +317,9 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             private List<double> _tareVibrationZBuffer;
 
             private double _highVibration;
+            private double _highIPSVibration;
             private List<double> _highVibrationBuffer;
+            private List<double> _highIPSVibrationBuffer;
 
             public double Value
             {
@@ -400,12 +403,22 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             {
                 get => _highVibration;
                 set => SetProperty(ref _highVibration, value);
+            }    
+            public double HighIPSVibration
+            {
+                get => _highIPSVibration;
+                set => SetProperty(ref _highIPSVibration, value);
             }
 
             public List<double> HighVibrationBuffer
             {
                 get => _highVibrationBuffer;
                 set => SetProperty(ref _highVibrationBuffer, value);
+            }   
+            public List<double> HighIPSVibrationBuffer
+            {
+                get => _highIPSVibrationBuffer;
+                set => SetProperty(ref _highIPSVibrationBuffer, value);
             }
 
             public event PropertyChangedEventHandler PropertyChanged;

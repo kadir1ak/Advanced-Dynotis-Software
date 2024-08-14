@@ -341,7 +341,9 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             newData.Vibration.TareVibrationZBuffer = currentData.Vibration.TareVibrationZBuffer;
 
             newData.Vibration.HighVibration = currentData.Vibration.HighVibration;
+            newData.Vibration.HighIPSVibration = currentData.Vibration.HighIPSVibration;
             newData.Vibration.HighVibrationBuffer = currentData.Vibration.HighVibrationBuffer;
+            newData.Vibration.HighIPSVibrationBuffer = currentData.Vibration.HighIPSVibrationBuffer;
           
             DynotisData = newData;
         }
@@ -477,7 +479,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 }
 
                 // IPS Calculation
-                if (DynotisData.Vibration.Value > 0 && DynotisData.MotorSpeed.Value > 0)
+                if (DynotisData.MotorSpeed.Value > 0)
                 {
                     DynotisData.Theoric.IPS = (3685.1) * (DynotisData.Vibration.HighVibration) / (DynotisData.MotorSpeed.Value);
                 }
@@ -527,7 +529,10 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         private void VibrationCalculations()
         {
             DynotisData.Vibration.Value = Math.Abs(DynotisData.VibrationY);
+
             DynotisData.Vibration.HighVibrationBuffer.Add(DynotisData.Vibration.Value);
+            DynotisData.Vibration.HighIPSVibrationBuffer.Add(DynotisData.Theoric.IPS);
+
             DynotisData.Vibration.TareVibrationBuffer.Add(DynotisData.Vibration.Value);
 
             DynotisData.Vibration.TareVibrationXBuffer.Add(DynotisData.Vibration.VibrationX);
@@ -541,7 +546,10 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 DynotisData.Vibration.TareBufferCount = 0;
 
                 DynotisData.Vibration.HighVibration = CalculateHighVibrations(DynotisData.Vibration.HighVibrationBuffer);
-                DynotisData.Vibration.HighVibrationBuffer.Clear();
+                DynotisData.Vibration.HighVibrationBuffer.Clear(); 
+                
+                DynotisData.Vibration.HighIPSVibration = CalculateHighVibrations(DynotisData.Vibration.HighIPSVibrationBuffer);
+                DynotisData.Vibration.HighIPSVibrationBuffer.Clear();
 
                 DynotisData.Vibration.TareVibration = CalculateAverage(DynotisData.Vibration.TareVibrationBuffer);
                 DynotisData.Vibration.TareVibrationBuffer.Clear();

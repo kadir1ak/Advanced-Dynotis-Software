@@ -527,6 +527,7 @@ public class InterfaceVariables : INotifyPropertyChanged
         Vibration.VibrationZ = data.Vibration.VibrationZ - Vibration.TareVibrationZ;
         Vibration.Value = data.Vibration.Value - Vibration.TareVibration;
         Vibration.HighVibration = data.Vibration.HighVibration - Vibration.TareVibration;
+        Vibration.HighIPSVibration = data.Vibration.HighIPSVibration;
         Vibration.TareCurrentVibration = data.Vibration.TareVibration;
         Vibration.TareCurrentVibrationX = data.Vibration.TareVibrationX;
         Vibration.TareCurrentVibrationY = data.Vibration.TareVibrationY;
@@ -943,6 +944,7 @@ public class InterfaceVariables : INotifyPropertyChanged
         private double _tareCurrentVibrationZ;
 
         private double _highVibration;
+        private double _highIPSVibration;
 
         public double Value
         {
@@ -1020,6 +1022,11 @@ public class InterfaceVariables : INotifyPropertyChanged
         {
             get => _highVibration;
             set => SetProperty(ref _highVibration, value);
+        }  
+        public double HighIPSVibration
+        {
+            get => _highIPSVibration;
+            set => SetProperty(ref _highIPSVibration, value);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -390,6 +390,9 @@
   <data name="BalancerPage_VibrationLevelsChart" xml:space="preserve">
     <value>Vibration (g)</value>
   </data>
+  <data name="BalancerPage_VibrationLevelsChartIPS" xml:space="preserve">
+    <value>Vibration (IPS)</value>
+  </data>
   <data name="BalancerPage_WarningMessage" xml:space="preserve">
     <value>When the test starts, be careful about your distance from the propeller; it may crash.</value>
   </data>
@@ -440,6 +443,9 @@
   </data>
   <data name="DeviceCard_ChartVibration" xml:space="preserve">
     <value>Vibration (g)</value>
+  </data>
+  <data name="DeviceCard_ChartVibrationIPS" xml:space="preserve">
+    <value>Vibration (IPS)</value>
   </data>
   <data name="DeviceCard_ChartVoltage" xml:space="preserve">
     <value>Voltage (V)</value>

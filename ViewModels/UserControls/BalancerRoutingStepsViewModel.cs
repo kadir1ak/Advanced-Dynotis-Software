@@ -100,7 +100,9 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         // Vibration 
         private DispatcherTimer HighVibrationDataCollectionTimer;
         private double _highVibration;
+        private double _highIPSVibration;
         private List<double> _vibrationsDataBuffer;
+        private List<double> _vibrationsIPSDataBuffer;
 
 
         private readonly object _balancerProgressTimerLock = new object();
@@ -125,8 +127,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             _dynotisData = dynotisData;
 
             _interfaceVariables.PropertyChanged += InterfaceVariables_PropertyChanged;
-
             VibrationsDataBuffer = new List<double>();
+            VibrationsIPSDataBuffer = new List<double>();
             TestStepsPropellerVibrations = new List<double>();
             BalancerIterationStepChart = new ObservableCollection<int>();
             BalancerIterationVibrationsChart = new ObservableCollection<double>();
@@ -204,9 +206,18 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             IterationStepIndex = 0;
 
             ESCValue = 800;
+            DeviceBaseStaticVibration = 0;
+            MotorBaseRunningVibration = 0;
+            PropellerBaseRunningVibration = 0;
+            FirstBladeVibration = 0;
+            SecondBladeVibration = 0;
+            EqualizerTapeCoefficient = 0;
+            EqualizerDirection = "";
+            BalancedPropellerRunningVibration = 0;            
 
             // Clear Buffers and Charts
             VibrationsDataBuffer.Clear();
+            VibrationsIPSDataBuffer.Clear();
             TestStepsPropellerVibrations.Clear();
             BalancerIterationStepChart.Clear();
             BalancerIterationVibrationsChart.Clear();
@@ -245,7 +256,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
         private void StopCommand()
         {
-            // Stop logic implementation here
+            MotorStop();
         }
 
         private void NewTestCommand()
@@ -405,7 +416,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                     SetVisibility("ApprovalRepeatStepVisible");
                                     Iteration = Iteration + "\r\n" +
                                                 "Device Base Static Vibration: " + DeviceBaseStaticVibration.ToString("0.000") + " g" + "\r\n" +
-                                                "Motor Base Running Vibration: " + MotorBaseRunningVibration.ToString("0.000") + " g";
+                                                "Motor Base Running Vibration: " + MotorBaseRunningVibration.ToString("0.000") + " IPS";
                                 }
                                 break;
                         }
@@ -439,7 +450,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                 {
                                     SetVisibility("ApprovalRepeatStepVisible");
                                     Iteration = Iteration + "\r\n" +
-                                                "Propeller Base Running Vibration: " + PropellerBaseRunningVibration.ToString("0.000") + " g";
+                                                "Propeller Base Running Vibration: " + PropellerBaseRunningVibration.ToString("0.000") + " IPS";
                                 }
                                 break;
                         }
@@ -504,8 +515,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                 {
                                     SetVisibility("ApprovalRepeatStepVisible");
                                     Iteration = Iteration + "\r\n" +
-                                                "First Blade Vibration: " + FirstBladeVibration.ToString("0.000") + " g" + "\r\n" +
-                                                "Second Blade Vibration: " + SecondBladeVibration.ToString("0.000") + " g";
+                                                "First Blade Vibration: " + FirstBladeVibration.ToString("0.000") + " IPS" + "\r\n" +
+                                                "Second Blade Vibration: " + SecondBladeVibration.ToString("0.000") + " IPS";
 
                                 }
                                 break;
@@ -581,7 +592,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                 {
                                     SetVisibility("ApprovalRepeatStepVisible");
                                     Iteration = Iteration + "\r\n" +
-                                                "Balanced Propeller Running Vibration: " + BalancedPropellerRunningVibration.ToString("0.000") + " g";
+                                                "Balanced Propeller Running Vibration: " + BalancedPropellerRunningVibration.ToString("0.000") + " IPS";
                                 }
                                 break;
                             case 3:  // Sonuçları kontrol edin.
@@ -631,35 +642,61 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 TareVibrationZ = _interfaceVariables.Vibration.TareCurrentVibrationZ;
             }
         }
+        private void HighVibrationDataCollectionTimer_Tick(object sender, EventArgs e)
+        {
+            lock (_highVibrationDataCollectionTimerLock)
+            {
+                HighVibration = _interfaceVariables.Vibration.HighVibration;
+                HighIPSVibration = _interfaceVariables.Vibration.HighIPSVibration;
+                VibrationsDataBuffer.Add(HighVibration);
+                VibrationsIPSDataBuffer.Add(HighIPSVibration);
+            }
+        }
+        private double CalculateHighIPSVibrations(List<double> buffer)
+        {
+            double average = buffer.Average();
+            var aboveAverageValues = buffer.Where(x => x > average);
+            if (!aboveAverageValues.Any()) {   return 0; }
+            return aboveAverageValues.Average();
+        }
+        private void CalculateDeviceBaseStaticVibrationVibration()
+        {
+            DeviceBaseStaticVibration = VibrationsDataBuffer.Sum() / VibrationsDataBuffer.Count;
+            VibrationsDataBuffer.Clear();
+        }
 
-        private void CalculateDeviceBaseStaticVibrationVibration(List<double> DataBuffer)
+        private void CalculateMotorBaseRunningVibration()
         {
-            DeviceBaseStaticVibration = DataBuffer.Sum() / DataBuffer.Count;
+            MotorBaseRunningVibration = CalculateHighIPSVibrations(VibrationsIPSDataBuffer);
+            VibrationsIPSDataBuffer.Clear();
         }
-        private void CalculateMotorBaseRunningVibration(List<double> DataBuffer)
+        private void CalculatePropellerBaseRunningVibration()
         {
-            MotorBaseRunningVibration = DataBuffer.Sum() / DataBuffer.Count;
+            PropellerBaseRunningVibration = CalculateHighIPSVibrations(VibrationsIPSDataBuffer);
+            VibrationsIPSDataBuffer.Clear();
         }
-        private void CalculatePropellerBaseRunningVibration(List<double> DataBuffer)
+        private void CalculateBalancedPropellerRunningVibration()
         {
-            PropellerBaseRunningVibration = DataBuffer.Sum() / DataBuffer.Count;
+            BalancedPropellerRunningVibration = CalculateHighIPSVibrations(VibrationsIPSDataBuffer);
+            VibrationsIPSDataBuffer.Clear();
         }
-        private void CalculateBalancedPropellerRunningVibration(List<double> DataBuffer)
+        private void CalculateFirstBladeVibration()
         {
-            BalancedPropellerRunningVibration = DataBuffer.Sum() / DataBuffer.Count;
+            FirstBladeVibration = CalculateHighIPSVibrations(VibrationsIPSDataBuffer);
+            VibrationsIPSDataBuffer.Clear();
         }
-        private void CalculateFirstBladeVibration(List<double> DataBuffer)
+        private void CalculateSecondBladeVibration()
         {
-            FirstBladeVibration = DataBuffer.Sum() / DataBuffer.Count;
-        }
-        private void CalculateSecondBladeVibration(List<double> DataBuffer)
-        {
-            SecondBladeVibration = DataBuffer.Sum() / DataBuffer.Count;
+            SecondBladeVibration = CalculateHighIPSVibrations(VibrationsIPSDataBuffer);
+            VibrationsIPSDataBuffer.Clear();
         }
 
         private void MotorStop()
         {
             PIDTimer.Stop();
+            //AutoProgressCountTimer.Stop();
+            //BalancerProgressTimer.Stop();
+            //HighVibrationDataCollectionTimer.Stop();
             ESCStatus = false;
             ESCValue = 800;
             MotorReadyStatus = false;
@@ -956,8 +993,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                                 BalancerProgressTimer.Stop();
                                                 TestTimeCount = 0;
                                                 TestTimeStatusBar = 0;
-                                                CalculateDeviceBaseStaticVibrationVibration(VibrationsDataBuffer);
-                                                VibrationsDataBuffer.Clear();
+                                                CalculateDeviceBaseStaticVibrationVibration();
                                                 IterationStepIndex++;
                                                 BalancingIteration();
                                             }
@@ -991,8 +1027,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                                     MotorStop();
                                                     TestTimeCount = 0;
                                                     TestTimeStatusBar = 0;
-                                                    CalculateMotorBaseRunningVibration(VibrationsDataBuffer);
-                                                    VibrationsDataBuffer.Clear();
+                                                    CalculateMotorBaseRunningVibration();
                                                     IterationStepIndex++;
                                                     BalancingIteration();
                                                 }
@@ -1040,8 +1075,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                                     MotorStop();
                                                     TestTimeCount = 0;
                                                     TestTimeStatusBar = 0;
-                                                    CalculatePropellerBaseRunningVibration(VibrationsDataBuffer);
-                                                    VibrationsDataBuffer.Clear();
+                                                    CalculatePropellerBaseRunningVibration();
                                                     IterationStepIndex++;
                                                     BalancingIteration();
                                                 }
@@ -1094,8 +1128,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                                     MotorStop();
                                                     TestTimeCount = 0;
                                                     TestTimeStatusBar = 0;
-                                                    CalculateFirstBladeVibration(VibrationsDataBuffer);
-                                                    VibrationsDataBuffer.Clear();
+                                                    CalculateFirstBladeVibration();
                                                     IterationStepIndex++;
                                                     BalancingIteration();
                                                 }
@@ -1133,8 +1166,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                                     MotorStop();
                                                     TestTimeCount = 0;
                                                     TestTimeStatusBar = 0;
-                                                    CalculateSecondBladeVibration(VibrationsDataBuffer);
-                                                    VibrationsDataBuffer.Clear();
+                                                    CalculateSecondBladeVibration();
                                                     IterationStepIndex++;
                                                     BalancingIteration();
                                                 }
@@ -1184,8 +1216,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                                     MotorStop();
                                                     TestTimeCount = 0;
                                                     TestTimeStatusBar = 0;
-                                                    CalculateBalancedPropellerRunningVibration(VibrationsDataBuffer);
-                                                    VibrationsDataBuffer.Clear();
+                                                    CalculateBalancedPropellerRunningVibration();
                                                     IterationStepIndex++;
                                                     BalancingIteration();
                                                 }
@@ -1209,14 +1240,6 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                         }
                         break;
                 }
-            }
-        }
-
-        private void HighVibrationDataCollectionTimer_Tick(object sender, EventArgs e)
-        {
-            lock (_highVibrationDataCollectionTimerLock)
-            {
-                VibrationsDataBuffer.Add(HighVibration);
             }
         }
 
@@ -1271,9 +1294,11 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
         private void InterfaceVariables_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(_interfaceVariables.Vibration.HighVibration))
-            {
+            if (e.PropertyName == nameof(_interfaceVariables.Vibration.HighVibration) ||
+                e.PropertyName == nameof(_interfaceVariables.Vibration.HighVibration))
+            {                
                 HighVibration = _interfaceVariables.Vibration.HighVibration;
+                HighIPSVibration = _interfaceVariables.Vibration.HighIPSVibration;
             }
         }
 
@@ -1552,7 +1577,21 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     OnPropertyChanged(nameof(HighVibration));
                 }
             }
+        }      
+        public double HighIPSVibration
+        {
+            get => _highIPSVibration;
+            set
+            {
+                if (_highIPSVibration != value)
+                {
+                    _highIPSVibration = value;
+                    _interfaceVariables.Vibration.HighIPSVibration = value;
+                    OnPropertyChanged(nameof(HighIPSVibration));
+                }
+            }
         }
+
         public double DeviceBaseStaticVibration
         {
             get => _deviceBaseStaticVibration;
@@ -1725,6 +1764,18 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 {
                     _vibrationsDataBuffer = value;
                     OnPropertyChanged(nameof(VibrationsDataBuffer));
+                }
+            }
+        }     
+        public List<double> VibrationsIPSDataBuffer
+        {
+            get => _vibrationsIPSDataBuffer;
+            set
+            {
+                if (_vibrationsIPSDataBuffer != value)
+                {
+                    _vibrationsIPSDataBuffer = value;
+                    OnPropertyChanged(nameof(VibrationsIPSDataBuffer));
                 }
             }
         }

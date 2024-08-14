@@ -65,7 +65,7 @@
                     <DataGridTextColumn Header="Unit" Foreground="{DynamicResource Text}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
-                                <Setter Property="Text" Value="g"/>
+                                <Setter Property="Text" Value="IPS"/>
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>

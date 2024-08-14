@@ -15,6 +15,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
     public class ChartViewModel : INotifyPropertyChanged
     {
         public SeriesCollection VibrationSeriesCollection { get; private set; }
+        public SeriesCollection VibrationIPSSeriesCollection { get; private set; }
         public SeriesCollection VibrationXSeriesCollection { get; private set; }
         public SeriesCollection VibrationYSeriesCollection { get; private set; }
         public SeriesCollection VibrationZSeriesCollection { get; private set; }
@@ -51,6 +52,9 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         public double VoltageYAxisMin { get; private set; }
         public double VoltageYAxisMax { get; private set; }
 
+        public double VibrationIPSYAxisMin { get; private set; }
+        public double VibrationIPSYAxisMax { get; private set; }       
+
         public double VibrationYAxisMin { get; private set; }
         public double VibrationYAxisMax { get; private set; }
 
@@ -79,6 +83,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         public double CurrentYAxisStep { get; private set; }
         public double VoltageXAxisStep { get; private set; }
         public double VoltageYAxisStep { get; private set; }
+        public double VibrationIPSXAxisStep { get; private set; }
+        public double VibrationIPSYAxisStep { get; private set; }
         public double VibrationXAxisStep { get; private set; }
         public double VibrationYAxisStep { get; private set; }
         public double VibrationXXAxisStep { get; private set; }
@@ -109,6 +115,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         private void InitializeCharts()
         {
             VibrationSeriesCollection = CreateSeriesCollection("Vibration", Colors.IndianRed);
+
+            VibrationIPSSeriesCollection = CreateSeriesCollection("Vibration IPS", Colors.Orange);
 
             VibrationXSeriesCollection = CreateSeriesCollection("VibrationX", Colors.Blue);
             VibrationYSeriesCollection = CreateSeriesCollection("VibrationY", Colors.Green);
@@ -149,6 +157,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             for (int i = 0; i < seriesBufferSize; i++)
             {
                 TimeLabels.Add(i.ToString());
+                UpdateSeries(VibrationIPSSeriesCollection, defaultValue);
                 UpdateSeries(VibrationSeriesCollection, defaultValue);
                 UpdateSeries(VibrationXSeriesCollection, defaultValue);
                 UpdateSeries(VibrationYSeriesCollection, defaultValue);
@@ -192,6 +201,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             }
             TimeLabels.Add(interfaceData.Time.ToString());
             UpdateSeries(VibrationSeriesCollection, interfaceData.Vibration.Value);
+            UpdateSeries(VibrationIPSSeriesCollection, interfaceData.Theoric.IPS);
             UpdateSeries(VibrationXSeriesCollection, interfaceData.Vibration.VibrationX);
             UpdateSeries(VibrationYSeriesCollection, interfaceData.Vibration.VibrationY);
             UpdateSeries(VibrationZSeriesCollection, interfaceData.Vibration.VibrationZ);
@@ -233,6 +243,9 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             TorqueXAxisStep = ((LineSeries)TorqueSeriesCollection[0]).Values.Count / 6.0;
             TorqueYAxisStep = (TorqueYAxisMax == TorqueYAxisMin) ? 1 : (TorqueYAxisMax - TorqueYAxisMin) / 10.0;
 
+            VibrationIPSXAxisStep = ((LineSeries)VibrationIPSSeriesCollection[0]).Values.Count / 6.0;
+            VibrationIPSYAxisStep = (VibrationIPSYAxisMax == VibrationIPSYAxisMin) ? 1 : (VibrationIPSYAxisMax - VibrationIPSYAxisMin) / 10.0;
+
             VibrationXAxisStep = ((LineSeries)VibrationSeriesCollection[0]).Values.Count / 6.0;
             VibrationYAxisStep = (VibrationYAxisMax == VibrationYAxisMin) ? 1 : (VibrationYAxisMax - VibrationYAxisMin) / 10.0;
 
@@ -252,6 +265,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             OnPropertyChanged(nameof(CurrentYAxisStep));
             OnPropertyChanged(nameof(VoltageXAxisStep));
             OnPropertyChanged(nameof(VoltageYAxisStep));
+            OnPropertyChanged(nameof(VibrationIPSXAxisStep));
+            OnPropertyChanged(nameof(VibrationIPSYAxisStep));
             OnPropertyChanged(nameof(VibrationXAxisStep));
             OnPropertyChanged(nameof(VibrationYAxisStep));
             OnPropertyChanged(nameof(VibrationXXAxisStep));
@@ -289,6 +304,9 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             VibrationYAxisMin = VibrationSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Min() / 2.0;
             VibrationYAxisMax = Math.Max(VibrationSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Max() * 2.5, 0.1);
 
+            VibrationIPSYAxisMin = VibrationIPSSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Min() / 2.0;
+            VibrationIPSYAxisMax = Math.Max(VibrationIPSSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Max() * 2.5, 0.1);
+
             VibrationXYAxisMin = VibrationXSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Min() / 2.0;
             VibrationXYAxisMax = Math.Max(VibrationXSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Max() * 2.5, 0.1);
 
@@ -311,6 +329,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             OnPropertyChanged(nameof(ThrustYAxisMax));
             OnPropertyChanged(nameof(TorqueYAxisMin));
             OnPropertyChanged(nameof(TorqueYAxisMax));     
+            OnPropertyChanged(nameof(VibrationIPSYAxisMin));
+            OnPropertyChanged(nameof(VibrationIPSYAxisMax));  
             OnPropertyChanged(nameof(VibrationYAxisMin));
             OnPropertyChanged(nameof(VibrationYAxisMax));  
             OnPropertyChanged(nameof(VibrationXYAxisMin));

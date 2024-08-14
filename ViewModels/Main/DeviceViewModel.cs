@@ -157,6 +157,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                                 e.PropertyName == nameof(BalancerRoutingStepsViewModel.TareVibrationZ) ||
                                 e.PropertyName == nameof(BalancerRoutingStepsViewModel.ESCValue) ||
                                 e.PropertyName == nameof(BalancerRoutingStepsViewModel.ESCStatus) ||
+                                e.PropertyName == nameof(BalancerRoutingStepsViewModel.HighIPSVibration) ||
                                 e.PropertyName == nameof(BalancerRoutingStepsViewModel.HighVibration))
                             {
 
@@ -176,7 +177,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                                 DeviceInterfaceVariables.Vibration.TareVibrationZ = _currentBalancerRoutingSteps.TareVibrationZ;
                                
                                 _currentBalancerRoutingSteps.HighVibration = DeviceInterfaceVariables.Vibration.HighVibration;
-
+                                _currentBalancerRoutingSteps.HighIPSVibration = DeviceInterfaceVariables.Vibration.HighIPSVibration;
 
                                 OnPropertyChanged(nameof(DeviceInterfaceVariables));
 
