@@ -302,22 +302,22 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             TorqueYAxisMax = Math.Max(TorqueSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Max() * 1.5, 500);
 
             VibrationYAxisMin = VibrationSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Min() / 2.0;
-            VibrationYAxisMax = Math.Max(VibrationSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Max() * 2.5, 0.1);
+            VibrationYAxisMax = Math.Max(VibrationSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Max() * 3, 2);
 
             VibrationIPSYAxisMin = VibrationIPSSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Min() / 2.0;
-            VibrationIPSYAxisMax = Math.Max(VibrationIPSSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Max() * 2.5, 0.1);
+            VibrationIPSYAxisMax = Math.Max(VibrationIPSSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Max() * 3, 2);
 
             VibrationXYAxisMin = VibrationXSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Min() / 2.0;
-            VibrationXYAxisMax = Math.Max(VibrationXSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Max() * 2.5, 0.1);
+            VibrationXYAxisMax = Math.Max(VibrationXSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Max() * 3, 2);
 
             VibrationYYAxisMin = VibrationYSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Min() / 2.0;
-            VibrationYYAxisMax = Math.Max(VibrationYSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Max() * 2.5, 0.1);
+            VibrationYYAxisMax = Math.Max(VibrationYSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Max() * 3, 2);
 
             VibrationZYAxisMin = VibrationZSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Min() / 2.0;
-            VibrationZYAxisMax = Math.Max(VibrationZSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Max() * 2.5, 0.1);
+            VibrationZYAxisMax = Math.Max(VibrationZSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Max() * 3, 2);
 
             VibrationHighYAxisMin = VibrationHighSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Min() / 2.0;
-            VibrationHighYAxisMax = Math.Max(VibrationHighSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Max() * 2.5, 0.1);
+            VibrationHighYAxisMax = Math.Max(VibrationHighSeriesCollection.SelectMany(series => series.Values.Cast<double>()).Max() * 3, 2);
 
             OnPropertyChanged(nameof(CurrentYAxisMin));
             OnPropertyChanged(nameof(CurrentYAxisMax));

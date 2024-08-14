@@ -127,11 +127,11 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             _dynotisData = dynotisData;
 
             _interfaceVariables.PropertyChanged += InterfaceVariables_PropertyChanged;
-            VibrationsDataBuffer = new List<double>();
-            VibrationsIPSDataBuffer = new List<double>();
-            TestStepsPropellerVibrations = new List<double>();
-            BalancerIterationStepChart = new ObservableCollection<int>();
-            BalancerIterationVibrationsChart = new ObservableCollection<double>();
+            _vibrationsDataBuffer = new List<double>();
+            _vibrationsIPSDataBuffer = new List<double>();
+            _testStepsPropellerVibrations = new List<double>();
+            _balancerIterationStepChart = new ObservableCollection<int>();
+            _balancerIterationVibrationsChart = new ObservableCollection<double>();
 
             // Initialize PID Controller
             PIDController = new PIDController(1.5, 0.03, 0.05);
@@ -213,7 +213,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             SecondBladeVibration = 0;
             EqualizerTapeCoefficient = 0;
             EqualizerDirection = "";
-            BalancedPropellerRunningVibration = 0;            
+            BalancedPropellerRunningVibration = 0;
 
             // Clear Buffers and Charts
             VibrationsDataBuffer.Clear();
@@ -284,6 +284,82 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
         private void ApprovalCommand()
         {
+            switch (HeaderStepIndex)
+            {
+                case 1: // Ortam Titreşimlerinin Hesaplanması
+                    {
+                        switch (IterationStepIndex)
+                        {
+                            case 6:  // Sonuçları kontrol edin.
+                                {
+                                    BalancerIterationVibrationsChart.Add(MotorBaseRunningVibration);                                    
+                                    BalancerIterationStepChart.Add(BalancerIterationVibrationsChart.Count);
+
+                                    TestStepsPropellerVibrations.Add(MotorBaseRunningVibration);
+                                }
+                                break;
+                        }
+                    }
+                    break;
+                case 2: // Pervane Titreşiminin Hesaplanması
+                    {
+                        switch (IterationStepIndex)
+                        {
+                            case 3:  // Sonuçları kontrol edin.
+                                {
+                                    BalancerIterationVibrationsChart.Add(PropellerBaseRunningVibration);                                    
+                                    BalancerIterationStepChart.Add(BalancerIterationVibrationsChart.Count);
+
+                                    TestStepsPropellerVibrations.Add(PropellerBaseRunningVibration);
+                                }
+                                break;
+                        }
+                    }
+                    break;
+                case 3: // Birim Referans Bant Uzunluğunun Seçimi
+                    {
+
+                    }
+                    break;
+                case 4: // Pervanenin Her İki Kanadına Birim Referans Bantın Eklenmesi
+                    {
+                        switch (IterationStepIndex)
+                        {
+                            case 6:  // Sonuçları kontrol edin.
+                                {
+                                    BalancerIterationVibrationsChart.Add(FirstBladeVibration);
+                                    BalancerIterationStepChart.Add(BalancerIterationVibrationsChart.Count);
+                                    BalancerIterationVibrationsChart.Add(SecondBladeVibration);
+                                    BalancerIterationStepChart.Add(BalancerIterationVibrationsChart.Count);
+
+                                    TestStepsPropellerVibrations.Add(FirstBladeVibration);
+                                    TestStepsPropellerVibrations.Add(SecondBladeVibration);
+                                }
+                                break;
+                        }
+                    }
+                    break;
+                case 5: // Düzeltici Bant Adetinin ve Yönünün Belirlenmesi, Düzeltici Bantın Eklenmesi"
+                    {
+
+                    }
+                    break;
+                case 6: // Test ve Sonuçların Kontrolü
+                    {
+                        switch (IterationStepIndex)
+                        {
+                            case 2:  // Sonuçları kontrol edin.
+                                {
+                                    BalancerIterationVibrationsChart.Add(BalancedPropellerRunningVibration);
+                                    BalancerIterationStepChart.Add(BalancerIterationVibrationsChart.Count);
+
+                                    TestStepsPropellerVibrations.Add(BalancedPropellerRunningVibration);
+                                }
+                                break;
+                        }
+                    }
+                    break;
+            }
             IterationStepIndex = 0;
             HeaderStepIndex++;
             // Set Buttons Visibility
@@ -563,10 +639,10 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                         "Equalizer Tape Coefficient: " + EqualizerTapeCoefficient.ToString("0.0") + " Piece" + "\r\n" +
                                         "Equalizer Direction: " + EqualizerDirection + "\r\n" +
                                          EqualizerTapeCoefficient.ToString("0.0") + IterationSteps[HeaderStepIndex].Steps[2];
-                        }                    
-                        
-                        HeaderStepIndex++; 
-                        IterationStepIndex = 0; 
+                        }
+
+                        HeaderStepIndex++;
+                        IterationStepIndex = 0;
                     }
                     break;
                 case 6: // Test ve Sonuçların Kontrolü
@@ -656,7 +732,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         {
             double average = buffer.Average();
             var aboveAverageValues = buffer.Where(x => x > average);
-            if (!aboveAverageValues.Any()) {   return 0; }
+            if (!aboveAverageValues.Any()) { return 0; }
             return aboveAverageValues.Average();
         }
         private void CalculateDeviceBaseStaticVibrationVibration()
@@ -1296,7 +1372,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         {
             if (e.PropertyName == nameof(_interfaceVariables.Vibration.HighVibration) ||
                 e.PropertyName == nameof(_interfaceVariables.Vibration.HighVibration))
-            {                
+            {
                 HighVibration = _interfaceVariables.Vibration.HighVibration;
                 HighIPSVibration = _interfaceVariables.Vibration.HighIPSVibration;
             }
@@ -1577,7 +1653,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     OnPropertyChanged(nameof(HighVibration));
                 }
             }
-        }      
+        }
         public double HighIPSVibration
         {
             get => _highIPSVibration;
@@ -1766,7 +1842,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     OnPropertyChanged(nameof(VibrationsDataBuffer));
                 }
             }
-        }     
+        }
         public List<double> VibrationsIPSDataBuffer
         {
             get => _vibrationsIPSDataBuffer;
@@ -1800,6 +1876,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 if (SetProperty(ref _balancerIterationStepChart, value))
                 {
+                    _balancerIterationStepChart = value;
                     _interfaceVariables.BalancerIterationStepChart = value;
                     OnPropertyChanged(nameof(BalancerIterationStepChart));
                 }
@@ -1813,6 +1890,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 if (SetProperty(ref _balancerIterationVibrationsChart, value))
                 {
+                    _balancerIterationVibrationsChart = value;
                     _interfaceVariables.BalancerIterationVibrationsChart = value;
                     OnPropertyChanged(nameof(BalancerIterationVibrationsChart));
                 }

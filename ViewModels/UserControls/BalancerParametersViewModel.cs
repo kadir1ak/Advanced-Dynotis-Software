@@ -234,10 +234,10 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         {
             // Clear the BalancingIterations collection to prevent data stacking
             BalancingIterations.Clear();
-
             // Iterate through the BalancerIterationStepChart and BalancerIterationVibrationsChart collections
             for (int i = 0; i < BalancerIterationStepChart.Count && i < BalancerIterationVibrationsChart.Count; i++)
             {
+              
                 // Add each step and corresponding vibration to the BalancingIterations collection
                 BalancingIterations.Add(new BalancerIteration
                 {
