@@ -1456,6 +1456,24 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   Figure of Merit benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string EffVariables_FOM {
+            get {
+                return ResourceManager.GetString("EffVariables_FOM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   (FOM) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string EffVariables_FOMSubscript {
+            get {
+                return ResourceManager.GetString("EffVariables_FOMSubscript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Advanced Ratio (J) benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string EffVariables_J {
@@ -1470,6 +1488,15 @@ namespace Advanced_Dynotis_Software.Properties {
         public static string EffVariables_MotorEfficiency {
             get {
                 return ResourceManager.GetString("EffVariables_MotorEfficiency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   (ηdynamic): benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string EffVariables_MotorEfficiencySubscript {
+            get {
+                return ResourceManager.GetString("EffVariables_MotorEfficiencySubscript", resourceCulture);
             }
         }
         

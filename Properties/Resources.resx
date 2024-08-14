@@ -582,11 +582,20 @@
   <data name="EffVariables_Ct" xml:space="preserve">
     <value>Thrust Coefficient (Ct)</value>
   </data>
+  <data name="EffVariables_FOM" xml:space="preserve">
+    <value>Figure of Merit</value>
+  </data>
+  <data name="EffVariables_FOMSubscript" xml:space="preserve">
+    <value>(FOM)</value>
+  </data>
   <data name="EffVariables_J" xml:space="preserve">
     <value>Advanced Ratio (J)</value>
   </data>
   <data name="EffVariables_MotorEfficiency" xml:space="preserve">
     <value>Motor Efficiency</value>
+  </data>
+  <data name="EffVariables_MotorEfficiencySubscript" xml:space="preserve">
+    <value>(ηdynamic):</value>
   </data>
   <data name="EffVariables_MotorEfficiencyTooltip" xml:space="preserve">
     <value>Efficiency of the brushless motor used. Calculated based on the motor parameter inputs. Note that ESC efficiency is considered as constant as %95.</value>

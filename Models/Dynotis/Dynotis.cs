@@ -346,7 +346,42 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             DynotisData = newData;
         }
 
-           
+
+        /*
+            @@@@@@@        SABİTLER        @@@@@@@
+            Air_Gas_Constant = 287.058;  //Individual Gas Constant - R Unit: [J/kg K]
+            Esc_Eff_Const = 0.95;
+            @@@@@@@      STM'DEN GELEN VERİ PAKETİ      @@@@@@@
+            Motor Speed: RPM
+            Thrust: gf
+            Torque: Nmm
+            Voltage: V
+            Current: A
+            Pressure: Pa
+            Ambient Temperature: °C
+            Motor Temperature: °C
+            Vibration: g
+            @@@@@@@        ARAYÜZDEN OKUNAN PARAMETRELER        @@@@@@@
+            Propeller Diameter: inch
+            Motor Internal Resistance: ohm
+            Motor No Load Current: A
+            Battery Cell: S
+            Torque: Sensor Data Unit N.mm
+            Thrust: Sensor Data Unit gf
+            Motor Speed: Sensor Data Unit RPM
+            Temperature: Sensor Data Unit °C
+            Speed: Sensor Data Unit m/s 
+            Pressure: Sensor Data Unit Pa 
+            Power : Sensor Data Unit W
+            Voltage : Sensor Data Unit V
+            Current : Sensor Data Unit A
+            Air Density : Sensor Data Unit kg/m³
+            Wind Speed: Sensor Data Unit m/s 
+            Wind Direction: Sensor Data Unit Degre
+            Ambient Temperature: Sensor Data Unit °C
+            Motor Temperature: Sensor Data Unit °C
+            Vibration : Sensor Data Unit g      
+         */
         private void TheoreticalCalculations()
         {
             try
@@ -357,11 +392,19 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                     double diameterInMeters = DynotisData.PropellerDiameter * 0.0254;
                     DynotisData.Theoric.PropellerArea = Math.PI * Math.Pow(diameterInMeters / 2, 2);
                 }
+                else
+                {
+                    DynotisData.Theoric.PropellerArea = 0;
+                }
 
                 // Rotational Speed Calculation
                 if (DynotisData.MotorSpeed.Value > 0)
                 {
                     DynotisData.Theoric.RotationalSpeed = 2.0 * Math.PI * DynotisData.MotorSpeed.Value / 60.0;
+                }
+                else
+                {
+                    DynotisData.Theoric.RotationalSpeed = 0;
                 }
 
                 // Power Calculation
@@ -373,6 +416,10 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                     DynotisData.Theoric.AirDensity = DynotisData.Pressure.Value /
                         (DynotisData.TheoricVariables.AirGasConstant * (DynotisData.AmbientTemp.Value + DynotisData.TheoricVariables.KelvinConst));
                 }
+                else
+                {
+                    DynotisData.Theoric.AirDensity = 0;
+                }
 
                 // Motor Efficiency Calculation
                 if (DynotisData.Voltage > 0 && DynotisData.Current > 0)
@@ -380,6 +427,20 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                     double voltageDrop = DynotisData.Current * (DynotisData.MotorInner / 1000);
                     double motorEfficiencyFactor = (1 - voltageDrop / DynotisData.Voltage) * (1 - DynotisData.NoLoadCurrents / DynotisData.Current);
                     DynotisData.Theoric.MotorEfficiency = motorEfficiencyFactor > 0 ? 100.0 * motorEfficiencyFactor : 0;
+                }
+                else
+                {
+                    DynotisData.Theoric.MotorEfficiency = 0;
+                }
+
+                // Figure of Merit (FOM)
+                if (DynotisData.Theoric.Cp > 0)
+                {
+                    DynotisData.Theoric.FOM = Math.Pow(DynotisData.Theoric.Ct, 3 / 2) / Math.Sqrt(2) * DynotisData.Theoric.Cp;
+                }
+                else
+                {
+                    DynotisData.Theoric.FOM = 0;
                 }
 
                 // Propeller Efficiency Calculation
@@ -389,6 +450,10 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                         (2 * DynotisData.Theoric.AirDensity * DynotisData.Theoric.PropellerArea));
                     DynotisData.Theoric.PropellerEfficiency = 100.0 * thrustFactor / ((DynotisData.Torque.Value / 1000.0) * DynotisData.Theoric.RotationalSpeed);
                 }
+                else
+                {
+                    DynotisData.Theoric.PropellerEfficiency = 0;
+                }
 
                 // PropSysEfficiencyI Calculation
                 if (DynotisData.Theoric.MotorEfficiency > 0)
@@ -396,11 +461,19 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                     DynotisData.Theoric.PropSysEfficiencyI = (DynotisData.Theoric.MotorEfficiency / 100.0) *
                         DynotisData.TheoricVariables.EscEffConst * DynotisData.Theoric.PropellerEfficiency;
                 }
+                else
+                {
+                    DynotisData.Theoric.PropSysEfficiencyI = 0;
+                }
 
                 // PropSysEfficiencyII Calculation
                 if (DynotisData.Theoric.Power > 0)
                 {
                     DynotisData.Theoric.PropSysEfficiencyII = DynotisData.Thrust.Value / DynotisData.Theoric.Power;
+                }
+                else
+                {
+                    DynotisData.Theoric.PropSysEfficiencyII = 0;
                 }
 
                 // IPS Calculation
@@ -418,9 +491,14 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 {
                     DynotisData.Theoric.J = (DynotisData.Theoric.AirDensity) / (DynotisData.MotorSpeed.Value / 60.0) * (DynotisData.PropellerDiameter * 0.0254);
                 }
+                else
+                {
+                    DynotisData.Theoric.J = 0;
+                }
 
                 // Ct Calculation   
                 // Cq Calculation 
+                // Cp Calculation
                 if (DynotisData.Theoric.AirDensity > 0 && DynotisData.MotorSpeed.Value > 0 && DynotisData.PropellerDiameter > 0)
                 {
                     double motorSpeedSquared = Math.Pow(DynotisData.MotorSpeed.Value / 60, 2);
@@ -430,8 +508,14 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
                     DynotisData.Theoric.Cq = (DynotisData.Torque.Value * 0.001) /
                         (DynotisData.Theoric.AirDensity * motorSpeedSquared * Math.Pow(DynotisData.PropellerDiameter * 0.0254, 5));
-                    // Cp Calculation
+
                     DynotisData.Theoric.Cp = 2 * Math.PI * DynotisData.Theoric.Cq;
+                }
+                else
+                {
+                    DynotisData.Theoric.Ct = 0;
+                    DynotisData.Theoric.Cq = 0;
+                    DynotisData.Theoric.Cp = 0;
                 }
             }
             catch (Exception ex)

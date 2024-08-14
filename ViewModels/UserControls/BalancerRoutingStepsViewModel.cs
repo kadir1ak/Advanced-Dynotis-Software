@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -36,6 +37,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         public ICommand ApprovalStepButtonCommand { get; }
         public ICommand NextStepButtonCommand { get; }
 
+        private Visibility _autoProgressCountVisibility;
         private Visibility _recommendedTableVisibility;
         private Visibility _repeatStepButtonVisibility;
         private Visibility _approvalStepButtonVisibility;
@@ -91,11 +93,18 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         //Progress Bar Time
         private DispatcherTimer BalancerProgressTimer;
 
+        // Auto Progress Count
+        private DispatcherTimer AutoProgressCountTimer;
+        private string _autoProgressCountIcon;
+
         // Vibration 
         private DispatcherTimer HighVibrationDataCollectionTimer;
         private double _highVibration;
         private List<double> _vibrationsDataBuffer;
+
+
         private readonly object _balancerProgressTimerLock = new object();
+        private readonly object _autoProgressCountTimerLock = new object();
         private readonly object _highVibrationDataCollectionTimerLock = new object();
         private readonly object _pidTimerLock = new object();
 
@@ -151,6 +160,12 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             };
             BalancerProgressTimer.Tick += BalancerProgressTimer_Tick;
 
+            AutoProgressCountTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(1)
+            };
+            AutoProgressCountTimer.Tick += AutoProgressCountTimer_Tick;
+
             PIDTimer = new DispatcherTimer
             {
                 Interval = TimeSpan.FromMilliseconds(50)
@@ -175,6 +190,9 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                         IterationSteps[0].Steps[2] + "\r\n" +
                         IterationSteps[0].Steps[3] + "\r\n" +
                         IterationSteps[0].Steps[4];
+            // Auto Progress Count
+            AutoProgressCountIcon = "_3Solid";
+            AutoProgressCountTimer.Start();
 
             // Reset Counts and Status
             TestTimeCount = 0;
@@ -194,6 +212,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             BalancerIterationVibrationsChart.Clear();
 
             // Set Buttons Visibility
+            AutoProgressCountVisibility = Visibility.Visible;
             RecommendedTableVisibility = Visibility.Collapsed;
             RepeatStepButtonVisibility = Visibility.Collapsed;
             ApprovalStepButtonVisibility = Visibility.Collapsed;
@@ -274,7 +293,46 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 BalancingIteration();
             }
         }
+        private void SetVisibility(string status)
+        {
+            if (status == "AutoProgress")
+            {
+                AutoProgressCountVisibility = Visibility.Visible;
+                RepeatStepButtonVisibility = Visibility.Collapsed;
+                ApprovalStepButtonVisibility = Visibility.Collapsed;
+                NextStepButtonVisibility = Visibility.Collapsed;
+            }
+            else if (status == "AllCollapsed")
+            {
+                AutoProgressCountVisibility = Visibility.Collapsed;
+                RepeatStepButtonVisibility = Visibility.Collapsed;
+                ApprovalStepButtonVisibility = Visibility.Collapsed;
+                NextStepButtonVisibility = Visibility.Collapsed;
+            }
+            else if (status == "AllButtonVisible")
+            {
+                AutoProgressCountVisibility = Visibility.Collapsed;
+                RepeatStepButtonVisibility = Visibility.Visible;
+                ApprovalStepButtonVisibility = Visibility.Visible;
+                NextStepButtonVisibility = Visibility.Visible;
+            }
+            else if (status == "ApprovalRepeatStepVisible")
+            {
+                AutoProgressCountVisibility = Visibility.Collapsed;
+                RepeatStepButtonVisibility = Visibility.Visible;
+                ApprovalStepButtonVisibility = Visibility.Visible;
+                NextStepButtonVisibility = Visibility.Collapsed;
+            }
+            else if (status == "NextStepVisible")
+            {
+                AutoProgressCountVisibility = Visibility.Collapsed;
+                RepeatStepButtonVisibility = Visibility.Collapsed;
+                ApprovalStepButtonVisibility = Visibility.Collapsed;
+                NextStepButtonVisibility = Visibility.Visible;
+            }
 
+
+        }
         private void BalancingIteration()
         {
             switch (HeaderStepIndex)
@@ -301,7 +359,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                         }
                     }
                     break;
-                case 1: // Ortam Titreşimlerinin Hesaplanması
+                case 1: // Ortam ve Motor Titreşimlerinin Hesaplanması
                     {
                         IterationHeader = IterationSteps[HeaderStepIndex].Header;
                         Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
@@ -309,43 +367,51 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
                         switch (IterationStepIndex)
                         {
-                            case 1:  // Dara değeri hesaplanıyor.
+                            case 0:  // Cihaz sıfırlanacak, müdahale etmeyin.
                                 {
-                                    BalancerProgressTimer.Start();
-                                    // Set Buttons Visibility
-                                    RepeatStepButtonVisibility = Visibility.Collapsed;
-                                    ApprovalStepButtonVisibility = Visibility.Collapsed;
-                                    NextStepButtonVisibility = Visibility.Collapsed;
+                                    SetVisibility("AutoProgress");
+                                    AutoProgressCountTimer.Start();
+                                }
+                                break;
+                            case 1:  // Sıfırlama işlemi gerçekleştiriliyor.
+                                {
+                                    SetVisibility("AllCollapsed");
+                                }
+                                break;
+                            case 2:  // Ortam titreşim değeri hesaplanacak cihazına müdahale etmeyin.
+                                {
+                                    SetVisibility("AutoProgress");
+                                    AutoProgressCountTimer.Start();
                                 }
                                 break;
                             case 3:  // Ortam titreşim değeri hesaplanıyor.
                                 {
-                                    BalancerProgressTimer.Start();
-                                    // Set Buttons Visibility
-                                    RepeatStepButtonVisibility = Visibility.Collapsed;
-                                    ApprovalStepButtonVisibility = Visibility.Collapsed;
-                                    NextStepButtonVisibility = Visibility.Collapsed;
+                                    SetVisibility("AllCollapsed");
                                 }
                                 break;
-                            case 4:  // Sonuçlar değerlendiriliyor
+                            case 4:  // Motor titreşim değeri hesaplanacak cihazına müdahale etmeyin.
                                 {
+                                    SetVisibility("AutoProgress");
+                                    AutoProgressCountTimer.Start();
+                                }
+                                break;
+                            case 5:  // Motor titreşim değeri hesaplanıyor.
+                                {
+                                    SetVisibility("AllCollapsed");
+                                }
+                                break;
+                            case 6:  // Sonuçları kontrol edin.
+                                {
+                                    SetVisibility("ApprovalRepeatStepVisible");
                                     Iteration = Iteration + "\r\n" +
-                                   "Device Base Vibration: " + DeviceBaseStaticVibration.ToString("0.000") + " g";
-                                    // Set Buttons Visibility
-                                    RepeatStepButtonVisibility = Visibility.Visible;
-                                    ApprovalStepButtonVisibility = Visibility.Visible;
-                                    NextStepButtonVisibility = Visibility.Collapsed;
-                                }
-                                break;
-                            default:
-                                {
-                                    if (IterationStepIndex < IterationSteps[HeaderStepIndex].Steps.Count - 1) { IterationStepIndex++; } else { HeaderStepIndex++; IterationStepIndex = 0; }
+                                                "Device Base Static Vibration: " + DeviceBaseStaticVibration.ToString("0.000") + " g" + "\r\n" +
+                                                "Motor Base Running Vibration: " + MotorBaseRunningVibration.ToString("0.000") + " g";
                                 }
                                 break;
                         }
                     }
                     break;
-                case 2: // Motor Titreşimlerinin Hesaplanması
+                case 2: // Pervane Titreşiminin Hesaplanması
                     {
                         IterationHeader = IterationSteps[HeaderStepIndex].Header;
                         Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
@@ -353,96 +419,46 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
                         switch (IterationStepIndex)
                         {
-                            case 1: // Motor titreşim değeri hesaplanıyor.
+                            case 0:  // Pervane montajını yapın.
                                 {
-                                    BalancerProgressTimer.Start();
-                                    PIDTimer.Start();
-                                    // Set Buttons Visibility
-                                    RepeatStepButtonVisibility = Visibility.Collapsed;
-                                    ApprovalStepButtonVisibility = Visibility.Collapsed;
-                                    NextStepButtonVisibility = Visibility.Collapsed;
+                                    IterationStepIndex++;
                                 }
                                 break;
-                            case 2:  // Sonuçlar değerlendiriliyor 
+                            case 1:  // Pervane titreşim değeri hesaplanacak cihazına müdahale etmeyin.
                                 {
+                                    SetVisibility("AutoProgress");
+                                    AutoProgressCountTimer.Start();
+                                }
+                                break;
+                            case 2:  // Pervane titreşim değeri hesaplanıyor.
+                                {
+                                    SetVisibility("AllCollapsed");
+                                }
+                                break;
+                            case 3:  // Sonuçları kontrol edin.
+                                {
+                                    SetVisibility("ApprovalRepeatStepVisible");
                                     Iteration = Iteration + "\r\n" +
-                                    "Motor Base Vibration: " + MotorBaseRunningVibration.ToString("0.000") + " g";
-                                    // Set Buttons Visibility
-                                    RepeatStepButtonVisibility = Visibility.Visible;
-                                    ApprovalStepButtonVisibility = Visibility.Visible;
-                                    NextStepButtonVisibility = Visibility.Collapsed;
-                                }
-                                break;
-                            default:
-                                {
-                                    if (IterationStepIndex < IterationSteps[HeaderStepIndex].Steps.Count - 1) { IterationStepIndex++; } else { HeaderStepIndex++; IterationStepIndex = 0; }
+                                                "Propeller Base Running Vibration: " + PropellerBaseRunningVibration.ToString("0.000") + " g";
                                 }
                                 break;
                         }
-
-
                     }
                     break;
-                case 3: // Pervane Montajı
+                case 3: // Birim Referans Bant Uzunluğunun Seçimi
                     {
                         IterationHeader = IterationSteps[HeaderStepIndex].Header;
                         Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
                         StepIndicatorSet(HeaderStepIndex);
-
-                        if (IterationStepIndex < IterationSteps[HeaderStepIndex].Steps.Count - 1) { IterationStepIndex++; } else { HeaderStepIndex++; IterationStepIndex = 0; }
-
-                    }
-                    break;
-                case 4: // Pervane Titreşimlerinin Hesaplanması
-                    {
-                        IterationHeader = IterationSteps[HeaderStepIndex].Header;
-                        Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
-                        StepIndicatorSet(HeaderStepIndex);
-
-                        switch (IterationStepIndex)
-                        {
-                            case 1: // Motor titreşim değeri hesaplanıyor.
-                                {
-                                    BalancerProgressTimer.Start();
-                                    PIDTimer.Start();
-                                    // Set Buttons Visibility
-                                    RepeatStepButtonVisibility = Visibility.Collapsed;
-                                    ApprovalStepButtonVisibility = Visibility.Collapsed;
-                                    NextStepButtonVisibility = Visibility.Collapsed;
-                                }
-                                break;
-                            case 2:  // Sonuçlar değerlendiriliyor 
-                                {
-                                    Iteration = Iteration + "\r\n" +
-                                    "Propeller Base Vibration: " + PropellerBaseRunningVibration.ToString("0.000") + " g";
-                                    // Set Buttons Visibility
-                                    RepeatStepButtonVisibility = Visibility.Visible;
-                                    ApprovalStepButtonVisibility = Visibility.Visible;
-                                    NextStepButtonVisibility = Visibility.Collapsed;
-                                }
-                                break;
-                            default:
-                                {
-                                    if (IterationStepIndex < IterationSteps[HeaderStepIndex].Steps.Count - 1) { IterationStepIndex++; } else { HeaderStepIndex++; IterationStepIndex = 0; }
-                                }
-                                break;
-                        }
-
-                    }
-                    break;
-                case 5: // Birim Referans Bant Uzunluğunun Seçimi
-                    {
-                        IterationHeader = IterationSteps[HeaderStepIndex].Header;
-                        Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
-                        StepIndicatorSet(HeaderStepIndex);
-
                         RecommendedTableVisibility = Visibility.Visible;
 
+                        SetVisibility("NextStepVisible");
+
                         if (IterationStepIndex < IterationSteps[HeaderStepIndex].Steps.Count - 1) { IterationStepIndex++; } else { HeaderStepIndex++; IterationStepIndex = 0; }
 
                     }
                     break;
-                case 6: // Pervanenin Her İki Kanadına Birim Referans Bantın Eklenmesi
+                case 4: // Pervanenin Her İki Kanadına Birim Referans Bantın Eklenmesi
                     {
                         IterationHeader = IterationSteps[HeaderStepIndex].Header;
                         Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
@@ -450,102 +466,99 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                         RecommendedTableVisibility = Visibility.Collapsed;
                         switch (IterationStepIndex)
                         {
-                            case 2: // İlk kanat için hesaplama başlatılıyor
+                            case 0:  // Seçtiğiniz birim referans bandı, pervanenin herhangi bir kanadının merkezinden itibaren yarıçapının yaklaşık %25-30'una denk gelecek şekilde yapıştırın.
                                 {
-                                    BalancerProgressTimer.Start();
-                                    PIDTimer.Start();
-                                    // Set Buttons Visibility
-                                    RepeatStepButtonVisibility = Visibility.Collapsed;
-                                    ApprovalStepButtonVisibility = Visibility.Collapsed;
-                                    NextStepButtonVisibility = Visibility.Collapsed;
-                                }
-                                break;
-                            case 5:  // ikinci kanat için hesaplama başlatılıyor
-                                {
-                                    BalancerProgressTimer.Start();
-                                    PIDTimer.Start();
-                                    // Set Buttons Visibility
-                                    RepeatStepButtonVisibility = Visibility.Collapsed;
-                                    ApprovalStepButtonVisibility = Visibility.Collapsed;
-                                    NextStepButtonVisibility = Visibility.Collapsed;
-                                }
-                                break;
-                            case 6:  // Sonuçlar değerlendiriliyor 
-                                {
-                                    Iteration = Iteration + "\r\n" +
-                                    "First Blade Vibration: " + FirstBladeVibration.ToString("0.000") + " g" + "\r\n" +
-                                    "Second Blade Vibration: " + SecondBladeVibration.ToString("0.000") + " g";
-                                    // Set Buttons Visibility
-                                    RepeatStepButtonVisibility = Visibility.Visible;
-                                    ApprovalStepButtonVisibility = Visibility.Visible;
-                                    NextStepButtonVisibility = Visibility.Collapsed;
-                                }
-                                break;
-                            default:
-                                {
-                                    if (IterationStepIndex < IterationSteps[HeaderStepIndex].Steps.Count - 1) { IterationStepIndex++; } else { HeaderStepIndex++; IterationStepIndex = 0; }
-                                }
-                                break;
-                        }
-
-                    }
-                    break;
-                case 7: // Düzeltici Bant Adetinin ve Yönünün Belirlenmesi, Düzeltici Bantın Eklenmesi
-                    {
-                        IterationHeader = IterationSteps[HeaderStepIndex].Header;
-                        Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
-                        StepIndicatorSet(HeaderStepIndex);
-
-                        switch (IterationStepIndex)
-                        {
-                            case 0: // Düzeltici yön ve bant adedi hesaplandı.
-                                {
-                                    // Hesaplama yapılıyor 
-                                    double Ratio = 0;
-                                    if (FirstBladeVibration <= SecondBladeVibration)
-                                    {
-                                        EqualizerDirection = "First Blade";
-                                        Ratio = ((PropellerBaseRunningVibration - FirstBladeVibration) / PropellerBaseRunningVibration);
-                                    }
-                                    else
-                                    {
-                                        EqualizerDirection = "Second Blade";
-                                        Ratio = ((PropellerBaseRunningVibration - SecondBladeVibration) / PropellerBaseRunningVibration);
-                                    }
-
-                                    EqualizerTapeCoefficient = (1 / Ratio) - 1; // (-1) şuan var olan bantı temsil ediyor.
-
-
-                                    Iteration = Iteration + "\r\n" +
-                                               "Equalizer Tape Size: " + EqualizerTapeCoefficient.ToString("0.0") + " Piece" + "\r\n" +
-                                               "Equalizer Direction: " + EqualizerDirection;
+                                    SetVisibility("NextStepVisible");
                                     IterationStepIndex++;
                                 }
                                 break;
-                            case 1: // Denegelenmiş sistem için titreşim değeri hesaplanıyor.
+                            case 1:  // Pervane titreşim değeri hesaplanacak cihazına müdahale etmeyin.
                                 {
-                                    if (FirstBladeVibration <= SecondBladeVibration)
-                                    {
-                                        Iteration = IterationSteps[HeaderStepIndex].Steps[1] + "\r\n" +
-                                                    EqualizerTapeCoefficient.ToString("0.0") +
-                                                    IterationSteps[HeaderStepIndex].Steps[2];
-                                    }
-                                    else
-                                    {
-                                        Iteration =  EqualizerTapeCoefficient.ToString("0.0") + IterationSteps[HeaderStepIndex].Steps[2];
-                                    }                
-                                    HeaderStepIndex++;
+                                    SetVisibility("AutoProgress");
+                                    AutoProgressCountTimer.Start();
                                 }
                                 break;
-                            default:
+                            case 2:  // Pervane titreşim değeri hesaplanıyor.
                                 {
-                                    if (IterationStepIndex < IterationSteps[HeaderStepIndex].Steps.Count - 1) { IterationStepIndex++; } else { HeaderStepIndex++; IterationStepIndex = 0; }
+                                    SetVisibility("AllCollapsed");
+                                }
+                                break;
+                            case 3:  // Aynı bandı çıkarıp, pervanenin diğer kanadına merkezden itibaren yarıçapının yaklaşık %25-30'una denk gelecek şekilde yapıştırın.
+                                {
+                                    SetVisibility("NextStepVisible");
+                                    IterationStepIndex++;
+                                }
+                                break;
+                            case 4:  // Pervane titreşim değeri hesaplanacak cihazına müdahale etmeyin.
+                                {
+                                    SetVisibility("AutoProgress");
+                                    AutoProgressCountTimer.Start();
+                                }
+                                break;
+                            case 5:  // Pervane titreşim değeri hesaplanıyor.
+                                {
+                                    SetVisibility("AllCollapsed");
+                                }
+                                break;
+                            case 6:  // Sonuçları kontrol edin.
+                                {
+                                    SetVisibility("ApprovalRepeatStepVisible");
+                                    Iteration = Iteration + "\r\n" +
+                                                "First Blade Vibration: " + FirstBladeVibration.ToString("0.000") + " g" + "\r\n" +
+                                                "Second Blade Vibration: " + SecondBladeVibration.ToString("0.000") + " g";
+
                                 }
                                 break;
                         }
                     }
                     break;
-                case 8: // Belirlenmiş Yöne Düzeltici Bantın Eklenmesi
+                case 5: // Düzeltici Bant Adetinin ve Yönünün Belirlenmesi, Düzeltici Bantın Eklenmesi"
+                    {
+                        // Düzeltici yön ve bant adedi hesaplandı.
+                        // Lütfen seçtiğiniz birim referans bandı ilk durumundaki yere geri yapıştırın.
+                        // x adet daha ilave düzeltici bantı, aerodinamik yapıyı bozmayacak şekilde referans bantın olduğu bölgeye yapıştırın.
+                        IterationHeader = IterationSteps[HeaderStepIndex].Header;
+                        Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
+                        StepIndicatorSet(HeaderStepIndex);
+
+                        SetVisibility("NextStepVisible");
+
+                        double Ratio = 0;
+                        if (FirstBladeVibration <= SecondBladeVibration)
+                        {
+                            EqualizerDirection = "First Blade";
+                            Ratio = ((PropellerBaseRunningVibration - FirstBladeVibration) / PropellerBaseRunningVibration);
+                        }
+                        else
+                        {
+                            EqualizerDirection = "Second Blade";
+                            Ratio = ((PropellerBaseRunningVibration - SecondBladeVibration) / PropellerBaseRunningVibration);
+                        }
+
+                        EqualizerTapeCoefficient = (1 / Ratio) - 1; // (-1) şuan var olan referans bantı temsil ediyor.
+
+                        if (EqualizerDirection == "First Blade")
+                        {
+                            Iteration = IterationSteps[HeaderStepIndex].Steps[0] + "\r\n" +
+                                        IterationSteps[HeaderStepIndex].Steps[1] + "\r\n" +
+                                        "Equalizer Tape Coefficient: " + EqualizerTapeCoefficient.ToString("0.0") + " Piece" + "\r\n" +
+                                        "Equalizer Direction: " + EqualizerDirection + "\r\n" +
+                                         EqualizerTapeCoefficient.ToString("0.0") + IterationSteps[HeaderStepIndex].Steps[2];
+
+                        }
+                        else if (EqualizerDirection == "Second Blade")
+                        {
+                            Iteration = IterationSteps[HeaderStepIndex].Steps[0] + "\r\n" +
+                                        "Equalizer Tape Coefficient: " + EqualizerTapeCoefficient.ToString("0.0") + " Piece" + "\r\n" +
+                                        "Equalizer Direction: " + EqualizerDirection + "\r\n" +
+                                         EqualizerTapeCoefficient.ToString("0.0") + IterationSteps[HeaderStepIndex].Steps[2];
+                        }                    
+                        
+                        HeaderStepIndex++; 
+                        IterationStepIndex = 0; 
+                    }
+                    break;
+                case 6: // Test ve Sonuçların Kontrolü
                     {
                         IterationHeader = IterationSteps[HeaderStepIndex].Header;
                         Iteration = IterationSteps[HeaderStepIndex].Steps[IterationStepIndex];
@@ -553,36 +566,35 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
                         switch (IterationStepIndex)
                         {
-                            case 1: // Denegelenmiş sistem için titreşim değeri hesaplanıyor.
+                            case 0:  // Pervane titreşim değeri hesaplanacak cihazına müdahale etmeyin.
                                 {
-                                    BalancerProgressTimer.Start();
-                                    PIDTimer.Start();
-                                    // Set Buttons Visibility
-                                    RepeatStepButtonVisibility = Visibility.Collapsed;
-                                    ApprovalStepButtonVisibility = Visibility.Collapsed;
-                                    NextStepButtonVisibility = Visibility.Collapsed;
+                                    SetVisibility("AutoProgress");
+                                    AutoProgressCountTimer.Start();
                                 }
                                 break;
-                            case 2:  // Sonuçlar değerlendiriliyor 
+                            case 1:  // Pervane titreşim değeri hesaplanıyor.
                                 {
-
+                                    SetVisibility("AllCollapsed");
+                                }
+                                break;
+                            case 2:  // Sonuçları kontrol edin.
+                                {
+                                    SetVisibility("ApprovalRepeatStepVisible");
                                     Iteration = Iteration + "\r\n" +
-                                    "Balanced Propeller Vibration: " + BalancedPropellerRunningVibration.ToString("0.000") + " g";
-                                    // Set Buttons Visibility
-                                    RepeatStepButtonVisibility = Visibility.Visible;
-                                    ApprovalStepButtonVisibility = Visibility.Visible;
-                                    NextStepButtonVisibility = Visibility.Collapsed;
+                                                "Balanced Propeller Running Vibration: " + BalancedPropellerRunningVibration.ToString("0.000") + " g";
                                 }
                                 break;
-                            default:
+                            case 3:  // Sonuçları kontrol edin.
                                 {
-                                    if (IterationStepIndex < IterationSteps[HeaderStepIndex].Steps.Count - 1) { IterationStepIndex++; } else { HeaderStepIndex++; IterationStepIndex = 0; }
+                                    // Bitirme algoritması yazılacak
+                                    HeaderStepIndex++;
+                                    IterationStepIndex = 0;
                                 }
                                 break;
                         }
                     }
                     break;
-                case 9:
+                case 7:
                     {
                         BalancingTestFinished();
                     }
@@ -617,39 +629,32 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 TareVibrationX = _interfaceVariables.Vibration.TareCurrentVibrationX;
                 TareVibrationY = _interfaceVariables.Vibration.TareCurrentVibrationY;
                 TareVibrationZ = _interfaceVariables.Vibration.TareCurrentVibrationZ;
-                //MessageBox.Show("Titreşim seviyesinin darası alındı.", "Dara İşlemi", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
         private void CalculateDeviceBaseStaticVibrationVibration(List<double> DataBuffer)
         {
             DeviceBaseStaticVibration = DataBuffer.Sum() / DataBuffer.Count;
-            //MessageBox.Show("Sabit cihaz titreşimi alındı.", "Sabit Cihaz Titreşimi", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         private void CalculateMotorBaseRunningVibration(List<double> DataBuffer)
         {
             MotorBaseRunningVibration = DataBuffer.Sum() / DataBuffer.Count;
-            //MessageBox.Show("Motor titreşim değeri hesaplandı.", "Motor Titreşimi", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         private void CalculatePropellerBaseRunningVibration(List<double> DataBuffer)
         {
             PropellerBaseRunningVibration = DataBuffer.Sum() / DataBuffer.Count;
-            //MessageBox.Show("Pervane titreşim değeri hesaplandı.", "Pervane Titreşimi", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         private void CalculateBalancedPropellerRunningVibration(List<double> DataBuffer)
         {
             BalancedPropellerRunningVibration = DataBuffer.Sum() / DataBuffer.Count;
-            //MessageBox.Show("Dengeli pervane titreşim değeri hesaplandı.", "Dengeli Pervane Titreşimi", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         private void CalculateFirstBladeVibration(List<double> DataBuffer)
         {
             FirstBladeVibration = DataBuffer.Sum() / DataBuffer.Count;
-            //MessageBox.Show("Pervanin ilk kanat titreşim değeri hesaplandı.", "İlk Kanat Titreşimi", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         private void CalculateSecondBladeVibration(List<double> DataBuffer)
         {
             SecondBladeVibration = DataBuffer.Sum() / DataBuffer.Count;
-            //MessageBox.Show("Pervanin ikinci kanat titreşim değeri hesaplandı.", "İkinci Kanat Titreşimi", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void MotorStop()
@@ -659,6 +664,240 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             ESCValue = 800;
             MotorReadyStatus = false;
         }
+        private void AutoProgressCountTimer_Tick(object sender, EventArgs e)
+        {
+            lock (_autoProgressCountTimerLock)
+            {
+                switch (HeaderStepIndex)
+                {
+                    case 1: // Ortam Titreşimlerinin Hesaplanması
+                        {
+                            switch (IterationStepIndex)
+                            {
+                                case 0:  // Cihaz sıfırlanacak, müdahale etmeyin.
+                                    {
+                                        switch (AutoProgressCountIcon)
+                                        {
+                                            case "_3Solid": AutoProgressCountIcon = "_2Solid"; break;
+                                            case "_2Solid": AutoProgressCountIcon = "_1Solid"; break;
+                                            case "_1Solid": AutoProgressCountIcon = "_0Solid"; break;
+                                            case "_0Solid":
+                                                {
+                                                    AutoProgressCountVisibility = Visibility.Collapsed;
+                                                    AutoProgressCountIcon = "_3Solid";
+                                                    IterationStepIndex++;
+                                                    BalancingIteration();
+                                                    BalancerProgressTimer.Start();
+                                                    AutoProgressCountTimer.Stop();
+                                                }
+                                                break;
+                                        }
+                                    }
+                                    break;
+                                case 1:  // Sıfırlama işlemi gerçekleştiriliyor.
+                                    { }
+                                    break;
+                                case 2:  // Ortam titreşim değeri hesaplanacak cihazına müdahale etmeyin.
+                                    {
+                                        switch (AutoProgressCountIcon)
+                                        {
+                                            case "_3Solid": AutoProgressCountIcon = "_2Solid"; break;
+                                            case "_2Solid": AutoProgressCountIcon = "_1Solid"; break;
+                                            case "_1Solid": AutoProgressCountIcon = "_0Solid"; break;
+                                            case "_0Solid":
+                                                {
+                                                    AutoProgressCountVisibility = Visibility.Collapsed;
+                                                    AutoProgressCountIcon = "_3Solid";
+                                                    IterationStepIndex++;
+                                                    BalancingIteration();
+                                                    BalancerProgressTimer.Start();
+                                                    AutoProgressCountTimer.Stop();
+                                                }
+                                                break;
+                                        }
+                                    }
+                                    break;
+                                case 3:  // Ortam titreşim değeri hesaplanıyor.
+                                    { }
+                                    break;
+                                case 4:  // Motor titreşim değeri hesaplanacak cihazına müdahale etmeyin.
+                                    {
+                                        switch (AutoProgressCountIcon)
+                                        {
+                                            case "_3Solid": AutoProgressCountIcon = "_2Solid"; break;
+                                            case "_2Solid": AutoProgressCountIcon = "_1Solid"; break;
+                                            case "_1Solid": AutoProgressCountIcon = "_0Solid"; break;
+                                            case "_0Solid":
+                                                {
+                                                    AutoProgressCountVisibility = Visibility.Collapsed;
+                                                    AutoProgressCountIcon = "_3Solid";
+                                                    IterationStepIndex++;
+                                                    BalancingIteration();
+                                                    PIDTimer.Start();
+                                                    BalancerProgressTimer.Start();
+                                                    AutoProgressCountTimer.Stop();
+                                                }
+                                                break;
+                                        }
+                                    }
+                                    break;
+                                case 5:  // Motor titreşim değeri hesaplanıyor.
+                                    { }
+                                    break;
+                                case 6:  // Sonuçları kontrol edin.
+                                    { }
+                                    break;
+                            }
+                        }
+                        break;
+                    case 2: // Pervane Titreşiminin Hesaplanması
+                        {
+                            switch (IterationStepIndex)
+                            {
+                                case 0:  // Pervane montajını yapın.
+                                    { }
+                                    break;
+                                case 1:  // Pervane titreşim değeri hesaplanacak cihazına müdahale etmeyin.
+                                    {
+                                        switch (AutoProgressCountIcon)
+                                        {
+                                            case "_3Solid": AutoProgressCountIcon = "_2Solid"; break;
+                                            case "_2Solid": AutoProgressCountIcon = "_1Solid"; break;
+                                            case "_1Solid": AutoProgressCountIcon = "_0Solid"; break;
+                                            case "_0Solid":
+                                                {
+                                                    AutoProgressCountVisibility = Visibility.Collapsed;
+                                                    AutoProgressCountIcon = "_3Solid";
+                                                    IterationStepIndex++;
+                                                    BalancingIteration();
+                                                    PIDTimer.Start();
+                                                    BalancerProgressTimer.Start();
+                                                    AutoProgressCountTimer.Stop();
+                                                }
+                                                break;
+                                        }
+                                    }
+                                    break;
+                                case 2:  // Pervane titreşim değeri hesaplanıyor.
+                                    { }
+                                    break;
+                                case 3:  // Sonuçları kontrol edin.
+                                    { }
+                                    break;
+                            }
+                        }
+                        break;
+                    case 3: // Birim Referans Bant Uzunluğunun Seçimi
+                        {
+
+                        }
+                        break;
+                    case 4: // Pervanenin Her İki Kanadına Birim Referans Bantın Eklenmesi
+                        {
+                            switch (IterationStepIndex)
+                            {
+                                case 0:  // Seçtiğiniz birim referans bandı, pervanenin herhangi bir kanadının merkezinden itibaren yarıçapının yaklaşık %25-30'una denk gelecek şekilde yapıştırın.
+                                    { }
+                                    break;
+                                case 1:  // Pervane titreşim değeri hesaplanacak cihazına müdahale etmeyin.
+                                    {
+                                        switch (AutoProgressCountIcon)
+                                        {
+                                            case "_3Solid": AutoProgressCountIcon = "_2Solid"; break;
+                                            case "_2Solid": AutoProgressCountIcon = "_1Solid"; break;
+                                            case "_1Solid": AutoProgressCountIcon = "_0Solid"; break;
+                                            case "_0Solid":
+                                                {
+                                                    AutoProgressCountVisibility = Visibility.Collapsed;
+                                                    AutoProgressCountIcon = "_3Solid";
+                                                    IterationStepIndex++;
+                                                    BalancingIteration();
+                                                    PIDTimer.Start();
+                                                    BalancerProgressTimer.Start();
+                                                    AutoProgressCountTimer.Stop();
+                                                }
+                                                break;
+                                        }
+                                    }
+                                    break;
+                                case 2:  // Pervane titreşim değeri hesaplanıyor.
+                                    { }
+                                    break;
+                                case 3:  // Aynı bandı çıkarıp, pervanenin diğer kanadına merkezden itibaren yarıçapının yaklaşık %25-30'una denk gelecek şekilde yapıştırın.
+                                    { }
+                                    break;
+                                case 4:  // Pervane titreşim değeri hesaplanacak cihazına müdahale etmeyin.
+                                    {
+                                        switch (AutoProgressCountIcon)
+                                        {
+                                            case "_3Solid": AutoProgressCountIcon = "_2Solid"; break;
+                                            case "_2Solid": AutoProgressCountIcon = "_1Solid"; break;
+                                            case "_1Solid": AutoProgressCountIcon = "_0Solid"; break;
+                                            case "_0Solid":
+                                                {
+                                                    AutoProgressCountVisibility = Visibility.Collapsed;
+                                                    AutoProgressCountIcon = "_3Solid";
+                                                    IterationStepIndex++;
+                                                    BalancingIteration();
+                                                    PIDTimer.Start();
+                                                    BalancerProgressTimer.Start();
+                                                    AutoProgressCountTimer.Stop();
+                                                }
+                                                break;
+                                        }
+                                    }
+                                    break;
+                                case 5:  // Pervane titreşim değeri hesaplanıyor.
+                                    { }
+                                    break;
+                                case 6:  // Sonuçları kontrol edin.
+                                    { }
+                                    break;
+                            }
+                        }
+                        break;
+                    case 5: // Düzeltici Bant Adetinin ve Yönünün Belirlenmesi, Düzeltici Bantın Eklenmesi"
+                        {
+
+                        }
+                        break;
+                    case 6: // Test ve Sonuçların Kontrolü
+                        {
+                            switch (IterationStepIndex)
+                            {
+                                case 0:  // Pervane titreşim değeri hesaplanacak cihazına müdahale etmeyin.
+                                    {
+                                        switch (AutoProgressCountIcon)
+                                        {
+                                            case "_3Solid": AutoProgressCountIcon = "_2Solid"; break;
+                                            case "_2Solid": AutoProgressCountIcon = "_1Solid"; break;
+                                            case "_1Solid": AutoProgressCountIcon = "_0Solid"; break;
+                                            case "_0Solid":
+                                                {
+                                                    AutoProgressCountVisibility = Visibility.Collapsed;
+                                                    AutoProgressCountIcon = "_3Solid";
+                                                    IterationStepIndex++;
+                                                    BalancingIteration();
+                                                    PIDTimer.Start();
+                                                    BalancerProgressTimer.Start();
+                                                    AutoProgressCountTimer.Stop();
+                                                }
+                                                break;
+                                        }
+                                    }
+                                    break;
+                                case 1:  // Pervane titreşim değeri hesaplanıyor.
+                                    { }
+                                    break;
+                                case 2:  // Sonuçları kontrol edin.
+                                    { }
+                                    break;
+                            }
+                        }
+                        break;
+                }
+            }
+        }
         private void BalancerProgressTimer_Tick(object sender, EventArgs e)
         {
             lock (_balancerProgressTimerLock)
@@ -667,235 +906,305 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 {
                     case 1: // Ortam Titreşimlerinin Hesaplanması
                         {
-                            if (TestTimeCount >= 20) // 2 Sn
+                            switch (IterationStepIndex)
                             {
-
-                                HighVibrationDataCollectionTimer.Start();
-                                if (TestTimeStatusBar > 50 * 2) // 5 Sn
-                                {
-
-                                    HighVibrationDataCollectionTimer.Stop();
-                                    BalancerProgressTimer.Stop();
-                                    TestTimeCount = 0;
-                                    TestTimeStatusBar = 0;
-                                    switch (IterationStepIndex)
+                                case 0:  // Cihaz sıfırlanacak, müdahale etmeyin.
+                                    { }
+                                    break;
+                                case 1:  // Sıfırlama işlemi gerçekleştiriliyor.
                                     {
-                                        case 1:
+                                        if (TestTimeCount >= 20) // 2 Sn
+                                        {
+
+                                            HighVibrationDataCollectionTimer.Start();
+                                            if (TestTimeStatusBar > 50 * 2) // 5 Sn
                                             {
+
+                                                HighVibrationDataCollectionTimer.Stop();
+                                                BalancerProgressTimer.Stop();
+                                                TestTimeCount = 0;
+                                                TestTimeStatusBar = 0;
                                                 CalculateVibrationTare();
                                                 VibrationsDataBuffer.Clear();
-                                                // Set Buttons Visibility
-                                                RepeatStepButtonVisibility = Visibility.Collapsed;
-                                                ApprovalStepButtonVisibility = Visibility.Collapsed;
-                                                NextStepButtonVisibility = Visibility.Visible;
+                                                IterationStepIndex++;
+                                                BalancingIteration();
                                             }
-                                            break;
-                                        case 3:
+                                            else
                                             {
+                                                TestTimeStatusBar += 2;
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            TestTimeCount++;
+                                        }
+                                    }
+                                    break;
+                                case 2:  // Ortam titreşim değeri hesaplanacak cihazına müdahale etmeyin.
+                                    { }
+                                    break;
+                                case 3:  // Ortam titreşim değeri hesaplanıyor.
+                                    {
+                                        if (TestTimeCount >= 20) // 2 Sn
+                                        {
+
+                                            HighVibrationDataCollectionTimer.Start();
+                                            if (TestTimeStatusBar > 50 * 2) // 5 Sn
+                                            {
+                                                HighVibrationDataCollectionTimer.Stop();
+                                                BalancerProgressTimer.Stop();
+                                                TestTimeCount = 0;
+                                                TestTimeStatusBar = 0;
                                                 CalculateDeviceBaseStaticVibrationVibration(VibrationsDataBuffer);
                                                 VibrationsDataBuffer.Clear();
+                                                IterationStepIndex++;
+                                                BalancingIteration();
                                             }
-                                            break;
-                                    }
-                                    IterationStepIndex++;
-                                    BalancingIteration();
-                                }
-                                else
-                                {
-                                    TestTimeStatusBar += 2;
-                                }
+                                            else
+                                            {
+                                                TestTimeStatusBar += 2;
+                                            }
 
-                            }
-                            else
-                            {
-                                TestTimeCount++;
-                            }
-
-                        }
-                        break;
-                    case 2: // Motor Titreşimlerinin Hesaplanması
-                        {
-                            if (MotorReadyStatus) // Motor Hazırsa
-                            {
-                                if (TestTimeCount >= 50) // 5 Sn
-                                {
-
-                                    HighVibrationDataCollectionTimer.Start();
-                                    if (TestTimeStatusBar > 50 * 2) // 5 Sn
-                                    {
-                                        HighVibrationDataCollectionTimer.Stop();
-                                        BalancerProgressTimer.Stop();
-                                        MotorStop();
-                                        TestTimeCount = 0;
-                                        TestTimeStatusBar = 0;
-                                        switch (IterationStepIndex)
+                                        }
+                                        else
                                         {
-                                            case 1:
+                                            TestTimeCount++;
+                                        }
+                                    }
+                                    break;
+                                case 4:  // Motor titreşim değeri hesaplanacak cihazına müdahale etmeyin.
+                                    { }
+                                    break;
+                                case 5:  // Motor titreşim değeri hesaplanıyor.
+                                    {
+                                        if (MotorReadyStatus) // Motor Hazırsa
+                                        {
+                                            if (TestTimeCount >= 50) // 5 Sn
+                                            {
+
+                                                HighVibrationDataCollectionTimer.Start();
+                                                if (TestTimeStatusBar > 50 * 2) // 5 Sn
                                                 {
+                                                    HighVibrationDataCollectionTimer.Stop();
+                                                    BalancerProgressTimer.Stop();
+                                                    MotorStop();
+                                                    TestTimeCount = 0;
+                                                    TestTimeStatusBar = 0;
                                                     CalculateMotorBaseRunningVibration(VibrationsDataBuffer);
                                                     VibrationsDataBuffer.Clear();
-                                                    // Set Buttons Visibility
-                                                    RepeatStepButtonVisibility = Visibility.Collapsed;
-                                                    ApprovalStepButtonVisibility = Visibility.Collapsed;
-                                                    NextStepButtonVisibility = Visibility.Visible;
+                                                    IterationStepIndex++;
+                                                    BalancingIteration();
                                                 }
-                                                break;
-                                        }
-                                        IterationStepIndex++;
-                                        BalancingIteration();
-                                    }
-                                    else
-                                    {
-                                        TestTimeStatusBar += 2;
-                                    }
+                                                else
+                                                {
+                                                    TestTimeStatusBar += 2;
+                                                }
 
-                                }
-                                else
-                                {
-                                    TestTimeCount++;
-                                }
+                                            }
+                                            else
+                                            {
+                                                TestTimeCount++;
+                                            }
+                                        }
+                                    }
+                                    break;
+                                case 6:  // Sonuçları kontrol edin.
+                                    { }
+                                    break;
                             }
                         }
                         break;
-                    case 4: // Pervane Titreşimlerinin Hesaplanması
+                    case 2: // Pervane Titreşiminin Hesaplanması
                         {
-                            if (MotorReadyStatus) // Motor Hazırsa
+                            switch (IterationStepIndex)
                             {
-                                if (TestTimeCount >= 50) // 5 Sn
-                                {
-
-                                    HighVibrationDataCollectionTimer.Start();
-                                    if (TestTimeStatusBar > 50 * 2) // 5 Sn
+                                case 0:  // Pervane montajını yapın.
+                                    { }
+                                    break;
+                                case 1:  // Pervane titreşim değeri hesaplanacak cihazına müdahale etmeyin.
+                                    { }
+                                    break;
+                                case 2:  // Pervane titreşim değeri hesaplanıyor.
                                     {
-                                        HighVibrationDataCollectionTimer.Stop();
-                                        BalancerProgressTimer.Stop();
-                                        MotorStop();
-                                        TestTimeCount = 0;
-                                        TestTimeStatusBar = 0;
-                                        switch (IterationStepIndex)
+                                        if (MotorReadyStatus) // Motor Hazırsa
                                         {
-                                            case 1:
+                                            if (TestTimeCount >= 50) // 5 Sn
+                                            {
+
+                                                HighVibrationDataCollectionTimer.Start();
+                                                if (TestTimeStatusBar > 50 * 2) // 5 Sn
                                                 {
+                                                    HighVibrationDataCollectionTimer.Stop();
+                                                    BalancerProgressTimer.Stop();
+                                                    MotorStop();
+                                                    TestTimeCount = 0;
+                                                    TestTimeStatusBar = 0;
                                                     CalculatePropellerBaseRunningVibration(VibrationsDataBuffer);
                                                     VibrationsDataBuffer.Clear();
-                                                    // Set Buttons Visibility
-                                                    RepeatStepButtonVisibility = Visibility.Collapsed;
-                                                    ApprovalStepButtonVisibility = Visibility.Collapsed;
-                                                    NextStepButtonVisibility = Visibility.Visible;
+                                                    IterationStepIndex++;
+                                                    BalancingIteration();
                                                 }
-                                                break;
-                                        }
-                                        IterationStepIndex++;
-                                        BalancingIteration();
-                                    }
-                                    else
-                                    {
-                                        TestTimeStatusBar += 2;
-                                    }
+                                                else
+                                                {
+                                                    TestTimeStatusBar += 2;
+                                                }
 
-                                }
-                                else
-                                {
-                                    TestTimeCount++;
-                                }
+                                            }
+                                            else
+                                            {
+                                                TestTimeCount++;
+                                            }
+                                        }
+                                    }
+                                    break;
+                                case 3:  // Sonuçları kontrol edin.
+                                    { }
+                                    break;
                             }
                         }
                         break;
-                    case 6: // Pervanenin Her İki Kanadına Birim Referans Bantın Eklenmesi
+                    case 3: // Birim Referans Bant Uzunluğunun Seçimi
                         {
-                            if (MotorReadyStatus) // Motor Hazırsa
-                            {
-                                if (TestTimeCount >= 50) // 5 Sn
-                                {
 
-                                    HighVibrationDataCollectionTimer.Start();
-                                    if (TestTimeStatusBar > 50 * 2) // 5 Sn
+                        }
+                        break;
+                    case 4: // Pervanenin Her İki Kanadına Birim Referans Bantın Eklenmesi
+                        {
+                            switch (IterationStepIndex)
+                            {
+                                case 0:  // Seçtiğiniz birim referans bandı, pervanenin herhangi bir kanadının merkezinden itibaren yarıçapının yaklaşık %25-30'una denk gelecek şekilde yapıştırın.
+                                    { }
+                                    break;
+                                case 1:  // Pervane titreşim değeri hesaplanacak cihazına müdahale etmeyin.
+                                    { }
+                                    break;
+                                case 2:  // Pervane titreşim değeri hesaplanıyor.
                                     {
-                                        HighVibrationDataCollectionTimer.Stop();
-                                        BalancerProgressTimer.Stop();
-                                        MotorStop();
-                                        TestTimeCount = 0;
-                                        TestTimeStatusBar = 0;
-                                        switch (IterationStepIndex)
+                                        if (MotorReadyStatus) // Motor Hazırsa
                                         {
-                                            case 2:
+                                            if (TestTimeCount >= 50) // 5 Sn
+                                            {
+
+                                                HighVibrationDataCollectionTimer.Start();
+                                                if (TestTimeStatusBar > 50 * 2) // 5 Sn
                                                 {
+                                                    HighVibrationDataCollectionTimer.Stop();
+                                                    BalancerProgressTimer.Stop();
+                                                    MotorStop();
+                                                    TestTimeCount = 0;
+                                                    TestTimeStatusBar = 0;
                                                     CalculateFirstBladeVibration(VibrationsDataBuffer);
                                                     VibrationsDataBuffer.Clear();
-                                                    // Set Buttons Visibility
-                                                    RepeatStepButtonVisibility = Visibility.Collapsed;
-                                                    ApprovalStepButtonVisibility = Visibility.Collapsed;
-                                                    NextStepButtonVisibility = Visibility.Visible;
+                                                    IterationStepIndex++;
+                                                    BalancingIteration();
                                                 }
-                                                break;
-                                            case 5:
+                                                else
                                                 {
+                                                    TestTimeStatusBar += 2;
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                TestTimeCount++;
+                                            }
+                                        }
+                                    }
+                                    break;
+                                case 3:  // Aynı bandı çıkarıp, pervanenin diğer kanadına merkezden itibaren yarıçapının yaklaşık %25-30'una denk gelecek şekilde yapıştırın.
+                                    { }
+                                    break;
+                                case 4:  // Pervane titreşim değeri hesaplanacak cihazına müdahale etmeyin.
+                                    { }
+                                    break;
+                                case 5:  // Pervane titreşim değeri hesaplanıyor.
+                                    {
+                                        if (MotorReadyStatus) // Motor Hazırsa
+                                        {
+                                            if (TestTimeCount >= 50) // 5 Sn
+                                            {
+
+                                                HighVibrationDataCollectionTimer.Start();
+                                                if (TestTimeStatusBar > 50 * 2) // 5 Sn
+                                                {
+                                                    HighVibrationDataCollectionTimer.Stop();
+                                                    BalancerProgressTimer.Stop();
+                                                    MotorStop();
+                                                    TestTimeCount = 0;
+                                                    TestTimeStatusBar = 0;
                                                     CalculateSecondBladeVibration(VibrationsDataBuffer);
                                                     VibrationsDataBuffer.Clear();
-                                                    // Set Buttons Visibility
-                                                    RepeatStepButtonVisibility = Visibility.Collapsed;
-                                                    ApprovalStepButtonVisibility = Visibility.Collapsed;
-                                                    NextStepButtonVisibility = Visibility.Visible;
+                                                    IterationStepIndex++;
+                                                    BalancingIteration();
                                                 }
-                                                break;
-                                        }
-                                        IterationStepIndex++;
-                                        BalancingIteration();
-                                    }
-                                    else
-                                    {
-                                        TestTimeStatusBar += 2;
-                                    }
+                                                else
+                                                {
+                                                    TestTimeStatusBar += 2;
+                                                }
 
-                                }
-                                else
-                                {
-                                    TestTimeCount++;
-                                }
+                                            }
+                                            else
+                                            {
+                                                TestTimeCount++;
+                                            }
+                                        }
+                                    }
+                                    break;
+                                case 6:  // Sonuçları kontrol edin.
+                                    { }
+                                    break;
                             }
                         }
                         break;
-                    case 8: // Belirlenmiş Yöne Düzeltici Bantın Eklenmesi
+                    case 5: // Düzeltici Bant Adetinin ve Yönünün Belirlenmesi, Düzeltici Bantın Eklenmesi"
                         {
-                            if (MotorReadyStatus) // Motor Hazırsa
-                            {
-                                if (TestTimeCount >= 50) // 5 Sn
-                                {
 
-                                    HighVibrationDataCollectionTimer.Start();
-                                    if (TestTimeStatusBar > 50 * 2) // 5 Sn
+                        }
+                        break;
+                    case 6: // Test ve Sonuçların Kontrolü
+                        {
+                            switch (IterationStepIndex)
+                            {
+                                case 0:  // Pervane titreşim değeri hesaplanacak cihazına müdahale etmeyin.
+                                    { }
+                                    break;
+                                case 1:  // Pervane titreşim değeri hesaplanıyor.
                                     {
-                                        HighVibrationDataCollectionTimer.Stop();
-                                        BalancerProgressTimer.Stop();
-                                        MotorStop();
-                                        TestTimeCount = 0;
-                                        TestTimeStatusBar = 0;
-                                        switch (IterationStepIndex)
+                                        if (MotorReadyStatus) // Motor Hazırsa
                                         {
-                                            case 1:
+                                            if (TestTimeCount >= 50) // 5 Sn
+                                            {
+
+                                                HighVibrationDataCollectionTimer.Start();
+                                                if (TestTimeStatusBar > 50 * 2) // 5 Sn
                                                 {
+                                                    HighVibrationDataCollectionTimer.Stop();
+                                                    BalancerProgressTimer.Stop();
+                                                    MotorStop();
+                                                    TestTimeCount = 0;
+                                                    TestTimeStatusBar = 0;
                                                     CalculateBalancedPropellerRunningVibration(VibrationsDataBuffer);
                                                     VibrationsDataBuffer.Clear();
-                                                    // Set Buttons Visibility
-                                                    RepeatStepButtonVisibility = Visibility.Collapsed;
-                                                    ApprovalStepButtonVisibility = Visibility.Collapsed;
-                                                    NextStepButtonVisibility = Visibility.Visible;
+                                                    IterationStepIndex++;
+                                                    BalancingIteration();
                                                 }
-                                                break;
-                                        }
-                                        IterationStepIndex++;
-                                        BalancingIteration();
-                                    }
-                                    else
-                                    {
-                                        TestTimeStatusBar += 2;
-                                    }
+                                                else
+                                                {
+                                                    TestTimeStatusBar += 2;
+                                                }
 
-                                }
-                                else
-                                {
-                                    TestTimeCount++;
-                                }
+                                            }
+                                            else
+                                            {
+                                                TestTimeCount++;
+                                            }
+                                        }
+                                    }
+                                    break;
+                                case 2:  // Sonuçları kontrol edin.
+                                    { }
+                                    break;
                             }
                         }
                         break;
@@ -1088,6 +1397,17 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             }
         }
 
+        public Visibility AutoProgressCountVisibility
+        {
+            get => _autoProgressCountVisibility;
+            set
+            {
+                if (SetProperty(ref _autoProgressCountVisibility, value))
+                {
+                    OnPropertyChanged(nameof(AutoProgressCountVisibility));
+                }
+            }
+        }
         public Visibility RecommendedTableVisibility
         {
             get => _recommendedTableVisibility;
@@ -1384,6 +1704,17 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
+        public string AutoProgressCountIcon
+        {
+            get => _autoProgressCountIcon;
+            set
+            {
+                if (SetProperty(ref _autoProgressCountIcon, value))
+                {
+                    OnPropertyChanged(nameof(AutoProgressCountIcon));
+                }
+            }
+        }
 
         public List<double> VibrationsDataBuffer
         {
@@ -1492,45 +1823,30 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             },
             new IterationStep // 1
             {
-                Header = "Ortam Titreşimlerinin Hesaplanması",
+                Header = "Ortam ve Motor Titreşimlerinin Hesaplanması",
                 Steps = new List<string>
                 {
-                    "Dara değeri hesaplanacak cihazına müdahale etmeyin.",
-                    "Dara değeri hesaplanıyor.",
+                    "Cihaz sıfırlanacak, müdahale etmeyin.",
+                    "Sıfırlama işlemi gerçekleştiriliyor.",
                     "Ortam titreşim değeri hesaplanacak cihazına müdahale etmeyin.",
                     "Ortam titreşim değeri hesaplanıyor.",
-                    "Sonuçları kontrol edin."
-                }
-            },
-            new IterationStep // 2
-            {
-                Header = "Motor Titreşiminin Hesaplanması",
-                Steps = new List<string>
-                {
                     "Motor titreşim değeri hesaplanacak cihazına müdahale etmeyin.",
                     "Motor titreşim değeri hesaplanıyor.",
                     "Sonuçları kontrol edin."
                 }
             },
-            new IterationStep // 3
-            {
-                Header = "Pervane Montajı",
-                Steps = new List<string>
-                {
-                    "Pervane montajını yapın."
-                }
-            },
-            new IterationStep // 4
+            new IterationStep // 2
             {
                 Header = "Pervane Titreşiminin Hesaplanması",
                 Steps = new List<string>
                 {
+                    "Pervane montajını yapın.",
                     "Pervane titreşim değeri hesaplanacak cihazına müdahale etmeyin.",
                     "Pervane titreşim değeri hesaplanıyor.",
                     "Sonuçları kontrol edin."
                 }
             },
-            new IterationStep // 5
+            new IterationStep // 3
             {
                 Header = "Birim Referans Bant Uzunluğunun Seçimi",
                 Steps = new List<string>
@@ -1538,21 +1854,21 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     "Lütfen standart elektrik bandı kullanın veya genişliği 15-20 mm arasında olan bir bant tercih edin."
                 }
             },
-            new IterationStep // 6
+            new IterationStep // 4
             {
                 Header = "Pervanenin Her İki Kanadına Birim Referans Bantın Eklenmesi",
                 Steps = new List<string>
                 {
                     "Seçtiğiniz birim referans bandı, pervanenin herhangi bir kanadının merkezinden itibaren yarıçapının yaklaşık %25-30'una denk gelecek şekilde yapıştırın.",
                     "Pervane titreşim değeri hesaplanacak cihazına müdahale etmeyin.",
-                    "Pervanenin titreşim değeri hesaplanıyor.",
+                    "Pervane titreşim değeri hesaplanıyor.",
                     "Aynı bandı çıkarıp, pervanenin diğer kanadına merkezden itibaren yarıçapının yaklaşık %25-30'una denk gelecek şekilde yapıştırın.",
                     "Pervane titreşim değeri hesaplanacak cihazına müdahale etmeyin.",
-                    "Pervanenin titreşim değeri hesaplanıyor.",
+                    "Pervane titreşim değeri hesaplanıyor.",
                     "Sonuçları kontrol edin."
                 }
             },
-            new IterationStep // 7
+            new IterationStep // 5
             {
                 Header = "Düzeltici Bant Adetinin ve Yönünün Belirlenmesi, Düzeltici Bantın Eklenmesi",
                 Steps = new List<string>
@@ -1562,13 +1878,13 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     " adet daha ilave düzeltici bantı, aerodinamik yapıyı bozmayacak şekilde referans bantın olduğu bölgeye yapıştırın."
                 }
             },
-            new IterationStep // 8
+            new IterationStep // 6
             {
-                Header = "Son Test ve Sonuçların Kontrolü",
+                Header = "Test ve Sonuçların Kontrolü",
                 Steps = new List<string>
                 {
                     "Pervane titreşim değeri hesaplanacak cihazına müdahale etmeyin.",
-                    "Pervanenin titreşim değeri hesaplanıyor.",
+                    "Pervane titreşim değeri hesaplanıyor.",
                     "Sonuçları kontrol edin."
                 }
             }

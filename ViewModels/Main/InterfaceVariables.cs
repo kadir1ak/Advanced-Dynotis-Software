@@ -551,6 +551,7 @@ public class InterfaceVariables : INotifyPropertyChanged
         Theoric.PropSysEfficiencyI = data.Theoric.PropSysEfficiencyI;
         Theoric.PropSysEfficiencyII = data.Theoric.PropSysEfficiencyII;
         Theoric.MotorEfficiency = data.Theoric.MotorEfficiency;
+        Theoric.FOM = data.Theoric.FOM;
         Theoric.IPS = data.Theoric.IPS;
         Theoric.J = data.Theoric.J;
         Theoric.Ct = data.Theoric.Ct;
@@ -1046,6 +1047,7 @@ public class InterfaceVariables : INotifyPropertyChanged
         private static double _propSysEfficiencyI;
         private static double _propSysEfficiencyII;
         private static double _motorEfficiency;
+        private static double _fom;
         private static double _ips;
         private static double _j;
         private static double _ct;
@@ -1097,6 +1099,11 @@ public class InterfaceVariables : INotifyPropertyChanged
         {
             get => _motorEfficiency;
             set => SetProperty(ref _motorEfficiency, value);
+        }    
+        public double FOM
+        {
+            get => _fom;
+            set => SetProperty(ref _fom, value);
         }
 
         public double IPS

@@ -436,6 +436,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             private static double _propSysEfficiencyI;
             private static double _propSysEfficiencyII;
             private static double _motorEfficiency;
+            private static double _fom;
             private static double _ips; // Vibration - inches per second
             private static double _j;   // Advance Ratio
             private static double _ct;  // Thrust Coefficient
@@ -487,6 +488,11 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             {
                 get => _motorEfficiency;
                 set => SetProperty(ref _motorEfficiency, value);
+            }      
+            public double FOM
+            {
+                get => _fom;
+                set => SetProperty(ref _fom, value);
             }
 
             public double J

@@ -65,7 +65,7 @@
         <DataTemplate x:Key="TooltipTemplate1">
             <StackPanel Width="200">
                 <StackPanel Orientation="Horizontal" Background="Transparent">
-                    <icon:PackIconMaterial Width="20" Height="20" Margin="0,1,0,0" Kind="PlaylistMinus"/>
+                    <icon:PackIconMaterial Width="20" Height="20" Margin="0,1,0,0" Kind="MarkerCheck"/>
                     <Label Content="{x:Static p:Resources.EffVariables_PropulsionSystemEfficiencyI}" Margin="4,0,0,0" FontSize="12" FontWeight="Bold" Foreground="Black" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </StackPanel>
                 <Line Stroke="LightGray" StrokeThickness="2" X2="200"/>
@@ -76,7 +76,7 @@
         <DataTemplate x:Key="TooltipTemplate2">
             <StackPanel Width="200">
                 <StackPanel Orientation="Horizontal" Background="Transparent">
-                    <icon:PackIconMaterial Width="20" Height="20" Margin="0,1,0,0" Kind="PlaylistMinus"/>
+                    <icon:PackIconMaterial Width="20" Height="20" Margin="0,1,0,0" Kind="MarkerCheck"/>
                     <Label Content="{x:Static p:Resources.EffVariables_PropulsionSystemEfficiencyII}" Margin="4,0,0,0" FontSize="12" FontWeight="Bold" Foreground="Black" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </StackPanel>
                 <Line Stroke="LightGray" StrokeThickness="2" X2="200"/>
@@ -87,7 +87,7 @@
         <DataTemplate x:Key="TooltipTemplate3">
             <StackPanel Width="200">
                 <StackPanel Orientation="Horizontal" Background="Transparent">
-                    <icon:PackIconMaterial Width="20" Height="20" Margin="0,1,0,0" Kind="PlaylistMinus"/>
+                    <icon:PackIconMaterial Width="20" Height="20" Margin="0,1,0,0" Kind="MarkerCheck"/>
                     <Label Content="{x:Static p:Resources.EffVariables_PropellerEfficiency}" Margin="4,0,0,0" FontSize="12" FontWeight="Bold" Foreground="Black" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </StackPanel>
                 <Line Stroke="LightGray" StrokeThickness="2" X2="200"/>
@@ -98,7 +98,7 @@
         <DataTemplate x:Key="TooltipTemplate4">
             <StackPanel Width="200">
                 <StackPanel Orientation="Horizontal" Background="Transparent">
-                    <icon:PackIconMaterial Width="20" Height="20" Margin="0,1,0,0" Kind="PlaylistMinus"/>
+                    <icon:PackIconMaterial Width="20" Height="20" Margin="0,1,0,0" Kind="MarkerCheck"/>
                     <Label Content="{x:Static p:Resources.EffVariables_MotorEfficiency}" Margin="4,0,0,0" FontSize="12" FontWeight="Bold" Foreground="Black" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </StackPanel>
                 <Line Stroke="LightGray" StrokeThickness="2" X2="200"/>
@@ -120,11 +120,12 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <!-- 1. Değişken -->
             <StackPanel Style="{StaticResource StackPanelStyle}" Grid.Row="0">
-                <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="PlaylistMinus" ToolTipService.InitialShowDelay="2">
+                <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="MarkerCheck" ToolTipService.InitialShowDelay="2">
                     <icon:PackIconMaterial.ToolTip>
                         <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate1}"/>
                     </icon:PackIconMaterial.ToolTip>
@@ -136,7 +137,7 @@
 
             <!-- 2. Değişken -->
             <StackPanel Style="{StaticResource StackPanelStyle}" Grid.Row="1">
-                <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="PlaylistMinus" ToolTipService.InitialShowDelay="2">
+                <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="MarkerCheck" ToolTipService.InitialShowDelay="2">
                     <icon:PackIconMaterial.ToolTip>
                         <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate2}"/>
                     </icon:PackIconMaterial.ToolTip>
@@ -148,7 +149,7 @@
 
             <!-- 3. Değişken -->
             <StackPanel Style="{StaticResource StackPanelStyle}" Grid.Row="2">
-                <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="PlaylistMinus" ToolTipService.InitialShowDelay="2">
+                <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="MarkerCheck" ToolTipService.InitialShowDelay="2">
                     <icon:PackIconMaterial.ToolTip>
                         <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate3}"/>
                     </icon:PackIconMaterial.ToolTip>
@@ -160,12 +161,27 @@
 
             <!-- 4. Değişken -->
             <StackPanel Style="{StaticResource StackPanelStyle}" Grid.Row="3">
-                <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="PlaylistMinus" ToolTipService.InitialShowDelay ="2">
+                <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="MarkerCheck" ToolTipService.InitialShowDelay ="2">
                     <icon:PackIconMaterial.ToolTip>
                         <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate4}"/>
                     </icon:PackIconMaterial.ToolTip>
                 </icon:PackIconMaterial>
-                <TextBlock Style="{StaticResource NameLabelStyle}" Text="{x:Static p:Resources.EffVariables_MotorEfficiency}" />
+                <TextBlock Style="{StaticResource NameLabelStyle}" Text="{x:Static p:Resources.EffVariables_FOM}" />
+                <TextBlock Style="{StaticResource ValueLabelStyle}" Text="{Binding DeviceInterfaceVariables.Theoric.FOM, Mode=OneWay, StringFormat={}{0:0.00}}" />
+                <TextBlock Style="{StaticResource UnitLabelStyle}" Text="%" />
+            </StackPanel>
+            <!-- 5. Değişken -->
+            <StackPanel Style="{StaticResource StackPanelStyle}" Grid.Row="4">
+                <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="MarkerCheck" ToolTipService.InitialShowDelay ="2">
+                    <icon:PackIconMaterial.ToolTip>
+                        <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate4}"/>
+                    </icon:PackIconMaterial.ToolTip>
+                </icon:PackIconMaterial>
+                <TextBlock Style="{StaticResource NameLabelStyle}">
+                    <Run Text="{x:Static p:Resources.EffVariables_MotorEfficiency}"/>            
+                    <Run BaselineAlignment="Superscript" FontSize="12" Text=""/>            
+                    <Run BaselineAlignment="Subscript" FontSize="12" Text="{x:Static p:Resources.EffVariables_MotorEfficiencySubscript}"/>
+                </TextBlock>
                 <TextBlock Style="{StaticResource ValueLabelStyle}" Text="{Binding DeviceInterfaceVariables.Theoric.MotorEfficiency, Mode=OneWay, StringFormat={}{0:0.00}}" />
                 <TextBlock Style="{StaticResource UnitLabelStyle}" Text="%" />
             </StackPanel>
@@ -180,7 +196,7 @@
 
             <!-- 1. Değişken -->
             <StackPanel Style="{StaticResource StackPanelStyle}" Grid.Row="0">
-                <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="PlaylistMinus" ToolTipService.InitialShowDelay="2">
+                <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="MarkerCheck" ToolTipService.InitialShowDelay="2">
                     <icon:PackIconMaterial.ToolTip>
                         <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate1}"/>
                     </icon:PackIconMaterial.ToolTip>
@@ -191,7 +207,7 @@
 
             <!-- 2. Değişken -->
             <StackPanel Style="{StaticResource StackPanelStyle}" Grid.Row="1">
-                <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="PlaylistMinus" ToolTipService.InitialShowDelay="2">
+                <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="MarkerCheck" ToolTipService.InitialShowDelay="2">
                     <icon:PackIconMaterial.ToolTip>
                         <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate1}"/>
                     </icon:PackIconMaterial.ToolTip>
@@ -202,7 +218,7 @@
 
             <!-- 3. Değişken -->
             <StackPanel Style="{StaticResource StackPanelStyle}" Grid.Row="2">
-                <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="PlaylistMinus" ToolTipService.InitialShowDelay="2">
+                <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="MarkerCheck" ToolTipService.InitialShowDelay="2">
                     <icon:PackIconMaterial.ToolTip>
                         <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate1}"/>
                     </icon:PackIconMaterial.ToolTip>
@@ -213,7 +229,7 @@
 
             <!-- 4. Değişken -->
             <StackPanel Style="{StaticResource StackPanelStyle}" Grid.Row="3">
-                <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="PlaylistMinus" ToolTipService.InitialShowDelay="2">
+                <icon:PackIconMaterial Style="{StaticResource IconStyle}" Kind="MarkerCheck" ToolTipService.InitialShowDelay="2">
                     <icon:PackIconMaterial.ToolTip>
                         <ToolTip Style="{StaticResource TooltipStyle}" ContentTemplate="{StaticResource TooltipTemplate1}"/>
                     </icon:PackIconMaterial.ToolTip>
