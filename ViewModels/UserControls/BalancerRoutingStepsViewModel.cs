@@ -1,6 +1,7 @@
 ﻿using Advanced_Dynotis_Software.Models.Dynotis;
 using Advanced_Dynotis_Software.Services.Controllers;
 using Advanced_Dynotis_Software.Services.Helpers;
+using Advanced_Dynotis_Software.Services.Logger;
 using DocumentFormat.OpenXml.InkML;
 using DocumentFormat.OpenXml.Math;
 using DocumentFormat.OpenXml.Presentation;
@@ -825,10 +826,16 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         {
             lock (_highVibrationDataCollectionTimerLock)
             {
+                if (_interfaceVariables.Vibration.HighIPSVibration > 0) 
+                {                   
+                    HighIPSVibration = _interfaceVariables.Vibration.HighIPSVibration;                 
+                    VibrationsIPSDataBuffer.Add(HighIPSVibration);                   
+                    //Logger.Log($"HighIPSVibration:  {HighIPSVibration.ToString("0.000")}");
+                }
+
                 HighVibration = _interfaceVariables.Vibration.HighVibration;
-                HighIPSVibration = _interfaceVariables.Vibration.HighIPSVibration;
                 VibrationsDataBuffer.Add(HighVibration);
-                VibrationsIPSDataBuffer.Add(HighIPSVibration);
+                //Logger.Log($"HighVibration:     {HighVibration.ToString("0.000")}");
             }
         }
         private double CalculateHighIPSVibrations(List<double> buffer)
