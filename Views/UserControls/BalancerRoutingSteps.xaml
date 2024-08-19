@@ -103,14 +103,18 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto" MinHeight="100"/>
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Steps" Grid.Row="0" Grid.Column="0" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
                 <!-- Step Indicator -->
-                <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="3">
+                <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="3">
                     <Grid>
                         <Ellipse Fill="{Binding StepIndicators[1]}" Width="20" Height="20" Stroke="{DynamicResource BalancerRoutingStepsIconBorder}"/>
                         <!-- Icon -->
@@ -208,18 +212,18 @@
                     </Grid>
                 </StackPanel>
 
-                <StackPanel  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Width="500" Margin="0 5 0 5" VerticalAlignment="Top" HorizontalAlignment="Center">
+                <StackPanel  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Width="500" Margin="0 5 0 5" VerticalAlignment="Top" HorizontalAlignment="Center">
                     <TextBlock Text="{Binding IterationHeader}" Background="{DynamicResource Page}" TextWrapping="Wrap" FontSize="16" FontWeight="DemiBold" Foreground="{DynamicResource Text}" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </StackPanel>
 
-                <StackPanel  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 5 0 5" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center" Visibility="{Binding AutoProgressCountVisibility}">
+                <StackPanel  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 5 0 5" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center" Visibility="{Binding AutoProgressCountVisibility}">
                     <icon:PackIconFontAwesome Kind="ClockRotateLeftSolid" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource deviceCardIcon}"/>
                     <Label Content=":" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource deviceCardIcon}" Margin="0 -4 0 0"/>
                     <icon:PackIconFontAwesome Kind="{Binding AutoProgressCountIcon}" Width="16" Height="16" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource deviceCardIcon}"/>
                 </StackPanel>
               
 
-                <StackPanel  Grid.Row="2" Grid.Column="0" Width="500" Margin="0 10 0 0" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                <StackPanel  Grid.Row="3" Grid.Column="0" Width="500" Margin="0 10 0 0" VerticalAlignment="Top" HorizontalAlignment="Stretch">
                     <TextBlock Text="{Binding Iteration}" FontSize="14" Background="{DynamicResource Page}" TextWrapping="Wrap" TextAlignment="Left" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
                     <Grid Grid.Row="0" Grid.Column="1" Margin="0 0 5 0" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="{Binding RecommendedTableVisibility}">
                         <!-- Define the rows and columns -->
@@ -257,7 +261,7 @@
                     </Grid>
                 </StackPanel>
 
-                <StackPanel Grid.Row="3" Grid.Column="0" Margin="3 0 50 0" VerticalAlignment="Top" HorizontalAlignment="Right">
+                <StackPanel Grid.Row="4" Grid.Column="0" Margin="3 0 50 0" VerticalAlignment="Top" HorizontalAlignment="Right">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" MinHeight="30"/>

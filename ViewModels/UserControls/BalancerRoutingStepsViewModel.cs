@@ -296,6 +296,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                 {
                                     BalancerIterationVibrationsChart.Add(MotorBaseRunningVibration);                                    
                                     BalancerIterationStepChart.Add(BalancerIterationVibrationsChart.Count);
+                                    BalancerIterationDescription.Add("Motor Base Running Vibration");
+                                    BalancerIterationStep = BalancerIterationVibrationsChart.Count;
 
                                     TestStepsPropellerVibrations.Add(MotorBaseRunningVibration);
                                 }
@@ -310,7 +312,9 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                             case 3:  // Sonuçları kontrol edin.
                                 {
                                     BalancerIterationVibrationsChart.Add(PropellerBaseRunningVibration);                                    
-                                    BalancerIterationStepChart.Add(BalancerIterationVibrationsChart.Count);
+                                    BalancerIterationStepChart.Add(BalancerIterationVibrationsChart.Count);                             
+                                    BalancerIterationDescription.Add("Propeller Base Running Vibration");
+                                    BalancerIterationStep = BalancerIterationVibrationsChart.Count;
 
                                     TestStepsPropellerVibrations.Add(PropellerBaseRunningVibration);
                                 }
@@ -330,9 +334,14 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                             case 6:  // Sonuçları kontrol edin.
                                 {
                                     BalancerIterationVibrationsChart.Add(FirstBladeVibration);
-                                    BalancerIterationStepChart.Add(BalancerIterationVibrationsChart.Count);
+                                    BalancerIterationStepChart.Add(BalancerIterationVibrationsChart.Count);                                    
+                                    BalancerIterationDescription.Add("First Blade Vibration");
+                                    BalancerIterationStep = BalancerIterationVibrationsChart.Count;
+
                                     BalancerIterationVibrationsChart.Add(SecondBladeVibration);
                                     BalancerIterationStepChart.Add(BalancerIterationVibrationsChart.Count);
+                                    BalancerIterationDescription.Add("Second Blade Vibration");
+                                    BalancerIterationStep = BalancerIterationVibrationsChart.Count;
 
                                     TestStepsPropellerVibrations.Add(FirstBladeVibration);
                                     TestStepsPropellerVibrations.Add(SecondBladeVibration);
@@ -354,6 +363,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                 {
                                     BalancerIterationVibrationsChart.Add(BalancedPropellerRunningVibration);
                                     BalancerIterationStepChart.Add(BalancerIterationVibrationsChart.Count);
+                                    BalancerIterationDescription.Add("Balanced Propeller Running Vibration");
+                                    BalancerIterationStep = BalancerIterationVibrationsChart.Count;
 
                                     TestStepsPropellerVibrations.Add(BalancedPropellerRunningVibration);
                                 }
@@ -1439,18 +1450,6 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             }
         }
 
-        public int BalancerIterationStep
-        {
-            get => _balancerIterationStep;
-            set
-            {
-                if (SetProperty(ref _balancerIterationStep, value))
-                {
-                    _interfaceVariables.BalancerIterationStep = value;
-                    OnPropertyChanged(nameof(BalancerIterationStep));
-                }
-            }
-        }
 
         public double TestTimeStatusBar
         {
@@ -1870,7 +1869,18 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
-
+        public int BalancerIterationStep
+        {
+            get => _balancerIterationStep;
+            set
+            {
+                if (SetProperty(ref _balancerIterationStep, value))
+                {
+                    _interfaceVariables.BalancerIterationStep = value;
+                    OnPropertyChanged(nameof(BalancerIterationStep));
+                }
+            }
+        }
         public ObservableCollection<double> BalancerIterationStepChart
         {
             get => _balancerIterationStepChart;
@@ -1878,7 +1888,6 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 if (SetProperty(ref _balancerIterationStepChart, value))
                 {
-                    _balancerIterationStepChart = value;
                     _interfaceVariables.BalancerIterationStepChart = value;
                     OnPropertyChanged(nameof(BalancerIterationStepChart));
                 }
@@ -1892,7 +1901,6 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 if (SetProperty(ref _balancerIterationVibrationsChart, value))
                 {
-                    _balancerIterationVibrationsChart = value;
                     _interfaceVariables.BalancerIterationVibrationsChart = value;
                     OnPropertyChanged(nameof(BalancerIterationVibrationsChart));
                 }
@@ -1906,7 +1914,6 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 if (SetProperty(ref _balancerIterationDescription, value))
                 {
-                    _balancerIterationDescription = value;
                     _interfaceVariables.BalancerIterationDescription = value;
                     OnPropertyChanged(nameof(BalancerIterationDescription));
                 }

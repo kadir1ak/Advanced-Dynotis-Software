@@ -40,14 +40,17 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         {
             if (e.PropertyName == nameof(_interfaceVariables.BalancerIterationStep) ||
                 e.PropertyName == nameof(_interfaceVariables.BalancerIterationStepChart) ||
+                e.PropertyName == nameof(_interfaceVariables.BalancerIterationDescription) ||
                 e.PropertyName == nameof(_interfaceVariables.ReferencePropellerDiameter) ||
+                e.PropertyName == nameof(_interfaceVariables.ReferenceMotorSpeed) ||
                 e.PropertyName == nameof(_interfaceVariables.BalancerIterationVibrationsChart))
             {
                 BalancerIterationStep = _interfaceVariables.BalancerIterationStep;
                 BalancerIterationStepChart = _interfaceVariables.BalancerIterationStepChart;
                 BalancerIterationVibrationsChart = _interfaceVariables.BalancerIterationVibrationsChart;
+                BalancerIterationDescription = _interfaceVariables.BalancerIterationDescription;
                 ReferencePropellerDiameter = _interfaceVariables.ReferencePropellerDiameter;
-                UpdateBalancingIterations();
+                ReferenceMotorSpeed = _interfaceVariables.ReferenceMotorSpeed;
             }
         }
         public int ReferenceMotorSpeed
@@ -81,8 +84,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 if (SetProperty(ref _balancerIterationStep, value))
                 {
-                    _interfaceVariables.BalancerIterationStep = value;
                     OnPropertyChanged(nameof(BalancerIterationStep));
+                    UpdateBalancingIterations();
                 }
             }
         }
@@ -94,9 +97,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 if (SetProperty(ref _balancerIterationStepChart, value))
                 {
-                    _interfaceVariables.BalancerIterationStepChart = value;
                     OnPropertyChanged(nameof(BalancerIterationStepChart));
-                    UpdateBalancingIterations();
                 }
             }
         }
@@ -108,9 +109,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 if (SetProperty(ref _balancerIterationVibrationsChart, value))
                 {
-                    _interfaceVariables.BalancerIterationVibrationsChart = value;
                     OnPropertyChanged(nameof(BalancerIterationVibrationsChart));
-                    UpdateBalancingIterations();
                 }
             }
         }     
@@ -121,9 +120,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 if (SetProperty(ref _balancerIterationDescription, value))
                 {
-                    _interfaceVariables.BalancerIterationDescription = value;
                     OnPropertyChanged(nameof(BalancerIterationDescription));
-                    UpdateBalancingIterations();
                 }
             }
         }
@@ -144,7 +141,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             // Clear the BalancingIterations collection to prevent data stacking
             BalancingIterations.Clear();
             // Iterate through the BalancerIterationStepChart and BalancerIterationVibrationsChart collections
-            for (int i = 0; i < BalancerIterationStepChart.Count && i < BalancerIterationVibrationsChart.Count; i++)
+            for (int i = 0; i < BalancerIterationStep; i++)
             {
               
                 // Add each step and corresponding vibration to the BalancingIterations collection
@@ -152,10 +149,10 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 {
                     IterationStep = BalancerIterationStepChart[i],
                     Vibrations = Math.Round(BalancerIterationVibrationsChart[i], 3),
-                    Unit = "g",
-                    Description = "Description"
+                    Unit = "IPS",
+                    Description = BalancerIterationDescription[i]
                 });
-            }
+            }  
 
             // Notify that the BalancingIterations collection has been updated
             OnPropertyChanged(nameof(BalancingIterations));

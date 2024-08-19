@@ -70,7 +70,6 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 if (SetProperty(ref _balancerIterationStepChart, value))
                 {
                     OnPropertyChanged(nameof(BalancerIterationStepChart));
-                    UpdateVibrationChart();
                 }
             }
         }
@@ -83,7 +82,6 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 if (SetProperty(ref _balancerIterationVibrationsChart, value))
                 {
                     OnPropertyChanged(nameof(BalancerIterationVibrationsChart));
-                    UpdateVibrationChart();
                 }
             }
         }
@@ -95,8 +93,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 if (SetProperty(ref _balancerIterationStep, value))
                 {
-                    _interfaceVariables.BalancerIterationStep = value;
                     OnPropertyChanged(nameof(BalancerIterationStep));
+                    UpdateVibrationChart();
                 }
             }
         }
@@ -128,9 +126,9 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     series.Values.Clear();
 
                     double maxVibrationValue = 0;
-                    for (int i = 0; i < BalancerIterationStepChart.Count; i++)
+                    for (int i = 0; i < BalancerIterationStep; i++)
                     {
-                        if (i < BalancerIterationVibrationsChart.Count)
+                        if (i < BalancerIterationStep)
                         {
                             var point = new ObservablePoint(BalancerIterationStepChart[i], BalancerIterationVibrationsChart[i]);
                             series.Values.Add(point);
