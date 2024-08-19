@@ -19,8 +19,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private InterfaceVariables _interfaceVariables;
         private DynotisData _dynotisData;
 
-        private int _balancerIterationStep;
-        private ObservableCollection<int> _balancerIterationStepChart;
+        private double _balancerIterationStep;
+        private ObservableCollection<double> _balancerIterationStepChart;
         private ObservableCollection<double> _balancerIterationVibrationsChart;
         public BalancerRoutingStepsVibrationLevelsViewModel(DynotisData dynotisData, InterfaceVariables interfaceVariables)
         {
@@ -30,7 +30,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             _interfaceVariables.PropertyChanged += InterfaceVariables_PropertyChanged;
 
             _balancerIterationStep = 0;
-            _balancerIterationStepChart = new ObservableCollection<int>();
+            _balancerIterationStepChart = new ObservableCollection<double>();
             _balancerIterationVibrationsChart = new ObservableCollection<double>();
 
             _maxYAxisValue = 1;
@@ -62,7 +62,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             }
         }
 
-        public ObservableCollection<int> BalancerIterationStepChart
+        public ObservableCollection<double> BalancerIterationStepChart
         {
             get => _balancerIterationStepChart;
             set
@@ -88,7 +88,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             }
         }
 
-        public int BalancerIterationStep
+        public double BalancerIterationStep
         {
             get => _balancerIterationStep;
             set

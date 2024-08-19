@@ -28,8 +28,9 @@ public class InterfaceVariables : INotifyPropertyChanged
  
         _balancerIterationStep = 0;
         _balancerIterationVibrations = new List<double>();
-        _balancerIterationStepChart = new ObservableCollection<int>();
+        _balancerIterationStepChart = new ObservableCollection<double>();
         _balancerIterationVibrationsChart = new ObservableCollection<double>();
+        _balancerIterationDescription = new ObservableCollection<string>();
         _balancedPropellersVibrations = new ObservableCollection<double>();
         _balancedPropellersTestDates = new ObservableCollection<DateTime>();
         TestMode = "fuzzy";
@@ -114,10 +115,11 @@ public class InterfaceVariables : INotifyPropertyChanged
     private double _referencePropellerDiameter;
     private double _equalizerTapeCoefficient;
     private string _equalizerDirection;
-    private int _balancerIterationStep;
+    private double _balancerIterationStep;
     private List<double> _balancerIterationVibrations;
-    private ObservableCollection<int> _balancerIterationStepChart;
+    private ObservableCollection<double> _balancerIterationStepChart;
     private ObservableCollection<double> _balancerIterationVibrationsChart;
+    private ObservableCollection<string> _balancerIterationDescription;
     private string _balancedPropellersID;
     private double _balancedPropellersDiameter;
     private ObservableCollection<DateTime> _balancedPropellersTestDates;
@@ -467,7 +469,7 @@ public class InterfaceVariables : INotifyPropertyChanged
         set => SetProperty(ref _equalizerDirection, value);
     }
 
-    public int BalancerIterationStep
+    public double BalancerIterationStep
     {
         get => _balancerIterationStep;
         set => SetProperty(ref _balancerIterationStep, value);
@@ -477,7 +479,7 @@ public class InterfaceVariables : INotifyPropertyChanged
         get => _balancerIterationVibrations;
         set => SetProperty(ref _balancerIterationVibrations, value);
     }     
-    public ObservableCollection<int> BalancerIterationStepChart
+    public ObservableCollection<double> BalancerIterationStepChart
     {
         get => _balancerIterationStepChart;
         set => SetProperty(ref _balancerIterationStepChart, value);
@@ -486,6 +488,11 @@ public class InterfaceVariables : INotifyPropertyChanged
     {
         get => _balancerIterationVibrationsChart;
         set => SetProperty(ref _balancerIterationVibrationsChart, value);
+    }   
+    public ObservableCollection<string> BalancerIterationDescription
+    {
+        get => _balancerIterationDescription;
+        set => SetProperty(ref _balancerIterationDescription, value);
     }   
 
     public string BalancedPropellersID

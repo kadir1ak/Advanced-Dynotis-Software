@@ -14,23 +14,15 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
     {
         private int _referenceMotorSpeed;
         private double _referencePropellerDiameter;
-        private double _equalizerTapeCoefficient;
-        private string _equalizerDirection;
-        private string _motorSpeedUnitSymbol;
 
-        private int _balancerIterationStep;
-        private ObservableCollection<int> _balancerIterationStepChart;
+        private double _balancerIterationStep;
+        private ObservableCollection<double> _balancerIterationStepChart;
         private ObservableCollection<double> _balancerIterationVibrationsChart;
+        private ObservableCollection<string> _balancerIterationDescription;
         private InterfaceVariables _interfaceVariables;
         private DynotisData _dynotisData;
 
-        private double _tareVibration;
-        private double _tareVibrationX;
-        private double _tareVibrationY;
-        private double _tareVibrationZ;   
-
         private ObservableCollection<BalancerIteration> _balancingIterations;
-        public ICommand TareCommand { get; }
         public BalancerParametersViewModel(DynotisData dynotisData, InterfaceVariables interfaceVariables)
         {
             _interfaceVariables = interfaceVariables;
@@ -38,10 +30,9 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             // Subscribe to the PropertyChanged event of InterfaceVariables
             _interfaceVariables.PropertyChanged += InterfaceVariables_PropertyChanged;
 
-            TareCommand = new RelayCommand(param => VibrationTare());
-
-            _balancerIterationStepChart = new ObservableCollection<int>();
+            _balancerIterationStepChart = new ObservableCollection<double>();
             _balancerIterationVibrationsChart = new ObservableCollection<double>();
+            _balancerIterationDescription = new ObservableCollection<string>();
             _balancingIterations = new ObservableCollection<BalancerIteration>();
         }
 
@@ -55,70 +46,10 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 BalancerIterationStep = _interfaceVariables.BalancerIterationStep;
                 BalancerIterationStepChart = _interfaceVariables.BalancerIterationStepChart;
                 BalancerIterationVibrationsChart = _interfaceVariables.BalancerIterationVibrationsChart;
-                MotorSpeedUnitSymbol = _interfaceVariables.MotorSpeed.UnitSymbol;
                 ReferencePropellerDiameter = _interfaceVariables.ReferencePropellerDiameter;
                 UpdateBalancingIterations();
             }
         }
-        private void VibrationTare()
-        {
-            if (_interfaceVariables != null && _dynotisData != null)
-            {
-                TareVibration = _interfaceVariables.Vibration.TareCurrentVibration;
-                TareVibrationX = _interfaceVariables.Vibration.TareCurrentVibrationX;
-                TareVibrationY = _interfaceVariables.Vibration.TareCurrentVibrationY;
-                TareVibrationZ = _interfaceVariables.Vibration.TareCurrentVibrationZ;
-            }
-        }
-
-        public double TareVibration
-        {
-            get => _tareVibration;
-            set
-            {
-                if (SetProperty(ref _tareVibration, value))
-                {
-                    _interfaceVariables.Vibration.TareVibration = value;
-                    OnPropertyChanged(nameof(TareVibration));
-                }
-            }
-        } 
-        public double TareVibrationX
-        {
-            get => _tareVibrationX;
-            set
-            {
-                if (SetProperty(ref _tareVibrationX, value))
-                {
-                    _interfaceVariables.Vibration.TareVibrationX = value;
-                    OnPropertyChanged(nameof(TareVibrationX));
-                }
-            }
-        } 
-        public double TareVibrationY
-        {
-            get => _tareVibrationY;
-            set
-            {
-                if (SetProperty(ref _tareVibrationY, value))
-                {
-                    _interfaceVariables.Vibration.TareVibrationY = value;
-                    OnPropertyChanged(nameof(TareVibrationY));
-                }
-            }
-        } 
-        public double TareVibrationZ
-        {
-            get => _tareVibrationZ;
-            set
-            {
-                if (SetProperty(ref _tareVibrationZ, value))
-                {
-                    _interfaceVariables.Vibration.TareVibrationZ = value;
-                    OnPropertyChanged(nameof(TareVibrationZ));
-                }
-            }
-        }    
         public int ReferenceMotorSpeed
         {
             get => _referenceMotorSpeed;
@@ -143,42 +74,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
-        public double EqualizerTapeCoefficient
-        {
-            get => _equalizerTapeCoefficient;
-            set
-            {
-                if (SetProperty(ref _equalizerTapeCoefficient, value))
-                {
-                    _interfaceVariables.EqualizerTapeCoefficient = value;
-                    OnPropertyChanged(nameof(EqualizerTapeCoefficient));
-                }
-            }
-        }
-        public string EqualizerDirection
-        {
-            get => _equalizerDirection;
-            set
-            {
-                if (SetProperty(ref _equalizerDirection, value))
-                {
-                    _interfaceVariables.EqualizerDirection = value;
-                    OnPropertyChanged(nameof(EqualizerDirection));
-                }
-            }
-        }
-        public string MotorSpeedUnitSymbol
-        {
-            get => _motorSpeedUnitSymbol;
-            set
-            {
-                if (SetProperty(ref _motorSpeedUnitSymbol, value))
-                {
-                    OnPropertyChanged(nameof(MotorSpeedUnitSymbol));
-                }
-            }
-        }
-        public int BalancerIterationStep
+        public double BalancerIterationStep
         {
             get => _balancerIterationStep;
             set
@@ -191,7 +87,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             }
         }
 
-        public ObservableCollection<int> BalancerIterationStepChart
+        public ObservableCollection<double> BalancerIterationStepChart
         {
             get => _balancerIterationStepChart;
             set
@@ -214,6 +110,19 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 {
                     _interfaceVariables.BalancerIterationVibrationsChart = value;
                     OnPropertyChanged(nameof(BalancerIterationVibrationsChart));
+                    UpdateBalancingIterations();
+                }
+            }
+        }     
+        public ObservableCollection<string> BalancerIterationDescription
+        {
+            get => _balancerIterationDescription;
+            set
+            {
+                if (SetProperty(ref _balancerIterationDescription, value))
+                {
+                    _interfaceVariables.BalancerIterationDescription = value;
+                    OnPropertyChanged(nameof(BalancerIterationDescription));
                     UpdateBalancingIterations();
                 }
             }
@@ -242,7 +151,9 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 BalancingIterations.Add(new BalancerIteration
                 {
                     IterationStep = BalancerIterationStepChart[i],
-                    Vibrations = Math.Round(BalancerIterationVibrationsChart[i], 3)
+                    Vibrations = Math.Round(BalancerIterationVibrationsChart[i], 3),
+                    Unit = "g",
+                    Description = "Description"
                 });
             }
 
@@ -268,7 +179,9 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
     public class BalancerIteration
     {
-        public int IterationStep { get; set; }
+        public double IterationStep { get; set; }
         public double Vibrations { get; set; }
+        public string Unit { get; set; }
+        public string Description { get; set; }
     }
 }

@@ -144,6 +144,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                             if (e.PropertyName == nameof(BalancerRoutingStepsViewModel.BalancerIterationStep) ||                                
                                 e.PropertyName == nameof(BalancerRoutingStepsViewModel.BalancerIterationStepChart) ||
                                 e.PropertyName == nameof(BalancerRoutingStepsViewModel.BalancerIterationVibrationsChart) ||
+                                e.PropertyName == nameof(BalancerRoutingStepsViewModel.BalancerIterationDescription) ||
                                 e.PropertyName == nameof(BalancerRoutingStepsViewModel.TestStepsPropellerVibrations) ||
                                 e.PropertyName == nameof(BalancerRoutingStepsViewModel.DeviceBaseStaticVibration) ||
                                 e.PropertyName == nameof(BalancerRoutingStepsViewModel.MotorBaseRunningVibration) ||
@@ -165,6 +166,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                                 DeviceInterfaceVariables.BalancerIterationVibrations = _currentBalancerRoutingSteps.TestStepsPropellerVibrations;
                                 DeviceInterfaceVariables.BalancerIterationStepChart = _currentBalancerRoutingSteps.BalancerIterationStepChart;
                                 DeviceInterfaceVariables.BalancerIterationVibrationsChart = _currentBalancerRoutingSteps.BalancerIterationVibrationsChart;
+                                DeviceInterfaceVariables.BalancerIterationDescription = _currentBalancerRoutingSteps.BalancerIterationDescription;
                                 DeviceInterfaceVariables.DeviceBaseStaticVibration = _currentBalancerRoutingSteps.DeviceBaseStaticVibration;
                                 DeviceInterfaceVariables.MotorBaseRunningVibration = _currentBalancerRoutingSteps.MotorBaseRunningVibration;
                                 DeviceInterfaceVariables.PropellerBaseRunningVibration = _currentBalancerRoutingSteps.PropellerBaseRunningVibration;
@@ -206,27 +208,17 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                         {
                             if (e.PropertyName == nameof(BalancerParametersViewModel.ReferenceMotorSpeed) ||
                                 e.PropertyName == nameof(BalancerParametersViewModel.ReferencePropellerDiameter) ||
-                                e.PropertyName == nameof(BalancerParametersViewModel.EqualizerTapeCoefficient) ||
-                                e.PropertyName == nameof(BalancerParametersViewModel.EqualizerDirection) ||
                                 e.PropertyName == nameof(BalancerParametersViewModel.BalancerIterationStep) ||
                                 e.PropertyName == nameof(BalancerParametersViewModel.BalancerIterationStepChart) ||
                                 e.PropertyName == nameof(BalancerParametersViewModel.BalancerIterationVibrationsChart) ||
-                                e.PropertyName == nameof(BalancerParametersViewModel.TareVibration) ||
-                                e.PropertyName == nameof(BalancerParametersViewModel.TareVibrationX) ||
-                                e.PropertyName == nameof(BalancerParametersViewModel.TareVibrationY) ||
-                                e.PropertyName == nameof(BalancerParametersViewModel.TareVibrationZ))
+                                e.PropertyName == nameof(BalancerParametersViewModel.BalancerIterationDescription ))
                             {
                                 DeviceInterfaceVariables.ReferenceMotorSpeed = _currentBalancerParameters.ReferenceMotorSpeed;
-                                _currentBalancerParameters.ReferencePropellerDiameter = DeviceInterfaceVariables.ReferencePropellerDiameter;
-                                DeviceInterfaceVariables.EqualizerDirection = _currentBalancerParameters.EqualizerDirection;
-                                DeviceInterfaceVariables.EqualizerTapeCoefficient = _currentBalancerParameters.EqualizerTapeCoefficient;                                
+                                _currentBalancerParameters.ReferencePropellerDiameter = DeviceInterfaceVariables.ReferencePropellerDiameter;                           
                                 _currentBalancerParameters.BalancerIterationStep = DeviceInterfaceVariables.BalancerIterationStep;
                                 _currentBalancerParameters.BalancerIterationStepChart = DeviceInterfaceVariables.BalancerIterationStepChart;
+                                _currentBalancerParameters.BalancerIterationDescription = DeviceInterfaceVariables.BalancerIterationDescription;
                                 _currentBalancerParameters.BalancerIterationVibrationsChart = DeviceInterfaceVariables.BalancerIterationVibrationsChart;
-                                DeviceInterfaceVariables.Vibration.TareVibration = _currentBalancerParameters.TareVibration;
-                                DeviceInterfaceVariables.Vibration.TareVibrationX = _currentBalancerParameters.TareVibrationX;
-                                DeviceInterfaceVariables.Vibration.TareVibrationY = _currentBalancerParameters.TareVibrationY;
-                                DeviceInterfaceVariables.Vibration.TareVibrationZ = _currentBalancerParameters.TareVibrationZ;
                                 OnPropertyChanged(nameof(DeviceInterfaceVariables));
                             }
                         };

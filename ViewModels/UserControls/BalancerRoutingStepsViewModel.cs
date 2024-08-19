@@ -114,8 +114,9 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private List<double> _testStepsPropellerVibrations;
 
         //StepChart
-        private ObservableCollection<int> _balancerIterationStepChart;
+        private ObservableCollection<double> _balancerIterationStepChart;
         private ObservableCollection<double> _balancerIterationVibrationsChart;
+        private ObservableCollection<string> _balancerIterationDescription;
 
         // Step Indicators
         private ObservableCollection<System.Windows.Media.Brush> _stepIndicators;
@@ -130,8 +131,9 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             _vibrationsDataBuffer = new List<double>();
             _vibrationsIPSDataBuffer = new List<double>();
             _testStepsPropellerVibrations = new List<double>();
-            _balancerIterationStepChart = new ObservableCollection<int>();
+            _balancerIterationStepChart = new ObservableCollection<double>();
             _balancerIterationVibrationsChart = new ObservableCollection<double>();
+            _balancerIterationDescription = new ObservableCollection<string>();
 
             // Initialize PID Controller
             PIDController = new PIDController(1.5, 0.03, 0.05);
@@ -1869,7 +1871,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             }
         }
 
-        public ObservableCollection<int> BalancerIterationStepChart
+        public ObservableCollection<double> BalancerIterationStepChart
         {
             get => _balancerIterationStepChart;
             set
@@ -1893,6 +1895,20 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     _balancerIterationVibrationsChart = value;
                     _interfaceVariables.BalancerIterationVibrationsChart = value;
                     OnPropertyChanged(nameof(BalancerIterationVibrationsChart));
+                }
+            }
+        }
+
+        public ObservableCollection<string> BalancerIterationDescription
+        {
+            get => _balancerIterationDescription;
+            set
+            {
+                if (SetProperty(ref _balancerIterationDescription, value))
+                {
+                    _balancerIterationDescription = value;
+                    _interfaceVariables.BalancerIterationDescription = value;
+                    OnPropertyChanged(nameof(BalancerIterationDescription));
                 }
             }
         }
