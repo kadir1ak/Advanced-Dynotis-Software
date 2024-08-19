@@ -276,7 +276,97 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
         private void RepeatStepCommand()
         {
-            IterationStepIndex = 0;
+            switch (HeaderStepIndex)
+            {
+                case 1: // Ortam Titreşimlerinin Hesaplanması
+                    {                      
+                        switch (IterationStepIndex)
+                        {
+                            case 6:  // Sonuçları kontrol edin.
+                                {
+                                    BalancerIterationVibrationsChart.Add(MotorBaseRunningVibration);
+                                    BalancerIterationStepChart.Add(BalancerIterationVibrationsChart.Count);
+                                    BalancerIterationDescription.Add("Motor Base Running Vibration");
+                                    BalancerIterationStep = BalancerIterationVibrationsChart.Count;
+
+                                    TestStepsPropellerVibrations.Add(MotorBaseRunningVibration);
+                                }
+                                break;
+                        }
+                        IterationStepIndex = 0;
+                    }
+                    break;
+                case 2: // Pervane Titreşiminin Hesaplanması
+                    {                       
+                        switch (IterationStepIndex)
+                        {
+                            case 3:  // Sonuçları kontrol edin.
+                                {
+                                    BalancerIterationVibrationsChart.Add(PropellerBaseRunningVibration);
+                                    BalancerIterationStepChart.Add(BalancerIterationVibrationsChart.Count);
+                                    BalancerIterationDescription.Add("Propeller Base Running Vibration");
+                                    BalancerIterationStep = BalancerIterationVibrationsChart.Count;
+
+                                    TestStepsPropellerVibrations.Add(PropellerBaseRunningVibration);
+                                }
+                                break;
+                        }
+                        IterationStepIndex = 1;
+                    }
+                    break;
+                case 3: // Birim Referans Bant Uzunluğunun Seçimi
+                    {
+
+                    }
+                    break;
+                case 4: // Pervanenin Her İki Kanadına Birim Referans Bantın Eklenmesi
+                    {                        
+                        switch (IterationStepIndex)
+                        {
+                            case 6:  // Sonuçları kontrol edin.
+                                {
+                                    BalancerIterationVibrationsChart.Add(FirstBladeVibration);
+                                    BalancerIterationStepChart.Add(BalancerIterationVibrationsChart.Count);
+                                    BalancerIterationDescription.Add("First Blade Vibration");
+                                    BalancerIterationStep = BalancerIterationVibrationsChart.Count;
+
+                                    BalancerIterationVibrationsChart.Add(SecondBladeVibration);
+                                    BalancerIterationStepChart.Add(BalancerIterationVibrationsChart.Count);
+                                    BalancerIterationDescription.Add("Second Blade Vibration");
+                                    BalancerIterationStep = BalancerIterationVibrationsChart.Count;
+
+                                    TestStepsPropellerVibrations.Add(FirstBladeVibration);
+                                    TestStepsPropellerVibrations.Add(SecondBladeVibration);
+                                }
+                                break;
+                        }
+                        IterationStepIndex = 0;
+                    }
+                    break;
+                case 5: // Düzeltici Bant Adetinin ve Yönünün Belirlenmesi, Düzeltici Bantın Eklenmesi"
+                    {
+
+                    }
+                    break;
+                case 6: // Test ve Sonuçların Kontrolü
+                    {
+                        switch (IterationStepIndex)
+                        {
+                            case 2:  // Sonuçları kontrol edin.
+                                {
+                                    BalancerIterationVibrationsChart.Add(BalancedPropellerRunningVibration);
+                                    BalancerIterationStepChart.Add(BalancerIterationVibrationsChart.Count);
+                                    BalancerIterationDescription.Add("Balanced Propeller Running Vibration");
+                                    BalancerIterationStep = BalancerIterationVibrationsChart.Count;
+
+                                    TestStepsPropellerVibrations.Add(BalancedPropellerRunningVibration);
+                                }
+                                break;
+                        }
+                        IterationStepIndex = 0;
+                    }
+                    break;
+            }
             // Set Buttons Visibility
             RepeatStepButtonVisibility = Visibility.Collapsed;
             ApprovalStepButtonVisibility = Visibility.Collapsed;

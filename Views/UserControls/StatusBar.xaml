@@ -10,13 +10,13 @@
         <helpers:ValueToWidthAndThumbConverter x:Key="ValueToWidthAndThumbConverter"/>
     </UserControl.Resources>
     <Grid>
-        <Border CornerRadius="10" Background="#E0E0E0" Height="25" VerticalAlignment="Bottom" Margin="0">
-            <ProgressBar Height="15" VerticalAlignment="Center" Minimum="0" Maximum="100" Value="{Binding Value, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="5" Foreground="DodgerBlue">
+        <Border CornerRadius="8" Background="#E0E0E0" Height="20" VerticalAlignment="Bottom" Margin="0">
+            <ProgressBar Height="12" VerticalAlignment="Center" Minimum="0" Maximum="100" Value="{Binding Value, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="3" Foreground="DodgerBlue">
                 <ProgressBar.Template>
                     <ControlTemplate TargetType="ProgressBar">
                         <Grid x:Name="Root">
-                            <Border x:Name="PART_Track" Background="#E0E0E0" CornerRadius="8"/>
-                            <Border x:Name="PART_Indicator" Background="DodgerBlue" CornerRadius="8" HorizontalAlignment="Left">
+                            <Border x:Name="PART_Track" Background="#E0E0E0" CornerRadius="6"/>
+                            <Border x:Name="PART_Indicator" Background="DodgerBlue" CornerRadius="6" HorizontalAlignment="Left">
                                 <Border.Width>
                                     <MultiBinding Converter="{StaticResource ValueToWidthAndThumbConverter}">
                                         <Binding Path="Value" RelativeSource="{RelativeSource TemplatedParent}" />
