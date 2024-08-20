@@ -20,7 +20,7 @@
         <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="3 3 3 3" BorderBrush="{DynamicResource PageBorder}" BorderThickness="1">
             <lvc:CartesianChart Series="{Binding VibrationSeriesCollection}" Margin="0">
                 <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="Steps" Foreground="{DynamicResource Text}" LabelFormatter="{Binding XFormatter}" MinValue="1">
+                    <lvc:Axis Title="Test Steps" Foreground="{DynamicResource Text}" LabelFormatter="{Binding XFormatter}" MinValue="1">
                         <lvc:Axis.Separator>
                             <lvc:Separator Stroke="{DynamicResource Text}" StrokeThickness="0.5" Step="1.0"/>
                         </lvc:Axis.Separator>

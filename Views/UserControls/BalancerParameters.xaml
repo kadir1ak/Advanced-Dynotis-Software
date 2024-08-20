@@ -63,7 +63,7 @@
                       HorizontalAlignment="Stretch" Margin="5" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" 
                       ScrollViewer.HorizontalScrollBarVisibility="Auto" Foreground="{DynamicResource Text}" Background="{DynamicResource Page}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Iteration Step" Binding="{Binding IterationStep}" Foreground="{DynamicResource Text}"/>
+                    <DataGridTextColumn Header="Test Steps" Binding="{Binding IterationStep}" Foreground="{DynamicResource Text}"/>
                     <DataGridTextColumn Header="Vibration" Binding="{Binding Vibrations, StringFormat={}{0:0.000}}" Foreground="{DynamicResource Text}"/>
                     <DataGridTextColumn Header="Unit" Binding="{Binding Unit}" Foreground="{DynamicResource Text}"/>
                     <DataGridTextColumn Header="Description" Binding="{Binding Description}" Foreground="{DynamicResource Text}"/>

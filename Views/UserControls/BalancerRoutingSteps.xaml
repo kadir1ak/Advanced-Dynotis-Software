@@ -111,7 +111,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="Steps" Grid.Row="0" Grid.Column="0" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock Text="ITERATION" Grid.Row="0" Grid.Column="0" FontSize="16" FontWeight="DemiBold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
                 <!-- Step Indicator -->
                 <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0">
