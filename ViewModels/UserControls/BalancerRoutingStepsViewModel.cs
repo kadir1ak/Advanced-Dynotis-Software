@@ -1,13 +1,4 @@
-﻿using Advanced_Dynotis_Software.Models.Dynotis;
-using Advanced_Dynotis_Software.Services.Controllers;
-using Advanced_Dynotis_Software.Services.Helpers;
-using Advanced_Dynotis_Software.Services.Logger;
-using DocumentFormat.OpenXml.InkML;
-using DocumentFormat.OpenXml.Math;
-using DocumentFormat.OpenXml.Presentation;
-using DocumentFormat.OpenXml.Wordprocessing;
-using Microsoft.VisualBasic;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -17,6 +8,18 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using Advanced_Dynotis_Software.Properties;
+using Advanced_Dynotis_Software.Models.Dynotis;
+using Advanced_Dynotis_Software.Services.Controllers;
+using Advanced_Dynotis_Software.Services.Helpers;
+using Advanced_Dynotis_Software.Services.Logger;
+using DocumentFormat.OpenXml.InkML;
+using DocumentFormat.OpenXml.Math;
+using DocumentFormat.OpenXml.Presentation;
+using DocumentFormat.OpenXml.Wordprocessing;
+using DocumentFormat.OpenXml.Office2016.Excel;
+using Microsoft.VisualBasic;
+using DocumentFormat.OpenXml.ExtendedProperties;
 
 namespace Advanced_Dynotis_Software.ViewModels.UserControls
 {
@@ -38,6 +41,9 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         public ICommand ApprovalStepButtonCommand { get; }
         public ICommand NextStepButtonCommand { get; }
 
+
+
+        private Visibility _iterationWarningMessageVisibility;
         private Visibility _autoProgressCountVisibility;
         private Visibility _recommendedTableVisibility;
         private Visibility _repeatStepButtonVisibility;
@@ -156,7 +162,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             for (int i = 0; i < IterationSteps.Count; i++)
             {
                 // Inside your constructor or other methods
-                StepIndicators.Add((System.Windows.Media.SolidColorBrush)Application.Current.Resources["BalancerRoutingStepsPassive"]);
+                StepIndicators.Add((SolidColorBrush)System.Windows.Application.Current.Resources["BalancerRoutingStepsPassive"]);
             }
 
             BalancerProgressTimer = new DispatcherTimer
@@ -226,7 +232,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             BalancerIterationVibrationsChart.Clear();
 
             // Set Buttons Visibility
-            AutoProgressCountVisibility = Visibility.Visible;
+            IterationWarningMessageVisibility = Visibility.Collapsed;
+            AutoProgressCountVisibility = Visibility.Collapsed;
             RecommendedTableVisibility = Visibility.Collapsed;
             RepeatStepButtonVisibility = Visibility.Collapsed;
             ApprovalStepButtonVisibility = Visibility.Collapsed;
@@ -492,6 +499,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 RepeatStepButtonVisibility = Visibility.Collapsed;
                 ApprovalStepButtonVisibility = Visibility.Collapsed;
                 NextStepButtonVisibility = Visibility.Collapsed;
+                IterationWarningMessageVisibility = Visibility.Collapsed;
             }
             else if (status == "AllCollapsed")
             {
@@ -499,6 +507,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 RepeatStepButtonVisibility = Visibility.Collapsed;
                 ApprovalStepButtonVisibility = Visibility.Collapsed;
                 NextStepButtonVisibility = Visibility.Collapsed;
+                IterationWarningMessageVisibility = Visibility.Visible;
             }
             else if (status == "AllButtonVisible")
             {
@@ -506,6 +515,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 RepeatStepButtonVisibility = Visibility.Visible;
                 ApprovalStepButtonVisibility = Visibility.Visible;
                 NextStepButtonVisibility = Visibility.Visible;
+                IterationWarningMessageVisibility = Visibility.Collapsed;
             }
             else if (status == "ApprovalRepeatStepVisible")
             {
@@ -513,6 +523,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 RepeatStepButtonVisibility = Visibility.Visible;
                 ApprovalStepButtonVisibility = Visibility.Visible;
                 NextStepButtonVisibility = Visibility.Collapsed;
+                IterationWarningMessageVisibility = Visibility.Collapsed;
             }
             else if (status == "NextStepVisible")
             {
@@ -520,6 +531,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 RepeatStepButtonVisibility = Visibility.Collapsed;
                 ApprovalStepButtonVisibility = Visibility.Collapsed;
                 NextStepButtonVisibility = Visibility.Visible;
+                IterationWarningMessageVisibility = Visibility.Collapsed;
             }
 
 
@@ -694,10 +706,22 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                             case 6:  // Sonuçları kontrol edin.
                                 {
                                     SetVisibility("ApprovalRepeatStepVisible");
-                                    Iteration = Iteration + "\r\n" +
-                                                "First Blade Vibration: " + FirstBladeVibration.ToString("0.000") + " IPS" + "\r\n" +
-                                                "Second Blade Vibration: " + SecondBladeVibration.ToString("0.000") + " IPS";
-
+                                    if(FirstBladeVibration>SecondBladeVibration)
+                                    {
+                                        Iteration = Iteration + "\r\n" +
+                                                    "Measured vibration: " + SecondBladeVibration.ToString("0.000") + " IPS";
+                                    }
+                                    else if (SecondBladeVibration > FirstBladeVibration)
+                                    {
+                                        Iteration = Iteration + "\r\n" +
+                                                    "Measured vibration: " + FirstBladeVibration.ToString("0.000") + " IPS";
+                                    }
+                                    else
+                                    {
+                                        Iteration = Iteration + "\r\n" +
+                                                    "Measured vibration: " + FirstBladeVibration.ToString("0.000") + " IPS" + "\r\n" +
+                                                    "Measured vibration: " + SecondBladeVibration.ToString("0.000") + " IPS";
+                                    }
                                 }
                                 break;
                         }
@@ -732,19 +756,13 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                         {
                             Iteration = IterationSteps[HeaderStepIndex].Steps[0] + "\r\n" +
                                         IterationSteps[HeaderStepIndex].Steps[1] + "\r\n" +
-                                        "Equalizer Tape Coefficient: " + EqualizerTapeCoefficient.ToString("0.0") + " Piece" + "\r\n" +
-                                        "Equalizer Direction: " + EqualizerDirection + "\r\n" +
-                                         EqualizerTapeCoefficient.ToString("0.0") + IterationSteps[HeaderStepIndex].Steps[2];
-
+                                        IterationSteps[HeaderStepIndex].Steps[2] + " " + EqualizerTapeCoefficient.ToString("0.0");
                         }
                         else if (EqualizerDirection == "Second Blade")
                         {
                             Iteration = IterationSteps[HeaderStepIndex].Steps[0] + "\r\n" +
-                                        "Equalizer Tape Coefficient: " + EqualizerTapeCoefficient.ToString("0.0") + " Piece" + "\r\n" +
-                                        "Equalizer Direction: " + EqualizerDirection + "\r\n" +
-                                         EqualizerTapeCoefficient.ToString("0.0") + IterationSteps[HeaderStepIndex].Steps[2];
+                                        IterationSteps[HeaderStepIndex].Steps[2] + " " + EqualizerTapeCoefficient.ToString("0.0");
                         }
-
                         HeaderStepIndex++;
                         IterationStepIndex = 0;
                     }
@@ -802,14 +820,14 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         }
         private void StepIndicatorSet(int index)
         {
-            StepIndicators[index] = (System.Windows.Media.SolidColorBrush)Application.Current.Resources["BalancerRoutingStepsActive"];
+            StepIndicators[index] = (SolidColorBrush)System.Windows.Application.Current.Resources["BalancerRoutingStepsActive"];
             for (int i = 0; i < index; i++)
             {
-                StepIndicators[i] = (System.Windows.Media.SolidColorBrush)Application.Current.Resources["BalancerRoutingStepsOK"];
+                StepIndicators[i] = (SolidColorBrush)System.Windows.Application.Current.Resources["BalancerRoutingStepsOK"];
             }
             for (int i = index + 1; i < IterationSteps.Count; i++)
             {
-                StepIndicators[i] = (System.Windows.Media.SolidColorBrush)Application.Current.Resources["BalancerRoutingStepsPassive"];
+                StepIndicators[i] = (SolidColorBrush)System.Windows.Application.Current.Resources["BalancerRoutingStepsPassive"];
             }
         }
         private void CalculateVibrationTare()
@@ -1607,6 +1625,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
+
         public Visibility RecommendedTableVisibility
         {
             get => _recommendedTableVisibility;
@@ -2029,6 +2048,19 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             }
         }
 
+        //  Testing in progress, do not touch the device anytime during measurement process
+        public Visibility IterationWarningMessageVisibility
+        {
+            get => _iterationWarningMessageVisibility;
+            set
+            {
+                if (SetProperty(ref _iterationWarningMessageVisibility, value))
+                {
+                    OnPropertyChanged(nameof(IterationWarningMessageVisibility));
+                }
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
@@ -2060,81 +2092,81 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 new IterationStep // 0
             {
-                Header = "Cihazın Hazırlanması",
+                Header = Resources.BalancerPage_IterationStep0Header,   //  Preparing the Device
                 Steps = new List<string>
                 {
-                    "1.) Cihazı uygun şekilde sabitleyin. Çevresel dengesizlik veya belirsizliğe sebep olabilecek koşullardan arındırdığınızdan emin olun.",
-                    "2.) Motor montajını yapın.",
-                    "3.) Elektronik bağlantıları kontrol edin.",
-                    "4.) Pervane verilerini ayarlayın.",
-                    "5.) Referans motor hız değerini ayarlayın."
+                    Resources.BalancerPage_IterationStep0Message1,      //  1.) Mount the Dynotis on the ground as level as possible and make sure the surrounding area is clear
+                    Resources.BalancerPage_IterationStep0Message2,      //  2.) Mount the motor only
+                    Resources.BalancerPage_IterationStep0Message3,      //  3.) Check the electrical connections
+                    Resources.BalancerPage_IterationStep0Message4,      //  4.) Enter propeller details
+                    Resources.BalancerPage_IterationStep0Message5       //  5.) Set reference RPM               
                 }
             },
             new IterationStep // 1
             {
-                Header = "Ortam ve Motor Titreşimlerinin Hesaplanması",
+                Header = Resources.BalancerPage_IterationStep1Header,   //  Initialization and measurement of motor only vibration
                 Steps = new List<string>
                 {
-                    "Cihaz sıfırlanacak, müdahale etmeyin.",
-                    "Sıfırlama işlemi gerçekleştiriliyor.",
-                    "Ortam titreşim değeri hesaplanacak cihazına müdahale etmeyin.",
-                    "Ortam titreşim değeri hesaplanıyor.",
-                    "Motor titreşim değeri hesaplanacak cihazına müdahale etmeyin.",
-                    "Motor titreşim değeri hesaplanıyor.",
-                    "Sonuçları kontrol edin."
+                    Resources.BalancerPage_IterationStep1Message1,      //  The sensor will be calibrated + Testing in progress, do not touch the device anytime during measurement process
+                    Resources.BalancerPage_IterationStep1Message2,      //  The sensor is being calibrated
+                    Resources.BalancerPage_IterationStep1Message3,      //  Vibration noise will be calculated + Testing in progress, do not touch the device anytime during measurement process
+                    Resources.BalancerPage_IterationStep1Message4,      //  Vibration noise value is being measured
+                    Resources.BalancerPage_IterationStep1Message5,      //  Electric motor's vibration will be measured + Testing in progress, do not touch the device anytime during measurement process
+                    Resources.BalancerPage_IterationStep1Message6,      //  Electric motor's vibration is being measured
+                    Resources.BalancerPage_IterationStep1Message7       //  Please check the measurement
                 }
             },
             new IterationStep // 2
             {
-                Header = "Pervane Titreşiminin Hesaplanması",
+                Header = Resources.BalancerPage_IterationStep2Header,   //  Calculation of propulsion system's vibration
                 Steps = new List<string>
                 {
-                    "Pervane montajını yapın.",
-                    "Pervane titreşim değeri hesaplanacak cihazına müdahale etmeyin.",
-                    "Pervane titreşim değeri hesaplanıyor.",
-                    "Sonuçları kontrol edin."
+                    Resources.BalancerPage_IterationStep2Message1,      //  Attach the propeller to the motor
+                    Resources.BalancerPage_IterationStep2Message2,      //  Propulsion system's vibration will be measured + Testing in progress, do not touch the device anytime during measurement process
+                    Resources.BalancerPage_IterationStep2Message3,      //  Propulsion system's vibration is being measured
+                    Resources.BalancerPage_IterationStep2Message4       //  Check the measured value
                 }
             },
             new IterationStep // 3
             {
-                Header = "Birim Referans Bant Uzunluğunun Seçimi",
+                Header = Resources.BalancerPage_IterationStep3Header,   //  Selection of initial tape length
                 Steps = new List<string>
                 {
-                    "Lütfen standart elektrik bandı kullanın veya genişliği 15-20 mm arasında olan bir bant tercih edin."
+                    Resources.BalancerPage_IterationStep3Message1       //  Use a tape with 15-20mm width
                 }
             },
             new IterationStep // 4
             {
-                Header = "Pervanenin Her İki Kanadına Birim Referans Bantın Eklenmesi",
+                Header = Resources.BalancerPage_IterationStep4Header,   //  Adding reference weight to the lighter blade
                 Steps = new List<string>
                 {
-                    "Seçtiğiniz birim referans bandı, pervanenin herhangi bir kanadının merkezinden itibaren yarıçapının yaklaşık %25-30'una denk gelecek şekilde yapıştırın.",
-                    "Pervane titreşim değeri hesaplanacak cihazına müdahale etmeyin.",
-                    "Pervane titreşim değeri hesaplanıyor.",
-                    "Aynı bandı çıkarıp, pervanenin diğer kanadına merkezden itibaren yarıçapının yaklaşık %25-30'una denk gelecek şekilde yapıştırın.",
-                    "Pervane titreşim değeri hesaplanacak cihazına müdahale etmeyin.",
-                    "Pervane titreşim değeri hesaplanıyor.",
-                    "Sonuçları kontrol edin."
+                    Resources.BalancerPage_IterationStep4Message1,      //  Place the reference tape onto %20 to 30% of the radius of any propeller blade
+                    Resources.BalancerPage_IterationStep4Message2,      //  Propulsion system's vibration will be measured + Testing in progress, do not touch the device anytime during measurement process
+                    Resources.BalancerPage_IterationStep4Message3,      //  Propulsion system's vibration is being measured
+                    Resources.BalancerPage_IterationStep4Message4,      //  Remove the tape from the blade onto the other blade's 20% to 30% radius
+                    Resources.BalancerPage_IterationStep4Message5,      //  Propulsion system's vibration will be measured + Testing in progress, do not touch the device anytime during measurement process
+                    Resources.BalancerPage_IterationStep4Message6,      //  Propulsion system's vibration is being measured
+                    Resources.BalancerPage_IterationStep4Message7       //  Check the measured value
                 }
             },
             new IterationStep // 5
             {
-                Header = "Düzeltici Bant Adetinin ve Yönünün Belirlenmesi, Düzeltici Bantın Eklenmesi",
+                Header = Resources.BalancerPage_IterationStep5Header,   //  Calculation of correction band quantity/length
                 Steps = new List<string>
                 {
-                    "Düzeltici yön ve bant adedi hesaplandı.",
-                    "Lütfen seçtiğiniz birim referans bandı ilk durumundaki yere geri yapıştırın.",
-                    " adet daha ilave düzeltici bantı, aerodinamik yapıyı bozmayacak şekilde referans bantın olduğu bölgeye yapıştırın."
+                     Resources.BalancerPage_IterationStep5Message1,     //  Correction band length has been calculated
+                     Resources.BalancerPage_IterationStep5Message2,     //  Please paste the selected tape back to its first location
+                     Resources.BalancerPage_IterationStep5Message3      //  Please add X times more additional length of tape onto the existing tape
                 }
             },
             new IterationStep // 6
             {
-                Header = "Test ve Sonuçların Kontrolü",
+                Header = Resources.BalancerPage_IterationStep6Header,   //  Testing and Control of Results
                 Steps = new List<string>
                 {
-                    "Pervane titreşim değeri hesaplanacak cihazına müdahale etmeyin.",
-                    "Pervane titreşim değeri hesaplanıyor.",
-                    "Sonuçları kontrol edin."
+                    Resources.BalancerPage_IterationStep6Message1,      //  Propulsion system's vibration will be measured + Testing in progress, do not touch the device anytime during measurement process
+                    Resources.BalancerPage_IterationStep6Message2,      //  Propulsion system's vibration is being measured
+                    Resources.BalancerPage_IterationStep6Message3       //  Check the measured value
                 }
             }
             };

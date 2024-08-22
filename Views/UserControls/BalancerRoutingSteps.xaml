@@ -221,10 +221,11 @@
                     <Label Content=":" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource deviceCardIcon}" Margin="0 -4 0 0"/>
                     <icon:PackIconFontAwesome Kind="{Binding AutoProgressCountIcon}" Width="16" Height="16" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource deviceCardIcon}"/>
                 </StackPanel>
-              
+                
 
-                <StackPanel  Grid.Row="3" Grid.Column="0" Width="500" Margin="0 10 0 0" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                <StackPanel  Grid.Row="3" Grid.Column="0" Margin="20 10 20 0" VerticalAlignment="Top" HorizontalAlignment="Stretch">
                     <TextBlock Text="{Binding Iteration}" FontSize="14" Background="{DynamicResource Page}" TextWrapping="Wrap" TextAlignment="Left" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+                    <TextBlock Text="{x:Static p:Resources.BalancerPage_IterationWarningMessage}" Margin="0 10 0 0" Foreground="Red" Visibility="{Binding IterationWarningMessageVisibility}" FontSize="14" Background="{DynamicResource Page}" TextWrapping="Wrap" TextAlignment="Left" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                     <Grid Grid.Row="0" Grid.Column="1" Margin="0 0 5 0" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="{Binding RecommendedTableVisibility}">
                         <!-- Define the rows and columns -->
                         <Grid.RowDefinitions>
@@ -280,14 +281,14 @@
                           EllipseColor="{DynamicResource BalancerRoutingStepsEllipseColor1}" HorizontalAlignment="Center" VerticalAlignment="Center"   
                           IconKind="{x:Static icon:PackIconFontAwesomeKind.RepeatSolid}" 
                           IconColor="{DynamicResource BalancerRoutingStepsIcon}" Visibility="{Binding RepeatStepButtonVisibility}"/>
-                        <Label Grid.Row="0" Grid.Column="1" Content="Testi Tekrarla" FontSize="14" Visibility="{Binding RepeatStepButtonVisibility}" Margin="-3 0 5 0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        <Label Grid.Row="0" Grid.Column="1" Content="Repeat Test" FontSize="14" Visibility="{Binding RepeatStepButtonVisibility}" Margin="-3 0 5 0" HorizontalAlignment="Left" VerticalAlignment="Top" />
 
                         <!-- İkinci Buton -->
                         <helpers:StepButton Grid.Row="0" Grid.Column="2" Command="{Binding ApprovalStepButtonCommand}" Style="{StaticResource StepButtonStyle}"
                           EllipseColor="{DynamicResource BalancerRoutingStepsEllipseColor0}" HorizontalAlignment="Center" VerticalAlignment="Center"      
                           IconKind="{x:Static icon:PackIconFontAwesomeKind.CheckToSlotSolid}" 
                           IconColor="{DynamicResource BalancerRoutingStepsIcon}" Visibility="{Binding ApprovalStepButtonVisibility}"/>
-                        <Label Grid.Row="0" Grid.Column="3" Content="Onayla" FontSize="14" Visibility="{Binding ApprovalStepButtonVisibility}" Margin="-3 0 5 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label Grid.Row="0" Grid.Column="3" Content="Approve" FontSize="14" Visibility="{Binding ApprovalStepButtonVisibility}" Margin="-3 0 5 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
 
                         <!-- Üçüncü Buton -->
@@ -295,7 +296,7 @@
                           EllipseColor="{DynamicResource BalancerRoutingStepsEllipseColor2}" HorizontalAlignment="Center" VerticalAlignment="Center"      
                           IconKind="{x:Static icon:PackIconFontAwesomeKind.ArrowRightFromBracketSolid}" 
                           IconColor="{DynamicResource BalancerRoutingStepsIcon}" Visibility="{Binding NextStepButtonVisibility}"/>
-                        <Label Grid.Row="0" Grid.Column="5" Content="Diğer Adıma Geç" FontSize="14" Visibility="{Binding NextStepButtonVisibility}" Margin="-3 0 5 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label Grid.Row="0" Grid.Column="5" Content="Proceed to Next Step" FontSize="14" Visibility="{Binding NextStepButtonVisibility}" Margin="-3 0 5 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
 
                     </Grid> 

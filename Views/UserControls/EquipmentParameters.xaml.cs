@@ -28,8 +28,33 @@ namespace Advanced_Dynotis_Software.Views.UserControls
 
         private void NumericTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[^0-9.,]+"); // Yalnızca sayı, nokta ve virgül izin ver
+            // Sadece sayı, nokta ve virgüle izin ver
+            Regex regex = new Regex("[^0-9.,-]+");
             e.Handled = regex.IsMatch(e.Text);
         }
+
+
+        private void NumericTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            if (textBox != null)
+            {
+                string inputText = textBox.Text;
+
+                // Ondalık ayırıcıları göz önünde bulundurarak sayıyı işleyelim
+                if (double.TryParse(inputText.Replace(',', '.'), out double result))
+                {
+                    // Ondalık değeri doğru bir şekilde kaydet
+                    textBox.Text = result.ToString("F"); // "F" formatı ondalık olarak saklar
+                }
+                else
+                {
+                    // Geçersiz giriş varsa kullanıcıyı bilgilendir
+                    textBox.Text = "0"; // Girdiyi temizle
+                }
+            }
+        }
+
+
     }
 }

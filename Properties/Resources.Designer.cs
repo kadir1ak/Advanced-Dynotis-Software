@@ -574,6 +574,348 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
+        ///   Preparing the Device benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep0Header {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep0Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   1) Fix the Dynotis on the ground as level as possible and make sure the surroundıng area ıs clear benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep0Message1 {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep0Message1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   2) Only mount the electric motor benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep0Message2 {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep0Message2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   3) Check all electrical connections benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep0Message3 {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep0Message3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   4) Enter propeller details (name and diameter) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep0Message4 {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep0Message4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   5) Set reference motor speed (RPM) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep0Message5 {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep0Message5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Initialization and measurement of motor only vibration benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep1Header {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep1Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The sensor will be calibrated benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep1Message1 {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep1Message1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The sensor is being calibrated benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep1Message2 {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep1Message2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vibration noise will be calculated benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep1Message3 {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep1Message3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vibration noise value is being measured benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep1Message4 {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep1Message4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Electric motor&apos;s vibration will be measured benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep1Message5 {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep1Message5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Electric motor&apos;s vibration is being measured benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep1Message6 {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep1Message6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Please check the measurement benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep1Message7 {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep1Message7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Calculation of propulsion system&apos;s vibration benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep2Header {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep2Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Attach the propeller to the motor benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep2Message1 {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep2Message1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Propulsion system&apos;s vibration will be measured benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep2Message2 {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep2Message2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Propulsion system&apos;s vibration is being measured benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep2Message3 {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep2Message3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Check the measured value benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep2Message4 {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep2Message4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Selection of initial tape length benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep3Header {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep3Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Use a tape with 15-20mm width benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep3Message1 {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep3Message1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Adding reference weight to the lighter blade benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep4Header {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep4Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Place the reference tape onto %20 to 30% of the radius of any propeller blade benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep4Message1 {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep4Message1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Propulsion system&apos;s vibration will be measured benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep4Message2 {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep4Message2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Propulsion system&apos;s vibration is being measured benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep4Message3 {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep4Message3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Remove the tape from the blade onto the other blade&apos;s 20% to 30% radius benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep4Message4 {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep4Message4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Propulsion system&apos;s vibration will be measured benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep4Message5 {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep4Message5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Propulsion system&apos;s vibration is being measured benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep4Message6 {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep4Message6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Check the measured value benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep4Message7 {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep4Message7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Calculation of correction band quantity/length benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep5Header {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep5Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Correction band length has been calculated benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep5Message1 {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep5Message1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Please paste the selected tape back to its first location benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep5Message2 {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep5Message2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Multiplier for additional tape: benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep5Message3 {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep5Message3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Testing and Control of Results benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep6Header {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep6Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Propulsion system&apos;s vibration will be measured benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep6Message1 {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep6Message1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Propulsion system&apos;s vibration is being measured benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep6Message2 {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep6Message2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Measured propulsion system vibration benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationStep6Message3 {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationStep6Message3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Testing in progress, do not touch the device anytime during measurement process! benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string BalancerPage_IterationWarningMessage {
+            get {
+                return ResourceManager.GetString("BalancerPage_IterationWarningMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Motor Speed benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string BalancerPage_MotorSpeed {
@@ -844,7 +1186,7 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
-        ///   Propeller Balancer benzeri yerelleştirilmiş bir dize arar.
+        ///   Dynamic Balancer benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string BalancerPage_Text {
             get {
@@ -1735,7 +2077,7 @@ namespace Advanced_Dynotis_Software.Properties {
         }
         
         /// <summary>
-        ///   Propeller Balancer benzeri yerelleştirilmiş bir dize arar.
+        ///   Dynamic Balancer benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string MainWindow_Balancer {
             get {

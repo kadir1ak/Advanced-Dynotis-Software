@@ -276,6 +276,120 @@
   <data name="BalancerPage_Index" xml:space="preserve">
     <value>İndex</value>
   </data>
+  <data name="BalancerPage_IterationStep0Header" xml:space="preserve">
+    <value>Cihazın Hazırlanması</value>
+  </data>
+  <data name="BalancerPage_IterationStep0Message1" xml:space="preserve">
+    <value>1.) Cihazı uygun şekilde sabitleyin. Çevresel dengesizlik veya belirsizliğe sebep olabilecek koşullardan arındırdığınızdan emin olun.</value>
+  </data>
+  <data name="BalancerPage_IterationStep0Message2" xml:space="preserve">
+    <value>2.) Motor montajını yapın.</value>
+  </data>
+  <data name="BalancerPage_IterationStep0Message3" xml:space="preserve">
+    <value>3.) Elektronik bağlantıları kontrol edin.</value>
+  </data>
+  <data name="BalancerPage_IterationStep0Message4" xml:space="preserve">
+    <value>4.) Pervane verilerini ayarlayın.</value>
+  </data>
+  <data name="BalancerPage_IterationStep0Message5" xml:space="preserve">
+    <value>5.) Referans motor hız değerini ayarlayın.</value>
+  </data>
+  <data name="BalancerPage_IterationStep1Header" xml:space="preserve">
+    <value>Ortam ve Motor Titreşimlerinin Hesaplanması</value>
+  </data>
+  <data name="BalancerPage_IterationStep1Message1" xml:space="preserve">
+    <value>Cihaz sıfırlanacak, müdahale etmeyin.</value>
+  </data>
+  <data name="BalancerPage_IterationStep1Message2" xml:space="preserve">
+    <value>Sıfırlama işlemi gerçekleştiriliyor.</value>
+  </data>
+  <data name="BalancerPage_IterationStep1Message3" xml:space="preserve">
+    <value>Ortam titreşim değeri hesaplanacak cihazına müdahale etmeyin.</value>
+  </data>
+  <data name="BalancerPage_IterationStep1Message4" xml:space="preserve">
+    <value>Ortam titreşim değeri hesaplanıyor.</value>
+  </data>
+  <data name="BalancerPage_IterationStep1Message5" xml:space="preserve">
+    <value>Motor titreşim değeri hesaplanacak cihazına müdahale etmeyin.</value>
+  </data>
+  <data name="BalancerPage_IterationStep1Message6" xml:space="preserve">
+    <value>Motor titreşim değeri hesaplanıyor.</value>
+  </data>
+  <data name="BalancerPage_IterationStep1Message7" xml:space="preserve">
+    <value>Sonuçları kontrol edin.</value>
+  </data>
+  <data name="BalancerPage_IterationStep2Header" xml:space="preserve">
+    <value>Pervane Titreşiminin Hesaplanması</value>
+  </data>
+  <data name="BalancerPage_IterationStep2Message1" xml:space="preserve">
+    <value>Pervane montajını yapın.</value>
+  </data>
+  <data name="BalancerPage_IterationStep2Message2" xml:space="preserve">
+    <value>Pervane titreşim değeri hesaplanacak cihazına müdahale etmeyin.</value>
+  </data>
+  <data name="BalancerPage_IterationStep2Message3" xml:space="preserve">
+    <value>Pervane titreşim değeri hesaplanıyor.</value>
+  </data>
+  <data name="BalancerPage_IterationStep2Message4" xml:space="preserve">
+    <value>Sonuçları kontrol edin.</value>
+  </data>
+  <data name="BalancerPage_IterationStep3Header" xml:space="preserve">
+    <value>Birim Referans Bant Uzunluğunun Seçimi</value>
+  </data>
+  <data name="BalancerPage_IterationStep3Message1" xml:space="preserve">
+    <value>Lütfen standart elektrik bandı kullanın veya genişliği 15-20 mm arasında olan bir bant tercih edin.</value>
+  </data>
+  <data name="BalancerPage_IterationStep4Header" xml:space="preserve">
+    <value>Pervanenin Her İki Kanadına Birim Referans Bantın Eklenmesi</value>
+  </data>
+  <data name="BalancerPage_IterationStep4Message1" xml:space="preserve">
+    <value>Seçtiğiniz birim referans bandı, pervanenin herhangi bir kanadının merkezinden itibaren yarıçapının yaklaşık %25-30'una denk gelecek şekilde yapıştırın.</value>
+  </data>
+  <data name="BalancerPage_IterationStep4Message2" xml:space="preserve">
+    <value>Pervane titreşim değeri hesaplanacak cihazına müdahale etmeyin.</value>
+  </data>
+  <data name="BalancerPage_IterationStep4Message3" xml:space="preserve">
+    <value>Pervane titreşim değeri hesaplanıyor.</value>
+  </data>
+  <data name="BalancerPage_IterationStep4Message4" xml:space="preserve">
+    <value>Aynı bandı çıkarıp, pervanenin diğer kanadına merkezden itibaren yarıçapının yaklaşık %25-30'una denk gelecek şekilde yapıştırın.</value>
+  </data>
+  <data name="BalancerPage_IterationStep4Message5" xml:space="preserve">
+    <value>Pervane titreşim değeri hesaplanacak cihazına müdahale etmeyin.</value>
+  </data>
+  <data name="BalancerPage_IterationStep4Message6" xml:space="preserve">
+    <value>Pervane titreşim değeri hesaplanıyor.</value>
+  </data>
+  <data name="BalancerPage_IterationStep4Message7" xml:space="preserve">
+    <value>Sonuçları kontrol edin.</value>
+  </data>
+  <data name="BalancerPage_IterationStep5Header" xml:space="preserve">
+    <value>Düzeltici Bant Adetinin ve Yönünün Belirlenmesi, Düzeltici Bantın Eklenmesi</value>
+  </data>
+  <data name="BalancerPage_IterationStep5Message1" xml:space="preserve">
+    <value>Düzeltici yön ve bant adedi hesaplandı.</value>
+  </data>
+  <data name="BalancerPage_IterationStep5Message2" xml:space="preserve">
+    <value>Lütfen seçtiğiniz birim referans bandı ilk durumundaki yere geri yapıştırın.</value>
+  </data>
+  <data name="BalancerPage_IterationStep5Message3" xml:space="preserve">
+    <value>adet daha ilave düzeltici bantı, aerodinamik yapıyı bozmayacak şekilde referans bantın olduğu bölgeye yapıştırın.</value>
+  </data>
+  <data name="BalancerPage_IterationStep6Header" xml:space="preserve">
+    <value>Test ve Sonuçların Kontrolü</value>
+  </data>
+  <data name="BalancerPage_IterationStep6Message1" xml:space="preserve">
+    <value>Pervane titreşim değeri hesaplanacak cihazına müdahale etmeyin.</value>
+  </data>
+  <data name="BalancerPage_IterationStep6Message2" xml:space="preserve">
+    <value>Pervane titreşim değeri hesaplanıyor.</value>
+  </data>
+  <data name="BalancerPage_IterationStep6Message3" xml:space="preserve">
+    <value>Sonuçları kontrol edin.</value>
+  </data>
+  <data name="BalancerPage_IterationWarningMessage" xml:space="preserve">
+    <value>Test devam ediyor, ölçüm işlemi sırasında cihaza hiçbir zaman dokunmayın!</value>
+  </data>
   <data name="BalancerPage_MotorSpeed" xml:space="preserve">
     <value>Motor Hızı</value>
   </data>

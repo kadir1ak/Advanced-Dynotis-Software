@@ -288,6 +288,120 @@
   <data name="BalancerPage_Index" xml:space="preserve">
     <value>Index</value>
   </data>
+  <data name="BalancerPage_IterationStep0Header" xml:space="preserve">
+    <value>Preparing the Device</value>
+  </data>
+  <data name="BalancerPage_IterationStep0Message1" xml:space="preserve">
+    <value>1) Fix the Dynotis on the ground as level as possible and make sure the surroundıng area ıs clear</value>
+  </data>
+  <data name="BalancerPage_IterationStep0Message2" xml:space="preserve">
+    <value>2) Only mount the electric motor</value>
+  </data>
+  <data name="BalancerPage_IterationStep0Message3" xml:space="preserve">
+    <value>3) Check all electrical connections</value>
+  </data>
+  <data name="BalancerPage_IterationStep0Message4" xml:space="preserve">
+    <value>4) Enter propeller details (name and diameter)</value>
+  </data>
+  <data name="BalancerPage_IterationStep0Message5" xml:space="preserve">
+    <value>5) Set reference motor speed (RPM)</value>
+  </data>
+  <data name="BalancerPage_IterationStep1Header" xml:space="preserve">
+    <value>Initialization and measurement of motor only vibration</value>
+  </data>
+  <data name="BalancerPage_IterationStep1Message1" xml:space="preserve">
+    <value>The sensor will be calibrated</value>
+  </data>
+  <data name="BalancerPage_IterationStep1Message2" xml:space="preserve">
+    <value>The sensor is being calibrated</value>
+  </data>
+  <data name="BalancerPage_IterationStep1Message3" xml:space="preserve">
+    <value>Vibration noise will be calculated</value>
+  </data>
+  <data name="BalancerPage_IterationStep1Message4" xml:space="preserve">
+    <value>Vibration noise value is being measured</value>
+  </data>
+  <data name="BalancerPage_IterationStep1Message5" xml:space="preserve">
+    <value>Electric motor's vibration will be measured</value>
+  </data>
+  <data name="BalancerPage_IterationStep1Message6" xml:space="preserve">
+    <value>Electric motor's vibration is being measured</value>
+  </data>
+  <data name="BalancerPage_IterationStep1Message7" xml:space="preserve">
+    <value>Please check the measurement</value>
+  </data>
+  <data name="BalancerPage_IterationStep2Header" xml:space="preserve">
+    <value>Calculation of propulsion system's vibration</value>
+  </data>
+  <data name="BalancerPage_IterationStep2Message1" xml:space="preserve">
+    <value>Attach the propeller to the motor</value>
+  </data>
+  <data name="BalancerPage_IterationStep2Message2" xml:space="preserve">
+    <value>Propulsion system's vibration will be measured</value>
+  </data>
+  <data name="BalancerPage_IterationStep2Message3" xml:space="preserve">
+    <value>Propulsion system's vibration is being measured</value>
+  </data>
+  <data name="BalancerPage_IterationStep2Message4" xml:space="preserve">
+    <value>Check the measured value</value>
+  </data>
+  <data name="BalancerPage_IterationStep3Header" xml:space="preserve">
+    <value>Selection of initial tape length</value>
+  </data>
+  <data name="BalancerPage_IterationStep3Message1" xml:space="preserve">
+    <value>Use a tape with 15-20mm width</value>
+  </data>
+  <data name="BalancerPage_IterationStep4Header" xml:space="preserve">
+    <value>Adding reference weight to the lighter blade</value>
+  </data>
+  <data name="BalancerPage_IterationStep4Message1" xml:space="preserve">
+    <value>Place the reference tape onto %20 to 30% of the radius of any propeller blade</value>
+  </data>
+  <data name="BalancerPage_IterationStep4Message2" xml:space="preserve">
+    <value>Propulsion system's vibration will be measured</value>
+  </data>
+  <data name="BalancerPage_IterationStep4Message3" xml:space="preserve">
+    <value>Propulsion system's vibration is being measured</value>
+  </data>
+  <data name="BalancerPage_IterationStep4Message4" xml:space="preserve">
+    <value>Remove the tape from the blade onto the other blade's 20% to 30% radius</value>
+  </data>
+  <data name="BalancerPage_IterationStep4Message5" xml:space="preserve">
+    <value>Propulsion system's vibration will be measured</value>
+  </data>
+  <data name="BalancerPage_IterationStep4Message6" xml:space="preserve">
+    <value>Propulsion system's vibration is being measured</value>
+  </data>
+  <data name="BalancerPage_IterationStep4Message7" xml:space="preserve">
+    <value>Check the measured value</value>
+  </data>
+  <data name="BalancerPage_IterationStep5Header" xml:space="preserve">
+    <value>Calculation of correction band quantity/length</value>
+  </data>
+  <data name="BalancerPage_IterationStep5Message1" xml:space="preserve">
+    <value>Correction band length has been calculated</value>
+  </data>
+  <data name="BalancerPage_IterationStep5Message2" xml:space="preserve">
+    <value>Please paste the selected tape back to its first location</value>
+  </data>
+  <data name="BalancerPage_IterationStep5Message3" xml:space="preserve">
+    <value>Multiplier for additional tape:</value>
+  </data>
+  <data name="BalancerPage_IterationStep6Header" xml:space="preserve">
+    <value>Testing and Control of Results</value>
+  </data>
+  <data name="BalancerPage_IterationStep6Message1" xml:space="preserve">
+    <value>Propulsion system's vibration will be measured</value>
+  </data>
+  <data name="BalancerPage_IterationStep6Message2" xml:space="preserve">
+    <value>Propulsion system's vibration is being measured</value>
+  </data>
+  <data name="BalancerPage_IterationStep6Message3" xml:space="preserve">
+    <value>Measured propulsion system vibration</value>
+  </data>
+  <data name="BalancerPage_IterationWarningMessage" xml:space="preserve">
+    <value>Testing in progress, do not touch the device anytime during measurement process!</value>
+  </data>
   <data name="BalancerPage_MotorSpeed" xml:space="preserve">
     <value>Motor Speed</value>
   </data>
@@ -379,7 +493,7 @@
     <value>Tests</value>
   </data>
   <data name="BalancerPage_Text" xml:space="preserve">
-    <value>Propeller Balancer</value>
+    <value>Dynamic Balancer</value>
   </data>
   <data name="BalancerPage_Vibration" xml:space="preserve">
     <value>Vibration</value>
@@ -676,7 +790,7 @@
     <value>Automate</value>
   </data>
   <data name="MainWindow_Balancer" xml:space="preserve">
-    <value>Propeller Balancer</value>
+    <value>Dynamic Balancer</value>
   </data>
   <data name="MainWindow_Coaxial" xml:space="preserve">
     <value>Coaxial Test</value>
