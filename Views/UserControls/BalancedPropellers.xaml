@@ -90,6 +90,11 @@
                 </DataGrid.Columns>
             </DataGrid>
 
+
+            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+                <uc:GeneralButton Command="{Binding ExcelExportCommand}" Margin="2" Icon="FileExcelRegular" Text="Excel Export" Foreground="{DynamicResource Text}" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+            </StackPanel>
+
             <ScrollViewer Grid.Row="1" Grid.Column="0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                 <ListView ItemsSource="{Binding SavedPropellers}" SelectedItem="{Binding SelectedPropeller}" Margin="0"
                      FontSize="14" FontWeight="DemiBold" ScrollViewer.VerticalScrollBarVisibility="Auto" 

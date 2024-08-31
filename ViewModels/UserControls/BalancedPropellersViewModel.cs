@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Input;
 using Advanced_Dynotis_Software.Services.Helpers;
 using Newtonsoft.Json;
+using ClosedXML.Excel;
 using static Advanced_Dynotis_Software.ViewModels.Pages.AutomateTestViewModel;
 
 namespace Advanced_Dynotis_Software.ViewModels.UserControls
@@ -29,6 +30,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private bool _isPropellerIDTextBoxReadOnly;
         private bool _isPropellerDiameterTextBoxReadOnly;
         public ICommand NewCommand { get; }
+        public ICommand ExcelExportCommand { get; }
         public ICommand SaveCommand { get; }
         public ICommand LoadCommand { get; }
         public ICommand DeleteCommand { get; }
@@ -43,6 +45,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             _isPropellerIDTextBoxReadOnly = true;
             _isPropellerDiameterTextBoxReadOnly = true;
 
+            ExcelExportCommand = new RelayCommand(param => ExcelExport());
             NewCommand = new RelayCommand(param => NewBalancedPropeller());
             SaveCommand = new RelayCommand(param => SaveBalancedPropeller());
             LoadCommand = new RelayCommand(param => LoadBalancedPropeller());
@@ -66,6 +69,63 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 System.Diagnostics.Debug.WriteLine($"Error loading saved balanced propellers: {ex.Message}");
                 SavedPropellers = new ObservableCollection<string>();
+            }
+        }
+
+        private void ExcelExport()
+        {
+            try
+            {
+                var workbook = new ClosedXML.Excel.XLWorkbook();
+
+                foreach (var propellerName in SavedPropellers)
+                {
+                    var json = File.ReadAllText(Path.Combine("BalancedPropellers", propellerName + ".json"));
+                    var propellerData = JsonConvert.DeserializeObject<BalancedDataset>(json);
+
+                    if (propellerData != null)
+                    {
+                        var worksheet = workbook.Worksheets.Add(propellerName);
+
+                        // Başlıklar
+                        worksheet.Cell(1, 1).Value = "Propeller ID";
+                        worksheet.Cell(1, 2).Value = "Diameter";
+                        worksheet.Cell(1, 3).Value = "Test Date";
+                        worksheet.Cell(1, 4).Value = "Vibration Level (IPS)";
+
+                        // Pervane bilgileri
+                        worksheet.Cell(2, 1).Value = propellerData.PropellerID;
+                        worksheet.Cell(2, 2).Value = propellerData.PropellerDiameter;
+
+                        // Test tarihleri ve titreşim verileri
+                        for (int i = 0; i < propellerData.TestDates.Count; i++)
+                        {
+                            worksheet.Cell(i + 2, 3).Value = propellerData.TestDates[i];
+                            worksheet.Cell(i + 2, 4).Value = propellerData.Vibrations[i];
+                        }
+
+                        // Kolon genişliklerini ayarla
+                        worksheet.Columns().AdjustToContents();
+                    }
+                }
+
+                var saveFileDialog = new Microsoft.Win32.SaveFileDialog
+                {
+                    FileName = "BalancedPropellers.xlsx",
+                    DefaultExt = ".xlsx",
+                    Filter = "Excel Workbook (.xlsx)|*.xlsx"
+                };
+
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    workbook.SaveAs(saveFileDialog.FileName);
+                    MessageBox.Show("Excel file has been successfully saved.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error exporting to Excel: {ex.Message}");
+                MessageBox.Show($"Error exporting to Excel: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -163,8 +223,6 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     }
 
                     OnPropertyChanged(nameof(BalancingTestDatas)); // BalancingTestDatas'in güncellendiğini bildir
-
-
                 }
             }
             catch (Exception ex)

@@ -241,7 +241,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                     }
                     await Task.Delay(100);
                 }
-                // Cihazdan Sensör Verilerini Ayrıştırma Alanı
+                // Cihazdan Gelen Sensör Verilerini Ayrıştırma Alanı
                 while (!token.IsCancellationRequested && Port.IsOpen)
                 {
                     string indata = await Task.Run(() => Port.ReadExisting(), token);
@@ -313,6 +313,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             newData.NoLoadCurrents = currentData.NoLoadCurrents;
             newData.ESCValue = currentData.ESCValue;
             newData.ESCStatus = currentData.ESCStatus;
+            newData.DynamicBalancerStatus = currentData.DynamicBalancerStatus;
             newData.TestMode = currentData.TestMode;
             newData.FileName = currentData.FileName;
             newData.IsRecording = currentData.IsRecording;
@@ -323,6 +324,18 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             newData.TareTorqueValue = currentData.TareTorqueValue;
             newData.TareCurrentValue = currentData.TareCurrentValue;
             newData.TareMotorSpeedValue = currentData.TareMotorSpeedValue;
+
+            if ((newData.VibrationX + newData.VibrationY + newData.VibrationZ)>100) 
+            {
+                newData.DynamicBalancerStatus = true;
+                newData.VibrationX = newData.VibrationX - 100;
+                newData.VibrationY = newData.VibrationY - 100;
+                newData.VibrationZ = newData.VibrationZ - 100;
+            }
+            else
+            {
+                newData.DynamicBalancerStatus = false;
+            }
 
             newData.Vibration.VibrationX = newData.VibrationX;
             newData.Vibration.VibrationY = newData.VibrationY;
@@ -336,6 +349,9 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             newData.Vibration.TareVibrationX = currentData.Vibration.TareVibrationX;
             newData.Vibration.TareVibrationY = currentData.Vibration.TareVibrationY;
             newData.Vibration.TareVibrationZ = currentData.Vibration.TareVibrationZ;
+
+            newData.Vibration.TareCurrentVibration = currentData.Vibration.TareCurrentVibration;
+
             newData.Vibration.TareVibrationXBuffer = currentData.Vibration.TareVibrationXBuffer;
             newData.Vibration.TareVibrationYBuffer = currentData.Vibration.TareVibrationYBuffer;
             newData.Vibration.TareVibrationZBuffer = currentData.Vibration.TareVibrationZBuffer;
@@ -481,7 +497,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 // IPS Calculation
                 if (DynotisData.MotorSpeed.Value > 0)
                 {
-                    DynotisData.Theoric.IPS = (3685.1) * (DynotisData.Vibration.HighVibration) / (DynotisData.MotorSpeed.Value);
+                    DynotisData.Theoric.IPS = Math.Min(2.0, (3685.1) * (DynotisData.Vibration.HighVibration) / (DynotisData.MotorSpeed.Value));
                 }
                 else
                 {
@@ -530,7 +546,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         {
             DynotisData.Vibration.Value = Math.Abs(DynotisData.VibrationY);
 
-            DynotisData.Vibration.HighVibrationBuffer.Add(DynotisData.Vibration.Value);
+            DynotisData.Vibration.HighVibrationBuffer.Add(Math.Abs(DynotisData.Vibration.Value - DynotisData.Vibration.TareCurrentVibration));
             DynotisData.Vibration.HighIPSVibrationBuffer.Add(DynotisData.Theoric.IPS);
 
             DynotisData.Vibration.TareVibrationBuffer.Add(DynotisData.Vibration.Value);
@@ -541,7 +557,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
             DynotisData.Vibration.TareBufferCount++;
 
-            if (DynotisData.Vibration.TareBufferCount > 25)
+            if (DynotisData.Vibration.TareBufferCount > 100)
             {
                 DynotisData.Vibration.TareBufferCount = 0;
 

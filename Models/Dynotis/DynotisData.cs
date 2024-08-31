@@ -53,6 +53,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         private bool _securityStatus;
         private int _escValue;
         private bool _escStatus;
+        private bool _dynamicBalancerStatus;
 
         private VibrationVariables _vibrationVariables;
         private TheoricVariables _theoricVariables;
@@ -236,6 +237,11 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         {
             get => _escStatus;
             set => SetProperty(ref _escStatus, value);
+        }     
+        public bool DynamicBalancerStatus
+        {
+            get => _dynamicBalancerStatus;
+            set => SetProperty(ref _dynamicBalancerStatus, value);
         }
         public VibrationVariables Vibration
         {
@@ -308,6 +314,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
             private int _tareBufferCount;
             private double _tareVibration;
+            private double _tareCurrentVibration;
             private List<double> _tareVibrationBuffer;
             private double _tareVibrationX;
             private List<double> _tareVibrationXBuffer;
@@ -355,6 +362,11 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             {
                 get => _tareVibration;
                 set => SetProperty(ref _tareVibration, value);
+            }
+            public double TareCurrentVibration
+            {
+                get => _tareCurrentVibration;
+                set => SetProperty(ref _tareCurrentVibration, value);
             }
 
             public List<double> TareVibrationBuffer

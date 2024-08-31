@@ -83,6 +83,7 @@ public class InterfaceVariables : INotifyPropertyChanged
     private bool _securityStatus;
     private double _escValue;
     private bool _escStatus;
+    private bool _dynamicBalancerStatus;
 
     private string _testMode;
     private bool _isRecording;
@@ -252,6 +253,12 @@ public class InterfaceVariables : INotifyPropertyChanged
     {
         get => _escStatus;
         set => SetProperty(ref _escStatus, value);
+    }
+
+    public bool DynamicBalancerStatus
+    {
+        get => _dynamicBalancerStatus;
+        set => SetProperty(ref _dynamicBalancerStatus, value);
     }
 
     public bool IsRecording
@@ -532,8 +539,9 @@ public class InterfaceVariables : INotifyPropertyChanged
         Vibration.VibrationX = data.Vibration.VibrationX - Vibration.TareVibrationX;
         Vibration.VibrationY = data.Vibration.VibrationY - Vibration.TareVibrationY;
         Vibration.VibrationZ = data.Vibration.VibrationZ - Vibration.TareVibrationZ;
-        Vibration.Value = data.Vibration.Value - Vibration.TareVibration;
-        Vibration.HighVibration = data.Vibration.HighVibration - Vibration.TareVibration;
+        data.Vibration.TareCurrentVibration = Vibration.TareVibration;
+        Vibration.Value = data.Vibration.Value;
+        Vibration.HighVibration = data.Vibration.HighVibration;
         Vibration.HighIPSVibration = data.Vibration.HighIPSVibration;
         Vibration.TareCurrentVibration = data.Vibration.TareVibration;
         Vibration.TareCurrentVibrationX = data.Vibration.TareVibrationX;
@@ -550,6 +558,7 @@ public class InterfaceVariables : INotifyPropertyChanged
         SecurityStatus = data.SecurityStatus;
         ESCValue = data.ESCValue;
         ESCStatus = data.ESCStatus;
+        DynamicBalancerStatus = data.DynamicBalancerStatus;
 
         Theoric.PropellerArea = data.Theoric.PropellerArea;
         Theoric.RotationalSpeed = data.Theoric.RotationalSpeed;
