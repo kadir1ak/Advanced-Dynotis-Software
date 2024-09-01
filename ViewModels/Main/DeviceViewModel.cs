@@ -176,8 +176,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                                 DeviceInterfaceVariables.Vibration.TareVibration = _currentBalancerRoutingSteps.TareVibration;
                                 DeviceInterfaceVariables.Vibration.TareVibrationX = _currentBalancerRoutingSteps.TareVibrationX;
                                 DeviceInterfaceVariables.Vibration.TareVibrationY = _currentBalancerRoutingSteps.TareVibrationY;
-                                DeviceInterfaceVariables.Vibration.TareVibrationZ = _currentBalancerRoutingSteps.TareVibrationZ;
-                               
+                                DeviceInterfaceVariables.Vibration.TareVibrationZ = _currentBalancerRoutingSteps.TareVibrationZ;                               
                                 _currentBalancerRoutingSteps.HighVibration = DeviceInterfaceVariables.Vibration.HighVibration;
                                 _currentBalancerRoutingSteps.HighIPSVibration = DeviceInterfaceVariables.Vibration.HighIPSVibration;
 

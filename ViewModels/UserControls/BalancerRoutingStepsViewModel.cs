@@ -20,6 +20,9 @@ using DocumentFormat.OpenXml.Wordprocessing;
 using DocumentFormat.OpenXml.Office2016.Excel;
 using Microsoft.VisualBasic;
 using DocumentFormat.OpenXml.ExtendedProperties;
+using Advanced_Dynotis_Software.Views.UserControls;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace Advanced_Dynotis_Software.ViewModels.UserControls
 {
@@ -52,6 +55,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private Visibility _runButtonVisibility;
 
         // Main Buttons
+        public ICommand AddTestButtonCommand { get; }
         public ICommand RunButtonCommand { get; }
         public ICommand StopButtonCommand { get; }
         public ICommand NewBalanceTestButtonCommand { get; }
@@ -128,6 +132,12 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         // Step Indicators
         private ObservableCollection<System.Windows.Media.Brush> _stepIndicators;
 
+        // File
+        private string _balancedPropellersID;
+        private double _balancedPropellersDiameter;
+        private ObservableCollection<DateTime> _balancedPropellersTestDates;
+        private ObservableCollection<double> _balancedPropellersVibrations;
+
         // Constructor
         public BalancerRoutingStepsViewModel(DynotisData dynotisData, InterfaceVariables interfaceVariables)
         {
@@ -141,10 +151,13 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             _balancerIterationStepChart = new ObservableCollection<double>();
             _balancerIterationVibrationsChart = new ObservableCollection<double>();
             _balancerIterationDescription = new ObservableCollection<string>();
+            _balancedPropellersTestDates = new ObservableCollection<DateTime>();
+            _balancedPropellersVibrations = new ObservableCollection<double>();
 
             // Initialize PID Controller
             PIDController = new PIDController(1.5, 0.03, 0.05);
 
+            AddTestButtonCommand = new RelayCommand(param => AddTestFileCommand());
             RunButtonCommand = new RelayCommand(param => RunCommand());
             StopButtonCommand = new RelayCommand(param => StopCommand());
             NewBalanceTestButtonCommand = new RelayCommand(param => NewTestCommand());
@@ -257,6 +270,58 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
             // Reset Step Indicators
             StepIndicatorSet(0);
+        }
+
+        private void AddTestFileCommand()
+        {
+            MessageBoxResult result = MessageBox.Show(
+           "The last test data will be saved. Are you sure you want to save the test results?", 
+           "Confirm Result Save",
+           MessageBoxButton.YesNo,
+           MessageBoxImage.Information);
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    BalancedPropellersID = _interfaceVariables.BalancedPropellersID;
+                    BalancedPropellersDiameter = _interfaceVariables.BalancedPropellersDiameter;
+                    var filePath = Path.Combine("BalancedPropellers", BalancedPropellersID + ".json");
+                    // Dosya varsa, içeriğini yükle, yoksa yeni bir obje oluştur
+                    BalancedDataset propellerData;
+                    if (File.Exists(filePath))
+                    {
+                        var json = File.ReadAllText(filePath);
+                        propellerData = JsonConvert.DeserializeObject<BalancedDataset>(json);
+                    }
+                    else
+                    {
+                        propellerData = new BalancedDataset
+                        {
+                            PropellerID = BalancedPropellersID,
+                            PropellerDiameter = BalancedPropellersDiameter,
+                            TestDates = new ObservableCollection<DateTime>(),
+                            Vibrations = new ObservableCollection<double>()
+                        };
+                    }
+                    var currentDate = DateTime.Now;
+                    var VibrationData = BalancedPropellerRunningVibration; // Dengeli Pervane Çalışma Titreşimi
+
+                    propellerData.TestDates.Add(currentDate);
+                    propellerData.Vibrations.Add(Math.Round(VibrationData, 3));
+                    // Dosyayı tekrar kaydet
+                    var updatedJson = JsonConvert.SerializeObject(propellerData, Formatting.Indented);
+                    File.WriteAllText(filePath, updatedJson);
+
+                    // Bilgilendirme mesajı
+                    MessageBox.Show("Test Mesaj: " + BalancedPropellersID + " " + propellerData.PropellerDiameter
+                                    + "\nTest Date: " + currentDate + "\nVibration: " + VibrationData);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    System.Diagnostics.Debug.WriteLine($"Error in AddTestCommand: {ex.Message}");
+                }
+            }
         }
 
         private void RunCommand()
@@ -805,6 +870,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     break;
                 case 7:
                     {
+                        AddTestFileCommand();
                         BalancingTestFinished();
                     }
                     break;
@@ -2044,6 +2110,55 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 if (SetProperty(ref _stepIndicators, value))
                 {
                     OnPropertyChanged(nameof(StepIndicators));
+                }
+            }
+        }
+        public string BalancedPropellersID
+        {
+            get => _balancedPropellersID;
+            set
+            {
+                if (SetProperty(ref _balancedPropellersID, value))
+                {
+                    _interfaceVariables.BalancedPropellersID = value;
+                    OnPropertyChanged(nameof(BalancedPropellersID));
+                }
+            }
+        }
+        public double BalancedPropellersDiameter
+        {
+            get => _balancedPropellersDiameter;
+            set
+            {
+                if (SetProperty(ref _balancedPropellersDiameter, value))
+                {
+                    _interfaceVariables.BalancedPropellersDiameter = value;
+                    OnPropertyChanged(nameof(BalancedPropellersDiameter));
+                }
+            }
+        }
+        public ObservableCollection<DateTime> BalancedPropellersTestDates
+        {
+            get => _balancedPropellersTestDates;
+            set
+            {
+                if (SetProperty(ref _balancedPropellersTestDates, value))
+                {
+                    _interfaceVariables.BalancedPropellersTestDates = value;
+                    OnPropertyChanged(nameof(BalancedPropellersTestDates));
+                }
+            }
+        }
+
+        public ObservableCollection<double> BalancedPropellersVibrations
+        {
+            get => _balancedPropellersVibrations;
+            set
+            {
+                if (SetProperty(ref _balancedPropellersVibrations, value))
+                {
+                    _interfaceVariables.BalancedPropellersVibrations = value;
+                    OnPropertyChanged(nameof(BalancedPropellersVibrations));
                 }
             }
         }

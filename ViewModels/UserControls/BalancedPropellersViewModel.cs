@@ -35,6 +35,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         public ICommand LoadCommand { get; }
         public ICommand DeleteCommand { get; }
 
+        private FileSystemWatcher _fileWatcher;
+
         public BalancedPropellersViewModel(InterfaceVariables interfaceVariables)
         {
             _interfaceVariables = interfaceVariables;
@@ -52,7 +54,50 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             DeleteCommand = new RelayCommand(param => DeleteBalancedPropeller());
 
             LoadSavedBalancedPropellers();
+
+            StartFileWatcher();
         }
+
+        private void StartFileWatcher()
+        {
+            _fileWatcher = new FileSystemWatcher("BalancedPropellers")
+            {
+                NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName,
+                Filter = "*.json"
+            };
+
+            _fileWatcher.Changed += OnFileChanged;
+            _fileWatcher.Created += OnFileChanged;
+            _fileWatcher.Deleted += OnFileChanged;
+            _fileWatcher.Renamed += OnFileRenamed;
+
+            _fileWatcher.EnableRaisingEvents = true;
+        }
+
+        private void OnFileChanged(object sender, FileSystemEventArgs e)
+        {
+            // UI thread üzerinden erişim sağla
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                if (e.Name == SelectedPropeller + ".json")
+                {
+                    LoadBalancedPropeller();
+                }
+            });
+        }
+
+        private void OnFileRenamed(object sender, RenamedEventArgs e)
+        {
+            // UI thread üzerinden erişim sağla
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                if (e.OldName == SelectedPropeller + ".json" || e.Name == SelectedPropeller + ".json")
+                {
+                    LoadBalancedPropeller();
+                }
+            });
+        }
+
 
         private void LoadSavedBalancedPropellers()
         {
@@ -188,8 +233,6 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 MessageBox.Show($"Error saving balanced propeller: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-
         private void LoadBalancedPropeller()
         {
             try
@@ -197,23 +240,24 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 IsPropellerIDTextBoxReadOnly = true;
                 IsPropellerDiameterTextBoxReadOnly = true;
 
-
                 var json = File.ReadAllText(Path.Combine("BalancedPropellers", SelectedPropeller + ".json"));
                 var items = JsonConvert.DeserializeObject<BalancedDataset>(json);
-                
+
                 if (items != null)
                 {
                     ResultPropeller = items;
 
-                    //Verileri ViewModel alanlarına aktar
-                    
+                    // Verileri ViewModel alanlarına aktar
                     BalancedPropellerID = ResultPropeller.PropellerID;
                     BalancedPropellerDiameter = ResultPropeller.PropellerDiameter;
                     BalancingTestDates = ResultPropeller.TestDates ?? new ObservableCollection<DateTime>();
                     VibrationLevels = ResultPropeller.Vibrations ?? new ObservableCollection<double>();
 
-                    BalancingTestDatas = new ObservableCollection<BalanceTestData>();
-                    for (int i = 0; i < BalancingTestDates.Count; i++)
+                    BalancingTestDatas.Clear(); // Mevcut verileri temizle
+
+                    // Koleksiyon boyutlarını kontrol edin
+                    int count = Math.Min(BalancingTestDates.Count, VibrationLevels.Count);
+                    for (int i = 0; i < count; i++)
                     {
                         BalancingTestDatas.Add(new BalanceTestData
                         {
