@@ -314,7 +314,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
                     // Bilgilendirme mesajı
                     MessageBox.Show("Test Mesaj: " + BalancedPropellersID + " " + propellerData.PropellerDiameter
-                                    + "\nTest Date: " + currentDate + "\nVibration: " + VibrationData);
+                                    + "\nTest Date: " + currentDate + "\nVibration: " + Math.Round(VibrationData, 3) + " IPS");
                 }
                 catch (Exception ex)
                 {
