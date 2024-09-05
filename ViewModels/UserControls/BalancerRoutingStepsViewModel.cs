@@ -332,6 +332,11 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private void StopCommand()
         {
             MotorStop();
+            AutoProgressCountTimer.Stop();
+            BalancerProgressTimer.Stop();
+            HighVibrationDataCollectionTimer.Stop();
+            IterationStepIndex = 0;
+            BalancingIteration();
         }
 
         private void NewTestCommand()
