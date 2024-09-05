@@ -694,6 +694,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                         {
                             case 0:  // Pervane montajını yapın.
                                 {
+                                    SetVisibility("NextStepVisible");
                                     IterationStepIndex++;
                                 }
                                 break;
@@ -969,9 +970,6 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private void MotorStop()
         {
             PIDTimer.Stop();
-            //AutoProgressCountTimer.Stop();
-            //BalancerProgressTimer.Stop();
-            //HighVibrationDataCollectionTimer.Stop();
             ESCStatus = false;
             ESCValue = 800;
             MotorReadyStatus = false;

@@ -497,7 +497,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 // IPS Calculation
                 if (DynotisData.MotorSpeed.Value > 0)
                 {
-                    DynotisData.Theoric.IPS = Math.Min(2.0, (3685.1) * (DynotisData.Vibration.HighVibration) / (DynotisData.MotorSpeed.Value));
+                    DynotisData.Theoric.IPS = Math.Min(1.5, (3685.1) * (DynotisData.Vibration.HighVibration) / (DynotisData.MotorSpeed.Value));
                 }
                 else
                 {
@@ -557,7 +557,9 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
             DynotisData.Vibration.TareBufferCount++;
 
-            if (DynotisData.Vibration.TareBufferCount > 100)
+            //int dataPointsPerRevolution = (int)(60.0 / DynotisData.MotorSpeed.Value);
+
+            if (DynotisData.Vibration.TareBufferCount >= 50)
             {
                 DynotisData.Vibration.TareBufferCount = 0;
 
