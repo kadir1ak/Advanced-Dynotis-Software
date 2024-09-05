@@ -557,9 +557,12 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
             DynotisData.Vibration.TareBufferCount++;
 
-            //int dataPointsPerRevolution = (int)(60.0 / DynotisData.MotorSpeed.Value);
+            int dataPointsPerRevolution = (int)(60.0 / DynotisData.MotorSpeed.Value);
 
-            if (DynotisData.Vibration.TareBufferCount >= 50)
+            // Değeri 10 ile 1000 arasında sınırlandır
+            dataPointsPerRevolution = Math.Max(10, Math.Min(dataPointsPerRevolution, 1000));
+
+            if (DynotisData.Vibration.TareBufferCount >= dataPointsPerRevolution)
             {
                 DynotisData.Vibration.TareBufferCount = 0;
 

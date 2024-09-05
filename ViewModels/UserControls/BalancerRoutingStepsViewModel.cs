@@ -821,7 +821,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                             Ratio = ((PropellerBaseRunningVibration - SecondBladeVibration) / PropellerBaseRunningVibration);
                         }
 
-                        EqualizerTapeCoefficient = (1 / Ratio) - 1; // (-1) şuan var olan referans bantı temsil ediyor.
+                        EqualizerTapeCoefficient = (((1 / Ratio) - 1) / 2.0); // (-1) şuan var olan referans bantı temsil ediyor.
 
                         if (EqualizerDirection == "First Blade")
                         {
