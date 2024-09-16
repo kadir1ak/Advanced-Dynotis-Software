@@ -34,7 +34,6 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                 if (_device != value)
                 {
                     _device = value;
-                    OnPropertyChanged();
                     OnPropertyChanged(nameof(Device.DynotisData)); // Notify when the device changes
                 }
             }
