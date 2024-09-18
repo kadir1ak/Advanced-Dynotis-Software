@@ -24,7 +24,6 @@ namespace Advanced_Dynotis_Software.Views.UserControls
         public BalancerPolarChart()
         {
             InitializeComponent();
-            this.DataContext = new BalancerPolarChartViewModel();
         }
     }
 }

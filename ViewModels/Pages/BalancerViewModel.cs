@@ -29,6 +29,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         private BalancedPropellerTestsChartManager _balancedPropellerTestsChartManager;
         private BalancerRoutingStepsVibrationLevelsManager _balancerRoutingStepsVibrationLevelsManager;
         private BalancedPropellersManager _balancedPropellersManager;
+        private BalancerPolarChartManager _balancerPolarChartManager;
         public ObservableCollection<DeviceViewModel> AvailableDevices { get; }
 
         private List<double> _highVibrations;
@@ -102,6 +103,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             _balancedPropellerTestsChartManager = new BalancedPropellerTestsChartManager();
             _balancerRoutingStepsVibrationLevelsManager = new BalancerRoutingStepsVibrationLevelsManager();
             _balancedPropellersManager = new BalancedPropellersManager();
+            _balancerPolarChartManager = new BalancerPolarChartManager();
 
             HighVibrations = new List<double> {}; 
             BalancingIterationStep = 0;
@@ -150,6 +152,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             ConnectedDevice.CurrentBalancerRoutingStepsVibrationLevels = _balancerRoutingStepsVibrationLevelsManager.GetBalancerRoutingStepsVibrationLevelsViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData, SelectedDevice.DeviceInterfaceVariables);
             ConnectedDevice.CurrentBalancedPropellerTestsChart = _balancedPropellerTestsChartManager.GetBalancedPropellerTestsChartViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData, SelectedDevice.DeviceInterfaceVariables);
             ConnectedDevice.CurrentBalancedPropellers = _balancedPropellersManager.GetBalancedPropellersViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData, SelectedDevice.DeviceInterfaceVariables);
+            ConnectedDevice.CurrentBalancerPolarChart = _balancerPolarChartManager.GetBalancerPolarChartViewModel(SelectedDevice.Device.PortName, SelectedDevice.Device.DynotisData, SelectedDevice.DeviceInterfaceVariables);
         }
 
         private void OnDeviceDisconnected(DeviceViewModel device)
@@ -167,6 +170,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 ConnectedDevice.CurrentBalancerRoutingStepsVibrationLevels = null;
                 ConnectedDevice.CurrentBalancedPropellerTestsChart = null;
                 ConnectedDevice.CurrentBalancedPropellers = null;
+                ConnectedDevice.CurrentBalancerPolarChart = null;
             }
             RefreshAvailableDevices();
         }

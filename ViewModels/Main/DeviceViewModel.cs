@@ -39,6 +39,31 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             }
         }
 
+        private BalancerPolarChartViewModel _currentBalancerPolarChart;
+        public BalancerPolarChartViewModel CurrentBalancerPolarChart
+        {
+            get => _currentBalancerPolarChart;
+            set
+            {
+                if (SetProperty(ref _currentBalancerPolarChart, value))
+                {
+                    if (_currentBalancerPolarChart != null)
+                    {
+                        _currentBalancerPolarChart.PropertyChanged += (sender, e) =>
+                        {
+                            if (e.PropertyName == nameof(BalancerPolarChartViewModel.CartesianPlotModel) ||
+                                e.PropertyName == nameof(BalancerPolarChartViewModel.PolarPlotModel))
+                            {
+
+                                OnPropertyChanged(nameof(DeviceInterfaceVariables));
+                            }
+                        };
+                    }
+                }
+            }
+        }
+
+
         private BalancedPropellersViewModel _currentBalancedPropellers;
         public BalancedPropellersViewModel CurrentBalancedPropellers
         {

@@ -257,6 +257,15 @@
                                     </Border>
 
 
+                                    <Border Grid.Row="0" Grid.Column="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3 3 0 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
+                                        <ContentControl Grid.Row="0" Content="{Binding CurrentBalancerPolarChart, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                            <ContentControl.ContentTemplate>
+                                                <DataTemplate>
+                                                    <uc:BalancerPolarChart HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0"/>
+                                                </DataTemplate>
+                                            </ContentControl.ContentTemplate>
+                                        </ContentControl>
+                                    </Border>
 
                                 </Grid>
                             </Border>
