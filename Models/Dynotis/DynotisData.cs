@@ -56,6 +56,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         private bool _escStatus;
         private bool _dynamicBalancerStatus;
 
+
         private double[] _vibrationDynamicBalancer360 = new double[12];
 
         private VibrationVariables _vibrationVariables;
@@ -248,11 +249,13 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             get => _dynamicBalancerStatus;
             set => SetProperty(ref _dynamicBalancerStatus, value);
         }
+   
         public double[] VibrationDynamicBalancer360
         {
             get => _vibrationDynamicBalancer360;
             set => SetProperty(ref _vibrationDynamicBalancer360, value);
         }
+
         public VibrationVariables Vibration
         {
             get => _vibrationVariables;

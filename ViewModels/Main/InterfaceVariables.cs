@@ -25,7 +25,8 @@ public class InterfaceVariables : INotifyPropertyChanged
 
         _vibrationVariables = new VibrationVariables();
         _theoricVariables = new TheoricVariables();
- 
+
+
         _balancerIterationStep = 0;
         _balancerIterationVibrations = new List<double>();
         _balancerIterationStepChart = new ObservableCollection<double>();
@@ -84,6 +85,7 @@ public class InterfaceVariables : INotifyPropertyChanged
     private double _escValue;
     private bool _escStatus;
     private bool _dynamicBalancerStatus;
+    private double[] _vibrationDynamicBalancer360 = new double[12];
 
     private string _testMode;
     private bool _isRecording;
@@ -261,6 +263,11 @@ public class InterfaceVariables : INotifyPropertyChanged
     {
         get => _dynamicBalancerStatus;
         set => SetProperty(ref _dynamicBalancerStatus, value);
+    }
+    public double[] VibrationDynamicBalancer360
+    {
+        get => _vibrationDynamicBalancer360;
+        set => SetProperty(ref _vibrationDynamicBalancer360, value);
     }
 
     public bool IsRecording
@@ -570,6 +577,12 @@ public class InterfaceVariables : INotifyPropertyChanged
         ESCValue = data.ESCValue;
         ESCStatus = data.ESCStatus;
         DynamicBalancerStatus = data.DynamicBalancerStatus;
+
+        VibrationDynamicBalancer360 = data.VibrationDynamicBalancer360;
+        for (int i = 0; i < data.VibrationDynamicBalancer360.Length; i++)
+        {
+            VibrationDynamicBalancer360[i] = data.VibrationDynamicBalancer360[i];
+        }
 
         Theoric.PropellerArea = data.Theoric.PropellerArea;
         Theoric.RotationalSpeed = data.Theoric.RotationalSpeed;

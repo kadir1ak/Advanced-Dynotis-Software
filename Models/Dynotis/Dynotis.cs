@@ -321,18 +321,20 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                     VibrationY = TryParseDouble(dataParts[2], out double vibrationY) ? vibrationY : double.NaN,
                 };
 
+                
                 DynotisData.VibrationDynamicBalancer360[0] = TryParseDouble(dataParts[3], out double vibrationY0) ? vibrationY0 : double.NaN;
                 DynotisData.VibrationDynamicBalancer360[1] = TryParseDouble(dataParts[4], out double vibrationY30) ? vibrationY30 : double.NaN;
                 DynotisData.VibrationDynamicBalancer360[2] = TryParseDouble(dataParts[5], out double vibrationY60) ? vibrationY60 : double.NaN;
                 DynotisData.VibrationDynamicBalancer360[3] = TryParseDouble(dataParts[6], out double vibrationY90) ? vibrationY90 : double.NaN;
                 DynotisData.VibrationDynamicBalancer360[4] = TryParseDouble(dataParts[7], out double vibrationY120) ? vibrationY120 : double.NaN;
-                DynotisData.VibrationDynamicBalancer360[5] = TryParseDouble(dataParts[8], out double vibrationY150) ? vibrationY150 : double.NaN;
+                DynotisData.VibrationDynamicBalancer360[5] = TryParseDouble(dataParts[8], out double vibrationY150) ? vibrationY150 : double.NaN; ;
                 DynotisData.VibrationDynamicBalancer360[6] = TryParseDouble(dataParts[9], out double vibrationY180) ? vibrationY180 : double.NaN;
                 DynotisData.VibrationDynamicBalancer360[7] = TryParseDouble(dataParts[10], out double vibrationY210) ? vibrationY210 : double.NaN;
                 DynotisData.VibrationDynamicBalancer360[8] = TryParseDouble(dataParts[11], out double vibrationY240) ? vibrationY240 : double.NaN;
                 DynotisData.VibrationDynamicBalancer360[9] = TryParseDouble(dataParts[12], out double vibrationY270) ? vibrationY270 : double.NaN;
                 DynotisData.VibrationDynamicBalancer360[10] = TryParseDouble(dataParts[13], out double vibrationY300) ? vibrationY300 : double.NaN;
                 DynotisData.VibrationDynamicBalancer360[11] = TryParseDouble(dataParts[14], out double vibrationY330) ? vibrationY330 : double.NaN;
+                
 
                 await Application.Current.Dispatcher.InvokeAsync(() =>
                 {
@@ -401,18 +403,12 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             if ((temp) > 100)
             {
                 newData.DynamicBalancerStatus = true;
-                DynotisData.VibrationDynamicBalancer360[0] = DynotisData.VibrationDynamicBalancer360[0] - 100;
-                DynotisData.VibrationDynamicBalancer360[1] = DynotisData.VibrationDynamicBalancer360[1] - 100;
-                DynotisData.VibrationDynamicBalancer360[2] = DynotisData.VibrationDynamicBalancer360[2] - 100;
-                DynotisData.VibrationDynamicBalancer360[3] = DynotisData.VibrationDynamicBalancer360[3] - 100;
-                DynotisData.VibrationDynamicBalancer360[4] = DynotisData.VibrationDynamicBalancer360[4] - 100;
-                DynotisData.VibrationDynamicBalancer360[5] = DynotisData.VibrationDynamicBalancer360[5] - 100;
-                DynotisData.VibrationDynamicBalancer360[6] = DynotisData.VibrationDynamicBalancer360[6] - 100;
-                DynotisData.VibrationDynamicBalancer360[7] = DynotisData.VibrationDynamicBalancer360[7] - 100;
-                DynotisData.VibrationDynamicBalancer360[8] = DynotisData.VibrationDynamicBalancer360[8] - 100;
-                DynotisData.VibrationDynamicBalancer360[9] = DynotisData.VibrationDynamicBalancer360[9] - 100;
-                DynotisData.VibrationDynamicBalancer360[10] = DynotisData.VibrationDynamicBalancer360[10] - 100;
-                DynotisData.VibrationDynamicBalancer360[11] = DynotisData.VibrationDynamicBalancer360[11] - 100;
+          
+                for (int i = 0; i < DynotisData.VibrationDynamicBalancer360.Length; i++)
+                {
+                    newData.VibrationDynamicBalancer360[i] = Math.Abs(DynotisData.VibrationDynamicBalancer360[i] - 100);
+                }
+               
             }
             else
             {

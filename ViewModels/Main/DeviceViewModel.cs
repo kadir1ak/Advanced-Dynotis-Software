@@ -52,8 +52,12 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                         _currentBalancerPolarChart.PropertyChanged += (sender, e) =>
                         {
                             if (e.PropertyName == nameof(BalancerPolarChartViewModel.CartesianPlotModel) ||
-                                e.PropertyName == nameof(BalancerPolarChartViewModel.PolarPlotModel))
+                                e.PropertyName == nameof(BalancerPolarChartViewModel.PolarPlotModel)||
+                                 e.PropertyName == nameof(BalancerPolarChartViewModel.VibrationDynamicBalancer360))
                             {
+                              
+                                _currentBalancerPolarChart.VibrationDynamicBalancer360 = DeviceInterfaceVariables.VibrationDynamicBalancer360;
+                        
 
                                 OnPropertyChanged(nameof(DeviceInterfaceVariables));
                             }
