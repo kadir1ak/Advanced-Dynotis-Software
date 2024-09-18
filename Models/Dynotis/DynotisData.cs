@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using static Advanced_Dynotis_Software.Models.Dynotis.DynotisData;
 using static InterfaceVariables;
@@ -55,10 +56,14 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         private bool _escStatus;
         private bool _dynamicBalancerStatus;
 
+        private double[] _vibrationDynamicBalancer360 = new double[12];
+
         private VibrationVariables _vibrationVariables;
         private TheoricVariables _theoricVariables;
 
 
+
+        private string _pageName;
 
         private string _testMode;
         private bool _isRecording;
@@ -243,6 +248,11 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             get => _dynamicBalancerStatus;
             set => SetProperty(ref _dynamicBalancerStatus, value);
         }
+        public double[] VibrationDynamicBalancer360
+        {
+            get => _vibrationDynamicBalancer360;
+            set => SetProperty(ref _vibrationDynamicBalancer360, value);
+        }
         public VibrationVariables Vibration
         {
             get => _vibrationVariables;
@@ -260,6 +270,11 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             set => SetProperty(ref _isRecording, value);
         }
 
+        public string PageName
+        {
+            get => _pageName;
+            set => SetProperty(ref _pageName, value);
+        }
         public string TestMode
         {
             get => _testMode;

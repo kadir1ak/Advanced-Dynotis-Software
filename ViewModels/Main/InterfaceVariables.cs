@@ -90,6 +90,8 @@ public class InterfaceVariables : INotifyPropertyChanged
     private string _fileName;
     private TimeSpan _duration;
 
+    private string _pageName;
+
     private double _deviceBaseStaticVibration;          // Cihazın durağan haldeki titreşimi
     private double _motorBaseRunningVibration;              // Motor çalışır haldeki titreşimi
     private double _propellerBaseRunningVibration;          // Pervane çalışır haldeki titreşim değeri
@@ -265,6 +267,12 @@ public class InterfaceVariables : INotifyPropertyChanged
     {
         get => _isRecording;
         set => SetProperty(ref _isRecording, value);
+    }
+
+    public string PageName
+    {
+        get => _pageName;
+        set => SetProperty(ref _pageName, value);
     }
 
     public string TestMode
@@ -547,6 +555,9 @@ public class InterfaceVariables : INotifyPropertyChanged
         Vibration.TareCurrentVibrationX = data.Vibration.TareVibrationX;
         Vibration.TareCurrentVibrationY = data.Vibration.TareVibrationY;
         Vibration.TareCurrentVibrationZ = data.Vibration.TareVibrationZ;
+
+        data.PageName = PageName;
+        TestMode = data.TestMode;
 
         WindSpeed = WindSpeedUnitSet(WindSpeed.Value, WindSpeed.UnitName, WindSpeed.UnitSymbol, data.WindSpeed.Value, data.WindSpeed.UnitName, data.WindSpeed.UnitSymbol);
         WindDirection = data.WindDirection;

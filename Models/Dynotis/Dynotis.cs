@@ -230,8 +230,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                             {
                                 deviceInfoReceived = true;
                                 Mode = "2";
-                                await Task.Run(() => Port.WriteLine($"Device_Status:{Mode};ESC:{DynotisData.ESCValue};"), token);
-                               // await WriteLineAsync(Port, $"Device_Status:{Mode};ESC:{DynotisData.ESCValue};", token);                               
+                                await Task.Run(() => Port.WriteLine($"Device_Status:{Mode};ESC:{DynotisData.ESCValue};"), token);                         
                             }
                         }
                         else
@@ -244,46 +243,20 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 // Cihazdan Gelen Sensör Verilerini Ayrıştırma Alanı
                 while (!token.IsCancellationRequested && Port.IsOpen)
                 {
-                    string indata = await Task.Run(() => Port.ReadExisting(), token);
-                    string[] dataParts = indata.Split(',');
-                    if (dataParts.Length == 16)
+                    // Test için mod seçiniz
+                    Mode = "5";
+                    await Task.Run(() => Port.WriteLine($"Device_Status:{Mode};ESC:{DynotisData.ESCValue};"), token);
+                    switch (Mode)
                     {
-                        var newData = new DynotisData
-                        {
-                            Time = TryParseDouble(dataParts[0], out double time) ? time : double.NaN,
-                            Current = TryParseDouble(dataParts[1], out double current) ? current : double.NaN,
-                            Voltage = TryParseDouble(dataParts[2], out double voltage) ? voltage : double.NaN,
-                            Thrust = TryParseDouble(dataParts[3], out double thrust) ? new DynotisData.Unit(thrust, "Gram-force", "gf") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
-                            Torque = TryParseDouble(dataParts[4], out double torque) ? new DynotisData.Unit(torque, "Newton millimeter", "N.mm") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
-                            MotorSpeed = TryParseDouble(dataParts[5], out double motorSpeed) ? new DynotisData.Unit(motorSpeed, "Revolutions per minute", "RPM") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
-                            WindSpeed = TryParseDouble(dataParts[6], out double windSpeed) ? new DynotisData.Unit(windSpeed, "Meters per second", "m/s") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
-                            WindDirection = TryParseDouble(dataParts[7], out double windDirection) ? windDirection : double.NaN,
-                            VibrationX = TryParseDouble(dataParts[8], out double vibrationX) ? vibrationX : double.NaN,
-                            VibrationY = TryParseDouble(dataParts[9], out double vibrationY) ? vibrationY : double.NaN,
-                            VibrationZ = TryParseDouble(dataParts[10], out double vibrationZ) ? vibrationZ : double.NaN,
-                            AmbientTemp = TryParseDouble(dataParts[11], out double ambientTemp) ? new DynotisData.Unit(ambientTemp, "Celsius", "°C") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
-                            MotorTemp = TryParseDouble(dataParts[12], out double motorTemp) ? new DynotisData.Unit(motorTemp, "Celsius", "°C") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
-                            Temperature = TryParseDouble(dataParts[13], out double temp) ? new DynotisData.Unit(temp, "Celsius", "°C") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
-                            Pressure = TryParseDouble(dataParts[14], out double pressure) ? new DynotisData.Unit(pressure, "Pascal", "Pa") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
-                            Humidity = TryParseDouble(dataParts[15], out double humidity) ? humidity : double.NaN
-                        };
-
-                        await Application.Current.Dispatcher.InvokeAsync(() =>
-                        {
-                            lock (_dataLock)
-                            {
-                                TransferStoredData(DynotisData, newData);
-
-                                VibrationCalculations();
-
-                                TheoreticalCalculations();
-
-                                OnPropertyChanged(nameof(DynotisData));
-                            }
-                        });
-
-                        await Task.Run(() => Port.WriteLine($"Device_Status:{Mode};ESC:{DynotisData.ESCValue};"), token);
-                       // await WriteLineAsync(Port, $"Device_Status:{Mode};ESC:{DynotisData.ESCValue};", token);
+                        case "2":
+                            await Dynotis_Mod_2(token);
+                            break;
+                        case "5":
+                            await Dynotis_Mod_5(token);
+                            break;
+                        default:
+                            Logger.Log("Unknown test mode.");
+                            break;
                     }
                     await Task.Delay(1);
                 }
@@ -291,6 +264,89 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             catch (Exception ex)
             {
                 Logger.Log($"An error occurred: {ex.Message}");
+            }
+        }
+        private async Task Dynotis_Mod_2(CancellationToken token)
+        {
+            string indata = await Task.Run(() => Port.ReadExisting(), token);
+            string[] dataParts = indata.Split(',');
+            if (dataParts.Length == 16)
+            {
+                var newData = new DynotisData
+                {
+                    Time = TryParseDouble(dataParts[0], out double time) ? time : double.NaN,
+                    Current = TryParseDouble(dataParts[1], out double current) ? current : double.NaN,
+                    Voltage = TryParseDouble(dataParts[2], out double voltage) ? voltage : double.NaN,
+                    Thrust = TryParseDouble(dataParts[3], out double thrust) ? new DynotisData.Unit(thrust, "Gram-force", "gf") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
+                    Torque = TryParseDouble(dataParts[4], out double torque) ? new DynotisData.Unit(torque, "Newton millimeter", "N.mm") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
+                    MotorSpeed = TryParseDouble(dataParts[5], out double motorSpeed) ? new DynotisData.Unit(motorSpeed, "Revolutions per minute", "RPM") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
+                    WindSpeed = TryParseDouble(dataParts[6], out double windSpeed) ? new DynotisData.Unit(windSpeed, "Meters per second", "m/s") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
+                    WindDirection = TryParseDouble(dataParts[7], out double windDirection) ? windDirection : double.NaN,
+                    VibrationX = TryParseDouble(dataParts[8], out double vibrationX) ? vibrationX : double.NaN,
+                    VibrationY = TryParseDouble(dataParts[9], out double vibrationY) ? vibrationY : double.NaN,
+                    VibrationZ = TryParseDouble(dataParts[10], out double vibrationZ) ? vibrationZ : double.NaN,
+                    AmbientTemp = TryParseDouble(dataParts[11], out double ambientTemp) ? new DynotisData.Unit(ambientTemp, "Celsius", "°C") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
+                    MotorTemp = TryParseDouble(dataParts[12], out double motorTemp) ? new DynotisData.Unit(motorTemp, "Celsius", "°C") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
+                    Temperature = TryParseDouble(dataParts[13], out double temp) ? new DynotisData.Unit(temp, "Celsius", "°C") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
+                    Pressure = TryParseDouble(dataParts[14], out double pressure) ? new DynotisData.Unit(pressure, "Pascal", "Pa") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
+                    Humidity = TryParseDouble(dataParts[15], out double humidity) ? humidity : double.NaN
+                };
+
+                await Application.Current.Dispatcher.InvokeAsync(() =>
+                {
+                    lock (_dataLock)
+                    {
+                        TransferStoredData(DynotisData, newData);
+
+                        VibrationCalculations();
+
+                        TheoreticalCalculations();
+
+                        OnPropertyChanged(nameof(DynotisData));
+                    }
+                });
+            }
+        }
+        private async Task Dynotis_Mod_5(CancellationToken token)
+        {
+            string indata = await Task.Run(() => Port.ReadExisting(), token);
+            string[] dataParts = indata.Split(',');
+            if (dataParts.Length == 15)
+            {
+
+                var newData = new DynotisData
+                {
+                    Time = TryParseDouble(dataParts[0], out double time) ? time : double.NaN,
+                    MotorSpeed = TryParseDouble(dataParts[1], out double motorSpeed) ? new DynotisData.Unit(motorSpeed, "Revolutions per minute", "RPM") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
+                    VibrationY = TryParseDouble(dataParts[2], out double vibrationY) ? vibrationY : double.NaN,
+                };
+
+                DynotisData.VibrationDynamicBalancer360[0] = TryParseDouble(dataParts[3], out double vibrationY0) ? vibrationY0 : double.NaN;
+                DynotisData.VibrationDynamicBalancer360[1] = TryParseDouble(dataParts[4], out double vibrationY30) ? vibrationY30 : double.NaN;
+                DynotisData.VibrationDynamicBalancer360[2] = TryParseDouble(dataParts[5], out double vibrationY60) ? vibrationY60 : double.NaN;
+                DynotisData.VibrationDynamicBalancer360[3] = TryParseDouble(dataParts[6], out double vibrationY90) ? vibrationY90 : double.NaN;
+                DynotisData.VibrationDynamicBalancer360[4] = TryParseDouble(dataParts[7], out double vibrationY120) ? vibrationY120 : double.NaN;
+                DynotisData.VibrationDynamicBalancer360[5] = TryParseDouble(dataParts[8], out double vibrationY150) ? vibrationY150 : double.NaN;
+                DynotisData.VibrationDynamicBalancer360[6] = TryParseDouble(dataParts[9], out double vibrationY180) ? vibrationY180 : double.NaN;
+                DynotisData.VibrationDynamicBalancer360[7] = TryParseDouble(dataParts[10], out double vibrationY210) ? vibrationY210 : double.NaN;
+                DynotisData.VibrationDynamicBalancer360[8] = TryParseDouble(dataParts[11], out double vibrationY240) ? vibrationY240 : double.NaN;
+                DynotisData.VibrationDynamicBalancer360[9] = TryParseDouble(dataParts[12], out double vibrationY270) ? vibrationY270 : double.NaN;
+                DynotisData.VibrationDynamicBalancer360[10] = TryParseDouble(dataParts[13], out double vibrationY300) ? vibrationY300 : double.NaN;
+                DynotisData.VibrationDynamicBalancer360[11] = TryParseDouble(dataParts[14], out double vibrationY330) ? vibrationY330 : double.NaN;
+
+                await Application.Current.Dispatcher.InvokeAsync(() =>
+                {
+                    lock (_dataLock)
+                    {
+                        TransferStoredData(DynotisData, newData);
+
+                        VibrationCalculations();
+
+                        TheoreticalCalculations();
+
+                        OnPropertyChanged(nameof(DynotisData));
+                    }
+                });
             }
         }
 
@@ -325,12 +381,38 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             newData.TareCurrentValue = currentData.TareCurrentValue;
             newData.TareMotorSpeedValue = currentData.TareMotorSpeedValue;
 
+
+            /*
+             * 
             if ((newData.VibrationX + newData.VibrationY + newData.VibrationZ)>100) 
             {
                 newData.DynamicBalancerStatus = true;
                 newData.VibrationX = newData.VibrationX - 100;
                 newData.VibrationY = newData.VibrationY - 100;
                 newData.VibrationZ = newData.VibrationZ - 100;
+            }
+            else
+            {
+                newData.DynamicBalancerStatus = false;
+            }
+
+            */
+            double temp = DynotisData.VibrationDynamicBalancer360.Sum();
+            if ((temp) > 100)
+            {
+                newData.DynamicBalancerStatus = true;
+                DynotisData.VibrationDynamicBalancer360[0] = DynotisData.VibrationDynamicBalancer360[0] - 100;
+                DynotisData.VibrationDynamicBalancer360[1] = DynotisData.VibrationDynamicBalancer360[1] - 100;
+                DynotisData.VibrationDynamicBalancer360[2] = DynotisData.VibrationDynamicBalancer360[2] - 100;
+                DynotisData.VibrationDynamicBalancer360[3] = DynotisData.VibrationDynamicBalancer360[3] - 100;
+                DynotisData.VibrationDynamicBalancer360[4] = DynotisData.VibrationDynamicBalancer360[4] - 100;
+                DynotisData.VibrationDynamicBalancer360[5] = DynotisData.VibrationDynamicBalancer360[5] - 100;
+                DynotisData.VibrationDynamicBalancer360[6] = DynotisData.VibrationDynamicBalancer360[6] - 100;
+                DynotisData.VibrationDynamicBalancer360[7] = DynotisData.VibrationDynamicBalancer360[7] - 100;
+                DynotisData.VibrationDynamicBalancer360[8] = DynotisData.VibrationDynamicBalancer360[8] - 100;
+                DynotisData.VibrationDynamicBalancer360[9] = DynotisData.VibrationDynamicBalancer360[9] - 100;
+                DynotisData.VibrationDynamicBalancer360[10] = DynotisData.VibrationDynamicBalancer360[10] - 100;
+                DynotisData.VibrationDynamicBalancer360[11] = DynotisData.VibrationDynamicBalancer360[11] - 100;
             }
             else
             {
