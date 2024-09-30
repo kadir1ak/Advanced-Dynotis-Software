@@ -8,14 +8,17 @@ using Advanced_Dynotis_Software.Models.Dynotis;
 using Advanced_Dynotis_Software.ViewModels.Managers;
 using Advanced_Dynotis_Software.ViewModels.Pages;
 using Advanced_Dynotis_Software.ViewModels.UserControls;
+using Advanced_Dynotis_Software.Services.Helpers;
 
 namespace Advanced_Dynotis_Software.ViewModels.Main
 {
     public class DeviceViewModel : INotifyPropertyChanged, IDisposable
     {
         public InterfaceVariables DeviceInterfaceVariables { get; private set; }
-
+        public SaveVariables DeviceSaveVariables { get; private set; }
         public ChartViewModel ChartViewModel { get; }
+
+        public CsvHelper CsvHelper { get; private set; }
 
         public string DeviceDisplayName => $"{Device.Model} - {Device.SeriNo}";
 
@@ -23,9 +26,9 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         private DynotisData _latestDynotisData;
         private readonly object _dataLock = new();
         private CancellationTokenSource _cancellationTokenSource;
+        private int SaveTimeMillisecond = 1; // 1000 Hz (10ms)
         private int UpdateTimeMillisecond = 10; // 100 Hz (10ms)
         private int ChartUpdateTimeMillisecond = 20; // 50 Hz (20ms)
-
         public Dynotis Device
         {
             get => _device;
@@ -38,6 +41,125 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                 }
             }
         }
+
+        public DeviceViewModel(string portName)
+        {
+            if (!DesignerProperties.GetIsInDesignMode(new DependencyObject()))
+            {
+                DeviceInterfaceVariables = new InterfaceVariables();
+                DeviceSaveVariables = new SaveVariables();
+                Device = new Dynotis(portName);
+                ChartViewModel = new ChartViewModel();
+                _cancellationTokenSource = new CancellationTokenSource();
+
+                Device.PropertyChanged += Device_PropertyChanged;
+
+                InitializeDeviceAsync();
+                Task.Run(() => SaveDataLoop(_cancellationTokenSource.Token), _cancellationTokenSource.Token);
+                Task.Run(() => UpdateDataLoop(_cancellationTokenSource.Token), _cancellationTokenSource.Token);
+                Task.Run(() => UpdateChartLoop(_cancellationTokenSource.Token), _cancellationTokenSource.Token);
+            }
+        }
+
+        private async void InitializeDeviceAsync()
+        {
+            await Device.OpenPortAsync();
+        }
+
+        private async Task SaveDataLoop(CancellationToken token)
+        {
+            while (!token.IsCancellationRequested)
+            {
+                await Task.Delay(SaveTimeMillisecond, token);
+
+                DynotisData latestData;
+                lock (_dataLock)
+                {
+                    latestData = _latestDynotisData;
+                    _latestDynotisData = null;
+                }
+
+                if (latestData != null)
+                {
+                    await Application.Current.Dispatcher.InvokeAsync(() =>
+                    {
+                        if (latestData.RecordStatus)
+                        {
+                            DeviceSaveVariables.UpdateSaveVariables(latestData);
+                            if (!DeviceSaveVariables.RecordFileCreate && DeviceSaveVariables.RecordFilePath != null)
+                            {
+                                // CSV şablonu oluştur
+                                CsvHelper.CreateCsvTemplate(DeviceSaveVariables);
+                                DeviceSaveVariables.RecordFileCreate = true;
+                                DeviceSaveVariables.RecordStatus = true;
+                            }
+                            else
+                            {
+                                // CSV dosyasına satır ekle
+                                CsvHelper.AppendCsvRow(DeviceSaveVariables.RecordFilePath, DeviceSaveVariables.DataRow);
+                            }
+                        }
+                    });
+                }
+            }
+        }
+        private async Task UpdateDataLoop(CancellationToken token)
+        {
+            while (!token.IsCancellationRequested)
+            {
+                await Task.Delay(UpdateTimeMillisecond, token);
+
+                DynotisData latestData;
+                lock (_dataLock)
+                {
+                    latestData = _latestDynotisData;
+                    _latestDynotisData = null;
+                }
+
+                if (latestData != null)
+                {
+                    await Application.Current.Dispatcher.InvokeAsync(() =>
+                    {
+                        DeviceInterfaceVariables.UpdateFrom(latestData);
+                    });
+                }
+            }
+        }
+
+        private async Task UpdateChartLoop(CancellationToken token)
+        {
+            while (!token.IsCancellationRequested)
+            {
+                await Task.Delay(ChartUpdateTimeMillisecond, token);
+
+                // Veriler DynotisData dan alınacak şekilde düzenlenecek!
+                DynotisData latestData;
+                lock (_dataLock)
+                {
+                    latestData = _latestDynotisData;
+                    _latestDynotisData = null;
+                }
+
+                if (latestData != null)
+                {
+                    await Application.Current.Dispatcher.InvokeAsync(() =>
+                    {
+                        ChartViewModel.UpdateChartData(latestData,DeviceInterfaceVariables);
+                    });
+                }
+            }
+        }
+        private void Device_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(Dynotis.DynotisData))
+            {
+                lock (_dataLock)
+                {
+                    _latestDynotisData = Device.DynotisData;
+                }
+            }
+        }
+
 
         private BalancerPolarChartViewModel _currentBalancerPolarChart;
         public BalancerPolarChartViewModel CurrentBalancerPolarChart
@@ -52,12 +174,12 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                         _currentBalancerPolarChart.PropertyChanged += (sender, e) =>
                         {
                             if (e.PropertyName == nameof(BalancerPolarChartViewModel.CartesianPlotModel) ||
-                                e.PropertyName == nameof(BalancerPolarChartViewModel.PolarPlotModel)||
+                                e.PropertyName == nameof(BalancerPolarChartViewModel.PolarPlotModel) ||
                                  e.PropertyName == nameof(BalancerPolarChartViewModel.VibrationDynamicBalancer360))
                             {
-                              
+
                                 _currentBalancerPolarChart.VibrationDynamicBalancer360 = DeviceInterfaceVariables.VibrationDynamicBalancer360;
-                        
+
 
                                 OnPropertyChanged(nameof(DeviceInterfaceVariables));
                             }
@@ -97,7 +219,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                 }
             }
         }
-        
+
         private BalancedPropellerTestsChartViewModel _currentBalancedPropellerTestsChart;
         public BalancedPropellerTestsChartViewModel CurrentBalancedPropellerTestsChart
         {
@@ -126,8 +248,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                     }
                 }
             }
-        }           
-        
+        }
+
         private BalancerRoutingStepsVibrationLevelsViewModel _currentBalancerRoutingStepsVibrationLevels;
         public BalancerRoutingStepsVibrationLevelsViewModel CurrentBalancerRoutingStepsVibrationLevels
         {
@@ -154,7 +276,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                     }
                 }
             }
-        }       
+        }
 
         private BalancerRoutingStepsViewModel _currentBalancerRoutingSteps;
         public BalancerRoutingStepsViewModel CurrentBalancerRoutingSteps
@@ -169,7 +291,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                         _currentBalancerRoutingSteps.PropertyChanged += (sender, e) =>
                         {
 
-                            if (e.PropertyName == nameof(BalancerRoutingStepsViewModel.BalancerIterationStep) ||                                
+                            if (e.PropertyName == nameof(BalancerRoutingStepsViewModel.BalancerIterationStep) ||
                                 e.PropertyName == nameof(BalancerRoutingStepsViewModel.BalancerIterationStepChart) ||
                                 e.PropertyName == nameof(BalancerRoutingStepsViewModel.BalancerIterationVibrationsChart) ||
                                 e.PropertyName == nameof(BalancerRoutingStepsViewModel.BalancerIterationDescription) ||
@@ -204,7 +326,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                                 DeviceInterfaceVariables.Vibration.TareVibration = _currentBalancerRoutingSteps.TareVibration;
                                 DeviceInterfaceVariables.Vibration.TareVibrationX = _currentBalancerRoutingSteps.TareVibrationX;
                                 DeviceInterfaceVariables.Vibration.TareVibrationY = _currentBalancerRoutingSteps.TareVibrationY;
-                                DeviceInterfaceVariables.Vibration.TareVibrationZ = _currentBalancerRoutingSteps.TareVibrationZ;                               
+                                DeviceInterfaceVariables.Vibration.TareVibrationZ = _currentBalancerRoutingSteps.TareVibrationZ;
                                 _currentBalancerRoutingSteps.HighVibration = DeviceInterfaceVariables.Vibration.HighVibration;
                                 _currentBalancerRoutingSteps.HighIPSVibration = DeviceInterfaceVariables.Vibration.HighIPSVibration;
 
@@ -219,8 +341,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                     }
                 }
             }
-        }       
-        
+        }
+
         private BalancerParametersViewModel _currentBalancerParameters;
         public BalancerParametersViewModel CurrentBalancerParameters
         {
@@ -238,10 +360,10 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                                 e.PropertyName == nameof(BalancerParametersViewModel.BalancerIterationStep) ||
                                 e.PropertyName == nameof(BalancerParametersViewModel.BalancerIterationStepChart) ||
                                 e.PropertyName == nameof(BalancerParametersViewModel.BalancerIterationVibrationsChart) ||
-                                e.PropertyName == nameof(BalancerParametersViewModel.BalancerIterationDescription ))
+                                e.PropertyName == nameof(BalancerParametersViewModel.BalancerIterationDescription))
                             {
                                 DeviceInterfaceVariables.ReferenceMotorSpeed = _currentBalancerParameters.ReferenceMotorSpeed;
-                                _currentBalancerParameters.ReferencePropellerDiameter = DeviceInterfaceVariables.ReferencePropellerDiameter;                           
+                                _currentBalancerParameters.ReferencePropellerDiameter = DeviceInterfaceVariables.ReferencePropellerDiameter;
                                 _currentBalancerParameters.BalancerIterationStep = DeviceInterfaceVariables.BalancerIterationStep;
                                 _currentBalancerParameters.BalancerIterationStepChart = DeviceInterfaceVariables.BalancerIterationStepChart;
                                 _currentBalancerParameters.BalancerIterationDescription = DeviceInterfaceVariables.BalancerIterationDescription;
@@ -387,86 +509,6 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                             }
                         };
                     }
-                }
-            }
-        }
-
-        public DeviceViewModel(string portName)
-        {
-            if (!DesignerProperties.GetIsInDesignMode(new DependencyObject()))
-            {
-                DeviceInterfaceVariables = new InterfaceVariables();
-                Device = new Dynotis(portName);
-                ChartViewModel = new ChartViewModel();
-                _cancellationTokenSource = new CancellationTokenSource();
-
-                Device.PropertyChanged += Device_PropertyChanged;
-
-                InitializeDeviceAsync();
-                Task.Run(() => UpdateDataLoop(_cancellationTokenSource.Token), _cancellationTokenSource.Token);
-                Task.Run(() => UpdateChartLoop(_cancellationTokenSource.Token), _cancellationTokenSource.Token);
-            }
-        }
-
-        private async void InitializeDeviceAsync()
-        {
-            await Device.OpenPortAsync();
-        }
-
-        private async Task UpdateDataLoop(CancellationToken token)
-        {
-            while (!token.IsCancellationRequested)
-            {
-                await Task.Delay(UpdateTimeMillisecond, token);
-
-                DynotisData latestData;
-                lock (_dataLock)
-                {
-                    latestData = _latestDynotisData;
-                    _latestDynotisData = null;
-                }
-
-                if (latestData != null)
-                {
-                    await Application.Current.Dispatcher.InvokeAsync(() =>
-                    {
-                        DeviceInterfaceVariables.UpdateFrom(latestData);
-                    });
-                }
-            }
-        }
-
-        private async Task UpdateChartLoop(CancellationToken token)
-        {
-            while (!token.IsCancellationRequested)
-            {
-                await Task.Delay(ChartUpdateTimeMillisecond, token);
-
-                // Veriler DynotisData dan alınacak şekilde düzenlenecek!
-                DynotisData latestData;
-                lock (_dataLock)
-                {
-                    latestData = _latestDynotisData;
-                    _latestDynotisData = null;
-                }
-
-                if (latestData != null)
-                {
-                    await Application.Current.Dispatcher.InvokeAsync(() =>
-                    {
-                        ChartViewModel.UpdateChartData(latestData,DeviceInterfaceVariables);
-                    });
-                }
-            }
-        }
-
-        private void Device_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(Dynotis.DynotisData))
-            {
-                lock (_dataLock)
-                {
-                    _latestDynotisData = Device.DynotisData;
                 }
             }
         }

@@ -221,6 +221,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                             WorkingStatus = "Unknown";
                             ConnectionStatus = "True";
                             DynotisData.ESCStatus = false;
+                            DynotisData.RecordStatus = true;
                             DynotisData.ESCValue = 800;
                             DynotisData.BatteryLevel = 1;
                             DynotisData.MaxCurrent = 0;
@@ -371,6 +372,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             newData.NoLoadCurrents = currentData.NoLoadCurrents;
             newData.ESCValue = currentData.ESCValue;
             newData.ESCStatus = currentData.ESCStatus;
+            newData.RecordStatus = currentData.RecordStatus;
             newData.DynamicBalancerStatus = currentData.DynamicBalancerStatus;
             newData.TestMode = currentData.TestMode;
             newData.FileName = currentData.FileName;

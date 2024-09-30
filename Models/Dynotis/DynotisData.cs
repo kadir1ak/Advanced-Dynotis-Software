@@ -62,7 +62,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         private VibrationVariables _vibrationVariables;
         private TheoricVariables _theoricVariables;
 
-
+        private bool _recordStatus;
 
         private string _pageName;
 
@@ -271,6 +271,11 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         {
             get => _isRecording;
             set => SetProperty(ref _isRecording, value);
+        }  
+        public bool RecordStatus
+        {
+            get => _recordStatus;
+            set => SetProperty(ref _recordStatus, value);
         }
 
         public string PageName
