@@ -1,0 +1,97 @@
+﻿<UserControl x:Class="Advanced_Dynotis_Software.Views.UserControls.FirmwareUpdate"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
+             xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"             
+             xmlns:p="clr-namespace:Advanced_Dynotis_Software.Properties"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <!-- Define a custom button style with no focus border or highlight -->
+        <Style x:Key="CustomButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid Background="{DynamicResource Page}">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+            <!-- Circle Background -->
+            <Button Command="{Binding FirmwareUpdateCommand}" Style="{StaticResource CustomButtonStyle}">
+                <Grid>
+                    <Ellipse x:Name="ellipse" Fill="{DynamicResource FirmwareUpdateButton}" Width="35" Height="35"/>
+                    <!-- Icon -->
+                    <icon:PackIconFontAwesome x:Name="icon" Kind="CloudArrowDownSolid"
+                                              Width="25" 
+                                              Height="25" 
+                                              HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center" 
+                                              Foreground="{DynamicResource FirmwareUpdateIcon}"/>
+                </Grid>
+            </Button>
+            <!-- Text -->
+            <TextBlock Text="Firmware Update" 
+                       VerticalAlignment="Center" 
+                       Margin="10,0,20,0" 
+                       FontSize="18" 
+                       Foreground="{DynamicResource FirmwareUpdateText}"/>
+        </StackPanel>
+    </Grid>
+
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="MouseEnter">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="ellipse" 
+                                     Storyboard.TargetProperty="Width" 
+                                     To="40" 
+                                     Duration="0:0:0.2"/>
+                    <DoubleAnimation Storyboard.TargetName="ellipse" 
+                                     Storyboard.TargetProperty="Height" 
+                                     To="40" 
+                                     Duration="0:0:0.2"/>
+                    <DoubleAnimation Storyboard.TargetName="icon" 
+                                     Storyboard.TargetProperty="Width" 
+                                     To="30" 
+                                     Duration="0:0:0.2"/>
+                    <DoubleAnimation Storyboard.TargetName="icon" 
+                                     Storyboard.TargetProperty="Height" 
+                                     To="30" 
+                                     Duration="0:0:0.2"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="MouseLeave">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="ellipse" 
+                                     Storyboard.TargetProperty="Width" 
+                                     To="35" 
+                                     Duration="0:0:0.2"/>
+                    <DoubleAnimation Storyboard.TargetName="ellipse" 
+                                     Storyboard.TargetProperty="Height" 
+                                     To="35" 
+                                     Duration="0:0:0.2"/>
+                    <DoubleAnimation Storyboard.TargetName="icon" 
+                                     Storyboard.TargetProperty="Width" 
+                                     To="25" 
+                                     Duration="0:0:0.2"/>
+                    <DoubleAnimation Storyboard.TargetName="icon" 
+                                     Storyboard.TargetProperty="Height" 
+                                     To="25" 
+                                     Duration="0:0:0.2"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </UserControl.Triggers>
+</UserControl>

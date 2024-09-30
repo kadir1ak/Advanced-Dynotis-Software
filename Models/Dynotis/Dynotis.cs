@@ -1,9 +1,12 @@
 ﻿using Advanced_Dynotis_Software.Services.Logger;
 using Irony.Parsing;
 using LiveCharts.Wpf;
+using Microsoft.Win32;
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.IO.Ports;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -95,6 +98,33 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             }
         }
 
+        private string _binFilePath;
+        public string BinFilePath
+        {
+            get => _binFilePath;
+            set
+            {
+                if (_binFilePath != value)
+                {
+                    _binFilePath = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _bootloader_Mode;
+        public string Bootloader_Mode
+        {
+            get => _bootloader_Mode;
+            set
+            {
+                if (_bootloader_Mode != value)
+                {
+                    _bootloader_Mode = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         private string _mode;
         public string Mode
         {
@@ -158,6 +188,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 Encoding = Encoding.UTF8,
                 NewLine = "\r\n"
             };
+            Mode = "0";
             _portName = portName;
             _dynotisData = new DynotisData();
         }
@@ -227,6 +258,8 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                             DynotisData.MaxCurrent = 0;
                             DynotisData.SecurityStatus = false;
 
+                            OnPropertyChanged(nameof(DynotisData));
+
                             if (!string.IsNullOrEmpty(Model) && !string.IsNullOrEmpty(SeriNo))
                             {
                                 deviceInfoReceived = true;
@@ -239,13 +272,31 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                             deviceInfoReceived = false;
                         }
                     }
+                    else if (indata.Contains("Bootloader_Mode")) // Başlangıçta cihazın Bootloader_Mode (GO) -> 3 olarak ayarlamasına ve app e geçmesine yardımcı olan alan.
+                    {
+                        string[] dataParts = indata.Split(':');
+                        if (dataParts.Length >= 2)
+                        {
+                            Bootloader_Mode = dataParts[1];
+                        }
+                        if (Mode == "0")
+                        {
+                            await Task.Run(() => Port.WriteLine($"GO"), token);
+                            Port.Close();
+                        }
+                        else if(Mode == "6")
+                        {
+                            await Dynotis_Mod_6(token);
+                        }
+                      
+                    }
                     await Task.Delay(100);
                 }
                 // Cihazdan Gelen Sensör Verilerini Ayrıştırma Alanı
                 while (!token.IsCancellationRequested && Port.IsOpen)
                 {
                     // Test için mod seçiniz
-                    Mode = "5";
+                    // Mode = "6";
                     await Task.Run(() => Port.WriteLine($"Device_Status:{Mode};ESC:{DynotisData.ESCValue};"), token);
                     switch (Mode)
                     {
@@ -254,6 +305,9 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                             break;
                         case "5":
                             await Dynotis_Mod_5(token);
+                            break;
+                        case "6":
+                            await Dynotis_Mod_6(token);
                             break;
                         default:
                             Logger.Log("Unknown test mode.");
@@ -351,6 +405,87 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                     }
                 });
             }
+        }
+        private async Task Dynotis_Mod_6(CancellationToken token)
+        {
+            /*
+             *  Cihaz Update modu
+             *  Bu alanın çalışması için cihaza  "Device_Status:6;ESC:800;"  komutu iletilmelidir.
+             *  Gelen mesaj "Bootloader_Mode:0" içeriyorsa Bootloader_Mode değerini ayrıştırıp ilgili değişkene atamak gerekiyor.
+             */
+            try
+            {
+                string indata = await Task.Run(() => Port.ReadExisting(), token);
+                string[] dataParts = indata.Split(':');
+                if (indata.Contains("Bootloader_Mode"))
+                {
+                    if (dataParts.Length >= 2)
+                    {
+                        Bootloader_Mode = dataParts[1];
+                        if (Bootloader_Mode == "0")
+                        {
+                            // Bootloader moduna geçmek için komut gönder
+                            await Task.Run(() => Port.WriteLine($"UPDATE_MODE"), token);
+                            MessageBox.Show("Cihaz Update Moduna Geçti.");
+                        }
+                        else if (Bootloader_Mode == "1")
+                        {
+                            // Bin dosyası seç ve dosya boyutunu cihaza bildir
+                            BinFilePath = "D:\\ST\\Dynotis-ST-Firmware\\Dynotis-ST-Firmware-Application\\Debug\\Dynotis-ST-Firmware-Application.bin";
+                            if (!string.IsNullOrEmpty(BinFilePath))
+                            {
+                                // Bin dosyasının boyutunu hesapla
+                                //FileInfo binFileInfo = new FileInfo(BinFilePath);
+                                int binDataSize = 33076;
+
+                                // Bin dosya boyutunu cihaza ilet
+                                await Task.Run(() => Port.WriteLine($"{binDataSize}"), token);
+
+                                MessageBox.Show($"Bin dosya boyutu ({binDataSize} byte) cihaza gönderildi.");
+                            }
+                        }
+                        else if (Bootloader_Mode == "2")
+                        {
+                            // Cihazdan gelen yanıt, bin dosyasının gönderilebileceğini belirtiyor
+                            if (!string.IsNullOrEmpty(BinFilePath))
+                            {
+                                // Bin dosyasını cihaza gönder
+                                await SendBinFile(BinFilePath, token);
+                                MessageBox.Show("Bin dosya cihaza başarıyla gönderildi.");
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Log($"Bootloader işleminde hata oluştu: {ex.Message}");
+            }
+        }
+
+        private async Task SendBinFile(string filePath, CancellationToken token)
+        {
+            byte[] binData = File.ReadAllBytes(filePath);
+
+            const int packetSize = 64; // USB paket boyutu
+            int totalSent = 0;
+
+            while (totalSent < binData.Length)
+            {
+                int remaining = binData.Length - totalSent;
+                int sizeToSend = remaining > packetSize ? packetSize : remaining;
+
+                // Gönderilecek veri parçasını al
+                byte[] packet = new byte[sizeToSend];
+                Array.Copy(binData, totalSent, packet, 0, sizeToSend);
+
+                // Veriyi cihaza gönder
+                await Task.Run(() => Port.Write(packet, 0, packet.Length), token);
+
+                totalSent += sizeToSend;
+            }
+
+            Console.WriteLine("Bin dosya başarıyla gönderildi.");
         }
 
         public static bool TryParseDouble(string value, out double result)

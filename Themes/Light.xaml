@@ -63,7 +63,12 @@
     <SolidColorBrush Color="#FF3AF389" x:Key="TareButton"/>
     <SolidColorBrush Color="#151F2D" x:Key="TareText"/>
     <SolidColorBrush Color="#151F2D" x:Key="TareIcon"/>
-
+    
+    <!-- FirmwareUpdate -->
+    <SolidColorBrush Color="#FF3AF389" x:Key="FirmwareUpdateButton"/>
+    <SolidColorBrush Color="#151F2D" x:Key="FirmwareUpdateText"/>
+    <SolidColorBrush Color="#151F2D" x:Key="FirmwareUpdateIcon"/>
+    
     <!-- Balancer -->
     <BitmapImage x:Key="MotorAndPropellerImage" UriSource="pack://application:,,,/Documents/Images/Motor_and_Propeller.png"/>
     <SolidColorBrush Color="#151F2D" x:Key="Line"/>

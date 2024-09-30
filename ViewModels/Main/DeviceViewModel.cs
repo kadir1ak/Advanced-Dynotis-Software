@@ -434,6 +434,30 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             }
         }
 
+        private FirmwareUpdateViewModel _currentFirmwareUpdate;
+        public FirmwareUpdateViewModel CurrentFirmwareUpdate
+        {
+            get => _currentFirmwareUpdate;
+            set
+            {
+                if (SetProperty(ref _currentFirmwareUpdate, value))
+                {
+                    if (_currentFirmwareUpdate != null)
+                    {
+                        _currentFirmwareUpdate.PropertyChanged += (sender, e) =>
+                        {
+                            if (e.PropertyName == nameof(FirmwareUpdateViewModel.Bootloader_Mode))
+                            {
+                                Device.Bootloader_Mode = _currentFirmwareUpdate.Bootloader_Mode;
+                                Device.Mode = _currentFirmwareUpdate.Mode;
+                                OnPropertyChanged(nameof(Device.DynotisData));
+                            }
+                        };
+                    }
+                }
+            }
+        }
+
         private EquipmentParametersViewModel _currentEquipmentParameters;
         public EquipmentParametersViewModel CurrentEquipmentParameters
         {
