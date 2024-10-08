@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Advanced_Dynotis_Software.Views.Pages.SoftwareUpdatePage"
+﻿ <UserControl x:Class="Advanced_Dynotis_Software.Views.Pages.SoftwareUpdatePage"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -25,9 +25,10 @@
 
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="20">
             <TextBlock Text="{x:Static p:Resources.SoftwareUpdatePage_FirmwareText}" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Foreground="{DynamicResource Text}"/>
-            <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" BorderBrush="{DynamicResource PageBorder}" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="3">
+            <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" BorderBrush="Transparent" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="3">
                 <Grid Margin="20 0 20 0" VerticalAlignment="Center">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -35,23 +36,9 @@
                     <Label Grid.Row="0" Content="Device List" Foreground="{DynamicResource Text}" FontSize="14" HorizontalAlignment="Center"/>
                     <ComboBox Grid.Row="1" Width="120" ItemsSource="{Binding AvailableDevices}" SelectedItem="{Binding SelectedDevice}" DisplayMemberPath="DeviceDisplayName" VerticalAlignment="Center"/>
                     <Button Grid.Row="2" Content="{x:Static p:Resources.SingleTestPage_Connect}" Command="{Binding ConnectCommand}" Margin="0,10,0,0" VerticalAlignment="Center"/>
+                    <Button Grid.Row="3" Content="FirmwareUpdate" Command="{Binding FirmwareUpdateCommand}" Margin="0,10,0,0" VerticalAlignment="Center"/>
                 </Grid>
             </Border>
-            <ContentControl Grid.Row="0" Grid.RowSpan="3" Grid.Column="3" Content="{Binding ConnectedDevice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                <ContentControl.ContentTemplate>
-                    <DataTemplate>
-                        <Border HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0 3 3 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
-                            <ContentControl Content="{Binding CurrentFirmwareUpdate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                <ContentControl.ContentTemplate>
-                                    <DataTemplate>
-                                        <uc:FirmwareUpdate HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"/>
-                                    </DataTemplate>
-                                </ContentControl.ContentTemplate>
-                            </ContentControl>
-                        </Border>
-                    </DataTemplate>
-                </ContentControl.ContentTemplate>
-            </ContentControl>
         </StackPanel>
 
     </Grid>

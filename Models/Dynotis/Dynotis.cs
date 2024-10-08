@@ -139,6 +139,33 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             }
         }
 
+        private string _firmwareVersion;
+        public string FirmwareVersion
+        {
+            get => _firmwareVersion;
+            set
+            {
+                if (_firmwareVersion != value)
+                {
+                    _firmwareVersion = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        private string _firmwareUpdateStatus;
+        public string FirmwareUpdateStatus
+        {
+            get => _firmwareUpdateStatus;
+            set
+            {
+                if (_firmwareUpdateStatus != value)
+                {
+                    _firmwareUpdateStatus = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         private string _model;
         public string Model
         {
@@ -189,8 +216,11 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 NewLine = "\r\n"
             };
             Mode = "0";
-            _portName = portName;
-            _dynotisData = new DynotisData();
+            Bootloader_Mode = "0";
+            FirmwareUpdateStatus = "0";
+            FirmwareVersion = "v.1.1.4";
+            PortName = portName;
+            DynotisData = new DynotisData();
         }
 
         public async Task OpenPortAsync()
@@ -230,6 +260,20 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 }
             }
         }
+        public async Task SendCommandAsync(string command)
+        {
+            Port.WriteLine(command);
+        }
+
+        public async Task<string> ReceiveBootloaderResponseAsync()
+        {
+            return await Task.Run(() => Port.ReadLine());
+        }
+
+        public async Task SendDataAsync(byte[] data)
+        {
+            await Task.Run(() => Port.Write(data, 0, data.Length));
+        }
 
         private async Task DeviceDataReceivedAsync(CancellationToken token)
         {
@@ -264,7 +308,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                             {
                                 deviceInfoReceived = true;
                                 Mode = "2";
-                                await Task.Run(() => Port.WriteLine($"Device_Status:{Mode};ESC:{DynotisData.ESCValue};"), token);                         
+                                await Task.Run(() => Port.WriteLine($"Device_Status:{Mode};ESC:{DynotisData.ESCValue};"), token);
                             }
                         }
                         else
@@ -272,24 +316,107 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                             deviceInfoReceived = false;
                         }
                     }
-                    else if (indata.Contains("Bootloader_Mode")) // Başlangıçta cihazın Bootloader_Mode (GO) -> 3 olarak ayarlamasına ve app e geçmesine yardımcı olan alan.
+                    else if (indata.Contains("Bootloader_Mode"))
                     {
-                        string[] dataParts = indata.Split(':');
+                        string[] dataParts = indata.Split(':'); // Bootloader_Mode kısmını ayır
                         if (dataParts.Length >= 2)
                         {
-                            Bootloader_Mode = dataParts[1];
+                            string modeAndVersion = dataParts[1]; // Bootloader_Mode:0+v.1.1.1 -> "0+v.1.1.1"
+                            string[] modeVersionParts = modeAndVersion.Split('+'); // "0+v.1.1.1" -> ["0", "v.1.1.1"]
+
+                            if (modeVersionParts.Length >= 2)
+                            {
+                                // Bootloader_Mode bilgilerini al
+                                string bootloaderMode = modeVersionParts[0]; // "0"
+                                // Gelen değeri kontrol et
+                                if (int.TryParse(bootloaderMode, out int modeValue))
+                                {
+                                    Bootloader_Mode = bootloaderMode;
+                                }
+                            }
                         }
-                        if (Mode == "0")
+
+                        if (Bootloader_Mode == "0")
                         {
-                            await Task.Run(() => Port.WriteLine($"GO"), token);
-                            Port.Close();
+                            if (FirmwareUpdateStatus == "0") // Kontrol et
+                            {
+                                // Firmware Version bilgilerini al
+                                if (dataParts.Length >= 2)
+                                {
+                                    string modeAndVersion = dataParts[1]; // Bootloader_Mode:0+v.1.1.1 -> "0+v.1.1.1"
+                                    string[] modeVersionParts = modeAndVersion.Split('+'); // "0+v.1.1.1" -> ["0", "v.1.1.1"]
+
+                                    if (modeVersionParts.Length >= 2)
+                                    {
+                                        // Bootloader_Mode ve versiyon bilgilerini al
+                                        string bootloaderMode = modeVersionParts[0]; // "0"
+                                        string version = modeVersionParts[1]; // "v.1.1.1Bootloader_Mode" gibi hatalı olabilir
+
+                                        // Versiyon bilgilerini Regex kullanarak doğru formatta çek
+                                        var versionMatch = System.Text.RegularExpressions.Regex.Match(version, @"v\.(\d+)\.(\d+)\.(\d+)");
+
+                                        if (versionMatch.Success)
+                                        {
+                                            // Version bilgilerini ayıkla
+                                            string major = versionMatch.Groups[1].Value; // Major version
+                                            string minor = versionMatch.Groups[2].Value; // Minor version
+                                            string svnCommit = versionMatch.Groups[3].Value; // Commit number
+
+                                            // Bootloader_Mode değerini ayarla
+                                            Bootloader_Mode = bootloaderMode;
+
+                                            // Firmware versiyonu kontrolü
+                                            string trimmedFirmwareVersion = FirmwareVersion.Trim();
+                                            string receivedVersion = ("v." + major + "." + minor + "." + svnCommit).Trim();
+
+                                            FirmwareUpdateStatus = (trimmedFirmwareVersion == receivedVersion) ? "1" : "2";
+                                            if (FirmwareUpdateStatus == "1") // Uygun, "GO" komutu gönder
+                                            {
+                                                await Task.Run(() => Port.WriteLine($"GO"), token);
+                                                Port.Close(); // Portu kapat
+                                            }
+                                            else if (FirmwareUpdateStatus == "2") // Uygun değil, güncelleme modu
+                                            {
+                                                await Task.Run(() => Port.WriteLine($"UPDATE_MODE"), token);
+                                            }
+                                            // Firmware Version bilgisi cihaza gitsin.
+                                            await Task.Run(() => Port.WriteLine(FirmwareVersion), token);
+
+                                        }
+                                    }
+                                }
+                            }
+                            else if(FirmwareUpdateStatus == "1") // Uygun, "GO" komutu gönder
+                            { 
+                                await Task.Run(() => Port.WriteLine($"GO"), token);
+                                Port.Close(); // Portu kapat
+                            }
                         }
-                        else if(Mode == "6")
+                        else if (Bootloader_Mode == "1")
                         {
-                            await Dynotis_Mod_6(token);
+                            // bin dosyasının boyutunu ilet
+                            string binFilePath = @"D:\ST\Dynotis-ST-Firmware\Dynotis-ST-Firmware-Device\Debug\Dynotis-ST-Firmware-Device.bin";
+
+                            // Dosya boyutunu al
+                            FileInfo binFileInfo = new FileInfo(binFilePath);
+                            int binFileSize = (int)binFileInfo.Length; // Byte cinsinden dosya boyutu
+                            // Dosya boyutunu cihaza gönder
+                            await Task.Run(() => Port.WriteLine(binFileSize.ToString()), token);
+                            //await Task.Run(() => Port.WriteLine($"105696"), token);
                         }
-                      
+                        else if (Bootloader_Mode == "2")
+                        {
+                            // binFilePath değişkenini tanımla
+                            //D:\ST\Dynotis-ST-Firmware\Dynotis-ST-Firmware-Device\Debug
+                            string binFilePath = @"D:\ST\Dynotis-ST-Firmware\Dynotis-ST-Firmware-Device\Debug\Dynotis-ST-Firmware-Device.bin";
+                            // .bin dosyasını cihaza gönder
+                            await SendFirmwareAsync(binFilePath, token);
+                        }
                     }
+
+                    // Version bilgilerini kontrol edebilirsin
+                   // MessageBox.Show($"Bootloader_Mode:{Bootloader_Mode} \r\n FirmwareUpdateStatus:{FirmwareUpdateStatus}");
+
                     await Task.Delay(100);
                 }
                 // Cihazdan Gelen Sensör Verilerini Ayrıştırma Alanı
@@ -306,9 +433,6 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                         case "5":
                             await Dynotis_Mod_5(token);
                             break;
-                        case "6":
-                            await Dynotis_Mod_6(token);
-                            break;
                         default:
                             Logger.Log("Unknown test mode.");
                             break;
@@ -321,6 +445,58 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 Logger.Log($"An error occurred: {ex.Message}");
             }
         }
+        public async Task SendFirmwareAsync(string binFilePath, CancellationToken token)
+        {
+            try
+            {
+                if (!File.Exists(binFilePath))
+                {
+                    Logger.Log("Bin file does not exist at the specified path.");
+                    return;
+                }
+
+                byte[] firmwareData = await File.ReadAllBytesAsync(binFilePath, token);
+                int totalSize = firmwareData.Length;
+                int bufferSize = 256; // Gönderilecek her veri parçasının boyutu
+                int totalChunks = (int)Math.Ceiling((double)totalSize / bufferSize);
+
+                Logger.Log($"Firmware size: {totalSize} bytes. Sending in {totalChunks} chunks.");
+
+                for (int i = 0; i < totalChunks; i++)
+                {
+                    if (token.IsCancellationRequested)
+                    {
+                        Logger.Log("Firmware sending was cancelled.");
+                        break;
+                    }
+
+                    // Gönderilecek veriyi belirle
+                    int currentChunkSize = Math.Min(bufferSize, totalSize - (i * bufferSize));
+                    byte[] buffer = new byte[currentChunkSize];
+                    Array.Copy(firmwareData, i * bufferSize, buffer, 0, currentChunkSize);
+
+                    // Veriyi seri port üzerinden gönder
+                    Port.Write(buffer, 0, currentChunkSize);
+
+                    // Her parçayı gönderdikten sonra kısa bir süre bekle
+                     await Task.Delay(1, token);
+                    Logger.Log($"Chunk {i + 1}/{totalChunks} sent.");
+
+                    // Gönderim sonrası cihazdan onay bekleniyorsa buraya ekleyin
+                }
+
+                Logger.Log("Firmware update completed.");
+                Mode = "0";
+                Bootloader_Mode = "0";
+                FirmwareUpdateStatus = "0";
+
+            }
+            catch (Exception ex)
+            {
+                Logger.Log($"An error occurred while sending firmware: {ex.Message}");
+            }
+        }
+
         private async Task Dynotis_Mod_2(CancellationToken token)
         {
             string indata = await Task.Run(() => Port.ReadExisting(), token);
@@ -405,88 +581,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                     }
                 });
             }
-        }
-        private async Task Dynotis_Mod_6(CancellationToken token)
-        {
-            /*
-             *  Cihaz Update modu
-             *  Bu alanın çalışması için cihaza  "Device_Status:6;ESC:800;"  komutu iletilmelidir.
-             *  Gelen mesaj "Bootloader_Mode:0" içeriyorsa Bootloader_Mode değerini ayrıştırıp ilgili değişkene atamak gerekiyor.
-             */
-            try
-            {
-                string indata = await Task.Run(() => Port.ReadExisting(), token);
-                string[] dataParts = indata.Split(':');
-                if (indata.Contains("Bootloader_Mode"))
-                {
-                    if (dataParts.Length >= 2)
-                    {
-                        Bootloader_Mode = dataParts[1];
-                        if (Bootloader_Mode == "0")
-                        {
-                            // Bootloader moduna geçmek için komut gönder
-                            await Task.Run(() => Port.WriteLine($"UPDATE_MODE"), token);
-                            MessageBox.Show("Cihaz Update Moduna Geçti.");
-                        }
-                        else if (Bootloader_Mode == "1")
-                        {
-                            // Bin dosyası seç ve dosya boyutunu cihaza bildir
-                            BinFilePath = "D:\\ST\\Dynotis-ST-Firmware\\Dynotis-ST-Firmware-Application\\Debug\\Dynotis-ST-Firmware-Application.bin";
-                            if (!string.IsNullOrEmpty(BinFilePath))
-                            {
-                                // Bin dosyasının boyutunu hesapla
-                                //FileInfo binFileInfo = new FileInfo(BinFilePath);
-                                int binDataSize = 33076;
-
-                                // Bin dosya boyutunu cihaza ilet
-                                await Task.Run(() => Port.WriteLine($"{binDataSize}"), token);
-
-                                MessageBox.Show($"Bin dosya boyutu ({binDataSize} byte) cihaza gönderildi.");
-                            }
-                        }
-                        else if (Bootloader_Mode == "2")
-                        {
-                            // Cihazdan gelen yanıt, bin dosyasının gönderilebileceğini belirtiyor
-                            if (!string.IsNullOrEmpty(BinFilePath))
-                            {
-                                // Bin dosyasını cihaza gönder
-                                await SendBinFile(BinFilePath, token);
-                                MessageBox.Show("Bin dosya cihaza başarıyla gönderildi.");
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.Log($"Bootloader işleminde hata oluştu: {ex.Message}");
-            }
-        }
-
-        private async Task SendBinFile(string filePath, CancellationToken token)
-        {
-            byte[] binData = File.ReadAllBytes(filePath);
-
-            const int packetSize = 64; // USB paket boyutu
-            int totalSent = 0;
-
-            while (totalSent < binData.Length)
-            {
-                int remaining = binData.Length - totalSent;
-                int sizeToSend = remaining > packetSize ? packetSize : remaining;
-
-                // Gönderilecek veri parçasını al
-                byte[] packet = new byte[sizeToSend];
-                Array.Copy(binData, totalSent, packet, 0, sizeToSend);
-
-                // Veriyi cihaza gönder
-                await Task.Run(() => Port.Write(packet, 0, packet.Length), token);
-
-                totalSent += sizeToSend;
-            }
-
-            Console.WriteLine("Bin dosya başarıyla gönderildi.");
-        }
+        }   
 
         public static bool TryParseDouble(string value, out double result)
         {
@@ -519,7 +614,6 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             newData.TareTorqueValue = currentData.TareTorqueValue;
             newData.TareCurrentValue = currentData.TareCurrentValue;
             newData.TareMotorSpeedValue = currentData.TareMotorSpeedValue;
-
 
             /*
              * 

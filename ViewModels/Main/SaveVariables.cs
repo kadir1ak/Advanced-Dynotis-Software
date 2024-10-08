@@ -22,8 +22,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             RecordFileCreate = false;
 
             // Dosya adını oluştur (zaman damgalı)
-            string fileName = $"test_report_{DateTime.Now:yyyyMMdd_HHmmss}.csv";
-            RecordFilePath = Path.Combine("C:\\Users\\kadir\\Downloads", fileName);
+           // string fileName = $"test_report_{DateTime.Now:yyyyMMdd_HHmmss}.csv";
+           // RecordFilePath = Path.Combine("C:\\Users\\kadir\\Downloads", fileName);
         }
 
         public void UpdateSaveVariables(DynotisData data)

@@ -12,6 +12,14 @@ using Advanced_Dynotis_Software.Services;
 using Advanced_Dynotis_Software.ViewModels.Main;
 using Advanced_Dynotis_Software.ViewModels.Managers;
 using Advanced_Dynotis_Software.Models.Dynotis;
+using Advanced_Dynotis_Software.Services.Logger;
+using Irony.Parsing;
+using System.IO;
+using System.Windows;
+using Microsoft.Win32;
+using Newtonsoft.Json.Linq;
+using System.IO.Ports;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace Advanced_Dynotis_Software.ViewModels.Pages
 {
@@ -20,7 +28,11 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         // Add properties and methods as needed
         private DeviceViewModel _selectedDevice;
         private DeviceViewModel _connectedDevice;
-        private FirmwareUpdateManager _firmwareUpdateManager;
+        //Firmware update yapılacak cihaz
+        private SerialPort _device_Port;
+        private string _device_Port_Name;
+        private string _bootloader_Mode;
+        private string _mode;
         public ObservableCollection<DeviceViewModel> AvailableDevices { get; }
 
         public DeviceViewModel SelectedDevice
@@ -51,12 +63,13 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
         }
 
         public ICommand ConnectCommand { get; }
+        public ICommand FirmwareUpdateCommand { get; }
 
         public SoftwareUpdateViewModel()
         {
             AvailableDevices = new ObservableCollection<DeviceViewModel>(DeviceManager.Instance.GetAllDevices());
             ConnectCommand = new RelayCommand(async _ => await ConnectToDeviceAsync());
-            _firmwareUpdateManager = new FirmwareUpdateManager();
+            FirmwareUpdateCommand = new RelayCommand(async _ => await FirmwareUpdateAsync());
 
             DeviceManager.Instance.DeviceDisconnected += OnDeviceDisconnected;
             DeviceManager.Instance.DeviceConnected += OnDeviceConnected;
@@ -68,18 +81,45 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
 
             await DeviceManager.Instance.ConnectToDeviceAsync(SelectedDevice.Device.PortName);
             ConnectedDevice = SelectedDevice;
-
-            ConnectedDevice.CurrentFirmwareUpdate = _firmwareUpdateManager.GetFirmwareUpdateViewModel(SelectedDevice.Device);
         }
-
+        private async Task FirmwareUpdateAsync()
+        {
+            try
+            {
+                if (ConnectedDevice != null)
+                {
+                    // Bootloader komutu gönderiliyor
+                    string bootloaderCommand = "Device_Status:6;ESC:800;";
+                    await ConnectedDevice.Device.SendCommandAsync(bootloaderCommand);
+                    // USB bağlantısını kapatın
+                    ConnectedDevice.Device.Port.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Log($"Bootloader işleminde hata oluştu (FirmwareUpdateAsync): {ex.Message}");
+                MessageBox.Show($"Bootloader işleminde hata: {ex.Message}");
+            }
+        }
         private void OnDeviceDisconnected(DeviceViewModel device)
         {
-            if (ConnectedDevice == device)
+            try
             {
-                ConnectedDevice = null;
-                ConnectedDevice.CurrentFirmwareUpdate = null;
+                if (ConnectedDevice == device)
+                {
+                    if (ConnectedDevice != null)
+                    {
+                        ConnectedDevice.CurrentFirmwareUpdate = null;
+                    }
+                    // Now safely set ConnectedDevice to null
+                    ConnectedDevice = null;
+                }
+                RefreshAvailableDevices();
             }
-            RefreshAvailableDevices();
+            catch (Exception ex)
+            {
+                Logger.Log($"OnDeviceDisconnected: {ex.Message}");
+            }
         }
 
         private void OnDeviceConnected(DeviceViewModel device)
@@ -99,6 +139,28 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
                 AvailableDevices.Add(device);
             }
             SelectedDevice = AvailableDevices.FirstOrDefault(d => d.Device.PortName == previouslySelectedDevice?.Device.PortName);
+        }
+        public string Bootloader_Mode
+        {
+            get => _bootloader_Mode;
+            set
+            {
+                if (SetProperty(ref _bootloader_Mode, value))
+                {
+                    OnPropertyChanged(nameof(Bootloader_Mode));
+                }
+            }
+        }
+        public string Mode
+        {
+            get => _mode;
+            set
+            {
+                if (SetProperty(ref _mode, value))
+                {
+                    OnPropertyChanged(nameof(Mode));
+                }
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
