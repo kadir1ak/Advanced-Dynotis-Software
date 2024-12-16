@@ -218,7 +218,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             Mode = "0";
             Bootloader_Mode = "0";
             FirmwareUpdateStatus = "0";
-            FirmwareVersion = "v.1.1.4";
+            FirmwareVersion = "v.1.1.1";
             PortName = portName;
             DynotisData = new DynotisData();
         }
@@ -445,6 +445,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 Logger.Log($"An error occurred: {ex.Message}");
             }
         }
+
         public async Task SendFirmwareAsync(string binFilePath, CancellationToken token)
         {
             try
@@ -457,7 +458,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
                 byte[] firmwareData = await File.ReadAllBytesAsync(binFilePath, token);
                 int totalSize = firmwareData.Length;
-                int bufferSize = 256; // Gönderilecek her veri parçasının boyutu
+                int bufferSize = 256;
                 int totalChunks = (int)Math.Ceiling((double)totalSize / bufferSize);
 
                 Logger.Log($"Firmware size: {totalSize} bytes. Sending in {totalChunks} chunks.");
@@ -470,26 +471,19 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                         break;
                     }
 
-                    // Gönderilecek veriyi belirle
                     int currentChunkSize = Math.Min(bufferSize, totalSize - (i * bufferSize));
                     byte[] buffer = new byte[currentChunkSize];
                     Array.Copy(firmwareData, i * bufferSize, buffer, 0, currentChunkSize);
 
-                    // Veriyi seri port üzerinden gönder
                     Port.Write(buffer, 0, currentChunkSize);
-
-                    // Her parçayı gönderdikten sonra kısa bir süre bekle
-                     await Task.Delay(1, token);
+                    await Task.Delay(1, token);
                     Logger.Log($"Chunk {i + 1}/{totalChunks} sent.");
-
-                    // Gönderim sonrası cihazdan onay bekleniyorsa buraya ekleyin
                 }
 
                 Logger.Log("Firmware update completed.");
                 Mode = "0";
                 Bootloader_Mode = "0";
                 FirmwareUpdateStatus = "0";
-
             }
             catch (Exception ex)
             {
