@@ -249,12 +249,6 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             get => _dynamicBalancerStatus;
             set => SetProperty(ref _dynamicBalancerStatus, value);
         }
-   
-        public double[] VibrationDynamicBalancer360
-        {
-            get => _vibrationDynamicBalancer360;
-            set => SetProperty(ref _vibrationDynamicBalancer360, value);
-        }
 
         public VibrationVariables Vibration
         {

@@ -430,9 +430,6 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                         case "2":
                             await Dynotis_Mod_2(token);
                             break;
-                        case "5":
-                            await Dynotis_Mod_5(token);
-                            break;
                         default:
                             Logger.Log("Unknown test mode.");
                             break;
@@ -531,51 +528,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                     }
                 });
             }
-        }
-        private async Task Dynotis_Mod_5(CancellationToken token)
-        {
-            string indata = await Task.Run(() => Port.ReadExisting(), token);
-            string[] dataParts = indata.Split(',');
-            if (dataParts.Length == 15)
-            {
-
-                var newData = new DynotisData
-                {
-                    Time = TryParseDouble(dataParts[0], out double time) ? time : double.NaN,
-                    MotorSpeed = TryParseDouble(dataParts[1], out double motorSpeed) ? new DynotisData.Unit(motorSpeed, "Revolutions per minute", "RPM") : new DynotisData.Unit(double.NaN, "Unknown", "Unknown"),
-                    VibrationY = TryParseDouble(dataParts[2], out double vibrationY) ? vibrationY : double.NaN,
-                };
-
-                
-                DynotisData.VibrationDynamicBalancer360[0] = TryParseDouble(dataParts[3], out double vibrationY0) ? vibrationY0 : double.NaN;
-                DynotisData.VibrationDynamicBalancer360[1] = TryParseDouble(dataParts[4], out double vibrationY30) ? vibrationY30 : double.NaN;
-                DynotisData.VibrationDynamicBalancer360[2] = TryParseDouble(dataParts[5], out double vibrationY60) ? vibrationY60 : double.NaN;
-                DynotisData.VibrationDynamicBalancer360[3] = TryParseDouble(dataParts[6], out double vibrationY90) ? vibrationY90 : double.NaN;
-                DynotisData.VibrationDynamicBalancer360[4] = TryParseDouble(dataParts[7], out double vibrationY120) ? vibrationY120 : double.NaN;
-                DynotisData.VibrationDynamicBalancer360[5] = TryParseDouble(dataParts[8], out double vibrationY150) ? vibrationY150 : double.NaN; ;
-                DynotisData.VibrationDynamicBalancer360[6] = TryParseDouble(dataParts[9], out double vibrationY180) ? vibrationY180 : double.NaN;
-                DynotisData.VibrationDynamicBalancer360[7] = TryParseDouble(dataParts[10], out double vibrationY210) ? vibrationY210 : double.NaN;
-                DynotisData.VibrationDynamicBalancer360[8] = TryParseDouble(dataParts[11], out double vibrationY240) ? vibrationY240 : double.NaN;
-                DynotisData.VibrationDynamicBalancer360[9] = TryParseDouble(dataParts[12], out double vibrationY270) ? vibrationY270 : double.NaN;
-                DynotisData.VibrationDynamicBalancer360[10] = TryParseDouble(dataParts[13], out double vibrationY300) ? vibrationY300 : double.NaN;
-                DynotisData.VibrationDynamicBalancer360[11] = TryParseDouble(dataParts[14], out double vibrationY330) ? vibrationY330 : double.NaN;
-                
-
-                await Application.Current.Dispatcher.InvokeAsync(() =>
-                {
-                    lock (_dataLock)
-                    {
-                        TransferStoredData(DynotisData, newData);
-
-                        VibrationCalculations();
-
-                        TheoreticalCalculations();
-
-                        OnPropertyChanged(nameof(DynotisData));
-                    }
-                });
-            }
-        }   
+        } 
 
         public static bool TryParseDouble(string value, out double result)
         {
@@ -609,8 +562,8 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             newData.TareCurrentValue = currentData.TareCurrentValue;
             newData.TareMotorSpeedValue = currentData.TareMotorSpeedValue;
 
-            /*
-             * 
+           
+            
             if ((newData.VibrationX + newData.VibrationY + newData.VibrationZ)>100) 
             {
                 newData.DynamicBalancerStatus = true;
@@ -621,24 +574,9 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             else
             {
                 newData.DynamicBalancerStatus = false;
+
             }
 
-            */
-            double temp = DynotisData.VibrationDynamicBalancer360.Sum();
-            if ((temp) > 100)
-            {
-                newData.DynamicBalancerStatus = true;
-          
-                for (int i = 0; i < DynotisData.VibrationDynamicBalancer360.Length; i++)
-                {
-                    newData.VibrationDynamicBalancer360[i] = Math.Abs(DynotisData.VibrationDynamicBalancer360[i] - 100);
-                }
-               
-            }
-            else
-            {
-                newData.DynamicBalancerStatus = false;
-            }
 
             newData.Vibration.VibrationX = newData.VibrationX;
             newData.Vibration.VibrationY = newData.VibrationY;
@@ -849,7 +787,8 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         {
             DynotisData.Vibration.Value = Math.Abs(DynotisData.VibrationY);
 
-            DynotisData.Vibration.HighVibrationBuffer.Add(Math.Abs(DynotisData.Vibration.Value - DynotisData.Vibration.TareCurrentVibration));
+
+            DynotisData.Vibration.HighVibrationBuffer.Add(Math.Abs(DynotisData.Vibration.Value));
             DynotisData.Vibration.HighIPSVibrationBuffer.Add(DynotisData.Theoric.IPS);
 
             DynotisData.Vibration.TareVibrationBuffer.Add(DynotisData.Vibration.Value);
@@ -860,32 +799,49 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
             DynotisData.Vibration.TareBufferCount++;
 
-            int dataPointsPerRevolution = (int)(60.0 / DynotisData.MotorSpeed.Value);
-
-            // Değeri 10 ile 1000 arasında sınırlandır
-            dataPointsPerRevolution = Math.Max(10, Math.Min(dataPointsPerRevolution, 1000));
-
-            if (DynotisData.Vibration.TareBufferCount >= dataPointsPerRevolution)
+            if (DynotisData.DynamicBalancerStatus == false && DynotisData.Vibration.TareBufferCount > 100)
             {
                 DynotisData.Vibration.TareBufferCount = 0;
 
                 DynotisData.Vibration.HighVibration = CalculateHighVibrations(DynotisData.Vibration.HighVibrationBuffer);
-                DynotisData.Vibration.HighVibrationBuffer.Clear(); 
-                
-                DynotisData.Vibration.HighIPSVibration = CalculateHighVibrations(DynotisData.Vibration.HighIPSVibrationBuffer);
+                DynotisData.Vibration.HighVibrationBuffer.Clear();
+
                 DynotisData.Vibration.HighIPSVibrationBuffer.Clear();
-
-                DynotisData.Vibration.TareVibration = CalculateAverage(DynotisData.Vibration.TareVibrationBuffer);
                 DynotisData.Vibration.TareVibrationBuffer.Clear();
-
-                DynotisData.Vibration.TareVibrationX = CalculateAverage(DynotisData.Vibration.TareVibrationXBuffer);
                 DynotisData.Vibration.TareVibrationXBuffer.Clear();
-
-                DynotisData.Vibration.TareVibrationY = CalculateAverage(DynotisData.Vibration.TareVibrationYBuffer);
                 DynotisData.Vibration.TareVibrationYBuffer.Clear();
-
-                DynotisData.Vibration.TareVibrationZ = CalculateAverage(DynotisData.Vibration.TareVibrationZBuffer);
                 DynotisData.Vibration.TareVibrationZBuffer.Clear();
+            }
+
+            if (DynotisData.MotorSpeed.Value != 0)
+            {
+                int dataPointsPerRevolution = (int)(60.0 / DynotisData.MotorSpeed.Value);
+
+                // Değeri 10 ile 1000 arasında sınırlandır
+                dataPointsPerRevolution = Math.Max(10, Math.Min(dataPointsPerRevolution, 1000));
+
+                if (DynotisData.Vibration.TareBufferCount >= dataPointsPerRevolution)
+                {
+                    DynotisData.Vibration.TareBufferCount = 0;
+
+                    DynotisData.Vibration.HighVibration = CalculateHighVibrations(DynotisData.Vibration.HighVibrationBuffer);
+                    DynotisData.Vibration.HighVibrationBuffer.Clear();
+
+                    DynotisData.Vibration.HighIPSVibration = CalculateHighVibrations(DynotisData.Vibration.HighIPSVibrationBuffer);
+                    DynotisData.Vibration.HighIPSVibrationBuffer.Clear();
+
+                    DynotisData.Vibration.TareVibration = CalculateAverage(DynotisData.Vibration.TareVibrationBuffer);
+                    DynotisData.Vibration.TareVibrationBuffer.Clear();
+
+                    DynotisData.Vibration.TareVibrationX = CalculateAverage(DynotisData.Vibration.TareVibrationXBuffer);
+                    DynotisData.Vibration.TareVibrationXBuffer.Clear();
+
+                    DynotisData.Vibration.TareVibrationY = CalculateAverage(DynotisData.Vibration.TareVibrationYBuffer);
+                    DynotisData.Vibration.TareVibrationYBuffer.Clear();
+
+                    DynotisData.Vibration.TareVibrationZ = CalculateAverage(DynotisData.Vibration.TareVibrationZBuffer);
+                    DynotisData.Vibration.TareVibrationZBuffer.Clear();
+                }
             }
         }
 

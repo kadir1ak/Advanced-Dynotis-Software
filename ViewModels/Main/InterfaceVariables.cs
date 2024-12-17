@@ -578,12 +578,6 @@ public class InterfaceVariables : INotifyPropertyChanged
         ESCStatus = data.ESCStatus;
         DynamicBalancerStatus = data.DynamicBalancerStatus;
 
-        VibrationDynamicBalancer360 = data.VibrationDynamicBalancer360;
-        for (int i = 0; i < data.VibrationDynamicBalancer360.Length; i++)
-        {
-            VibrationDynamicBalancer360[i] = data.VibrationDynamicBalancer360[i];
-        }
-
         Theoric.PropellerArea = data.Theoric.PropellerArea;
         Theoric.RotationalSpeed = data.Theoric.RotationalSpeed;
         Theoric.Power = data.Theoric.Power;
