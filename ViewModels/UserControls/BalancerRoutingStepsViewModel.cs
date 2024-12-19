@@ -331,12 +331,12 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
         private void StopCommand()
         {
-            MotorStop();
             AutoProgressCountTimer.Stop();
             BalancerProgressTimer.Stop();
             HighVibrationDataCollectionTimer.Stop();
             IterationStepIndex = 0;
             BalancingIteration();
+            MotorStop();
         }
 
         private void NewTestCommand()
@@ -1208,6 +1208,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 }
             }
         }
+        int timeTest = 2; 
         private void BalancerProgressTimer_Tick(object sender, EventArgs e)
         {
             lock (_balancerProgressTimerLock)
@@ -1241,7 +1242,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                             }
                                             else
                                             {
-                                                TestTimeStatusBar++;
+                                                TestTimeStatusBar += timeTest;
                                             }
 
                                         }
@@ -1272,7 +1273,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                             }
                                             else
                                             {
-                                                TestTimeStatusBar++;
+                                                TestTimeStatusBar += timeTest;
                                             }
 
                                         }
@@ -1296,17 +1297,17 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                                 if (TestTimeStatusBar > 100) // 100 Sn
                                                 {
                                                     HighVibrationDataCollectionTimer.Stop();
-                                                    BalancerProgressTimer.Stop();
-                                                    MotorStop();
+                                                    BalancerProgressTimer.Stop();                                                   
                                                     TestTimeCount = 0;
                                                     TestTimeStatusBar = 0;
                                                     CalculateMotorBaseRunningVibration();
                                                     IterationStepIndex++;
                                                     BalancingIteration();
+                                                    MotorStop();
                                                 }
                                                 else
                                                 {
-                                                    TestTimeStatusBar++;
+                                                    TestTimeStatusBar += timeTest;
                                                 }
 
                                             }
@@ -1345,16 +1346,16 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                                 {
                                                     HighVibrationDataCollectionTimer.Stop();
                                                     BalancerProgressTimer.Stop();
-                                                    MotorStop();
                                                     TestTimeCount = 0;
                                                     TestTimeStatusBar = 0;
                                                     CalculatePropellerBaseRunningVibration();
                                                     IterationStepIndex++;
                                                     BalancingIteration();
+                                                    MotorStop();
                                                 }
                                                 else
                                                 {
-                                                    TestTimeStatusBar++;
+                                                    TestTimeStatusBar += timeTest;
                                                 }
 
                                             }
@@ -1398,16 +1399,16 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                                 {
                                                     HighVibrationDataCollectionTimer.Stop();
                                                     BalancerProgressTimer.Stop();
-                                                    MotorStop();
                                                     TestTimeCount = 0;
                                                     TestTimeStatusBar = 0;
                                                     CalculateFirstBladeVibration();
                                                     IterationStepIndex++;
                                                     BalancingIteration();
+                                                    MotorStop();
                                                 }
                                                 else
                                                 {
-                                                    TestTimeStatusBar++;
+                                                    TestTimeStatusBar += timeTest;
                                                 }
 
                                             }
@@ -1436,16 +1437,16 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                                 {
                                                     HighVibrationDataCollectionTimer.Stop();
                                                     BalancerProgressTimer.Stop();
-                                                    MotorStop();
                                                     TestTimeCount = 0;
                                                     TestTimeStatusBar = 0;
                                                     CalculateSecondBladeVibration();
                                                     IterationStepIndex++;
                                                     BalancingIteration();
+                                                    MotorStop();
                                                 }
                                                 else
                                                 {
-                                                    TestTimeStatusBar++;
+                                                    TestTimeStatusBar += timeTest;
                                                 }
 
                                             }
@@ -1486,16 +1487,16 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                                 {
                                                     HighVibrationDataCollectionTimer.Stop();
                                                     BalancerProgressTimer.Stop();
-                                                    MotorStop();
                                                     TestTimeCount = 0;
                                                     TestTimeStatusBar = 0;
                                                     CalculateBalancedPropellerRunningVibration();
                                                     IterationStepIndex++;
                                                     BalancingIteration();
+                                                    MotorStop();
                                                 }
                                                 else
                                                 {
-                                                    TestTimeStatusBar++;
+                                                    TestTimeStatusBar += timeTest;
                                                 }
 
                                             }
