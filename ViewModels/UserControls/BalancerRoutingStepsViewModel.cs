@@ -974,6 +974,21 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             ESCValue = 800;
             MotorReadyStatus = false;
         }
+
+        private async Task MotorStopAsync()
+        {
+            // PID kontrolü durduruluyor
+            PIDTimer.Stop();
+
+            // Gecikme eklemek için belirli bir süre bekleme
+            await Task.Delay(2000); // 1000 ms = 1 saniye
+
+            // Motor durdurma işlemleri
+            ESCStatus = false;
+            ESCValue = 800;
+            MotorReadyStatus = false;
+        }
+
         private void AutoProgressCountTimer_Tick(object sender, EventArgs e)
         {
             lock (_autoProgressCountTimerLock)
@@ -1224,7 +1239,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                     break;
                                 case 1:  // Sıfırlama işlemi gerçekleştiriliyor.
                                     {
-                                        if (TestTimeCount >= 100) // 10 Sn
+                                        if (TestTimeCount >= 20) // 2 Sn
                                         {
 
                                             HighVibrationDataCollectionTimer.Start();
@@ -1257,7 +1272,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                     break;
                                 case 3:  // Ortam titreşim değeri hesaplanıyor.
                                     {
-                                        if (TestTimeCount >= 100) // 10 Sn
+                                        if (TestTimeCount >= 30) // 3 Sn
                                         {
 
                                             HighVibrationDataCollectionTimer.Start();
@@ -1303,7 +1318,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                                     CalculateMotorBaseRunningVibration();
                                                     IterationStepIndex++;
                                                     BalancingIteration();
-                                                    MotorStop();
+                                                    MotorStopAsync();
                                                 }
                                                 else
                                                 {
@@ -1351,7 +1366,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                                     CalculatePropellerBaseRunningVibration();
                                                     IterationStepIndex++;
                                                     BalancingIteration();
-                                                    MotorStop();
+                                                    MotorStopAsync();
                                                 }
                                                 else
                                                 {
@@ -1404,7 +1419,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                                     CalculateFirstBladeVibration();
                                                     IterationStepIndex++;
                                                     BalancingIteration();
-                                                    MotorStop();
+                                                    MotorStopAsync();
                                                 }
                                                 else
                                                 {
@@ -1442,7 +1457,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                                     CalculateSecondBladeVibration();
                                                     IterationStepIndex++;
                                                     BalancingIteration();
-                                                    MotorStop();
+                                                    MotorStopAsync();
                                                 }
                                                 else
                                                 {
@@ -1492,7 +1507,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                                     CalculateBalancedPropellerRunningVibration();
                                                     IterationStepIndex++;
                                                     BalancingIteration();
-                                                    MotorStop();
+                                                    MotorStopAsync();
                                                 }
                                                 else
                                                 {
