@@ -329,6 +329,8 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             private double _vibrationY;
             private double _vibrationZ;
 
+            private int _bufferCount;
+            private int _ipsBufferCount;
             private int _tareBufferCount;
             private double _tareVibration;
             private double _tareCurrentVibration;
@@ -367,6 +369,16 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             {
                 get => _vibrationZ;
                 set => SetProperty(ref _vibrationZ, value);
+            }
+            public int BufferCount
+            {
+                get => _bufferCount;
+                set => SetProperty(ref _bufferCount, value);
+            }
+            public int IPSBufferCount
+            {
+                get => _ipsBufferCount;
+                set => SetProperty(ref _ipsBufferCount, value);
             }
 
             public int TareBufferCount

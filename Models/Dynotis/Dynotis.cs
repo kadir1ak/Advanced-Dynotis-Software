@@ -583,6 +583,8 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             newData.Vibration.VibrationZ = newData.VibrationZ;
 
             newData.Vibration.TareBufferCount = currentData.Vibration.TareBufferCount;
+            newData.Vibration.IPSBufferCount = currentData.Vibration.IPSBufferCount;
+            newData.Vibration.BufferCount = currentData.Vibration.BufferCount;
 
             newData.Vibration.TareVibration = currentData.Vibration.TareVibration;
             newData.Vibration.TareVibrationBuffer = currentData.Vibration.TareVibrationBuffer;
@@ -785,62 +787,58 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
         private void VibrationCalculations()
         {
-            DynotisData.Vibration.Value = Math.Abs(DynotisData.VibrationY);
+            DynotisData.Vibration.Value = DynotisData.VibrationY;
 
+            DynotisData.Vibration.BufferCount++;
 
-            DynotisData.Vibration.HighVibrationBuffer.Add(Math.Abs(DynotisData.Vibration.Value));
-            DynotisData.Vibration.HighIPSVibrationBuffer.Add(DynotisData.Theoric.IPS);
-
-            DynotisData.Vibration.TareVibrationBuffer.Add(DynotisData.Vibration.Value);
-
-            DynotisData.Vibration.TareVibrationXBuffer.Add(DynotisData.Vibration.VibrationX);
-            DynotisData.Vibration.TareVibrationYBuffer.Add(DynotisData.Vibration.VibrationY);
-            DynotisData.Vibration.TareVibrationZBuffer.Add(DynotisData.Vibration.VibrationZ);
-
-            DynotisData.Vibration.TareBufferCount++;
-
-            if (DynotisData.DynamicBalancerStatus == false && DynotisData.Vibration.TareBufferCount > 100)
+            if (DynotisData.Vibration.BufferCount >= 100)
             {
-                DynotisData.Vibration.TareBufferCount = 0;
+                DynotisData.Vibration.BufferCount = 0;
 
                 DynotisData.Vibration.HighVibration = CalculateRMS(DynotisData.Vibration.HighVibrationBuffer);
                 DynotisData.Vibration.HighVibrationBuffer.Clear();
 
-                DynotisData.Vibration.HighIPSVibrationBuffer.Clear();
+                DynotisData.Vibration.TareVibration = CalculateAverage(DynotisData.Vibration.TareVibrationBuffer);
                 DynotisData.Vibration.TareVibrationBuffer.Clear();
+
+                DynotisData.Vibration.TareVibrationX = CalculateAverage(DynotisData.Vibration.TareVibrationXBuffer);
                 DynotisData.Vibration.TareVibrationXBuffer.Clear();
+
+                DynotisData.Vibration.TareVibrationY = CalculateAverage(DynotisData.Vibration.TareVibrationYBuffer);
                 DynotisData.Vibration.TareVibrationYBuffer.Clear();
+
+                DynotisData.Vibration.TareVibrationZ = CalculateAverage(DynotisData.Vibration.TareVibrationZBuffer);
                 DynotisData.Vibration.TareVibrationZBuffer.Clear();
             }
+            else
+            {
+                DynotisData.Vibration.HighVibrationBuffer.Add(DynotisData.Vibration.Value);
+
+
+                DynotisData.Vibration.TareVibrationBuffer.Add(DynotisData.Vibration.Value);
+
+                DynotisData.Vibration.TareVibrationXBuffer.Add(DynotisData.Vibration.VibrationX);
+                DynotisData.Vibration.TareVibrationYBuffer.Add(DynotisData.Vibration.VibrationY);
+                DynotisData.Vibration.TareVibrationZBuffer.Add(DynotisData.Vibration.VibrationZ);
+            }
+
+            DynotisData.Vibration.IPSBufferCount++;
 
             if (DynotisData.MotorSpeed.Value != 0)
             {
+                DynotisData.Vibration.HighIPSVibrationBuffer.Add(DynotisData.Theoric.IPS);
+
                 int dataPointsPerRevolution = (int)(60.0 / DynotisData.MotorSpeed.Value);
 
                 // Değeri 10 ile 1000 arasında sınırlandır
                 dataPointsPerRevolution = Math.Max(10, Math.Min(dataPointsPerRevolution, 1000));
 
-                if (DynotisData.Vibration.TareBufferCount >= dataPointsPerRevolution)
+                if (DynotisData.Vibration.IPSBufferCount >= dataPointsPerRevolution)
                 {
-                    DynotisData.Vibration.TareBufferCount = 0;
-
-                    DynotisData.Vibration.HighVibration = CalculateRMS(DynotisData.Vibration.HighVibrationBuffer);
-                    DynotisData.Vibration.HighVibrationBuffer.Clear();
+                    DynotisData.Vibration.IPSBufferCount = 0;
 
                     DynotisData.Vibration.HighIPSVibration = CalculateRMS(DynotisData.Vibration.HighIPSVibrationBuffer);
                     DynotisData.Vibration.HighIPSVibrationBuffer.Clear();
-
-                    DynotisData.Vibration.TareVibration = CalculateAverage(DynotisData.Vibration.TareVibrationBuffer);
-                    DynotisData.Vibration.TareVibrationBuffer.Clear();
-
-                    DynotisData.Vibration.TareVibrationX = CalculateAverage(DynotisData.Vibration.TareVibrationXBuffer);
-                    DynotisData.Vibration.TareVibrationXBuffer.Clear();
-
-                    DynotisData.Vibration.TareVibrationY = CalculateAverage(DynotisData.Vibration.TareVibrationYBuffer);
-                    DynotisData.Vibration.TareVibrationYBuffer.Clear();
-
-                    DynotisData.Vibration.TareVibrationZ = CalculateAverage(DynotisData.Vibration.TareVibrationZBuffer);
-                    DynotisData.Vibration.TareVibrationZBuffer.Clear();
                 }
             }
         }
