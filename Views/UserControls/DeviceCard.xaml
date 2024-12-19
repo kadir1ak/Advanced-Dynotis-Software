@@ -318,11 +318,17 @@
             <Border Grid.Row="1" Margin="0 0 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
                 <Grid>
                     <Border Margin="10 10 20 10" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}"  HorizontalAlignment="Right" VerticalAlignment="Top">
-                        <StackPanel  Orientation="Vertical">
+                        <StackPanel  Orientation="Horizontal">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock FontSize="12" Text="Max:" Margin="0 0 5 0" Foreground="{DynamicResource Text}"/>
+                                <TextBlock FontSize="12" Text="Max(g):" Margin="0 0 5 0" Foreground="{DynamicResource Text}"/>
                                 <TextBlock FontSize="12" Text="{Binding DeviceInterfaceVariables.Vibration.HighVibration, Mode=OneWay, StringFormat={}{0:0.000}}" Foreground="{DynamicResource Text}"/>
                             </StackPanel>
+                            <!--
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="12" Text="Max(IPS):" Margin="0 0 5 0" Foreground="{DynamicResource Text}"/>
+                                <TextBlock FontSize="12" Text="{Binding DeviceInterfaceVariables.Vibration.HighIPSVibration, Mode=OneWay, StringFormat={}{0:0.000}}" Foreground="{DynamicResource Text}"/>
+                            </StackPanel>
+                            -->
                         </StackPanel>
                     </Border>
                     <lvc:CartesianChart Series="{Binding ChartViewModel.VibrationSeriesCollection}" Margin="2 0 0 2" DisableAnimations="True" DataTooltip="{x:Null}">

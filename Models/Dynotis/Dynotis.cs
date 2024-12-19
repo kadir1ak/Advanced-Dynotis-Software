@@ -795,7 +795,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             {
                 DynotisData.Vibration.BufferCount = 0;
 
-                DynotisData.Vibration.HighVibration = CalculateRMS(DynotisData.Vibration.HighVibrationBuffer);
+                DynotisData.Vibration.HighVibration = CalculatePeakToPeak(DynotisData.Vibration.HighVibrationBuffer);
                 DynotisData.Vibration.HighVibrationBuffer.Clear();
 
                 DynotisData.Vibration.TareVibration = CalculateAverage(DynotisData.Vibration.TareVibrationBuffer);

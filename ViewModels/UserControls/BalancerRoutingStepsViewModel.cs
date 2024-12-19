@@ -1223,11 +1223,11 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                     break;
                                 case 1:  // Sıfırlama işlemi gerçekleştiriliyor.
                                     {
-                                        if (TestTimeCount >= 20) // 2 Sn
+                                        if (TestTimeCount >= 100) // 10 Sn
                                         {
 
                                             HighVibrationDataCollectionTimer.Start();
-                                            if (TestTimeStatusBar > 50 * 2) // 5 Sn
+                                            if (TestTimeStatusBar > 100) // 10 Sn
                                             {
 
                                                 HighVibrationDataCollectionTimer.Stop();
@@ -1241,7 +1241,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                             }
                                             else
                                             {
-                                                TestTimeStatusBar += 2;
+                                                TestTimeStatusBar++;
                                             }
 
                                         }
@@ -1256,11 +1256,11 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                     break;
                                 case 3:  // Ortam titreşim değeri hesaplanıyor.
                                     {
-                                        if (TestTimeCount >= 20) // 2 Sn
+                                        if (TestTimeCount >= 100) // 10 Sn
                                         {
 
                                             HighVibrationDataCollectionTimer.Start();
-                                            if (TestTimeStatusBar > 50 * 2) // 5 Sn
+                                            if (TestTimeStatusBar > 100) // 10 Sn
                                             {
                                                 HighVibrationDataCollectionTimer.Stop();
                                                 BalancerProgressTimer.Stop();
@@ -1272,7 +1272,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                             }
                                             else
                                             {
-                                                TestTimeStatusBar += 2;
+                                                TestTimeStatusBar++;
                                             }
 
                                         }
@@ -1289,11 +1289,11 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                     {
                                         if (MotorReadyStatus) // Motor Hazırsa
                                         {
-                                            if (TestTimeCount >= 50) // 5 Sn
+                                            if (TestTimeCount >= 100) // 10 Sn
                                             {
 
                                                 HighVibrationDataCollectionTimer.Start();
-                                                if (TestTimeStatusBar > 50 * 2) // 5 Sn
+                                                if (TestTimeStatusBar > 100) // 100 Sn
                                                 {
                                                     HighVibrationDataCollectionTimer.Stop();
                                                     BalancerProgressTimer.Stop();
@@ -1306,7 +1306,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                                 }
                                                 else
                                                 {
-                                                    TestTimeStatusBar += 2;
+                                                    TestTimeStatusBar++;
                                                 }
 
                                             }
@@ -1337,11 +1337,11 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                     {
                                         if (MotorReadyStatus) // Motor Hazırsa
                                         {
-                                            if (TestTimeCount >= 50) // 5 Sn
+                                            if (TestTimeCount >= 100) // 10 Sn
                                             {
 
                                                 HighVibrationDataCollectionTimer.Start();
-                                                if (TestTimeStatusBar > 50 * 2) // 5 Sn
+                                                if (TestTimeStatusBar > 100) // 10 Sn
                                                 {
                                                     HighVibrationDataCollectionTimer.Stop();
                                                     BalancerProgressTimer.Stop();
@@ -1354,7 +1354,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                                 }
                                                 else
                                                 {
-                                                    TestTimeStatusBar += 2;
+                                                    TestTimeStatusBar++;
                                                 }
 
                                             }
@@ -1390,11 +1390,11 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                     {
                                         if (MotorReadyStatus) // Motor Hazırsa
                                         {
-                                            if (TestTimeCount >= 50) // 5 Sn
+                                            if (TestTimeCount >= 100) // 10 Sn
                                             {
 
                                                 HighVibrationDataCollectionTimer.Start();
-                                                if (TestTimeStatusBar > 50 * 2) // 5 Sn
+                                                if (TestTimeStatusBar > 100) // 10 Sn
                                                 {
                                                     HighVibrationDataCollectionTimer.Stop();
                                                     BalancerProgressTimer.Stop();
@@ -1407,7 +1407,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                                 }
                                                 else
                                                 {
-                                                    TestTimeStatusBar += 2;
+                                                    TestTimeStatusBar++;
                                                 }
 
                                             }
@@ -1428,11 +1428,11 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                     {
                                         if (MotorReadyStatus) // Motor Hazırsa
                                         {
-                                            if (TestTimeCount >= 50) // 5 Sn
+                                            if (TestTimeCount >= 100) // 10 Sn
                                             {
 
                                                 HighVibrationDataCollectionTimer.Start();
-                                                if (TestTimeStatusBar > 50 * 2) // 5 Sn
+                                                if (TestTimeStatusBar > 100) // 10 Sn
                                                 {
                                                     HighVibrationDataCollectionTimer.Stop();
                                                     BalancerProgressTimer.Stop();
@@ -1445,7 +1445,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                                 }
                                                 else
                                                 {
-                                                    TestTimeStatusBar += 2;
+                                                    TestTimeStatusBar++;
                                                 }
 
                                             }
@@ -1478,11 +1478,11 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                     {
                                         if (MotorReadyStatus) // Motor Hazırsa
                                         {
-                                            if (TestTimeCount >= 50) // 5 Sn
+                                            if (TestTimeCount >= 100) // 10 Sn
                                             {
 
                                                 HighVibrationDataCollectionTimer.Start();
-                                                if (TestTimeStatusBar > 50 * 2) // 5 Sn
+                                                if (TestTimeStatusBar > 100) // 10 Sn
                                                 {
                                                     HighVibrationDataCollectionTimer.Stop();
                                                     BalancerProgressTimer.Stop();
@@ -1495,7 +1495,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                                 }
                                                 else
                                                 {
-                                                    TestTimeStatusBar += 2;
+                                                    TestTimeStatusBar++;
                                                 }
 
                                             }
