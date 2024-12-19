@@ -803,7 +803,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             {
                 DynotisData.Vibration.TareBufferCount = 0;
 
-                DynotisData.Vibration.HighVibration = CalculateHighVibrations(DynotisData.Vibration.HighVibrationBuffer);
+                DynotisData.Vibration.HighVibration = CalculateRMS(DynotisData.Vibration.HighVibrationBuffer);
                 DynotisData.Vibration.HighVibrationBuffer.Clear();
 
                 DynotisData.Vibration.HighIPSVibrationBuffer.Clear();
@@ -824,10 +824,10 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 {
                     DynotisData.Vibration.TareBufferCount = 0;
 
-                    DynotisData.Vibration.HighVibration = CalculateHighVibrations(DynotisData.Vibration.HighVibrationBuffer);
+                    DynotisData.Vibration.HighVibration = CalculateRMS(DynotisData.Vibration.HighVibrationBuffer);
                     DynotisData.Vibration.HighVibrationBuffer.Clear();
 
-                    DynotisData.Vibration.HighIPSVibration = CalculateHighVibrations(DynotisData.Vibration.HighIPSVibrationBuffer);
+                    DynotisData.Vibration.HighIPSVibration = CalculateRMS(DynotisData.Vibration.HighIPSVibrationBuffer);
                     DynotisData.Vibration.HighIPSVibrationBuffer.Clear();
 
                     DynotisData.Vibration.TareVibration = CalculateAverage(DynotisData.Vibration.TareVibrationBuffer);
@@ -862,6 +862,24 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
             // En büyük 2 değerin ortalamasını hesapla
             return topValues.Average();
+        }
+        private double CalculateRMS(List<double> buffer)
+        {
+            // Karelerin toplamını al
+            double sumOfSquares = buffer.Sum(x => x * x);
+
+            // Ortalama al ve karekökünü hesapla
+            return Math.Sqrt(sumOfSquares / buffer.Count);
+        }
+
+        private double CalculatePeakToPeak(List<double> buffer)
+        {
+            // Maksimum ve minimum değerleri bul
+            double max = buffer.Max();
+            double min = buffer.Min();
+
+            // Tepe noktalar arasındaki farkı hesapla
+            return max - min;
         }
 
         public void OnPropertyChanged([CallerMemberName] string propertyName = null)
