@@ -1556,7 +1556,24 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         {
             double speedDifference = Math.Abs(_interfaceVariables.MotorSpeed.Value - _interfaceVariables.ReferenceMotorSpeed);
 
-            if (speedDifference > 10)
+            if (MotorReadyStatus && speedDifference > 100)
+            {
+                if (speedDifference >= 400) { smoothTransitionStep = 5; }
+                else if (speedDifference > 300) { smoothTransitionStep = 4; }
+                else if (speedDifference > 200) { smoothTransitionStep = 3; }
+                else if (speedDifference > 100) { smoothTransitionStep = 2; }
+                else if (speedDifference > 50) { smoothTransitionStep = 1; }
+                else { smoothTransitionStep = 0; }
+
+                if (Math.Abs(currentValue - targetValue) <= smoothTransitionStep)
+                {
+                    return targetValue;
+                }
+
+                currentValue += currentValue < targetValue ? smoothTransitionStep : -smoothTransitionStep;
+                MotorReadyStatus = speedDifference < 80;
+            }
+            else if (MotorReadyStatus==false && speedDifference > 10)
             {
                 if (speedDifference >= 400) { smoothTransitionStep = 5; }
                 else if (speedDifference > 300) { smoothTransitionStep = 4; }
