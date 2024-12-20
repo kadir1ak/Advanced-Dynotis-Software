@@ -784,44 +784,46 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 Logger.Log($"An error occurred during theoretical calculations: {ex.Message}");
             }
         }
+        private const int WindowSize = 500; // kayan pencere boyutu örneğin 25
 
         private void VibrationCalculations()
         {
+            // Yeni değeri al
             DynotisData.Vibration.Value = DynotisData.VibrationY;
 
-            DynotisData.Vibration.BufferCount++;
+            // HighVibrationBuffer'a yeni değeri ekle
+            DynotisData.Vibration.HighVibrationBuffer.Add(DynotisData.Vibration.Value);
 
-            if (DynotisData.Vibration.BufferCount >= 100)
+            // Eğer pencere boyutunu aştıysa en eski veriyi kaldır
+            if (DynotisData.Vibration.HighVibrationBuffer.Count > WindowSize)
             {
-                DynotisData.Vibration.BufferCount = 0;
-
-                DynotisData.Vibration.HighVibration = CalculatePeakToPeak(DynotisData.Vibration.HighVibrationBuffer);
-                DynotisData.Vibration.HighVibrationBuffer.Clear();
-
-                DynotisData.Vibration.TareVibration = CalculateAverage(DynotisData.Vibration.TareVibrationBuffer);
-                DynotisData.Vibration.TareVibrationBuffer.Clear();
-
-                DynotisData.Vibration.TareVibrationX = CalculateAverage(DynotisData.Vibration.TareVibrationXBuffer);
-                DynotisData.Vibration.TareVibrationXBuffer.Clear();
-
-                DynotisData.Vibration.TareVibrationY = CalculateAverage(DynotisData.Vibration.TareVibrationYBuffer);
-                DynotisData.Vibration.TareVibrationYBuffer.Clear();
-
-                DynotisData.Vibration.TareVibrationZ = CalculateAverage(DynotisData.Vibration.TareVibrationZBuffer);
-                DynotisData.Vibration.TareVibrationZBuffer.Clear();
-            }
-            else
-            {
-                DynotisData.Vibration.HighVibrationBuffer.Add(DynotisData.Vibration.Value);
-
-
-                DynotisData.Vibration.TareVibrationBuffer.Add(DynotisData.Vibration.Value);
-
-                DynotisData.Vibration.TareVibrationXBuffer.Add(DynotisData.Vibration.VibrationX);
-                DynotisData.Vibration.TareVibrationYBuffer.Add(DynotisData.Vibration.VibrationY);
-                DynotisData.Vibration.TareVibrationZBuffer.Add(DynotisData.Vibration.VibrationZ);
+                DynotisData.Vibration.HighVibrationBuffer.RemoveAt(0);
             }
 
+            // Her seferinde RMS hesapla (isterseniz daha seyrek de hesaplayabilirsiniz)
+            DynotisData.Vibration.HighVibration = CalculateRMS(DynotisData.Vibration.HighVibrationBuffer);
+
+            // Aşağıda diğer işlemler aynı kalabilir.
+            // Örnek: TareVibration, TareVibrationX, Y, Z bufferlarını da aynı mantıkta kayan pencere yapabilirsiniz.
+            // Eğer bu bufferlar da kayan pencere ile takip edilecekse, benzer yaklaşımı orada da kullanın.
+
+            DynotisData.Vibration.TareVibrationBuffer.Add(DynotisData.Vibration.Value);
+            if (DynotisData.Vibration.TareVibrationBuffer.Count > WindowSize)
+                DynotisData.Vibration.TareVibrationBuffer.RemoveAt(0);
+
+            DynotisData.Vibration.TareVibrationXBuffer.Add(DynotisData.Vibration.VibrationX);
+            if (DynotisData.Vibration.TareVibrationXBuffer.Count > WindowSize)
+                DynotisData.Vibration.TareVibrationXBuffer.RemoveAt(0);
+
+            DynotisData.Vibration.TareVibrationYBuffer.Add(DynotisData.Vibration.VibrationY);
+            if (DynotisData.Vibration.TareVibrationYBuffer.Count > WindowSize)
+                DynotisData.Vibration.TareVibrationYBuffer.RemoveAt(0);
+
+            DynotisData.Vibration.TareVibrationZBuffer.Add(DynotisData.Vibration.VibrationZ);
+            if (DynotisData.Vibration.TareVibrationZBuffer.Count > WindowSize)
+                DynotisData.Vibration.TareVibrationZBuffer.RemoveAt(0);
+
+            // Motor hızıyla ilgili kısım olduğu gibi kalabilir.
             DynotisData.Vibration.IPSBufferCount++;
 
             if (DynotisData.MotorSpeed.Value != 0)
@@ -829,19 +831,33 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 DynotisData.Vibration.HighIPSVibrationBuffer.Add(DynotisData.Theoric.IPS);
 
                 int dataPointsPerRevolution = (int)(60.0 / DynotisData.MotorSpeed.Value);
-
-                // Değeri 10 ile 1000 arasında sınırlandır
                 dataPointsPerRevolution = Math.Max(10, Math.Min(dataPointsPerRevolution, 1000));
 
                 if (DynotisData.Vibration.IPSBufferCount >= dataPointsPerRevolution)
                 {
                     DynotisData.Vibration.IPSBufferCount = 0;
-
                     DynotisData.Vibration.HighIPSVibration = CalculateRMS(DynotisData.Vibration.HighIPSVibrationBuffer);
                     DynotisData.Vibration.HighIPSVibrationBuffer.Clear();
                 }
             }
         }
+
+        // RMS Hesaplama Fonksiyonu Örneği
+        private double CalculateRMS(List<double> values)
+        {
+            if (values.Count == 0)
+                return 0.0;
+
+            double sumOfSquares = 0.0;
+            foreach (var v in values)
+            {
+                sumOfSquares += v * v;
+            }
+
+            double mean = sumOfSquares / values.Count;
+            return Math.Sqrt(mean);
+        }
+
 
         private double CalculateAverage(List<double> buffer)
         {
@@ -860,14 +876,6 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
             // En büyük 2 değerin ortalamasını hesapla
             return topValues.Average();
-        }
-        private double CalculateRMS(List<double> buffer)
-        {
-            // Karelerin toplamını al
-            double sumOfSquares = buffer.Sum(x => x * x);
-
-            // Ortalama al ve karekökünü hesapla
-            return Math.Sqrt(sumOfSquares / buffer.Count);
         }
 
         private double CalculatePeakToPeak(List<double> buffer)
