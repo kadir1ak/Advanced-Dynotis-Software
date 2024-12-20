@@ -784,7 +784,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 Logger.Log($"An error occurred during theoretical calculations: {ex.Message}");
             }
         }
-        private const int WindowSize = 500; // kayan pencere boyutu örneğin 25
+        private const int WindowSize = 25; // kayan pencere boyutu örneğin 25
 
         private void VibrationCalculations()
         {
