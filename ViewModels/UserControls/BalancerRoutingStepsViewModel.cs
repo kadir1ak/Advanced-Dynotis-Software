@@ -919,7 +919,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 if (_interfaceVariables.Vibration.HighIPSVibration > 0) 
                 {                   
                     HighIPSVibration = _interfaceVariables.Vibration.HighIPSVibration;                 
-                    VibrationsIPSDataBuffer.Add(HighIPSVibration);                   
+                    VibrationsIPSDataBuffer.Add(HighIPSVibration);
                     //Logger.Log($"HighIPSVibration:  {HighIPSVibration.ToString("0.000")}");
                 }
 
@@ -945,26 +945,31 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         {
             MotorBaseRunningVibration = CalculateHighIPSVibrations(VibrationsIPSDataBuffer);
             VibrationsIPSDataBuffer.Clear();
+            VibrationsDataBuffer.Clear();
         }
         private void CalculatePropellerBaseRunningVibration()
         {
             PropellerBaseRunningVibration = CalculateHighIPSVibrations(VibrationsIPSDataBuffer);
             VibrationsIPSDataBuffer.Clear();
+            VibrationsDataBuffer.Clear();
         }
         private void CalculateBalancedPropellerRunningVibration()
         {
             BalancedPropellerRunningVibration = CalculateHighIPSVibrations(VibrationsIPSDataBuffer);
             VibrationsIPSDataBuffer.Clear();
+            VibrationsDataBuffer.Clear();
         }
         private void CalculateFirstBladeVibration()
         {
             FirstBladeVibration = CalculateHighIPSVibrations(VibrationsIPSDataBuffer);
             VibrationsIPSDataBuffer.Clear();
+            VibrationsDataBuffer.Clear();
         }
         private void CalculateSecondBladeVibration()
         {
             SecondBladeVibration = CalculateHighIPSVibrations(VibrationsIPSDataBuffer);
             VibrationsIPSDataBuffer.Clear();
+            VibrationsDataBuffer.Clear();
         }
 
         private void MotorStop()
@@ -977,11 +982,11 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
         private async Task MotorStopAsync()
         {
-            // PID kontrolü durduruluyor
-            PIDTimer.Stop();
-
             // Gecikme eklemek için belirli bir süre bekleme
             await Task.Delay(2000); // 1000 ms = 1 saniye
+
+            // PID kontrolü durduruluyor
+            PIDTimer.Stop();
 
             // Motor durdurma işlemleri
             ESCStatus = false;
@@ -1318,7 +1323,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                                     CalculateMotorBaseRunningVibration();
                                                     IterationStepIndex++;
                                                     BalancingIteration();
-                                                    MotorStopAsync();
+                                                    Task.Run(() => MotorStopAsync());
                                                 }
                                                 else
                                                 {
@@ -1366,7 +1371,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                                     CalculatePropellerBaseRunningVibration();
                                                     IterationStepIndex++;
                                                     BalancingIteration();
-                                                    MotorStopAsync();
+                                                    Task.Run(() => MotorStopAsync());
                                                 }
                                                 else
                                                 {
@@ -1419,7 +1424,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                                     CalculateFirstBladeVibration();
                                                     IterationStepIndex++;
                                                     BalancingIteration();
-                                                    MotorStopAsync();
+                                                    Task.Run(() => MotorStopAsync());
                                                 }
                                                 else
                                                 {
@@ -1457,7 +1462,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                                     CalculateSecondBladeVibration();
                                                     IterationStepIndex++;
                                                     BalancingIteration();
-                                                    MotorStopAsync();
+                                                     Task.Run(() => MotorStopAsync());
                                                 }
                                                 else
                                                 {
@@ -1507,7 +1512,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                                     CalculateBalancedPropellerRunningVibration();
                                                     IterationStepIndex++;
                                                     BalancingIteration();
-                                                    MotorStopAsync();
+                                                     Task.Run(() => MotorStopAsync());
                                                 }
                                                 else
                                                 {
