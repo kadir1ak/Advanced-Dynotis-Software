@@ -11,7 +11,7 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         xmlns:p="clr-namespace:Advanced_Dynotis_Software.Properties"
-        Title="MainWindow" MinHeight="600" MinWidth="800" Height="1024" Width="1820"
+        Title="MainWindow" MinHeight="600" MinWidth="800" Height="1280" Width="2220"
         AllowsTransparency="True" Background="Transparent"
         WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" WindowStyle="None"
         d:DataContext="{d:DesignInstance Type=vm:MainWindowViewModel, IsDesignTimeCreatable=True}"  MouseDown="MainWindow_MouseDown">

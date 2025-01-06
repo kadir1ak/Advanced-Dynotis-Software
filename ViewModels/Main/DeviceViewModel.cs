@@ -241,6 +241,10 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                                 DeviceInterfaceVariables.BalancedPropellersDiameter = _currentBalancedPropellers.BalancedPropellerDiameter;
                                 DeviceInterfaceVariables.BalancedPropellersTestDates = _currentBalancedPropellers.BalancingTestDates;
                                 DeviceInterfaceVariables.BalancedPropellersVibrations = _currentBalancedPropellers.VibrationLevels;
+
+                                Device.DynotisData.PropellerDiameter = DeviceInterfaceVariables.BalancedPropellersDiameter;
+                                Device.DynotisData.Iso.ReferansDonusHizi = DeviceInterfaceVariables.ReferenceMotorSpeed;
+
                                 OnPropertyChanged(nameof(DeviceInterfaceVariables));
                                 OnPropertyChanged(nameof(Device.DynotisData));
                             }

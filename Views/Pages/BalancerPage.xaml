@@ -176,7 +176,7 @@
                                                             <RowDefinition Height="1*"/>
                                                             <RowDefinition Height="1*"/>
                                                             <RowDefinition Height="1*"/>
-                                                            <RowDefinition Height="1*"/>
+                                                            <RowDefinition Height="1*"/>                             
                                                         </Grid.RowDefinitions>
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="Auto"/>
@@ -194,7 +194,7 @@
                                                         <TextBlock Text="{x:Static p:Resources.BalancerPage_ReferenceMotorSpeed}" Grid.Row="2" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
                                                         <TextBlock Text=":" Grid.Row="2" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
 
-
+                                                        
                                                         <TextBlock Text="{Binding DeviceInterfaceVariables.ReferencePropellerDiameter, StringFormat={}{0:0.00}}" Grid.Row="1" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
                                                         <TextBlock Text="{Binding DeviceInterfaceVariables.ReferenceMotorSpeed}" Grid.Row="2" Width="50" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
 
@@ -244,6 +244,89 @@
                                             </ContentControl.ContentTemplate>
                                         </ContentControl>
                                     </Border>
+
+                                    <Border Grid.Row="0" Grid.Column="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3 3 0 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
+                                        <Grid Background="{DynamicResource Page}">
+                                            <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="0 0 0 0">
+                                                <Grid VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="1*"/>
+                                                        <RowDefinition Height="1*"/>
+                                                        <RowDefinition Height="1*"/>
+                                                        <RowDefinition Height="1*"/>
+                                                        <RowDefinition Height="1*"/>
+                                                        <RowDefinition Height="1*"/>
+                                                        <RowDefinition Height="1*"/>
+                                                        <RowDefinition Height="1*"/>
+                                                        <RowDefinition Height="1*"/>
+                                                        <RowDefinition Height="1*"/>
+                                                        <RowDefinition Height="1*"/>
+                                                        <RowDefinition Height="1*"/>
+                                                        <RowDefinition Height="1*"/>
+                                                        <RowDefinition Height="1*"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="1*"/>
+                                                        <ColumnDefinition Width="1*"/>
+                                                    </Grid.ColumnDefinitions>
+
+
+                                                    <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="3 3 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                                        <TextBlock FontSize="16" Text="Dinamik Balan ISO21940-11" Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </Border>
+
+                                                    <TextBlock Text="• Dönüş Hızı (n):" Grid.Row="1" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="• Ölçülen İvme (a):" Grid.Row="2" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>                                                  
+                                                    <TextBlock Text="• Toplam Kütle (M)" Grid.Row="3" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="• Düzeltme Ağırlığı Yarıçapı (r_c)" Grid.Row="4" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    
+                                                    <TextBlock Text="1.) İvme(a)" Grid.Row="5" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>                                                    
+                                                    <TextBlock Text="2.) Santrifüj Kuvveti (F)" Grid.Row="6" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>                                                   
+                                                    <TextBlock Text="3.) Açısal Hız (ω)" Grid.Row="7" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>                                                   
+                                                    <TextBlock Text="4.) Ölçülen Dengesizlik (U_res)" Grid.Row="8" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>                                                 
+                                                    <TextBlock Text="5.) İzin Verilebilir Dengesizlik (U_per)" Grid.Row="9" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="6.) Gerekli Düzeltme Ağırlığı(m_c)" Grid.Row="10" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="7.) Kullanılan düzeltme ağırlığı(m_uygulanan)" Grid.Row="11" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="8.) Uygulanan ağırlıkla kalan dengesizlik(U_kalan)" Grid.Row="12" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="9.) Eksik ağırlık(m_eksik)" Grid.Row="13" Grid.Column="0" Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+
+
+                                                    <TextBlock Text="{Binding DeviceInterfaceVariables.Iso.DonusHizi , StringFormat={}{0:0.0}}" Grid.Row="1" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="{Binding DeviceInterfaceVariables.Iso.OlculenIvme, StringFormat={}{0:0.0000}}" Grid.Row="2" Width="50" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="{Binding DeviceInterfaceVariables.Iso.ToplamKutle, StringFormat={}{0:0.0000}}" Grid.Row="3" Width="50" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="{Binding DeviceInterfaceVariables.Iso.DuzeltmeYaricapi, StringFormat={}{0:0.0000}}" Grid.Row="4" Width="50" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="{Binding DeviceInterfaceVariables.Iso.Ivme, StringFormat={}{0:0.0000}}" Grid.Row="5" Width="50" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="{Binding DeviceInterfaceVariables.Iso.SantrifujKuvveti, StringFormat={}{0:0.0000}}" Grid.Row="6" Width="50" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="{Binding DeviceInterfaceVariables.Iso.AcisalHiz, StringFormat={}{0:0.00}}" Grid.Row="7" Width="50" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="{Binding DeviceInterfaceVariables.Iso.OlculenDengesizlik, StringFormat={}{0:0.00}}" Grid.Row="8" Width="50" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="{Binding DeviceInterfaceVariables.Iso.IzinVerilebilirDengesizlik, StringFormat={}{0:0.00}}" Grid.Row="9" Width="50" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="{Binding DeviceInterfaceVariables.Iso.GerekliDuzeltmeAgirligi, StringFormat={}{0:0.0000}}" Grid.Row="10" Width="50" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="{Binding DeviceInterfaceVariables.Iso.KullanilanDuzeltmeAgirligi, StringFormat={}{0:0.0000}}" Grid.Row="11" Width="50" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="{Binding DeviceInterfaceVariables.Iso.KalanDengesizlik, StringFormat={}{0:0.0000}}" Grid.Row="12" Width="50" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="{Binding DeviceInterfaceVariables.Iso.EksikAgirlik, StringFormat={}{0:0.0000}}" Grid.Row="13" Width="50" Grid.Column="1"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+
+                                                    <TextBlock Text="RPM" Grid.Row="1" Grid.Column="2"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="a" Grid.Row="2" Grid.Column="2"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="kg" Grid.Row="3" Grid.Column="2"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="m" Grid.Row="4" Grid.Column="2"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="m/s^2" Grid.Row="5" Grid.Column="2"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="N" Grid.Row="6" Grid.Column="2"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="rad/s" Grid.Row="7" Grid.Column="2"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="gram·mm" Grid.Row="8" Grid.Column="2"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="gram·mm" Grid.Row="9" Grid.Column="2"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="gram" Grid.Row="10" Grid.Column="2"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="gram" Grid.Row="11" Grid.Column="2"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="gram·mm" Grid.Row="12" Grid.Column="2"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+                                                    <TextBlock Text="gram" Grid.Row="13" Grid.Column="2"  Foreground="{DynamicResource Text}" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2 0 10 0"/>
+
+
+                                                </Grid>
+                                            </StackPanel>
+
+                                        </Grid>
+                                    </Border>
+
 
 
                                     <Border Grid.Row="0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3 3 0 3" CornerRadius="0 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">

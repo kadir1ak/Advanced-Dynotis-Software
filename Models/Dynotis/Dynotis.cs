@@ -524,6 +524,8 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
                         TheoreticalCalculations();
 
+                        ISOCalculate();
+
                         OnPropertyChanged(nameof(DynotisData));
                     }
                 });
@@ -562,7 +564,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             newData.TareCurrentValue = currentData.TareCurrentValue;
             newData.TareMotorSpeedValue = currentData.TareMotorSpeedValue;
 
-           
+            newData.Iso = currentData.Iso;           
             
             if ((newData.VibrationX + newData.VibrationY + newData.VibrationZ)>100) 
             {
@@ -886,6 +888,24 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
             // Tepe noktalar arasındaki farkı hesapla
             return max - min;
+        }
+
+        private void ISOCalculate()
+        {
+            DynotisData.Iso.ToplamKutle = 0.500;
+            DynotisData.Iso.DonusHizi = DynotisData.MotorSpeed.Value; //DynotisData.Iso.ReferansDonusHizi;
+            DynotisData.Iso.OlculenIvme = DynotisData.Vibration.HighVibration;
+            DynotisData.Iso.DuzeltmeYaricapi = DynotisData.PropellerDiameter * 0.0254;
+            DynotisData.Iso.Ivme = DynotisData.Iso.OlculenIvme * 9.81;
+            DynotisData.Iso.SantrifujKuvveti = DynotisData.Iso.ToplamKutle * DynotisData.Iso.Ivme;
+            DynotisData.Iso.AcisalHiz = 2.0 * Math.PI * (DynotisData.Iso.DonusHizi / 60.0);
+            DynotisData.Iso.OlculenDengesizlik = DynotisData.Iso.SantrifujKuvveti / Math.Pow(DynotisData.Iso.AcisalHiz, 2) * Math.Pow(10.0, 6);
+            DynotisData.Iso.IzinVerilebilirDengesizlik = (9549 * 6.3 * DynotisData.Iso.ToplamKutle) / DynotisData.Iso.DonusHizi;
+            DynotisData.Iso.GerekliDuzeltmeAgirligi = DynotisData.Iso.OlculenDengesizlik / (DynotisData.Iso.DuzeltmeYaricapi * 1000.0);
+            DynotisData.Iso.KullanilanDuzeltmeAgirligi = DynotisData.Iso.GerekliDuzeltmeAgirligi * 0.9;
+            DynotisData.Iso.KalanDengesizlik = DynotisData.Iso.OlculenDengesizlik - (DynotisData.Iso.KullanilanDuzeltmeAgirligi * (DynotisData.Iso.DuzeltmeYaricapi * 1000.0));
+            DynotisData.Iso.EksikAgirlik = DynotisData.Iso.GerekliDuzeltmeAgirligi - DynotisData.Iso.KullanilanDuzeltmeAgirligi;
+
         }
 
         public void OnPropertyChanged([CallerMemberName] string propertyName = null)

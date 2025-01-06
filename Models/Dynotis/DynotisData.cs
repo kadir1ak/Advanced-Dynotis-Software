@@ -26,6 +26,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         {
             _vibrationVariables = new VibrationVariables();
             _theoricVariables = new TheoricVariables();
+            _iso = new ISO();
         }
 
         private double _time;
@@ -61,6 +62,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
         private VibrationVariables _vibrationVariables;
         private TheoricVariables _theoricVariables;
+        private ISO _iso;
 
         private bool _recordStatus;
 
@@ -259,8 +261,12 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         {
             get => _theoricVariables;
             set => SetProperty(ref _theoricVariables, value);
+        }  
+        public ISO Iso
+        {
+            get => _iso;
+            set => SetProperty(ref _iso, value);
         }
-
         public bool IsRecording
         {
             get => _isRecording;
@@ -477,6 +483,122 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 return true;
             }
         }
+        public class ISO : INotifyPropertyChanged
+        {
+            private double _donusHizi; // Dönüş Hızı (n)
+            private double _referansDonusHizi; // Dönüş Hızı (n)
+            private double _olculenIvme; // Ölçülen İvme (a)
+            private double _toplamKutle; // Toplam Kütle (M)
+            private double _duzeltmeYaricapi; // Düzeltme Ağırlığı Yarıçapı (r_c)
+
+            private double _ivme; // 1.) İvme (a)
+            private double _santrifujKuvveti; // 2.) Santrifüj Kuvveti (F)
+            private double _acisalHiz; // 3.) Açısal Hız (ω)
+            private double _olculenDengesizlik; // 4.) Ölçülen Dengesizlik (U_res)
+            private double _izinVerilebilirDengesizlik; // 5.) İzin Verilebilir Dengesizlik (U_per)
+            private double _gerekliDuzeltmeAgirligi; // 6.) Gerekli Düzeltme Ağırlığı (m_c)
+            private double _kullanilanDuzeltmeAgirligi; // 7.) Kullanılan düzeltme ağırlığı (m_uygulanan)
+            private double _kalanDengesizlik; // 8.) Uygulanan ağırlıkla kalan dengesizlik (U_kalan)
+            private double _eksikAgirlik; // 9.) Eksik ağırlık (m_eksik)
+
+            public double DonusHizi
+            {
+                get => _donusHizi;
+                set => SetProperty(ref _donusHizi, value);
+            }
+
+            public double ReferansDonusHizi
+            {
+                get => _referansDonusHizi;
+                set => SetProperty(ref _referansDonusHizi, value);
+            }
+
+            public double OlculenIvme
+            {
+                get => _olculenIvme;
+                set => SetProperty(ref _olculenIvme, value);
+            }
+            public double ToplamKutle
+            {
+                get => _toplamKutle;
+                set => SetProperty(ref _toplamKutle, value);
+            }
+            public double DuzeltmeYaricapi
+            {
+                get => _duzeltmeYaricapi;
+                set => SetProperty(ref _duzeltmeYaricapi, value);
+            }
+
+            public double Ivme
+            {
+                get => _ivme;
+                set => SetProperty(ref _ivme, value);
+            }
+
+            public double SantrifujKuvveti
+            {
+                get => _santrifujKuvveti;
+                set => SetProperty(ref _santrifujKuvveti, value);
+            }
+
+            public double AcisalHiz
+            {
+                get => _acisalHiz;
+                set => SetProperty(ref _acisalHiz, value);
+            }
+
+            public double OlculenDengesizlik
+            {
+                get => _olculenDengesizlik;
+                set => SetProperty(ref _olculenDengesizlik, value);
+            }
+
+            public double IzinVerilebilirDengesizlik
+            {
+                get => _izinVerilebilirDengesizlik;
+                set => SetProperty(ref _izinVerilebilirDengesizlik, value);
+            }
+
+            public double GerekliDuzeltmeAgirligi
+            {
+                get => _gerekliDuzeltmeAgirligi;
+                set => SetProperty(ref _gerekliDuzeltmeAgirligi, value);
+            }
+
+            public double KullanilanDuzeltmeAgirligi
+            {
+                get => _kullanilanDuzeltmeAgirligi;
+                set => SetProperty(ref _kullanilanDuzeltmeAgirligi, value);
+            }
+
+            public double KalanDengesizlik
+            {
+                get => _kalanDengesizlik;
+                set => SetProperty(ref _kalanDengesizlik, value);
+            }
+
+            public double EksikAgirlik
+            {
+                get => _eksikAgirlik;
+                set => SetProperty(ref _eksikAgirlik, value);
+            }
+
+            public event PropertyChangedEventHandler PropertyChanged;
+
+            protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+
+            protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+            {
+                if (Equals(field, value)) return false;
+                field = value;
+                OnPropertyChanged(propertyName);
+                return true;
+            }
+        }
+
         public class TheoricVariables : INotifyPropertyChanged
         {
             public const double AirGasConstant = 287.058; // Individual Gas Constant - R Unit: [J/kg K]

@@ -1,5 +1,6 @@
 ﻿using Advanced_Dynotis_Software.Models.Dynotis;
 using Advanced_Dynotis_Software.Views.UserControls;
+using ClosedXML.Excel;
 using DocumentFormat.OpenXml;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -25,6 +26,7 @@ public class InterfaceVariables : INotifyPropertyChanged
 
         _vibrationVariables = new VibrationVariables();
         _theoricVariables = new TheoricVariables();
+        _iso = new ISO();
 
 
         _balancerIterationStep = 0;
@@ -75,6 +77,7 @@ public class InterfaceVariables : INotifyPropertyChanged
 
     private VibrationVariables _vibrationVariables; 
     private TheoricVariables _theoricVariables;
+    private ISO _iso;
  
     private double _propellerDiameter;
     private double _motorInner;
@@ -192,7 +195,11 @@ public class InterfaceVariables : INotifyPropertyChanged
         get => _theoricVariables;
         set => SetProperty(ref _theoricVariables, value);
     }
-
+    public ISO Iso
+    {
+        get => _iso;
+        set => SetProperty(ref _iso, value);
+    }
     public Unit Pressure
     {
         get => _pressure;
@@ -592,6 +599,22 @@ public class InterfaceVariables : INotifyPropertyChanged
         Theoric.Ct = data.Theoric.Ct;
         Theoric.Cq = data.Theoric.Cq;
         Theoric.Cp = data.Theoric.Cp;
+
+        Iso.DonusHizi = data.Iso.DonusHizi;
+        Iso.ReferansDonusHizi = data.Iso.ReferansDonusHizi;
+        Iso.OlculenIvme = data.Iso.OlculenIvme;
+        Iso.ToplamKutle = data.Iso.ToplamKutle;
+        Iso.DuzeltmeYaricapi = data.Iso.DuzeltmeYaricapi;
+
+        Iso.Ivme = data.Iso.Ivme;
+        Iso.SantrifujKuvveti = data.Iso.SantrifujKuvveti;
+        Iso.AcisalHiz = data.Iso.AcisalHiz;
+        Iso.OlculenDengesizlik = data.Iso.OlculenDengesizlik;
+        Iso.IzinVerilebilirDengesizlik = data.Iso.IzinVerilebilirDengesizlik;
+        Iso.GerekliDuzeltmeAgirligi = data.Iso.GerekliDuzeltmeAgirligi;
+        Iso.KullanilanDuzeltmeAgirligi = data.Iso.KullanilanDuzeltmeAgirligi;
+        Iso.KalanDengesizlik = data.Iso.KalanDengesizlik;
+        Iso.EksikAgirlik = data.Iso.EksikAgirlik;
 
         // Ensure your values ​​are protected
         SelectedIsTurkishChecked = InterfaceVariables.Instance.SelectedIsTurkishChecked;
@@ -1078,6 +1101,124 @@ public class InterfaceVariables : INotifyPropertyChanged
             return true;
         }
     }
+
+    public class ISO : INotifyPropertyChanged
+    {
+        private double _donusHizi; // Dönüş Hızı (n)
+        private double _referansDonusHizi; // Dönüş Hızı (n)
+        private double _olculenIvme; // Ölçülen İvme (a)
+        private double _toplamKutle; // Toplam Kütle (M)
+        private double _duzeltmeYaricapi; // Düzeltme Ağırlığı Yarıçapı (r_c)
+
+        private double _ivme; // 1.) İvme (a)
+        private double _santrifujKuvveti; // 2.) Santrifüj Kuvveti (F)
+        private double _acisalHiz; // 3.) Açısal Hız (ω)
+        private double _olculenDengesizlik; // 4.) Ölçülen Dengesizlik (U_res)
+        private double _izinVerilebilirDengesizlik; // 5.) İzin Verilebilir Dengesizlik (U_per)
+        private double _gerekliDuzeltmeAgirligi; // 6.) Gerekli Düzeltme Ağırlığı (m_c)
+        private double _kullanilanDuzeltmeAgirligi; // 7.) Kullanılan düzeltme ağırlığı (m_uygulanan)
+        private double _kalanDengesizlik; // 8.) Uygulanan ağırlıkla kalan dengesizlik (U_kalan)
+        private double _eksikAgirlik; // 9.) Eksik ağırlık (m_eksik)
+
+        public double DonusHizi
+        {
+            get => _donusHizi;
+            set => SetProperty(ref _donusHizi, value);
+        }
+        public double ReferansDonusHizi
+        {
+            get => _referansDonusHizi;
+            set => SetProperty(ref _referansDonusHizi, value);
+        }
+
+        public double OlculenIvme
+        {
+            get => _olculenIvme;
+            set => SetProperty(ref _olculenIvme, value);
+        }
+
+        public double ToplamKutle
+        {
+            get => _toplamKutle;
+            set => SetProperty(ref _toplamKutle, value);
+        }
+
+        public double DuzeltmeYaricapi
+        {
+            get => _duzeltmeYaricapi;
+            set => SetProperty(ref _duzeltmeYaricapi, value);
+        }
+
+        public double Ivme
+        {
+            get => _ivme;
+            set => SetProperty(ref _ivme, value);
+        }
+
+        public double SantrifujKuvveti
+        {
+            get => _santrifujKuvveti;
+            set => SetProperty(ref _santrifujKuvveti, value);
+        }
+
+        public double AcisalHiz
+        {
+            get => _acisalHiz;
+            set => SetProperty(ref _acisalHiz, value);
+        }
+
+        public double OlculenDengesizlik
+        {
+            get => _olculenDengesizlik;
+            set => SetProperty(ref _olculenDengesizlik, value);
+        }
+
+        public double IzinVerilebilirDengesizlik
+        {
+            get => _izinVerilebilirDengesizlik;
+            set => SetProperty(ref _izinVerilebilirDengesizlik, value);
+        }
+
+        public double GerekliDuzeltmeAgirligi
+        {
+            get => _gerekliDuzeltmeAgirligi;
+            set => SetProperty(ref _gerekliDuzeltmeAgirligi, value);
+        }
+
+        public double KullanilanDuzeltmeAgirligi
+        {
+            get => _kullanilanDuzeltmeAgirligi;
+            set => SetProperty(ref _kullanilanDuzeltmeAgirligi, value);
+        }
+
+        public double KalanDengesizlik
+        {
+            get => _kalanDengesizlik;
+            set => SetProperty(ref _kalanDengesizlik, value);
+        }
+
+        public double EksikAgirlik
+        {
+            get => _eksikAgirlik;
+            set => SetProperty(ref _eksikAgirlik, value);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (Equals(field, value)) return false;
+            field = value;
+            OnPropertyChanged(propertyName);
+            return true;
+        }
+    }
+
     public class TheoricVariables : INotifyPropertyChanged
     {
         private static double _propellerArea;
