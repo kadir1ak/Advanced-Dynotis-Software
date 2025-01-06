@@ -27,6 +27,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             _vibrationVariables = new VibrationVariables();
             _theoricVariables = new TheoricVariables();
             _iso = new ISO();
+            _isoCal = new ISO();
         }
 
         private double _time;
@@ -63,6 +64,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         private VibrationVariables _vibrationVariables;
         private TheoricVariables _theoricVariables;
         private ISO _iso;
+        private ISO _isoCal;
 
         private bool _recordStatus;
 
@@ -266,6 +268,11 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         {
             get => _iso;
             set => SetProperty(ref _iso, value);
+        }
+        public ISO ISOCal
+        {
+            get => _isoCal;
+            set => SetProperty(ref _isoCal, value);
         }
         public bool IsRecording
         {

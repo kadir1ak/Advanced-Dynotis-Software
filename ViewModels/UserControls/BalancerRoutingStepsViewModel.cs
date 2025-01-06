@@ -23,6 +23,7 @@ using DocumentFormat.OpenXml.ExtendedProperties;
 using Advanced_Dynotis_Software.Views.UserControls;
 using System.IO;
 using Newtonsoft.Json;
+using System.Text.Json.Nodes;
 
 namespace Advanced_Dynotis_Software.ViewModels.UserControls
 {
@@ -124,6 +125,9 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         // Propeller Vibration 
         private List<double> _testStepsPropellerVibrations;
 
+        //ISO
+        private ISOArray _isoArray;
+
         //StepChart
         private ObservableCollection<double> _balancerIterationStepChart;
         private ObservableCollection<double> _balancerIterationVibrationsChart;
@@ -156,6 +160,9 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
             // Initialize PID Controller
             PIDController = new PIDController(1.5, 0.03, 0.05);
+
+            //ISO
+            _isoArray = new ISOArray();
 
             AddTestButtonCommand = new RelayCommand(param => AddTestFileCommand());
             RunButtonCommand = new RelayCommand(param => RunCommand());
@@ -923,11 +930,100 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     //Logger.Log($"HighIPSVibration:  {HighIPSVibration.ToString("0.000")}");
                 }
 
+                ISOCalArrayAdd();
+
                 HighVibration = _interfaceVariables.Vibration.HighVibration;
                 VibrationsDataBuffer.Add(HighVibration);
                 //Logger.Log($"HighVibration:     {HighVibration.ToString("0.000")}");
             }
         }
+
+        private void ISOCalArrayAdd()
+        {
+            try
+            {
+                if (ISOCalArray.Status == true)
+                {
+                    ISOCalArray.DonusHizi.Add(_interfaceVariables.Iso.DonusHizi);
+                    ISOCalArray.OlculenIvme.Add(_interfaceVariables.Iso.OlculenIvme);
+                    ISOCalArray.Ivme.Add(_interfaceVariables.Iso.Ivme);
+                    ISOCalArray.SantrifujKuvveti.Add(_interfaceVariables.Iso.SantrifujKuvveti);
+                    ISOCalArray.AcisalHiz.Add(_interfaceVariables.Iso.AcisalHiz);
+                    ISOCalArray.OlculenDengesizlik.Add(_interfaceVariables.Iso.OlculenDengesizlik);
+                    ISOCalArray.IzinVerilebilirDengesizlik.Add(_interfaceVariables.Iso.IzinVerilebilirDengesizlik);
+                    ISOCalArray.GerekliDuzeltmeAgirligi.Add(_interfaceVariables.Iso.GerekliDuzeltmeAgirligi);
+                    ISOCalArray.KullanilanDuzeltmeAgirligi.Add(_interfaceVariables.Iso.KullanilanDuzeltmeAgirligi);
+                    ISOCalArray.KalanDengesizlik.Add(_interfaceVariables.Iso.KalanDengesizlik);
+                    ISOCalArray.EksikAgirlik.Add(_interfaceVariables.Iso.EksikAgirlik);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error in AddTestCommand: {ex.Message}");
+            }
+        }
+        private void ISOCalArrayClear()
+        {
+            // Tüm listeleri temizle
+            try
+            {
+                if(ISOCalArray.Status == false)
+                {
+                    ISOCalArray.DonusHizi.Clear();
+                    ISOCalArray.ReferansDonusHizi.Clear();
+                    ISOCalArray.OlculenIvme.Clear();
+                    ISOCalArray.ToplamKutle.Clear();
+                    ISOCalArray.DuzeltmeYaricapi.Clear();
+                    ISOCalArray.Ivme.Clear();
+                    ISOCalArray.SantrifujKuvveti.Clear();
+                    ISOCalArray.AcisalHiz.Clear();
+                    ISOCalArray.OlculenDengesizlik.Clear();
+                    ISOCalArray.IzinVerilebilirDengesizlik.Clear();
+                    ISOCalArray.GerekliDuzeltmeAgirligi.Clear();
+                    ISOCalArray.KullanilanDuzeltmeAgirligi.Clear();
+                    ISOCalArray.KalanDengesizlik.Clear();
+                    ISOCalArray.EksikAgirlik.Clear();
+                    ISOCalArray.Status = true;
+                }
+            }
+            catch (Exception ex)
+            {                
+                System.Diagnostics.Debug.WriteLine($"Error in AddTestCommand: {ex.Message}");
+            }
+        }
+        private void ISOCal()
+        {
+            try
+            {
+                ISOCalArray.Status = false;
+
+                _dynotisData.ISOCal.ToplamKutle = _interfaceVariables.ISOCal.ToplamKutle;
+                _dynotisData.ISOCal.DuzeltmeYaricapi = _interfaceVariables.ISOCal.DuzeltmeYaricapi;
+
+                // Ortalama hesaplamaları
+                _dynotisData.ISOCal.DonusHizi = ISOCalArray.DonusHizi.Count > 0 ? ISOCalArray.DonusHizi.Average() : 0;
+                _dynotisData.ISOCal.ReferansDonusHizi = ISOCalArray.ReferansDonusHizi.Count > 0 ? ISOCalArray.ReferansDonusHizi.Average() : 0;
+                _dynotisData.ISOCal.OlculenIvme = ISOCalArray.OlculenIvme.Count > 0 ? ISOCalArray.OlculenIvme.Average() : 0;
+                _dynotisData.ISOCal.ToplamKutle = ISOCalArray.ToplamKutle.Count > 0 ? ISOCalArray.ToplamKutle.Average() : 0;
+                _dynotisData.ISOCal.DuzeltmeYaricapi = ISOCalArray.DuzeltmeYaricapi.Count > 0 ? ISOCalArray.DuzeltmeYaricapi.Average() : 0;
+                _dynotisData.ISOCal.Ivme = ISOCalArray.Ivme.Count > 0 ? ISOCalArray.Ivme.Average() : 0;
+                _dynotisData.ISOCal.SantrifujKuvveti = ISOCalArray.SantrifujKuvveti.Count > 0 ? ISOCalArray.SantrifujKuvveti.Average() : 0;
+                _dynotisData.ISOCal.AcisalHiz = ISOCalArray.AcisalHiz.Count > 0 ? ISOCalArray.AcisalHiz.Average() : 0;
+                _dynotisData.ISOCal.OlculenDengesizlik = ISOCalArray.OlculenDengesizlik.Count > 0 ? ISOCalArray.OlculenDengesizlik.Average() : 0;
+                _dynotisData.ISOCal.IzinVerilebilirDengesizlik = ISOCalArray.IzinVerilebilirDengesizlik.Count > 0 ? ISOCalArray.IzinVerilebilirDengesizlik.Average() : 0;
+                _dynotisData.ISOCal.GerekliDuzeltmeAgirligi = ISOCalArray.GerekliDuzeltmeAgirligi.Count > 0 ? ISOCalArray.GerekliDuzeltmeAgirligi.Average() : 0;
+                _dynotisData.ISOCal.KullanilanDuzeltmeAgirligi = ISOCalArray.KullanilanDuzeltmeAgirligi.Count > 0 ? ISOCalArray.KullanilanDuzeltmeAgirligi.Average() : 0;
+                _dynotisData.ISOCal.KalanDengesizlik = ISOCalArray.KalanDengesizlik.Count > 0 ? ISOCalArray.KalanDengesizlik.Average() : 0;
+                _dynotisData.ISOCal.EksikAgirlik = ISOCalArray.EksikAgirlik.Count > 0 ? ISOCalArray.EksikAgirlik.Average() : 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}\nDetails: {ex.StackTrace}",
+                                "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Diagnostics.Debug.WriteLine($"Error in ISOCal: {ex.Message}, StackTrace: {ex.StackTrace}");
+            }
+        }
+
         private double CalculateHighIPSVibrations(List<double> buffer)
         {
             double average = buffer.Average();
@@ -1247,12 +1343,14 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                         if (TestTimeCount >= 20) // 2 Sn
                                         {
 
+                                            ISOCalArrayClear();
                                             HighVibrationDataCollectionTimer.Start();
                                             if (TestTimeStatusBar > 100) // 10 Sn
                                             {
 
                                                 HighVibrationDataCollectionTimer.Stop();
                                                 BalancerProgressTimer.Stop();
+                                                ISOCal();
                                                 TestTimeCount = 0;
                                                 TestTimeStatusBar = 0;
                                                 CalculateVibrationTare();
@@ -1279,12 +1377,13 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                     {
                                         if (TestTimeCount >= 30) // 3 Sn
                                         {
-
+                                            ISOCalArrayClear();
                                             HighVibrationDataCollectionTimer.Start();
                                             if (TestTimeStatusBar > 100) // 10 Sn
                                             {
                                                 HighVibrationDataCollectionTimer.Stop();
                                                 BalancerProgressTimer.Stop();
+                                                ISOCal();
                                                 TestTimeCount = 0;
                                                 TestTimeStatusBar = 0;
                                                 CalculateDeviceBaseStaticVibrationVibration();
@@ -1312,11 +1411,12 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                         {
                                             if (TestTimeCount >= 100) // 10 Sn
                                             {
-
+                                                ISOCalArrayClear();
                                                 HighVibrationDataCollectionTimer.Start();
                                                 if (TestTimeStatusBar > 100) // 100 Sn
                                                 {
                                                     HighVibrationDataCollectionTimer.Stop();
+                                                    ISOCal();
                                                     BalancerProgressTimer.Stop();                                                   
                                                     TestTimeCount = 0;
                                                     TestTimeStatusBar = 0;
@@ -1361,11 +1461,13 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                             if (TestTimeCount >= 100) // 10 Sn
                                             {
 
+                                                ISOCalArrayClear();
                                                 HighVibrationDataCollectionTimer.Start();
                                                 if (TestTimeStatusBar > 100) // 10 Sn
                                                 {
                                                     HighVibrationDataCollectionTimer.Stop();
                                                     BalancerProgressTimer.Stop();
+                                                    ISOCal();
                                                     TestTimeCount = 0;
                                                     TestTimeStatusBar = 0;
                                                     CalculatePropellerBaseRunningVibration();
@@ -1414,11 +1516,13 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                             if (TestTimeCount >= 100) // 10 Sn
                                             {
 
+                                                ISOCalArrayClear();
                                                 HighVibrationDataCollectionTimer.Start();
                                                 if (TestTimeStatusBar > 100) // 10 Sn
                                                 {
                                                     HighVibrationDataCollectionTimer.Stop();
                                                     BalancerProgressTimer.Stop();
+                                                    ISOCal();
                                                     TestTimeCount = 0;
                                                     TestTimeStatusBar = 0;
                                                     CalculateFirstBladeVibration();
@@ -1451,12 +1555,13 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                         {
                                             if (TestTimeCount >= 100) // 10 Sn
                                             {
-
+                                                ISOCalArrayClear();
                                                 HighVibrationDataCollectionTimer.Start();
                                                 if (TestTimeStatusBar > 100) // 10 Sn
                                                 {
                                                     HighVibrationDataCollectionTimer.Stop();
                                                     BalancerProgressTimer.Stop();
+                                                    ISOCal();
                                                     TestTimeCount = 0;
                                                     TestTimeStatusBar = 0;
                                                     CalculateSecondBladeVibration();
@@ -1501,12 +1606,13 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                         {
                                             if (TestTimeCount >= 100) // 10 Sn
                                             {
-
+                                                ISOCalArrayClear();
                                                 HighVibrationDataCollectionTimer.Start();
                                                 if (TestTimeStatusBar > 100) // 10 Sn
                                                 {
                                                     HighVibrationDataCollectionTimer.Stop();
                                                     BalancerProgressTimer.Stop();
+                                                    ISOCal();
                                                     TestTimeCount = 0;
                                                     TestTimeStatusBar = 0;
                                                     CalculateBalancedPropellerRunningVibration();
@@ -1892,6 +1998,21 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             }
         }
 
+        public ISOArray ISOCalArray
+        {
+            get => _isoArray;
+            set
+            {
+                if (_isoArray != value)
+                {
+                    _isoArray = value;
+                    OnPropertyChanged(nameof(ISOCalArray));
+                }
+            }
+        }
+
+
+
         public double DeviceBaseStaticVibration
         {
             get => _deviceBaseStaticVibration;
@@ -2230,6 +2351,129 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    public class ISOArray : INotifyPropertyChanged
+    {
+        // Değişkenler liste olarak tanımlandı
+        public bool Status = true;
+
+        private List<double> _donusHizi = new List<double>(); // Dönüş Hızı (n)
+        private List<double> _referansDonusHizi = new List<double>(); // Referans Dönüş Hızı
+        private List<double> _olculenIvme = new List<double>(); // Ölçülen İvme (a)
+        private List<double> _toplamKutle = new List<double>(); // Toplam Kütle (M)
+        private List<double> _duzeltmeYaricapi = new List<double>(); // Düzeltme Ağırlığı Yarıçapı (r_c)
+
+        private List<double> _ivme = new List<double>(); // İvme (a)
+        private List<double> _santrifujKuvveti = new List<double>(); // Santrifüj Kuvveti (F)
+        private List<double> _acisalHiz = new List<double>(); // Açısal Hız (ω)
+        private List<double> _olculenDengesizlik = new List<double>(); // Ölçülen Dengesizlik (U_res)
+        private List<double> _izinVerilebilirDengesizlik = new List<double>(); // İzin Verilebilir Dengesizlik (U_per)
+        private List<double> _gerekliDuzeltmeAgirligi = new List<double>(); // Gerekli Düzeltme Ağırlığı (m_c)
+        private List<double> _kullanilanDuzeltmeAgirligi = new List<double>(); // Kullanılan düzeltme ağırlığı (m_uygulanan)
+        private List<double> _kalanDengesizlik = new List<double>(); // Kalan Dengesizlik (U_kalan)
+        private List<double> _eksikAgirlik = new List<double>(); // Eksik Ağırlık (m_eksik)
+
+        // Property'ler listeye erişim sağlıyor
+        public List<double> DonusHizi
+        {
+            get => _donusHizi;
+            set => SetProperty(ref _donusHizi, value);
+        }
+
+        public List<double> ReferansDonusHizi
+        {
+            get => _referansDonusHizi;
+            set => SetProperty(ref _referansDonusHizi, value);
+        }
+
+        public List<double> OlculenIvme
+        {
+            get => _olculenIvme;
+            set => SetProperty(ref _olculenIvme, value);
+        }
+
+        public List<double> ToplamKutle
+        {
+            get => _toplamKutle;
+            set => SetProperty(ref _toplamKutle, value);
+        }
+
+        public List<double> DuzeltmeYaricapi
+        {
+            get => _duzeltmeYaricapi;
+            set => SetProperty(ref _duzeltmeYaricapi, value);
+        }
+
+        public List<double> Ivme
+        {
+            get => _ivme;
+            set => SetProperty(ref _ivme, value);
+        }
+
+        public List<double> SantrifujKuvveti
+        {
+            get => _santrifujKuvveti;
+            set => SetProperty(ref _santrifujKuvveti, value);
+        }
+
+        public List<double> AcisalHiz
+        {
+            get => _acisalHiz;
+            set => SetProperty(ref _acisalHiz, value);
+        }
+
+        public List<double> OlculenDengesizlik
+        {
+            get => _olculenDengesizlik;
+            set => SetProperty(ref _olculenDengesizlik, value);
+        }
+
+        public List<double> IzinVerilebilirDengesizlik
+        {
+            get => _izinVerilebilirDengesizlik;
+            set => SetProperty(ref _izinVerilebilirDengesizlik, value);
+        }
+
+        public List<double> GerekliDuzeltmeAgirligi
+        {
+            get => _gerekliDuzeltmeAgirligi;
+            set => SetProperty(ref _gerekliDuzeltmeAgirligi, value);
+        }
+
+        public List<double> KullanilanDuzeltmeAgirligi
+        {
+            get => _kullanilanDuzeltmeAgirligi;
+            set => SetProperty(ref _kullanilanDuzeltmeAgirligi, value);
+        }
+
+        public List<double> KalanDengesizlik
+        {
+            get => _kalanDengesizlik;
+            set => SetProperty(ref _kalanDengesizlik, value);
+        }
+
+        public List<double> EksikAgirlik
+        {
+            get => _eksikAgirlik;
+            set => SetProperty(ref _eksikAgirlik, value);
+        }
+
+        // INotifyPropertyChanged üyeleri
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (Equals(field, value)) return false;
+            field = value;
+            OnPropertyChanged(propertyName);
+            return true;
         }
     }
 

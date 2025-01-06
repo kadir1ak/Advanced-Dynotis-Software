@@ -27,6 +27,7 @@ public class InterfaceVariables : INotifyPropertyChanged
         _vibrationVariables = new VibrationVariables();
         _theoricVariables = new TheoricVariables();
         _iso = new ISO();
+        _isoCal = new ISO();
 
 
         _balancerIterationStep = 0;
@@ -78,6 +79,7 @@ public class InterfaceVariables : INotifyPropertyChanged
     private VibrationVariables _vibrationVariables; 
     private TheoricVariables _theoricVariables;
     private ISO _iso;
+    private ISO _isoCal;
  
     private double _propellerDiameter;
     private double _motorInner;
@@ -199,6 +201,11 @@ public class InterfaceVariables : INotifyPropertyChanged
     {
         get => _iso;
         set => SetProperty(ref _iso, value);
+    }
+    public ISO ISOCal
+    {
+        get => _isoCal;
+        set => SetProperty(ref _isoCal, value);
     }
     public Unit Pressure
     {
@@ -615,6 +622,22 @@ public class InterfaceVariables : INotifyPropertyChanged
         Iso.KullanilanDuzeltmeAgirligi = data.Iso.KullanilanDuzeltmeAgirligi;
         Iso.KalanDengesizlik = data.Iso.KalanDengesizlik;
         Iso.EksikAgirlik = data.Iso.EksikAgirlik;
+
+        ISOCal.DonusHizi = data.ISOCal.DonusHizi;
+        ISOCal.ReferansDonusHizi = data.ISOCal.ReferansDonusHizi;
+        ISOCal.OlculenIvme = data.ISOCal.OlculenIvme;
+        ISOCal.ToplamKutle = data.ISOCal.ToplamKutle;
+        ISOCal.DuzeltmeYaricapi = data.ISOCal.DuzeltmeYaricapi;
+
+        ISOCal.Ivme = data.ISOCal.Ivme;
+        ISOCal.SantrifujKuvveti = data.ISOCal.SantrifujKuvveti;
+        ISOCal.AcisalHiz = data.ISOCal.AcisalHiz;
+        ISOCal.OlculenDengesizlik = data.ISOCal.OlculenDengesizlik;
+        ISOCal.IzinVerilebilirDengesizlik = data.ISOCal.IzinVerilebilirDengesizlik;
+        ISOCal.GerekliDuzeltmeAgirligi = data.ISOCal.GerekliDuzeltmeAgirligi;
+        ISOCal.KullanilanDuzeltmeAgirligi = data.ISOCal.KullanilanDuzeltmeAgirligi;
+        ISOCal.KalanDengesizlik = data.ISOCal.KalanDengesizlik;
+        ISOCal.EksikAgirlik = data.ISOCal.EksikAgirlik;
 
         // Ensure your values ​​are protected
         SelectedIsTurkishChecked = InterfaceVariables.Instance.SelectedIsTurkishChecked;

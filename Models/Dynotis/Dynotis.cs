@@ -565,6 +565,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             newData.TareMotorSpeedValue = currentData.TareMotorSpeedValue;
 
             newData.Iso = currentData.Iso;           
+            newData.ISOCal = currentData.ISOCal;           
             
             if ((newData.VibrationX + newData.VibrationY + newData.VibrationZ)>100) 
             {
