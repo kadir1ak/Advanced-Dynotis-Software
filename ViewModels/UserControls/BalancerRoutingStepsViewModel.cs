@@ -972,8 +972,6 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     ISOCalArray.DonusHizi.Clear();
                     ISOCalArray.ReferansDonusHizi.Clear();
                     ISOCalArray.OlculenIvme.Clear();
-                    ISOCalArray.ToplamKutle.Clear();
-                    ISOCalArray.DuzeltmeYaricapi.Clear();
                     ISOCalArray.Ivme.Clear();
                     ISOCalArray.SantrifujKuvveti.Clear();
                     ISOCalArray.AcisalHiz.Clear();
@@ -997,15 +995,13 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             {
                 ISOCalArray.Status = false;
 
-                _dynotisData.ISOCal.ToplamKutle = _interfaceVariables.ISOCal.ToplamKutle;
-                _dynotisData.ISOCal.DuzeltmeYaricapi = _interfaceVariables.ISOCal.DuzeltmeYaricapi;
+                _dynotisData.ISOCal.ToplamKutle = _interfaceVariables.Iso.ToplamKutle;
+                _dynotisData.ISOCal.DuzeltmeYaricapi = _interfaceVariables.Iso.DuzeltmeYaricapi;
 
                 // Ortalama hesaplamaları
                 _dynotisData.ISOCal.DonusHizi = ISOCalArray.DonusHizi.Count > 0 ? ISOCalArray.DonusHizi.Average() : 0;
                 _dynotisData.ISOCal.ReferansDonusHizi = ISOCalArray.ReferansDonusHizi.Count > 0 ? ISOCalArray.ReferansDonusHizi.Average() : 0;
                 _dynotisData.ISOCal.OlculenIvme = ISOCalArray.OlculenIvme.Count > 0 ? ISOCalArray.OlculenIvme.Average() : 0;
-                _dynotisData.ISOCal.ToplamKutle = ISOCalArray.ToplamKutle.Count > 0 ? ISOCalArray.ToplamKutle.Average() : 0;
-                _dynotisData.ISOCal.DuzeltmeYaricapi = ISOCalArray.DuzeltmeYaricapi.Count > 0 ? ISOCalArray.DuzeltmeYaricapi.Average() : 0;
                 _dynotisData.ISOCal.Ivme = ISOCalArray.Ivme.Count > 0 ? ISOCalArray.Ivme.Average() : 0;
                 _dynotisData.ISOCal.SantrifujKuvveti = ISOCalArray.SantrifujKuvveti.Count > 0 ? ISOCalArray.SantrifujKuvveti.Average() : 0;
                 _dynotisData.ISOCal.AcisalHiz = ISOCalArray.AcisalHiz.Count > 0 ? ISOCalArray.AcisalHiz.Average() : 0;

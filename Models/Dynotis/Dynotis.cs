@@ -893,7 +893,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
         private void ISOCalculate()
         {
-            DynotisData.Iso.ToplamKutle = 0.500;
+            DynotisData.Iso.ToplamKutle = 0.400;
             DynotisData.Iso.DonusHizi = DynotisData.MotorSpeed.Value; //DynotisData.Iso.ReferansDonusHizi;
             DynotisData.Iso.OlculenIvme = DynotisData.Vibration.HighVibration;
             DynotisData.Iso.DuzeltmeYaricapi = DynotisData.PropellerDiameter * 0.0254;
