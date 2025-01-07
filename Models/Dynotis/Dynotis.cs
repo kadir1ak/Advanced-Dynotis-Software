@@ -524,7 +524,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
                         TheoreticalCalculations();
 
-                        ISOCalculate();
+                        //ISOCalculate();
 
                         OnPropertyChanged(nameof(DynotisData));
                     }
