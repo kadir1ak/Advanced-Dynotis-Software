@@ -792,7 +792,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         private void VibrationCalculations()
         {
             // Yeni değeri al
-            DynotisData.Vibration.Value = DynotisData.VibrationY;
+            DynotisData.Vibration.Value = Math.Abs(DynotisData.VibrationY);
 
             // HighVibrationBuffer'a yeni değeri ekle
             DynotisData.Vibration.HighVibrationBuffer.Add(DynotisData.Vibration.Value);
@@ -804,7 +804,8 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             }
 
             // Her seferinde RMS hesapla (isterseniz daha seyrek de hesaplayabilirsiniz)
-            DynotisData.Vibration.HighVibration = CalculateRMS(DynotisData.Vibration.HighVibrationBuffer);
+            //DynotisData.Vibration.HighVibration = CalculateRMS(DynotisData.Vibration.HighVibrationBuffer);
+            DynotisData.Vibration.HighVibration = CalculateHighVibrations(DynotisData.Vibration.HighVibrationBuffer);
 
             // Aşağıda diğer işlemler aynı kalabilir.
             // Örnek: TareVibration, TareVibrationX, Y, Z bufferlarını da aynı mantıkta kayan pencere yapabilirsiniz.
@@ -893,20 +894,37 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
         private void ISOCalculate()
         {
-            DynotisData.Iso.ToplamKutle = 0.400;
-            DynotisData.Iso.DonusHizi = DynotisData.MotorSpeed.Value; //DynotisData.Iso.ReferansDonusHizi;
-            DynotisData.Iso.OlculenIvme = DynotisData.Vibration.HighVibration;
-            DynotisData.Iso.DuzeltmeYaricapi = DynotisData.PropellerDiameter * 0.0254;
-            DynotisData.Iso.Ivme = DynotisData.Iso.OlculenIvme * 9.81;
-            DynotisData.Iso.SantrifujKuvveti = DynotisData.Iso.ToplamKutle * DynotisData.Iso.Ivme;
-            DynotisData.Iso.AcisalHiz = 2.0 * Math.PI * (DynotisData.Iso.DonusHizi / 60.0);
-            DynotisData.Iso.OlculenDengesizlik = DynotisData.Iso.SantrifujKuvveti / Math.Pow(DynotisData.Iso.AcisalHiz, 2) * Math.Pow(10.0, 6);
-            DynotisData.Iso.IzinVerilebilirDengesizlik = (9549 * 6.3 * DynotisData.Iso.ToplamKutle) / DynotisData.Iso.DonusHizi;
-            DynotisData.Iso.GerekliDuzeltmeAgirligi = DynotisData.Iso.OlculenDengesizlik / (DynotisData.Iso.DuzeltmeYaricapi * 1000.0);
-            DynotisData.Iso.KullanilanDuzeltmeAgirligi = DynotisData.Iso.GerekliDuzeltmeAgirligi * 0.9;
-            DynotisData.Iso.KalanDengesizlik = DynotisData.Iso.OlculenDengesizlik - (DynotisData.Iso.KullanilanDuzeltmeAgirligi * (DynotisData.Iso.DuzeltmeYaricapi * 1000.0));
-            DynotisData.Iso.EksikAgirlik = DynotisData.Iso.GerekliDuzeltmeAgirligi - DynotisData.Iso.KullanilanDuzeltmeAgirligi;
+            // Anlık Değerler alanının hesaplamaları
 
+            DynotisData.Iso.DonusHizi = DynotisData.MotorSpeed.Value; //DynotisData.Iso.ReferansDonusHizi;  // RPM
+            DynotisData.Iso.OlculenIvme = DynotisData.Vibration.HighVibration; // a
+            DynotisData.Iso.ToplamKutle = 0.428; // kg    360 motor + 68 pervane         
+            DynotisData.Iso.DuzeltmeYaricapi = (DynotisData.PropellerDiameter * 0.0254) / 4.0; //m
+            //•	Denge Kalite Derecesi (G): G = 6.3 (genel amaçlı motor ve pervaneler için).
+
+            //Adım 1: Ölçülen İvmenin SI Birimlerine Çevrilmesi (m/s^2)
+            DynotisData.Iso.Ivme = DynotisData.Iso.OlculenIvme * 9.81;
+
+            //Adım 2: Santrifüj Kuvveti (F) Hesaplanması (N)
+            DynotisData.Iso.SantrifujKuvveti = DynotisData.Iso.ToplamKutle * DynotisData.Iso.Ivme;
+
+            //Adım 3: Açısal Hız (ω) Hesaplanması (rad/s)
+            DynotisData.Iso.AcisalHiz = 2.0 * Math.PI * (DynotisData.Iso.DonusHizi / 60.0);
+
+            //Adım 4: Ölçülen Dengesizlik (U_res) Hesaplanması (gram·mm)
+            DynotisData.Iso.OlculenDengesizlik = DynotisData.Iso.SantrifujKuvveti / Math.Pow(DynotisData.Iso.AcisalHiz, 2) * Math.Pow(10.0, 6);
+
+            //Adım 5: İzin Verilebilir Dengesizlik (U_per) Hesaplanması (gram·mm)
+            DynotisData.Iso.IzinVerilebilirDengesizlik = (9549 * 6.3 * DynotisData.Iso.ToplamKutle) / DynotisData.Iso.DonusHizi;
+
+            //Adım 6: Gerekli Düzeltme Ağırlığının Hesaplanması
+            DynotisData.Iso.GerekliDuzeltmeAgirligi = DynotisData.Iso.OlculenDengesizlik / (DynotisData.Iso.DuzeltmeYaricapi * 1000.0); // (gram)
+            
+            DynotisData.Iso.KullanilanDuzeltmeAgirligi = DynotisData.Iso.GerekliDuzeltmeAgirligi * 0.9; // (gram)
+
+            DynotisData.Iso.KalanDengesizlik = DynotisData.Iso.OlculenDengesizlik - (DynotisData.Iso.KullanilanDuzeltmeAgirligi * (DynotisData.Iso.DuzeltmeYaricapi * 1000.0)); // (gram·mm)
+
+            DynotisData.Iso.EksikAgirlik = DynotisData.Iso.GerekliDuzeltmeAgirligi - DynotisData.Iso.KullanilanDuzeltmeAgirligi; // (gram)
         }
 
         public void OnPropertyChanged([CallerMemberName] string propertyName = null)
