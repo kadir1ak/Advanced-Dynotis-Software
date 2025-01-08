@@ -121,6 +121,8 @@ public class InterfaceVariables : INotifyPropertyChanged
     private bool _selectedIsTurkishChecked;
     private bool _selectedIsEnglishChecked;
 
+    private double _unitReferenceWeight;
+    private double _totalWeight;
     private int _referenceMotorSpeed;
     private double _referencePropellerDiameter;
     private double _equalizerTapeCoefficient;
@@ -488,6 +490,16 @@ public class InterfaceVariables : INotifyPropertyChanged
     {
         get => _referenceMotorSpeed;
         set => SetProperty(ref _referenceMotorSpeed, value);
+    }
+    public double UnitReferenceWeight
+    {
+        get => _unitReferenceWeight;
+        set => SetProperty(ref _unitReferenceWeight, value);
+    }
+    public double TotalWeight
+    {
+        get => _totalWeight;
+        set => SetProperty(ref _totalWeight, value);
     }
     public double ReferencePropellerDiameter
     {

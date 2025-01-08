@@ -1026,7 +1026,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
                 _dynotisData.Iso.DonusHizi = _dynotisData.ISOCal.DonusHizi; // RPM
                 _dynotisData.Iso.OlculenIvme = _dynotisData.ISOCal.OlculenIvme; // g
-                _dynotisData.Iso.ToplamKutle = 0.428; // kg    360 motor + 68 pervane         
+                _dynotisData.Iso.ToplamKutle = _interfaceVariables.TotalWeight / 1000.0; //0.428; // kg    360 motor + 68 pervane         
                 _dynotisData.Iso.DuzeltmeYaricapi = (_interfaceVariables.ReferencePropellerDiameter * 0.0254) / 4.0; // m
                 //•	Denge Kalite Derecesi (G): G = 6.3 (genel amaçlı motor ve pervaneler için).
 

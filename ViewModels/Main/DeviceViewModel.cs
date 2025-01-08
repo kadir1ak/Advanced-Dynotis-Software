@@ -367,6 +367,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                                 e.PropertyName == nameof(BalancerParametersViewModel.BalancerIterationDescription))
                             {
                                 DeviceInterfaceVariables.ReferenceMotorSpeed = _currentBalancerParameters.ReferenceMotorSpeed;
+                                DeviceInterfaceVariables.TotalWeight = _currentBalancerParameters.TotalWeight;
+                                DeviceInterfaceVariables.UnitReferenceWeight = _currentBalancerParameters.UnitReferenceWeight;
                                 _currentBalancerParameters.ReferencePropellerDiameter = DeviceInterfaceVariables.ReferencePropellerDiameter;
                                 _currentBalancerParameters.BalancerIterationStep = DeviceInterfaceVariables.BalancerIterationStep;
                                 _currentBalancerParameters.BalancerIterationStepChart = DeviceInterfaceVariables.BalancerIterationStepChart;

@@ -12,6 +12,8 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 {
     public class BalancerParametersViewModel : INotifyPropertyChanged
     {
+        private double _unitReferenceWeight;
+        private double _totalWeight;
         private int _referenceMotorSpeed;
         private double _referencePropellerDiameter;
 
@@ -51,6 +53,30 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                 BalancerIterationDescription = _interfaceVariables.BalancerIterationDescription;
                 ReferencePropellerDiameter = _interfaceVariables.ReferencePropellerDiameter;
                 ReferenceMotorSpeed = _interfaceVariables.ReferenceMotorSpeed;
+            }
+        }
+        public double UnitReferenceWeight
+        {
+            get => _unitReferenceWeight;
+            set
+            {
+                if (SetProperty(ref _unitReferenceWeight, value))
+                {
+                    _interfaceVariables.UnitReferenceWeight = value;
+                    OnPropertyChanged(nameof(UnitReferenceWeight));
+                }
+            }
+        }
+        public double TotalWeight
+        {
+            get => _totalWeight;
+            set
+            {
+                if (SetProperty(ref _totalWeight, value))
+                {
+                    _interfaceVariables.TotalWeight = value;
+                    OnPropertyChanged(nameof(TotalWeight));
+                }
             }
         }
         public int ReferenceMotorSpeed
