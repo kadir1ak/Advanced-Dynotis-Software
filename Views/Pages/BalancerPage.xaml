@@ -689,7 +689,7 @@
                                         </Grid>
                                     </Border>
 
-                                    <Grid Grid.Row="0" Grid.Column="3">
+                                    <!--<Grid Grid.Row="0" Grid.Column="3">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="*"/>
                                             <RowDefinition Height="*"/>
@@ -1107,7 +1107,7 @@
                                                 </StackPanel>
                                             </Grid>
                                         </Border>
-                                    </Grid>
+                                    </Grid>-->
 
                                   
                                 </Grid>

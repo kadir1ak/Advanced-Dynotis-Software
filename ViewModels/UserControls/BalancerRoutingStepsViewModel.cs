@@ -617,6 +617,16 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         }
         private void BalancingIteration()
         {
+            // İterasyon atlama noktası
+            if(HeaderStepIndex == 3)
+            {
+                HeaderStepIndex = 4;
+            }
+            if (HeaderStepIndex == 5)
+            {
+                HeaderStepIndex = 6;
+            }
+
             switch (HeaderStepIndex)
             {
                 case 0: // Run Button
@@ -723,8 +733,10 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                     SetVisibility("ApprovalRepeatStepVisible");
                                     Iteration = Iteration + "\r\n" +
                                                 "Propeller Base Running Vibration: " + PropellerBaseRunningVibration.ToString("0.000") + " IPS" + "\r\n" +
-                                                "Propeller Base Running Vibration: " + (PropellerBaseRunningVibration * 25.4).ToString("0.000") + " G" + "\r\n" +
-                                                "Propeller Base Running Vibration: " + ((_dynotisData.BalancerParameterBasePropeller.OlculenDengesizlik* _dynotisData.BalancerParameterBasePropeller.DonusHizi) /(9549*0.5)).ToString("0.000") + " G";
+                                                "Permissible Imbalance: " + "6.3" + " G" + "\r\n" +
+                                                "Measured Imbalance: " + ((_dynotisData.BalancerParameterBasePropeller.OlculenDengesizlik * _dynotisData.BalancerParameterBasePropeller.DonusHizi) /(9549*0.5)).ToString("0.000") + " G" + "\r\n" +
+                                                "Required Correction Weight: " + (_dynotisData.BalancerParameterBasePropeller.GerekliDuzeltmeAgirligi).ToString("0.000") + " g" + "\r\n" +
+                                                "Required Correction Tape Length: " + (_dynotisData.BalancerParameterBasePropeller.GerekliDuzeltmeAgirligi / _interfaceVariables.UnitReferenceWeight).ToString("0.000") + " cm";
                                 }   
                                 break;
                         }
@@ -788,21 +800,21 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                             case 6:  // Sonuçları kontrol edin.
                                 {
                                     SetVisibility("ApprovalRepeatStepVisible");
-                                    if(FirstBladeVibration>SecondBladeVibration)
+
+                                    if (_dynotisData.BalancerParameterFirstBladePropeller.OlculenDengesizlik > _dynotisData.BalancerParameterSecondBladePropeller.OlculenDengesizlik)
                                     {
-                                        Iteration = Iteration + "\r\n" +
-                                                    "Measured vibration: " + SecondBladeVibration.ToString("0.000") + " IPS";
+
+                                        Iteration = "Permissible Imbalance: " + "6.3" + " G" + "\r\n" +
+                                                    "Measured Imbalance for First Blade: " + ((_dynotisData.BalancerParameterFirstBladePropeller.OlculenDengesizlik * _dynotisData.BalancerParameterFirstBladePropeller.DonusHizi) / (9549 * 0.5)).ToString("0.000") + " G" + "\r\n" +
+                                                    "Measured Imbalance for Second Blade: " + ((_dynotisData.BalancerParameterSecondBladePropeller.OlculenDengesizlik * _dynotisData.BalancerParameterSecondBladePropeller.DonusHizi) / (9549 * 0.5)).ToString("0.000") + " G";
+
                                     }
-                                    else if (SecondBladeVibration > FirstBladeVibration)
+                                    else if (_dynotisData.BalancerParameterSecondBladePropeller.OlculenDengesizlik > _dynotisData.BalancerParameterFirstBladePropeller.OlculenDengesizlik)
                                     {
-                                        Iteration = Iteration + "\r\n" +
-                                                    "Measured vibration: " + FirstBladeVibration.ToString("0.000") + " IPS";
-                                    }
-                                    else
-                                    {
-                                        Iteration = Iteration + "\r\n" +
-                                                    "Measured vibration: " + FirstBladeVibration.ToString("0.000") + " IPS" + "\r\n" +
-                                                    "Measured vibration: " + SecondBladeVibration.ToString("0.000") + " IPS";
+                                        Iteration = "Please paste the selected tape back to its first location\r\n" +
+                                                    "Permissible Imbalance: " + "6.3" + " G" + "\r\n" +
+                                                    "Measured Imbalance for First Blade: " + ((_dynotisData.BalancerParameterFirstBladePropeller.OlculenDengesizlik * _dynotisData.BalancerParameterFirstBladePropeller.DonusHizi) / (9549 * 0.5)).ToString("0.000") + " G" + "\r\n" +
+                                                    "Measured Imbalance for Second Blade: " + ((_dynotisData.BalancerParameterSecondBladePropeller.OlculenDengesizlik * _dynotisData.BalancerParameterSecondBladePropeller.DonusHizi) / (9549 * 0.5)).ToString("0.000") + " G";
                                     }
                                 }
                                 break;
@@ -872,7 +884,9 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                 {
                                     SetVisibility("ApprovalRepeatStepVisible");
                                     Iteration = Iteration + "\r\n" +
-                                                "Balanced Propeller Running Vibration: " + BalancedPropellerRunningVibration.ToString("0.000") + " IPS";
+                                                "Balanced Propeller Running Vibration: " + BalancedPropellerRunningVibration.ToString("0.000") + " IPS" + "\r\n" +
+                                                "Permissible Imbalance: " + "6.3" + " G" + "\r\n" +
+                                                "Measured Imbalance: " + ((_dynotisData.BalancerParameterBalancedPropeller.OlculenDengesizlik * _dynotisData.BalancerParameterBalancedPropeller.DonusHizi) / (9549 * 0.5)).ToString("0.000") + " G";
                                 }
                                 break;
                             case 3:  // Sonuçları kontrol edin.
