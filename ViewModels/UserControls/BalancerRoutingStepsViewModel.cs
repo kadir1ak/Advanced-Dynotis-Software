@@ -886,6 +886,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                     Iteration = Iteration + "\r\n" +
                                                 "Balanced Propeller Running Vibration: " + BalancedPropellerRunningVibration.ToString("0.000") + " IPS" + "\r\n" +
                                                 "Permissible Imbalance: " + "6.3" + " G" + "\r\n" +
+                                                "Initial Imbalance: " + ((_dynotisData.BalancerParameterBasePropeller.OlculenDengesizlik * _dynotisData.BalancerParameterBasePropeller.DonusHizi) / (9549 * 0.5)).ToString("0.000") + " G" + "\r\n" +
                                                 "Measured Imbalance: " + ((_dynotisData.BalancerParameterBalancedPropeller.OlculenDengesizlik * _dynotisData.BalancerParameterBalancedPropeller.DonusHizi) / (9549 * 0.5)).ToString("0.000") + " G";
                                 }
                                 break;
