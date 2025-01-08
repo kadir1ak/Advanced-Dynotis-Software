@@ -24,6 +24,8 @@ using Advanced_Dynotis_Software.Views.UserControls;
 using System.IO;
 using Newtonsoft.Json;
 using System.Text.Json.Nodes;
+using System.Diagnostics;
+using System.Collections;
 
 namespace Advanced_Dynotis_Software.ViewModels.UserControls
 {
@@ -126,7 +128,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private List<double> _testStepsPropellerVibrations;
 
         //ISO
-        private ISOArray _isoArray;
+        private TestProcessBuffer _testProcessBuffer;
 
         //StepChart
         private ObservableCollection<double> _balancerIterationStepChart;
@@ -162,7 +164,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             PIDController = new PIDController(1.5, 0.03, 0.05);
 
             //ISO
-            _isoArray = new ISOArray();
+            _testProcessBuffer = new TestProcessBuffer();
 
             AddTestButtonCommand = new RelayCommand(param => AddTestFileCommand());
             RunButtonCommand = new RelayCommand(param => RunCommand());
@@ -720,8 +722,10 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                 {
                                     SetVisibility("ApprovalRepeatStepVisible");
                                     Iteration = Iteration + "\r\n" +
-                                                "Propeller Base Running Vibration: " + PropellerBaseRunningVibration.ToString("0.000") + " IPS";
-                                }
+                                                "Propeller Base Running Vibration: " + PropellerBaseRunningVibration.ToString("0.000") + " IPS" + "\r\n" +
+                                                "Propeller Base Running Vibration: " + (PropellerBaseRunningVibration * 25.4).ToString("0.000") + " G" + "\r\n" +
+                                                "Propeller Base Running Vibration: " + ((_dynotisData.BalancerParameterBasePropeller.OlculenDengesizlik* _dynotisData.BalancerParameterBasePropeller.DonusHizi) /(9549*0.5)).ToString("0.000") + " G";
+                                }   
                                 break;
                         }
                     }
@@ -930,147 +934,82 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                     //Logger.Log($"HighIPSVibration:  {HighIPSVibration.ToString("0.000")}");
                 }
 
-                ISOCalArrayAdd();
+                TestProcessBufferAdd();
 
                 HighVibration = _interfaceVariables.Vibration.HighVibration;
                 VibrationsDataBuffer.Add(HighVibration);
                 //Logger.Log($"HighVibration:     {HighVibration.ToString("0.000")}");
             }
         }
-
-        private void ISOCalArrayAdd()
+        private void TestProcessBufferAdd()
         {
             try
             {
-                if (ISOCalArray.Status == true)
-                {
-                    ISOCalArray.DonusHizi.Add(_interfaceVariables.MotorSpeed.Value);
-                    ISOCalArray.OlculenIvme.Add(_interfaceVariables.Vibration.Value);
-                }
+                TestProcessBuffer.DonusHizi.Add(_interfaceVariables.MotorSpeed.Value);
+                TestProcessBuffer.OlculenIvme.Add(_interfaceVariables.Vibration.Value);
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error in AddTestCommand: {ex.Message}");
             }
         }
-        private void ISOCalArrayClear()
+        private void TestProcessBufferClear()
         {
             // Tüm listeleri temizle
             try
             {
-                if(ISOCalArray.Status == false)
-                {
-                    ISOCalArray.DonusHizi.Clear();
-                    ISOCalArray.OlculenIvme.Clear();
-                    ISOCalArray.Status = true;
-                }
+                TestProcessBuffer.DonusHizi.Clear();
+                TestProcessBuffer.OlculenIvme.Clear();
             }
             catch (Exception ex)
             {                
                 System.Diagnostics.Debug.WriteLine($"Error in AddTestCommand: {ex.Message}");
             }
         }
-        private void ISOCal()
-        {
-            try
-            {
-                ISOCalArray.Status = false;
-               
 
-                _dynotisData.ISOCal.ReferansDonusHizi = _interfaceVariables.ReferenceMotorSpeed;
-    
-                // Ortalama hesaplamaları
-                _dynotisData.ISOCal.DonusHizi = ISOCalArray.DonusHizi.Count > 0 ? ISOCalArray.DonusHizi.Average() : 0;
-                //_dynotisData.ISOCal.OlculenIvme = ISOCalArray.OlculenIvme.Count > 0 ? ISOCalArray.OlculenIvme.Average() : 0;
-
-
-                /*
-                double ortlamaIvme = ISOCalArray.OlculenIvme.Count > 0 ? ISOCalArray.OlculenIvme.Average() : 0;
-                double yüksekIvmelerinToplamı = 0;
-                double yüksekIvmelerinSayısı = 0;
-                for (int i = 0; i < ISOCalArray.OlculenIvme.Count; i++)
-                {
-                    if(ISOCalArray.OlculenIvme[i] > ortlamaIvme)
-                    {
-                        yüksekIvmelerinSayısı++;
-                        yüksekIvmelerinToplamı += ISOCalArray.OlculenIvme[i];
-                    }                    
-                }
-                _dynotisData.ISOCal.OlculenIvme = yüksekIvmelerinToplamı / yüksekIvmelerinSayısı;
-                */
-             
-                // Diziyi büyükten küçüğe sırala ve en büyük 10 değeri seç
-                var largest10 = ISOCalArray.OlculenIvme.OrderByDescending(n => n).Take(10);
-                // Ortalama hesapla
-                double OlculenIvme = largest10.Average();
-                _dynotisData.ISOCal.OlculenIvme = OlculenIvme;
-
-                ISOCalArrayClear();
-
-                ISOCalculate();
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"An error occurred: {ex.Message}\nDetails: {ex.StackTrace}",
-                                "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                System.Diagnostics.Debug.WriteLine($"Error in ISOCal: {ex.Message}, StackTrace: {ex.StackTrace}");
-            }
-        }
-
-        private void ISOCalculate()
+        private void MotorTestProcessCalculate()
         {
             try
             {
                 // Anlık Değerler alanının hesaplamaları
+                _dynotisData.BalancerParameterMotor.DonusHizi = TestProcessBuffer.DonusHizi.Count > 0 ? TestProcessBuffer.DonusHizi.Average() : 0;
+                // Diziyi büyükten küçüğe sırala ve en büyük 10 değeri seç
+                var largest10 = TestProcessBuffer.OlculenIvme.OrderByDescending(n => n).Take(10);
+                // Ortalama hesapla
+                double OlculenIvme = largest10.Average();
 
-                _dynotisData.Iso.DonusHizi = _dynotisData.ISOCal.DonusHizi; // RPM
-                _dynotisData.Iso.OlculenIvme = _dynotisData.ISOCal.OlculenIvme; // g
-                _dynotisData.Iso.ToplamKutle = _interfaceVariables.TotalWeight / 1000.0; //0.428; // kg    360 motor + 68 pervane         
-                _dynotisData.Iso.DuzeltmeYaricapi = (_interfaceVariables.ReferencePropellerDiameter * 0.0254) / 4.0; // m
+                _dynotisData.BalancerParameterMotor.OlculenIvme = OlculenIvme;
+
+
+                _dynotisData.BalancerParameterMotor.ToplamKutle = _interfaceVariables.TotalWeight / 1000.0; //0.428; // kg    360 motor + 68 pervane         
+                _dynotisData.BalancerParameterMotor.DuzeltmeYaricapi = (_interfaceVariables.ReferencePropellerDiameter * 0.0254) / 4.0; // m
                 //•	Denge Kalite Derecesi (G): G = 6.3 (genel amaçlı motor ve pervaneler için).
 
                 //Adım 1: Ölçülen İvmenin SI Birimlerine Çevrilmesi (m/s^2)
-                _dynotisData.Iso.Ivme = _dynotisData.Iso.OlculenIvme * 9.81;
+                _dynotisData.BalancerParameterMotor.Ivme = _dynotisData.BalancerParameterMotor.OlculenIvme * 9.81;
 
                 //Adım 2: Santrifüj Kuvveti (F) Hesaplanması (N)
-                _dynotisData.Iso.SantrifujKuvveti = _dynotisData.Iso.ToplamKutle * _dynotisData.Iso.Ivme;
+                _dynotisData.BalancerParameterMotor.SantrifujKuvveti = _dynotisData.BalancerParameterMotor.ToplamKutle * _dynotisData.BalancerParameterMotor.Ivme;
 
                 //Adım 3: Açısal Hız (ω) Hesaplanması (rad/s)
-                _dynotisData.Iso.AcisalHiz = 2.0 * Math.PI * (_dynotisData.Iso.DonusHizi / 60.0);
+                _dynotisData.BalancerParameterMotor.AcisalHiz = 2.0 * Math.PI * (_dynotisData.BalancerParameterMotor.DonusHizi / 60.0);
 
                 //Adım 4: Ölçülen Dengesizlik (U_res) Hesaplanması (gram·mm)
-                _dynotisData.Iso.OlculenDengesizlik = _dynotisData.Iso.SantrifujKuvveti / Math.Pow(_dynotisData.Iso.AcisalHiz, 2) * Math.Pow(10.0, 6);
+                _dynotisData.BalancerParameterMotor.OlculenDengesizlik = _dynotisData.BalancerParameterMotor.SantrifujKuvveti / Math.Pow(_dynotisData.BalancerParameterMotor.AcisalHiz, 2) * Math.Pow(10.0, 6);
 
                 //Adım 5: İzin Verilebilir Dengesizlik (U_per) Hesaplanması (gram·mm)
-                _dynotisData.Iso.IzinVerilebilirDengesizlik = (9549 * 6.3 * _dynotisData.Iso.ToplamKutle) / _dynotisData.Iso.DonusHizi;
+                _dynotisData.BalancerParameterMotor.IzinVerilebilirDengesizlik = (9549 * 6.3 * _dynotisData.BalancerParameterMotor.ToplamKutle) / _dynotisData.BalancerParameterMotor.DonusHizi;
 
                 //Adım 6: Gerekli Düzeltme Ağırlığının Hesaplanması
-                _dynotisData.Iso.GerekliDuzeltmeAgirligi = _dynotisData.Iso.OlculenDengesizlik / (_dynotisData.Iso.DuzeltmeYaricapi * 1000.0); // (gram)
+                _dynotisData.BalancerParameterMotor.GerekliDuzeltmeAgirligi = _dynotisData.BalancerParameterMotor.OlculenDengesizlik / (_dynotisData.BalancerParameterMotor.DuzeltmeYaricapi * 1000.0); // (gram)
 
-                _dynotisData.Iso.KullanilanDuzeltmeAgirligi = _dynotisData.Iso.GerekliDuzeltmeAgirligi * 0.9; // (gram)
+                _dynotisData.BalancerParameterMotor.KullanilanDuzeltmeAgirligi = _dynotisData.BalancerParameterMotor.GerekliDuzeltmeAgirligi * 0.9; // (gram)
 
-                _dynotisData.Iso.KalanDengesizlik = _dynotisData.Iso.OlculenDengesizlik - (_dynotisData.Iso.KullanilanDuzeltmeAgirligi * (_dynotisData.Iso.DuzeltmeYaricapi * 1000.0)); // (gram·mm)
+                _dynotisData.BalancerParameterMotor.KalanDengesizlik = _dynotisData.BalancerParameterMotor.OlculenDengesizlik - (_dynotisData.BalancerParameterMotor.KullanilanDuzeltmeAgirligi * (_dynotisData.BalancerParameterMotor.DuzeltmeYaricapi * 1000.0)); // (gram·mm)
 
-                _dynotisData.Iso.EksikAgirlik = _dynotisData.Iso.GerekliDuzeltmeAgirligi - _dynotisData.Iso.KullanilanDuzeltmeAgirligi; // (gram)
+                _dynotisData.BalancerParameterMotor.EksikAgirlik = _dynotisData.BalancerParameterMotor.GerekliDuzeltmeAgirligi - _dynotisData.BalancerParameterMotor.KullanilanDuzeltmeAgirligi; // (gram)
 
-          
-
-                _dynotisData.ISOCal.DonusHizi = _dynotisData.Iso.DonusHizi;
-                _dynotisData.ISOCal.ReferansDonusHizi = _dynotisData.Iso.ReferansDonusHizi;
-                _dynotisData.ISOCal.OlculenIvme = _dynotisData.Iso.OlculenIvme;
-                _dynotisData.ISOCal.ToplamKutle = _dynotisData.Iso.ToplamKutle;
-                _dynotisData.ISOCal.DuzeltmeYaricapi = _dynotisData.Iso.DuzeltmeYaricapi;
-
-                _dynotisData.ISOCal.Ivme = _dynotisData.Iso.Ivme;
-                _dynotisData.ISOCal.SantrifujKuvveti = _dynotisData.Iso.SantrifujKuvveti;
-                _dynotisData.ISOCal.AcisalHiz = _dynotisData.Iso.AcisalHiz;
-                _dynotisData.ISOCal.OlculenDengesizlik = _dynotisData.Iso.OlculenDengesizlik;
-                _dynotisData.ISOCal.IzinVerilebilirDengesizlik = _dynotisData.Iso.IzinVerilebilirDengesizlik;
-                _dynotisData.ISOCal.GerekliDuzeltmeAgirligi = _dynotisData.Iso.GerekliDuzeltmeAgirligi;
-                _dynotisData.ISOCal.KullanilanDuzeltmeAgirligi = _dynotisData.Iso.KullanilanDuzeltmeAgirligi;
-                _dynotisData.ISOCal.KalanDengesizlik = _dynotisData.Iso.KalanDengesizlik;
-                _dynotisData.ISOCal.EksikAgirlik = _dynotisData.Iso.EksikAgirlik;
+                TestProcessBufferClear();
             }
             catch (Exception ex)
             {
@@ -1080,7 +1019,224 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             }
            
         }
+        private void BasePropellerTestProcessCalculate()
+        {
+            try
+            {
+                // Anlık Değerler alanının hesaplamaları
+                _dynotisData.BalancerParameterBasePropeller.DonusHizi = TestProcessBuffer.DonusHizi.Count > 0 ? TestProcessBuffer.DonusHizi.Average() : 0;
 
+                // Diziyi büyükten küçüğe sırala ve en büyük 10 değeri seç
+                var largest10 = TestProcessBuffer.OlculenIvme.OrderByDescending(n => n).Take(10);
+                // Ortalama hesapla
+                double OlculenIvme = largest10.Average();
+
+                _dynotisData.BalancerParameterBasePropeller.OlculenIvme = OlculenIvme;
+
+
+                _dynotisData.BalancerParameterBasePropeller.ToplamKutle = _interfaceVariables.TotalWeight / 1000.0; //0.428; // kg    360 motor + 68 pervane         
+                _dynotisData.BalancerParameterBasePropeller.DuzeltmeYaricapi = (_interfaceVariables.ReferencePropellerDiameter * 0.0254) / 4.0; // m
+                //•	Denge Kalite Derecesi (G): G = 6.3 (genel amaçlı motor ve pervaneler için).
+
+                //Adım 1: Ölçülen İvmenin SI Birimlerine Çevrilmesi (m/s^2)
+                _dynotisData.BalancerParameterBasePropeller.Ivme = _dynotisData.BalancerParameterBasePropeller.OlculenIvme * 9.81;
+
+                //Adım 2: Santrifüj Kuvveti (F) Hesaplanması (N)
+                _dynotisData.BalancerParameterBasePropeller.SantrifujKuvveti = _dynotisData.BalancerParameterBasePropeller.ToplamKutle * _dynotisData.BalancerParameterBasePropeller.Ivme;
+
+                //Adım 3: Açısal Hız (ω) Hesaplanması (rad/s)
+                _dynotisData.BalancerParameterBasePropeller.AcisalHiz = 2.0 * Math.PI * (_dynotisData.BalancerParameterBasePropeller.DonusHizi / 60.0);
+
+                //Adım 4: Ölçülen Dengesizlik (U_res) Hesaplanması (gram·mm)
+                _dynotisData.BalancerParameterBasePropeller.OlculenDengesizlik = _dynotisData.BalancerParameterBasePropeller.SantrifujKuvveti / Math.Pow(_dynotisData.BalancerParameterBasePropeller.AcisalHiz, 2) * Math.Pow(10.0, 6);
+
+                //Adım 5: İzin Verilebilir Dengesizlik (U_per) Hesaplanması (gram·mm)
+                _dynotisData.BalancerParameterBasePropeller.IzinVerilebilirDengesizlik = (9549 * 6.3 * _dynotisData.BalancerParameterBasePropeller.ToplamKutle) / _dynotisData.BalancerParameterBasePropeller.DonusHizi;
+
+                //Adım 6: Gerekli Düzeltme Ağırlığının Hesaplanması
+                _dynotisData.BalancerParameterBasePropeller.GerekliDuzeltmeAgirligi = _dynotisData.BalancerParameterBasePropeller.OlculenDengesizlik / (_dynotisData.BalancerParameterBasePropeller.DuzeltmeYaricapi * 1000.0); // (gram)
+
+                _dynotisData.BalancerParameterBasePropeller.KullanilanDuzeltmeAgirligi = _dynotisData.BalancerParameterBasePropeller.GerekliDuzeltmeAgirligi * 0.9; // (gram)
+
+                _dynotisData.BalancerParameterBasePropeller.KalanDengesizlik = _dynotisData.BalancerParameterBasePropeller.OlculenDengesizlik - (_dynotisData.BalancerParameterBasePropeller.KullanilanDuzeltmeAgirligi * (_dynotisData.BalancerParameterBasePropeller.DuzeltmeYaricapi * 1000.0)); // (gram·mm)
+
+                _dynotisData.BalancerParameterBasePropeller.EksikAgirlik = _dynotisData.BalancerParameterBasePropeller.GerekliDuzeltmeAgirligi - _dynotisData.BalancerParameterBasePropeller.KullanilanDuzeltmeAgirligi; // (gram)
+
+                TestProcessBufferClear();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}\nDetails: {ex.StackTrace}",
+                                "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Diagnostics.Debug.WriteLine($"Error in ISOCal: {ex.Message}, StackTrace: {ex.StackTrace}");
+            }
+
+        }
+        private void FirstBladePropellerTestProcessCalculate()
+        {
+            try
+            {
+                // Anlık Değerler alanının hesaplamaları
+                _dynotisData.BalancerParameterFirstBladePropeller.DonusHizi = TestProcessBuffer.DonusHizi.Count > 0 ? TestProcessBuffer.DonusHizi.Average() : 0;
+
+                // Diziyi büyükten küçüğe sırala ve en büyük 10 değeri seç
+                var largest10 = TestProcessBuffer.OlculenIvme.OrderByDescending(n => n).Take(10);
+                // Ortalama hesapla
+                double OlculenIvme = largest10.Average();
+
+                _dynotisData.BalancerParameterFirstBladePropeller.OlculenIvme = OlculenIvme;
+
+
+                _dynotisData.BalancerParameterFirstBladePropeller.ToplamKutle = _interfaceVariables.TotalWeight / 1000.0; //0.428; // kg    360 motor + 68 pervane         
+                _dynotisData.BalancerParameterFirstBladePropeller.DuzeltmeYaricapi = (_interfaceVariables.ReferencePropellerDiameter * 0.0254) / 4.0; // m
+                //•	Denge Kalite Derecesi (G): G = 6.3 (genel amaçlı motor ve pervaneler için).
+
+                //Adım 1: Ölçülen İvmenin SI Birimlerine Çevrilmesi (m/s^2)
+                _dynotisData.BalancerParameterFirstBladePropeller.Ivme = _dynotisData.BalancerParameterFirstBladePropeller.OlculenIvme * 9.81;
+
+                //Adım 2: Santrifüj Kuvveti (F) Hesaplanması (N)
+                _dynotisData.BalancerParameterFirstBladePropeller.SantrifujKuvveti = _dynotisData.BalancerParameterFirstBladePropeller.ToplamKutle * _dynotisData.BalancerParameterFirstBladePropeller.Ivme;
+
+                //Adım 3: Açısal Hız (ω) Hesaplanması (rad/s)
+                _dynotisData.BalancerParameterFirstBladePropeller.AcisalHiz = 2.0 * Math.PI * (_dynotisData.BalancerParameterFirstBladePropeller.DonusHizi / 60.0);
+
+                //Adım 4: Ölçülen Dengesizlik (U_res) Hesaplanması (gram·mm)
+                _dynotisData.BalancerParameterFirstBladePropeller.OlculenDengesizlik = _dynotisData.BalancerParameterFirstBladePropeller.SantrifujKuvveti / Math.Pow(_dynotisData.BalancerParameterFirstBladePropeller.AcisalHiz, 2) * Math.Pow(10.0, 6);
+
+                //Adım 5: İzin Verilebilir Dengesizlik (U_per) Hesaplanması (gram·mm)
+                _dynotisData.BalancerParameterFirstBladePropeller.IzinVerilebilirDengesizlik = (9549 * 6.3 * _dynotisData.BalancerParameterFirstBladePropeller.ToplamKutle) / _dynotisData.BalancerParameterFirstBladePropeller.DonusHizi;
+
+                //Adım 6: Gerekli Düzeltme Ağırlığının Hesaplanması
+                _dynotisData.BalancerParameterFirstBladePropeller.GerekliDuzeltmeAgirligi = _dynotisData.BalancerParameterFirstBladePropeller.OlculenDengesizlik / (_dynotisData.BalancerParameterFirstBladePropeller.DuzeltmeYaricapi * 1000.0); // (gram)
+
+                _dynotisData.BalancerParameterFirstBladePropeller.KullanilanDuzeltmeAgirligi = _dynotisData.BalancerParameterFirstBladePropeller.GerekliDuzeltmeAgirligi * 0.9; // (gram)
+
+                _dynotisData.BalancerParameterFirstBladePropeller.KalanDengesizlik = _dynotisData.BalancerParameterFirstBladePropeller.OlculenDengesizlik - (_dynotisData.BalancerParameterFirstBladePropeller.KullanilanDuzeltmeAgirligi * (_dynotisData.BalancerParameterFirstBladePropeller.DuzeltmeYaricapi * 1000.0)); // (gram·mm)
+
+                _dynotisData.BalancerParameterFirstBladePropeller.EksikAgirlik = _dynotisData.BalancerParameterFirstBladePropeller.GerekliDuzeltmeAgirligi - _dynotisData.BalancerParameterFirstBladePropeller.KullanilanDuzeltmeAgirligi; // (gram)
+
+
+                TestProcessBufferClear();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}\nDetails: {ex.StackTrace}",
+                                "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Diagnostics.Debug.WriteLine($"Error in ISOCal: {ex.Message}, StackTrace: {ex.StackTrace}");
+            }
+
+        }
+
+        private void SecondBladePropellerTestProcessCalculate()
+        {
+            try
+            {
+                // Anlık Değerler alanının hesaplamaları
+                _dynotisData.BalancerParameterSecondBladePropeller.DonusHizi = TestProcessBuffer.DonusHizi.Count > 0 ? TestProcessBuffer.DonusHizi.Average() : 0;
+
+                // Diziyi büyükten küçüğe sırala ve en büyük 10 değeri seç
+                var largest10 = TestProcessBuffer.OlculenIvme.OrderByDescending(n => n).Take(10);
+                // Ortalama hesapla
+                double OlculenIvme = largest10.Average();
+
+                _dynotisData.BalancerParameterSecondBladePropeller.OlculenIvme = OlculenIvme;
+
+
+                _dynotisData.BalancerParameterSecondBladePropeller.ToplamKutle = _interfaceVariables.TotalWeight / 1000.0; //0.428; // kg    360 motor + 68 pervane         
+                _dynotisData.BalancerParameterSecondBladePropeller.DuzeltmeYaricapi = (_interfaceVariables.ReferencePropellerDiameter * 0.0254) / 4.0; // m
+                //•	Denge Kalite Derecesi (G): G = 6.3 (genel amaçlı motor ve pervaneler için).
+
+                //Adım 1: Ölçülen İvmenin SI Birimlerine Çevrilmesi (m/s^2)
+                _dynotisData.BalancerParameterSecondBladePropeller.Ivme = _dynotisData.BalancerParameterSecondBladePropeller.OlculenIvme * 9.81;
+
+                //Adım 2: Santrifüj Kuvveti (F) Hesaplanması (N)
+                _dynotisData.BalancerParameterSecondBladePropeller.SantrifujKuvveti = _dynotisData.BalancerParameterSecondBladePropeller.ToplamKutle * _dynotisData.BalancerParameterSecondBladePropeller.Ivme;
+
+                //Adım 3: Açısal Hız (ω) Hesaplanması (rad/s)
+                _dynotisData.BalancerParameterSecondBladePropeller.AcisalHiz = 2.0 * Math.PI * (_dynotisData.BalancerParameterSecondBladePropeller.DonusHizi / 60.0);
+
+                //Adım 4: Ölçülen Dengesizlik (U_res) Hesaplanması (gram·mm)
+                _dynotisData.BalancerParameterSecondBladePropeller.OlculenDengesizlik = _dynotisData.BalancerParameterSecondBladePropeller.SantrifujKuvveti / Math.Pow(_dynotisData.BalancerParameterSecondBladePropeller.AcisalHiz, 2) * Math.Pow(10.0, 6);
+
+                //Adım 5: İzin Verilebilir Dengesizlik (U_per) Hesaplanması (gram·mm)
+                _dynotisData.BalancerParameterSecondBladePropeller.IzinVerilebilirDengesizlik = (9549 * 6.3 * _dynotisData.BalancerParameterSecondBladePropeller.ToplamKutle) / _dynotisData.BalancerParameterSecondBladePropeller.DonusHizi;
+
+                //Adım 6: Gerekli Düzeltme Ağırlığının Hesaplanması
+                _dynotisData.BalancerParameterSecondBladePropeller.GerekliDuzeltmeAgirligi = _dynotisData.BalancerParameterSecondBladePropeller.OlculenDengesizlik / (_dynotisData.BalancerParameterSecondBladePropeller.DuzeltmeYaricapi * 1000.0); // (gram)
+
+                _dynotisData.BalancerParameterSecondBladePropeller.KullanilanDuzeltmeAgirligi = _dynotisData.BalancerParameterSecondBladePropeller.GerekliDuzeltmeAgirligi * 0.9; // (gram)
+
+                _dynotisData.BalancerParameterSecondBladePropeller.KalanDengesizlik = _dynotisData.BalancerParameterSecondBladePropeller.OlculenDengesizlik - (_dynotisData.BalancerParameterSecondBladePropeller.KullanilanDuzeltmeAgirligi * (_dynotisData.BalancerParameterSecondBladePropeller.DuzeltmeYaricapi * 1000.0)); // (gram·mm)
+
+                _dynotisData.BalancerParameterSecondBladePropeller.EksikAgirlik = _dynotisData.BalancerParameterSecondBladePropeller.GerekliDuzeltmeAgirligi - _dynotisData.BalancerParameterSecondBladePropeller.KullanilanDuzeltmeAgirligi; // (gram)
+
+
+                TestProcessBufferClear();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}\nDetails: {ex.StackTrace}",
+                                "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Diagnostics.Debug.WriteLine($"Error in ISOCal: {ex.Message}, StackTrace: {ex.StackTrace}");
+            }
+
+        }
+
+        private void BalancedPropellerTestProcessCalculate()
+        {
+            try
+            {
+                // Anlık Değerler alanının hesaplamaları
+                _dynotisData.BalancerParameterBalancedPropeller.DonusHizi = TestProcessBuffer.DonusHizi.Count > 0 ? TestProcessBuffer.DonusHizi.Average() : 0;
+
+                // Diziyi büyükten küçüğe sırala ve en büyük 10 değeri seç
+                var largest10 = TestProcessBuffer.OlculenIvme.OrderByDescending(n => n).Take(10);
+                // Ortalama hesapla
+                double OlculenIvme = largest10.Average();
+
+                _dynotisData.BalancerParameterBalancedPropeller.OlculenIvme = OlculenIvme;
+
+
+                _dynotisData.BalancerParameterBalancedPropeller.ToplamKutle = _interfaceVariables.TotalWeight / 1000.0; //0.428; // kg    360 motor + 68 pervane         
+                _dynotisData.BalancerParameterBalancedPropeller.DuzeltmeYaricapi = (_interfaceVariables.ReferencePropellerDiameter * 0.0254) / 4.0; // m
+                                                                                                                                                    //•	Denge Kalite Derecesi (G): G = 6.3 (genel amaçlı motor ve pervaneler için).
+
+                //Adım 1: Ölçülen İvmenin SI Birimlerine Çevrilmesi (m/s^2)
+                _dynotisData.BalancerParameterBalancedPropeller.Ivme = _dynotisData.BalancerParameterBalancedPropeller.OlculenIvme * 9.81;
+
+                //Adım 2: Santrifüj Kuvveti (F) Hesaplanması (N)
+                _dynotisData.BalancerParameterBalancedPropeller.SantrifujKuvveti = _dynotisData.BalancerParameterBalancedPropeller.ToplamKutle * _dynotisData.BalancerParameterBalancedPropeller.Ivme;
+
+                //Adım 3: Açısal Hız (ω) Hesaplanması (rad/s)
+                _dynotisData.BalancerParameterBalancedPropeller.AcisalHiz = 2.0 * Math.PI * (_dynotisData.BalancerParameterBalancedPropeller.DonusHizi / 60.0);
+
+                //Adım 4: Ölçülen Dengesizlik (U_res) Hesaplanması (gram·mm)
+                _dynotisData.BalancerParameterBalancedPropeller.OlculenDengesizlik = _dynotisData.BalancerParameterBalancedPropeller.SantrifujKuvveti / Math.Pow(_dynotisData.BalancerParameterBalancedPropeller.AcisalHiz, 2) * Math.Pow(10.0, 6);
+
+                //Adım 5: İzin Verilebilir Dengesizlik (U_per) Hesaplanması (gram·mm)
+                _dynotisData.BalancerParameterBalancedPropeller.IzinVerilebilirDengesizlik = (9549 * 6.3 * _dynotisData.BalancerParameterBalancedPropeller.ToplamKutle) / _dynotisData.BalancerParameterBalancedPropeller.DonusHizi;
+
+                //Adım 6: Gerekli Düzeltme Ağırlığının Hesaplanması
+                _dynotisData.BalancerParameterBalancedPropeller.GerekliDuzeltmeAgirligi = _dynotisData.BalancerParameterBalancedPropeller.OlculenDengesizlik / (_dynotisData.BalancerParameterBalancedPropeller.DuzeltmeYaricapi * 1000.0); // (gram)
+
+                _dynotisData.BalancerParameterBalancedPropeller.KullanilanDuzeltmeAgirligi = _dynotisData.BalancerParameterBalancedPropeller.GerekliDuzeltmeAgirligi * 0.9; // (gram)
+
+                _dynotisData.BalancerParameterBalancedPropeller.KalanDengesizlik = _dynotisData.BalancerParameterBalancedPropeller.OlculenDengesizlik - (_dynotisData.BalancerParameterBalancedPropeller.KullanilanDuzeltmeAgirligi * (_dynotisData.BalancerParameterBalancedPropeller.DuzeltmeYaricapi * 1000.0)); // (gram·mm)
+
+                _dynotisData.BalancerParameterBalancedPropeller.EksikAgirlik = _dynotisData.BalancerParameterBalancedPropeller.GerekliDuzeltmeAgirligi - _dynotisData.BalancerParameterBalancedPropeller.KullanilanDuzeltmeAgirligi; // (gram)
+
+
+                TestProcessBufferClear();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}\nDetails: {ex.StackTrace}",
+                                "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Diagnostics.Debug.WriteLine($"Error in ISOCal: {ex.Message}, StackTrace: {ex.StackTrace}");
+            }
+
+        }
 
         private double CalculateHighIPSVibrations(List<double> buffer)
         {
@@ -1406,7 +1562,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
 
                                                 HighVibrationDataCollectionTimer.Stop();
                                                 BalancerProgressTimer.Stop();
-                                                ISOCal();
+                                                TestProcessBufferClear();
                                                 TestTimeCount = 0;
                                                 TestTimeStatusBar = 0;
                                                 CalculateVibrationTare();
@@ -1438,7 +1594,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                             {
                                                 HighVibrationDataCollectionTimer.Stop();
                                                 BalancerProgressTimer.Stop();
-                                                ISOCal();
+                                                TestProcessBufferClear();
                                                 TestTimeCount = 0;
                                                 TestTimeStatusBar = 0;
                                                 CalculateDeviceBaseStaticVibrationVibration();
@@ -1471,7 +1627,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                                 {
                                                     HighVibrationDataCollectionTimer.Stop();                                                   
                                                     BalancerProgressTimer.Stop();
-                                                    ISOCal();
+                                                    MotorTestProcessCalculate();
                                                     TestTimeCount = 0;
                                                     TestTimeStatusBar = 0;
                                                     CalculateMotorBaseRunningVibration();
@@ -1519,7 +1675,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                                 {
                                                     HighVibrationDataCollectionTimer.Stop();
                                                     BalancerProgressTimer.Stop();
-                                                    ISOCal();
+                                                    BasePropellerTestProcessCalculate();
                                                     TestTimeCount = 0;
                                                     TestTimeStatusBar = 0;
                                                     CalculatePropellerBaseRunningVibration();
@@ -1572,7 +1728,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                                 {
                                                     HighVibrationDataCollectionTimer.Stop();
                                                     BalancerProgressTimer.Stop();
-                                                    ISOCal();
+                                                    FirstBladePropellerTestProcessCalculate();
                                                     TestTimeCount = 0;
                                                     TestTimeStatusBar = 0;
                                                     CalculateFirstBladeVibration();
@@ -1610,7 +1766,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                                 {
                                                     HighVibrationDataCollectionTimer.Stop();
                                                     BalancerProgressTimer.Stop();
-                                                    ISOCal();
+                                                    SecondBladePropellerTestProcessCalculate();
                                                     TestTimeCount = 0;
                                                     TestTimeStatusBar = 0;
                                                     CalculateSecondBladeVibration();
@@ -1660,7 +1816,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
                                                 {
                                                     HighVibrationDataCollectionTimer.Stop();
                                                     BalancerProgressTimer.Stop();
-                                                    ISOCal();
+                                                    BalancedPropellerTestProcessCalculate();
                                                     TestTimeCount = 0;
                                                     TestTimeStatusBar = 0;
                                                     CalculateBalancedPropellerRunningVibration();
@@ -2046,15 +2202,15 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             }
         }
 
-        public ISOArray ISOCalArray
+        public TestProcessBuffer TestProcessBuffer
         {
-            get => _isoArray;
+            get => _testProcessBuffer;
             set
             {
-                if (_isoArray != value)
+                if (_testProcessBuffer != value)
                 {
-                    _isoArray = value;
-                    OnPropertyChanged(nameof(ISOCalArray));
+                    _testProcessBuffer = value;
+                    OnPropertyChanged(nameof(TestProcessBuffer));
                 }
             }
         }
@@ -2402,26 +2558,11 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         }
     }
 
-    public class ISOArray : INotifyPropertyChanged
+    public class TestProcessBuffer : INotifyPropertyChanged
     {
-        // Değişkenler liste olarak tanımlandı
-        public bool Status = true;
-
         private List<double> _donusHizi = new List<double>(); // Dönüş Hızı (n)
-        private List<double> _referansDonusHizi = new List<double>(); // Referans Dönüş Hızı
         private List<double> _olculenIvme = new List<double>(); // Ölçülen İvme (a)
-        private List<double> _toplamKutle = new List<double>(); // Toplam Kütle (M)
-        private List<double> _duzeltmeYaricapi = new List<double>(); // Düzeltme Ağırlığı Yarıçapı (r_c)
 
-        private List<double> _ivme = new List<double>(); // İvme (a)
-        private List<double> _santrifujKuvveti = new List<double>(); // Santrifüj Kuvveti (F)
-        private List<double> _acisalHiz = new List<double>(); // Açısal Hız (ω)
-        private List<double> _olculenDengesizlik = new List<double>(); // Ölçülen Dengesizlik (U_res)
-        private List<double> _izinVerilebilirDengesizlik = new List<double>(); // İzin Verilebilir Dengesizlik (U_per)
-        private List<double> _gerekliDuzeltmeAgirligi = new List<double>(); // Gerekli Düzeltme Ağırlığı (m_c)
-        private List<double> _kullanilanDuzeltmeAgirligi = new List<double>(); // Kullanılan düzeltme ağırlığı (m_uygulanan)
-        private List<double> _kalanDengesizlik = new List<double>(); // Kalan Dengesizlik (U_kalan)
-        private List<double> _eksikAgirlik = new List<double>(); // Eksik Ağırlık (m_eksik)
 
         // Property'ler listeye erişim sağlıyor
         public List<double> DonusHizi
@@ -2430,82 +2571,10 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
             set => SetProperty(ref _donusHizi, value);
         }
 
-        public List<double> ReferansDonusHizi
-        {
-            get => _referansDonusHizi;
-            set => SetProperty(ref _referansDonusHizi, value);
-        }
-
         public List<double> OlculenIvme
         {
             get => _olculenIvme;
             set => SetProperty(ref _olculenIvme, value);
-        }
-
-        public List<double> ToplamKutle
-        {
-            get => _toplamKutle;
-            set => SetProperty(ref _toplamKutle, value);
-        }
-
-        public List<double> DuzeltmeYaricapi
-        {
-            get => _duzeltmeYaricapi;
-            set => SetProperty(ref _duzeltmeYaricapi, value);
-        }
-
-        public List<double> Ivme
-        {
-            get => _ivme;
-            set => SetProperty(ref _ivme, value);
-        }
-
-        public List<double> SantrifujKuvveti
-        {
-            get => _santrifujKuvveti;
-            set => SetProperty(ref _santrifujKuvveti, value);
-        }
-
-        public List<double> AcisalHiz
-        {
-            get => _acisalHiz;
-            set => SetProperty(ref _acisalHiz, value);
-        }
-
-        public List<double> OlculenDengesizlik
-        {
-            get => _olculenDengesizlik;
-            set => SetProperty(ref _olculenDengesizlik, value);
-        }
-
-        public List<double> IzinVerilebilirDengesizlik
-        {
-            get => _izinVerilebilirDengesizlik;
-            set => SetProperty(ref _izinVerilebilirDengesizlik, value);
-        }
-
-        public List<double> GerekliDuzeltmeAgirligi
-        {
-            get => _gerekliDuzeltmeAgirligi;
-            set => SetProperty(ref _gerekliDuzeltmeAgirligi, value);
-        }
-
-        public List<double> KullanilanDuzeltmeAgirligi
-        {
-            get => _kullanilanDuzeltmeAgirligi;
-            set => SetProperty(ref _kullanilanDuzeltmeAgirligi, value);
-        }
-
-        public List<double> KalanDengesizlik
-        {
-            get => _kalanDengesizlik;
-            set => SetProperty(ref _kalanDengesizlik, value);
-        }
-
-        public List<double> EksikAgirlik
-        {
-            get => _eksikAgirlik;
-            set => SetProperty(ref _eksikAgirlik, value);
         }
 
         // INotifyPropertyChanged üyeleri

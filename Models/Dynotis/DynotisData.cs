@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using Advanced_Dynotis_Software.Views.UserControls;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using static Advanced_Dynotis_Software.Models.Dynotis.DynotisData;
@@ -26,8 +27,12 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
         {
             _vibrationVariables = new VibrationVariables();
             _theoricVariables = new TheoricVariables();
-            _iso = new ISO();
-            _isoCal = new ISO();
+            _balancerParameterMotor = new TestBalancerParameters();
+            _balancerParameterBasePropeller = new TestBalancerParameters();
+            _balancerParameterFirstBladePropeller = new TestBalancerParameters();
+            _balancerParameterSecondBladePropeller = new TestBalancerParameters();
+            _balancerParameterBalancedPropeller = new TestBalancerParameters();
+
         }
 
         private double _time;
@@ -63,8 +68,11 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
         private VibrationVariables _vibrationVariables;
         private TheoricVariables _theoricVariables;
-        private ISO _iso;
-        private ISO _isoCal;
+        private TestBalancerParameters _balancerParameterMotor;
+        private TestBalancerParameters _balancerParameterBasePropeller;
+        private TestBalancerParameters _balancerParameterFirstBladePropeller;
+        private TestBalancerParameters _balancerParameterSecondBladePropeller;
+        private TestBalancerParameters _balancerParameterBalancedPropeller;
 
         private bool _recordStatus;
 
@@ -264,16 +272,32 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             get => _theoricVariables;
             set => SetProperty(ref _theoricVariables, value);
         }  
-        public ISO Iso
+        public TestBalancerParameters BalancerParameterMotor
         {
-            get => _iso;
-            set => SetProperty(ref _iso, value);
+            get => _balancerParameterMotor;
+            set => SetProperty(ref _balancerParameterMotor, value);
         }
-        public ISO ISOCal
+        public TestBalancerParameters BalancerParameterBasePropeller
         {
-            get => _isoCal;
-            set => SetProperty(ref _isoCal, value);
+            get => _balancerParameterBasePropeller;
+            set => SetProperty(ref _balancerParameterBasePropeller, value);
         }
+        public TestBalancerParameters BalancerParameterFirstBladePropeller
+        {
+            get => _balancerParameterFirstBladePropeller;
+            set => SetProperty(ref _balancerParameterFirstBladePropeller, value);
+        }
+        public TestBalancerParameters BalancerParameterSecondBladePropeller
+        {
+            get => _balancerParameterSecondBladePropeller;
+            set => SetProperty(ref _balancerParameterSecondBladePropeller, value);
+        }
+        public TestBalancerParameters BalancerParameterBalancedPropeller
+        {
+            get => _balancerParameterBalancedPropeller;
+            set => SetProperty(ref _balancerParameterBalancedPropeller, value);
+        }
+
         public bool IsRecording
         {
             get => _isRecording;
@@ -490,10 +514,9 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 return true;
             }
         }
-        public class ISO : INotifyPropertyChanged
+        public class TestBalancerParameters : INotifyPropertyChanged
         {
             private double _donusHizi; // Dönüş Hızı (n)
-            private double _referansDonusHizi; // Dönüş Hızı (n)
             private double _olculenIvme; // Ölçülen İvme (a)
             private double _toplamKutle; // Toplam Kütle (M)
             private double _duzeltmeYaricapi; // Düzeltme Ağırlığı Yarıçapı (r_c)
@@ -512,12 +535,6 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             {
                 get => _donusHizi;
                 set => SetProperty(ref _donusHizi, value);
-            }
-
-            public double ReferansDonusHizi
-            {
-                get => _referansDonusHizi;
-                set => SetProperty(ref _referansDonusHizi, value);
             }
 
             public double OlculenIvme

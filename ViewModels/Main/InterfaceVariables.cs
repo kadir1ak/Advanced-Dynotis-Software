@@ -26,9 +26,11 @@ public class InterfaceVariables : INotifyPropertyChanged
 
         _vibrationVariables = new VibrationVariables();
         _theoricVariables = new TheoricVariables();
-        _iso = new ISO();
-        _isoCal = new ISO();
-
+        _balancerParameterMotor = new TestBalancerParameters();
+        _balancerParameterBasePropeller = new TestBalancerParameters();
+        _balancerParameterFirstBladePropeller = new TestBalancerParameters();
+        _balancerParameterSecondBladePropeller = new TestBalancerParameters();
+        _balancerParameterBalancedPropeller = new TestBalancerParameters();
 
         _balancerIterationStep = 0;
         _balancerIterationVibrations = new List<double>();
@@ -78,8 +80,11 @@ public class InterfaceVariables : INotifyPropertyChanged
 
     private VibrationVariables _vibrationVariables; 
     private TheoricVariables _theoricVariables;
-    private ISO _iso;
-    private ISO _isoCal;
+    private TestBalancerParameters _balancerParameterMotor;
+    private TestBalancerParameters _balancerParameterBasePropeller;
+    private TestBalancerParameters _balancerParameterFirstBladePropeller;
+    private TestBalancerParameters _balancerParameterSecondBladePropeller;
+    private TestBalancerParameters _balancerParameterBalancedPropeller;
  
     private double _propellerDiameter;
     private double _motorInner;
@@ -199,15 +204,30 @@ public class InterfaceVariables : INotifyPropertyChanged
         get => _theoricVariables;
         set => SetProperty(ref _theoricVariables, value);
     }
-    public ISO Iso
+    public TestBalancerParameters BalancerParameterMotor
     {
-        get => _iso;
-        set => SetProperty(ref _iso, value);
+        get => _balancerParameterMotor;
+        set => SetProperty(ref _balancerParameterMotor, value);
     }
-    public ISO ISOCal
+    public TestBalancerParameters BalancerParameterBasePropeller
     {
-        get => _isoCal;
-        set => SetProperty(ref _isoCal, value);
+        get => _balancerParameterBasePropeller;
+        set => SetProperty(ref _balancerParameterBasePropeller, value);
+    }
+    public TestBalancerParameters BalancerParameterFirstBladePropeller
+    {
+        get => _balancerParameterFirstBladePropeller;
+        set => SetProperty(ref _balancerParameterFirstBladePropeller, value);
+    } 
+    public TestBalancerParameters BalancerParameterSecondBladePropeller
+    {
+        get => _balancerParameterSecondBladePropeller;
+        set => SetProperty(ref _balancerParameterSecondBladePropeller, value);
+    }
+    public TestBalancerParameters BalancerParameterBalancedPropeller
+    {
+        get => _balancerParameterBalancedPropeller;
+        set => SetProperty(ref _balancerParameterBalancedPropeller, value);
     }
     public Unit Pressure
     {
@@ -619,37 +639,82 @@ public class InterfaceVariables : INotifyPropertyChanged
         Theoric.Cq = data.Theoric.Cq;
         Theoric.Cp = data.Theoric.Cp;
 
-        Iso.DonusHizi = data.Iso.DonusHizi;
-        Iso.ReferansDonusHizi = data.Iso.ReferansDonusHizi;
-        Iso.OlculenIvme = data.Iso.OlculenIvme;
-        Iso.ToplamKutle = data.Iso.ToplamKutle;
-        Iso.DuzeltmeYaricapi = data.Iso.DuzeltmeYaricapi;
 
-        Iso.Ivme = data.Iso.Ivme;
-        Iso.SantrifujKuvveti = data.Iso.SantrifujKuvveti;
-        Iso.AcisalHiz = data.Iso.AcisalHiz;
-        Iso.OlculenDengesizlik = data.Iso.OlculenDengesizlik;
-        Iso.IzinVerilebilirDengesizlik = data.Iso.IzinVerilebilirDengesizlik;
-        Iso.GerekliDuzeltmeAgirligi = data.Iso.GerekliDuzeltmeAgirligi;
-        Iso.KullanilanDuzeltmeAgirligi = data.Iso.KullanilanDuzeltmeAgirligi;
-        Iso.KalanDengesizlik = data.Iso.KalanDengesizlik;
-        Iso.EksikAgirlik = data.Iso.EksikAgirlik;
+        BalancerParameterMotor.DonusHizi = data.BalancerParameterMotor.DonusHizi;
+        BalancerParameterMotor.OlculenIvme = data.BalancerParameterMotor.OlculenIvme;
+        BalancerParameterMotor.ToplamKutle = data.BalancerParameterMotor.ToplamKutle;
+        BalancerParameterMotor.DuzeltmeYaricapi = data.BalancerParameterMotor.DuzeltmeYaricapi;
 
-        ISOCal.DonusHizi = data.ISOCal.DonusHizi;
-        ISOCal.ReferansDonusHizi = data.ISOCal.ReferansDonusHizi;
-        ISOCal.OlculenIvme = data.ISOCal.OlculenIvme;
-        ISOCal.ToplamKutle = data.ISOCal.ToplamKutle;
-        ISOCal.DuzeltmeYaricapi = data.ISOCal.DuzeltmeYaricapi;
+        BalancerParameterMotor.Ivme = data.BalancerParameterMotor.Ivme;
+        BalancerParameterMotor.SantrifujKuvveti = data.BalancerParameterMotor.SantrifujKuvveti;
+        BalancerParameterMotor.AcisalHiz = data.BalancerParameterMotor.AcisalHiz;
+        BalancerParameterMotor.OlculenDengesizlik = data.BalancerParameterMotor.OlculenDengesizlik;
+        BalancerParameterMotor.IzinVerilebilirDengesizlik = data.BalancerParameterMotor.IzinVerilebilirDengesizlik;
+        BalancerParameterMotor.GerekliDuzeltmeAgirligi = data.BalancerParameterMotor.GerekliDuzeltmeAgirligi;
+        BalancerParameterMotor.KullanilanDuzeltmeAgirligi = data.BalancerParameterMotor.KullanilanDuzeltmeAgirligi;
+        BalancerParameterMotor.KalanDengesizlik = data.BalancerParameterMotor.KalanDengesizlik;
+        BalancerParameterMotor.EksikAgirlik = data.BalancerParameterMotor.EksikAgirlik;
 
-        ISOCal.Ivme = data.ISOCal.Ivme;
-        ISOCal.SantrifujKuvveti = data.ISOCal.SantrifujKuvveti;
-        ISOCal.AcisalHiz = data.ISOCal.AcisalHiz;
-        ISOCal.OlculenDengesizlik = data.ISOCal.OlculenDengesizlik;
-        ISOCal.IzinVerilebilirDengesizlik = data.ISOCal.IzinVerilebilirDengesizlik;
-        ISOCal.GerekliDuzeltmeAgirligi = data.ISOCal.GerekliDuzeltmeAgirligi;
-        ISOCal.KullanilanDuzeltmeAgirligi = data.ISOCal.KullanilanDuzeltmeAgirligi;
-        ISOCal.KalanDengesizlik = data.ISOCal.KalanDengesizlik;
-        ISOCal.EksikAgirlik = data.ISOCal.EksikAgirlik;
+        BalancerParameterBasePropeller.DonusHizi = data.BalancerParameterBasePropeller.DonusHizi;
+        BalancerParameterBasePropeller.OlculenIvme = data.BalancerParameterBasePropeller.OlculenIvme;
+        BalancerParameterBasePropeller.ToplamKutle = data.BalancerParameterBasePropeller.ToplamKutle;
+        BalancerParameterBasePropeller.DuzeltmeYaricapi = data.BalancerParameterBasePropeller.DuzeltmeYaricapi;
+
+        BalancerParameterBasePropeller.Ivme = data.BalancerParameterBasePropeller.Ivme;
+        BalancerParameterBasePropeller.SantrifujKuvveti = data.BalancerParameterBasePropeller.SantrifujKuvveti;
+        BalancerParameterBasePropeller.AcisalHiz = data.BalancerParameterBasePropeller.AcisalHiz;
+        BalancerParameterBasePropeller.OlculenDengesizlik = data.BalancerParameterBasePropeller.OlculenDengesizlik;
+        BalancerParameterBasePropeller.IzinVerilebilirDengesizlik = data.BalancerParameterBasePropeller.IzinVerilebilirDengesizlik;
+        BalancerParameterBasePropeller.GerekliDuzeltmeAgirligi = data.BalancerParameterBasePropeller.GerekliDuzeltmeAgirligi;
+        BalancerParameterBasePropeller.KullanilanDuzeltmeAgirligi = data.BalancerParameterBasePropeller.KullanilanDuzeltmeAgirligi;
+        BalancerParameterBasePropeller.KalanDengesizlik = data.BalancerParameterBasePropeller.KalanDengesizlik;
+        BalancerParameterBasePropeller.EksikAgirlik = data.BalancerParameterBasePropeller.EksikAgirlik;
+
+        BalancerParameterFirstBladePropeller.DonusHizi = data.BalancerParameterFirstBladePropeller.DonusHizi;
+        BalancerParameterFirstBladePropeller.OlculenIvme = data.BalancerParameterFirstBladePropeller.OlculenIvme;
+        BalancerParameterFirstBladePropeller.ToplamKutle = data.BalancerParameterFirstBladePropeller.ToplamKutle;
+        BalancerParameterFirstBladePropeller.DuzeltmeYaricapi = data.BalancerParameterFirstBladePropeller.DuzeltmeYaricapi;
+
+        BalancerParameterFirstBladePropeller.Ivme = data.BalancerParameterFirstBladePropeller.Ivme;
+        BalancerParameterFirstBladePropeller.SantrifujKuvveti = data.BalancerParameterFirstBladePropeller.SantrifujKuvveti;
+        BalancerParameterFirstBladePropeller.AcisalHiz = data.BalancerParameterFirstBladePropeller.AcisalHiz;
+        BalancerParameterFirstBladePropeller.OlculenDengesizlik = data.BalancerParameterFirstBladePropeller.OlculenDengesizlik;
+        BalancerParameterFirstBladePropeller.IzinVerilebilirDengesizlik = data.BalancerParameterFirstBladePropeller.IzinVerilebilirDengesizlik;
+        BalancerParameterFirstBladePropeller.GerekliDuzeltmeAgirligi = data.BalancerParameterFirstBladePropeller.GerekliDuzeltmeAgirligi;
+        BalancerParameterFirstBladePropeller.KullanilanDuzeltmeAgirligi = data.BalancerParameterFirstBladePropeller.KullanilanDuzeltmeAgirligi;
+        BalancerParameterFirstBladePropeller.KalanDengesizlik = data.BalancerParameterFirstBladePropeller.KalanDengesizlik;
+        BalancerParameterFirstBladePropeller.EksikAgirlik = data.BalancerParameterFirstBladePropeller.EksikAgirlik;
+
+        BalancerParameterSecondBladePropeller.DonusHizi = data.BalancerParameterSecondBladePropeller.DonusHizi;
+        BalancerParameterSecondBladePropeller.OlculenIvme = data.BalancerParameterSecondBladePropeller.OlculenIvme;
+        BalancerParameterSecondBladePropeller.ToplamKutle = data.BalancerParameterSecondBladePropeller.ToplamKutle;
+        BalancerParameterSecondBladePropeller.DuzeltmeYaricapi = data.BalancerParameterSecondBladePropeller.DuzeltmeYaricapi;
+
+        BalancerParameterSecondBladePropeller.Ivme = data.BalancerParameterSecondBladePropeller.Ivme;
+        BalancerParameterSecondBladePropeller.SantrifujKuvveti = data.BalancerParameterSecondBladePropeller.SantrifujKuvveti;
+        BalancerParameterSecondBladePropeller.AcisalHiz = data.BalancerParameterSecondBladePropeller.AcisalHiz;
+        BalancerParameterSecondBladePropeller.OlculenDengesizlik = data.BalancerParameterSecondBladePropeller.OlculenDengesizlik;
+        BalancerParameterSecondBladePropeller.IzinVerilebilirDengesizlik = data.BalancerParameterSecondBladePropeller.IzinVerilebilirDengesizlik;
+        BalancerParameterSecondBladePropeller.GerekliDuzeltmeAgirligi = data.BalancerParameterSecondBladePropeller.GerekliDuzeltmeAgirligi;
+        BalancerParameterSecondBladePropeller.KullanilanDuzeltmeAgirligi = data.BalancerParameterSecondBladePropeller.KullanilanDuzeltmeAgirligi;
+        BalancerParameterSecondBladePropeller.KalanDengesizlik = data.BalancerParameterSecondBladePropeller.KalanDengesizlik;
+        BalancerParameterSecondBladePropeller.EksikAgirlik = data.BalancerParameterSecondBladePropeller.EksikAgirlik;
+
+        BalancerParameterBalancedPropeller.DonusHizi = data.BalancerParameterBalancedPropeller.DonusHizi;
+        BalancerParameterBalancedPropeller.OlculenIvme = data.BalancerParameterBalancedPropeller.OlculenIvme;
+        BalancerParameterBalancedPropeller.ToplamKutle = data.BalancerParameterBalancedPropeller.ToplamKutle;
+        BalancerParameterBalancedPropeller.DuzeltmeYaricapi = data.BalancerParameterBalancedPropeller.DuzeltmeYaricapi;
+
+        BalancerParameterBalancedPropeller.Ivme = data.BalancerParameterBalancedPropeller.Ivme;
+        BalancerParameterBalancedPropeller.SantrifujKuvveti = data.BalancerParameterBalancedPropeller.SantrifujKuvveti;
+        BalancerParameterBalancedPropeller.AcisalHiz = data.BalancerParameterBalancedPropeller.AcisalHiz;
+        BalancerParameterBalancedPropeller.OlculenDengesizlik = data.BalancerParameterBalancedPropeller.OlculenDengesizlik;
+        BalancerParameterBalancedPropeller.IzinVerilebilirDengesizlik = data.BalancerParameterBalancedPropeller.IzinVerilebilirDengesizlik;
+        BalancerParameterBalancedPropeller.GerekliDuzeltmeAgirligi = data.BalancerParameterBalancedPropeller.GerekliDuzeltmeAgirligi;
+        BalancerParameterBalancedPropeller.KullanilanDuzeltmeAgirligi = data.BalancerParameterBalancedPropeller.KullanilanDuzeltmeAgirligi;
+        BalancerParameterBalancedPropeller.KalanDengesizlik = data.BalancerParameterBalancedPropeller.KalanDengesizlik;
+        BalancerParameterBalancedPropeller.EksikAgirlik = data.BalancerParameterBalancedPropeller.EksikAgirlik;
+
 
         // Ensure your values ​​are protected
         SelectedIsTurkishChecked = InterfaceVariables.Instance.SelectedIsTurkishChecked;
@@ -1137,10 +1202,9 @@ public class InterfaceVariables : INotifyPropertyChanged
         }
     }
 
-    public class ISO : INotifyPropertyChanged
+    public class TestBalancerParameters : INotifyPropertyChanged
     {
         private double _donusHizi; // Dönüş Hızı (n)
-        private double _referansDonusHizi; // Dönüş Hızı (n)
         private double _olculenIvme; // Ölçülen İvme (a)
         private double _toplamKutle; // Toplam Kütle (M)
         private double _duzeltmeYaricapi; // Düzeltme Ağırlığı Yarıçapı (r_c)
@@ -1159,11 +1223,6 @@ public class InterfaceVariables : INotifyPropertyChanged
         {
             get => _donusHizi;
             set => SetProperty(ref _donusHizi, value);
-        }
-        public double ReferansDonusHizi
-        {
-            get => _referansDonusHizi;
-            set => SetProperty(ref _referansDonusHizi, value);
         }
 
         public double OlculenIvme
