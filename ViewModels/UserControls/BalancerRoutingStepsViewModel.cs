@@ -1262,6 +1262,7 @@ namespace Advanced_Dynotis_Software.ViewModels.UserControls
         private void CalculateDeviceBaseStaticVibrationVibration()
         {
             DeviceBaseStaticVibration = VibrationsDataBuffer.Sum() / VibrationsDataBuffer.Count;
+            VibrationsIPSDataBuffer.Clear();
             VibrationsDataBuffer.Clear();
         }
 
