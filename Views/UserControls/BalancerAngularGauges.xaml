@@ -66,8 +66,8 @@
             Foreground="{DynamicResource Text}"                                           
             Wedge="270" InputScope="Digits" SectionsInnerRadius="0.94" TicksForeground="{DynamicResource Text}">
                 <lvc:AngularGauge.Sections>
-                    <lvc:AngularSection FromValue="0" ToValue="0.15" Fill="#7FDBB6"/>
-                    <lvc:AngularSection FromValue="0.15" ToValue="0.5" Fill="#FFA726" InputScope="Number"/>
+                    <lvc:AngularSection FromValue="0" ToValue="0.25" Fill="#7FDBB6"/>
+                    <lvc:AngularSection FromValue="0.25" ToValue="0.5" Fill="#FFA726" InputScope="Number"/>
                     <lvc:AngularSection FromValue="0.5" ToValue="1.5" Fill="#EF5350"/>
                 </lvc:AngularGauge.Sections>
             </lvc:AngularGauge>
