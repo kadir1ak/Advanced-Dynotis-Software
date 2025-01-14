@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Advanced_Dynotis_Software.Models.Device.Sensors
+namespace Advanced_Dynotis_Software.Models.Devices.Sensors
 {
     public abstract class SensorBase : BindableBase
     {
@@ -13,7 +13,7 @@ namespace Advanced_Dynotis_Software.Models.Device.Sensors
         protected SensorBase(string name, string unitName, string unitSymbol)
         {
             Name = name;        // Varsayılan başlangıç değeri
-            Value = 0.0;       
+            Value = 0.0;
             UnitName = unitName;
             UnitSymbol = unitSymbol;
         }

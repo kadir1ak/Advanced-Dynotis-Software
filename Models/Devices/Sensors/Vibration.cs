@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Advanced_Dynotis_Software.Models.Device.Sensors
+namespace Advanced_Dynotis_Software.Models.Devices.Sensors
 {
     public class Vibration : SensorBase
     {

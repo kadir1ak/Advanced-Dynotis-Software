@@ -1,7 +1,7 @@
 ﻿using System;
 using Advanced_Dynotis_Software.Services.BindableBase;
 
-namespace Advanced_Dynotis_Software.Models.Device.Sensors
+namespace Advanced_Dynotis_Software.Models.Devices.Sensors
 {
     public class Voltage : SensorBase
     {
