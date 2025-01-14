@@ -11,23 +11,38 @@ namespace Advanced_Dynotis_Software.Models.Serial
 {
     public class SerialPortsManager : IDisposable
     {
-        private readonly ManagementEventWatcher _serialPortsPhysicallyRemovedEvents;
-        private readonly ManagementEventWatcher _serialPortsCreationDeletionEvents;
-        private readonly CancellationTokenSource _cancellationTokenSource;
-
-        public ObservableCollection<string> SerialPorts { get; private set; }
+        private ManagementEventWatcher _serialPortsRemovedWatcher;
+        private ManagementEventWatcher _serialPortsAddedWatcher;
+        public ObservableCollection<string> SerialPorts { get; }
         public event Action<string> SerialPortAdded;
         public event Action<string> SerialPortRemoved;
-
         public SerialPortsManager()
         {
             SerialPorts = new ObservableCollection<string>();
-            _cancellationTokenSource = new CancellationTokenSource();
-            _serialPortsPhysicallyRemovedEvents = CreateEventWatcher("SELECT * FROM Win32_DeviceChangeEvent WHERE EventType = 3", SerialPortsPhysicallyRemovedEventHandler);
-            _serialPortsCreationDeletionEvents = CreateEventWatcher("SELECT * FROM __InstanceOperationEvent WITHIN 1 WHERE TargetInstance ISA 'Win32_SerialPort'", SerialPortsCreationDeletionEventHandler);
+            InitializeEventWatchers();
             ScanSerialPorts();
         }
+        private void InitializeEventWatchers()
+        {
+            try
+            {
+                // Watch for serial ports removal
+                _serialPortsRemovedWatcher = CreateEventWatcher(
+                    "SELECT * FROM Win32_DeviceChangeEvent WHERE EventType = 3",
+                    OnSerialPortRemoved
+                );
 
+                // Watch for serial ports addition
+                _serialPortsAddedWatcher = CreateEventWatcher(
+                    "SELECT * FROM __InstanceOperationEvent WITHIN 1 WHERE TargetInstance ISA 'Win32_SerialPort'",
+                    OnSerialPortAdded
+                );
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error initializing event watchers: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
         private ManagementEventWatcher CreateEventWatcher(string query, EventArrivedEventHandler eventHandler)
         {
             var watcher = new ManagementEventWatcher(new ManagementScope("root\\CIMV2"), new WqlEventQuery(query));
@@ -35,23 +50,14 @@ namespace Advanced_Dynotis_Software.Models.Serial
             watcher.Start();
             return watcher;
         }
-
-        private void SerialPortsPhysicallyRemovedEventHandler(object sender, EventArrivedEventArgs e)
+        private void OnSerialPortRemoved(object sender, EventArrivedEventArgs e)
         {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                ScanSerialPorts();
-            });
+            Application.Current.Dispatcher.Invoke(ScanSerialPorts);
         }
-
-        private void SerialPortsCreationDeletionEventHandler(object sender, EventArrivedEventArgs e)
+        private void OnSerialPortAdded(object sender, EventArrivedEventArgs e)
         {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                ScanSerialPorts();
-            });
+            Application.Current.Dispatcher.Invoke(ScanSerialPorts);
         }
-
         public void ScanSerialPorts()
         {
             try
@@ -59,43 +65,45 @@ namespace Advanced_Dynotis_Software.Models.Serial
                 var existingPorts = SerialPorts.ToList();
                 var currentPorts = SerialPort.GetPortNames().ToList();
 
-                foreach (var port in currentPorts)
+                // Add new ports
+                foreach (var port in currentPorts.Except(existingPorts))
                 {
-                    if (!SerialPorts.Contains(port))
-                    {
-                        SerialPorts.Add(port);
-                        SerialPortAdded?.Invoke(port);
-                    }
+                    SerialPorts.Add(port);
+                    SerialPortAdded?.Invoke(port);
                 }
 
-                foreach (var port in existingPorts)
+                // Remove missing ports
+                foreach (var port in existingPorts.Except(currentPorts))
                 {
-                    if (!currentPorts.Contains(port))
-                    {
-                        SerialPorts.Remove(port);
-                        SerialPortRemoved?.Invoke(port);
-                    }
+                    SerialPorts.Remove(port);
+                    SerialPortRemoved?.Invoke(port);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"ScanSerialPorts: {ex.Message}");
+                MessageBox.Show($"Error scanning serial ports: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
         public IEnumerable<string> GetSerialPorts()
         {
-            return SerialPorts;
+            return SerialPorts.ToList();
         }
-
         public void Dispose()
         {
-            _cancellationTokenSource?.Cancel();
-            _serialPortsPhysicallyRemovedEvents?.Stop();
-            _serialPortsCreationDeletionEvents?.Stop();
-            _serialPortsPhysicallyRemovedEvents?.Dispose();
-            _serialPortsCreationDeletionEvents?.Dispose();
-            _cancellationTokenSource?.Dispose();
+            DisposeWatcher(_serialPortsRemovedWatcher);
+            DisposeWatcher(_serialPortsAddedWatcher);
+        }
+        private void DisposeWatcher(ManagementEventWatcher watcher)
+        {
+            try
+            {
+                watcher?.Stop();
+                watcher?.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error disposing watcher: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
     }
 }
