@@ -12,16 +12,16 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
 {
     public class MainViewModel : BindableBase
     {
+        public DevicesModel Devices { get; set; }
         public MainViewModel()
         {
             Devices = new DevicesModel();
 
             serialPortsManager = new SerialPortsManager();
-
         }
 
         private readonly SerialPortsManager serialPortsManager;
-        public DevicesModel Devices { get; set; }
+
 
     }
 }

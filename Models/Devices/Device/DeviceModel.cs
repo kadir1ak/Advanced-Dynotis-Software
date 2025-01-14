@@ -17,7 +17,7 @@ namespace Advanced_Dynotis_Software.Models.Devices.Device
     {
         public DeviceModel()
         {
-            // Sensörleri başlat
+            // Cihaz özelliklerini başlat
             CurrentSensor = new Current();
             VoltageSensor = new Voltage();
             TorqueSensor = new Torque();
@@ -31,7 +31,7 @@ namespace Advanced_Dynotis_Software.Models.Devices.Device
             SerialPort = new SerialPort();
         }
 
-        // Sensör özellikleri
+        // Cihaz özellikleri
         public Current CurrentSensor { get; set; }
         public Voltage VoltageSensor { get; set; }
         public Thrust ThrustSensor { get; set; }

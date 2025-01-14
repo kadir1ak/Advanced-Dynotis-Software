@@ -11,14 +11,20 @@ namespace Advanced_Dynotis_Software.Models.Devices
 {
     public class DevicesModel : BindableBase
     {
+        public DevicesModel()
+        {
+            _devices = new ConcurrentDictionary<string, (DeviceModel Device, InterfaceData InterfaceData)>();
+        }
+
         // Benzersiz cihaz ID'si ile cihaz ve InterfaceData'larını tutan sözlük
-        private ConcurrentDictionary<string, (DeviceModel Device, InterfaceData InterfaceData)> _devices = new();
+        private ConcurrentDictionary<string, (DeviceModel Device, InterfaceData InterfaceData)> _devices;
 
         // Cihazları dışarıya yalnızca okunabilir olarak sunar
         public IReadOnlyDictionary<string, (DeviceModel Device, InterfaceData InterfaceData)> Devices => _devices;
 
+
         // Yeni bir cihaz eklemek için yöntem
-        public void AddDevice(DeviceModel device, string deviceId)
+        private void AddDevice(DeviceModel device, string deviceId)
         {
             if (device == null) throw new ArgumentNullException(nameof(device));
             if (string.IsNullOrWhiteSpace(deviceId)) throw new ArgumentException("Device ID cannot be null or empty.", nameof(deviceId));
@@ -28,7 +34,6 @@ namespace Advanced_Dynotis_Software.Models.Devices
                 throw new InvalidOperationException($"A device with ID '{deviceId}' already exists.");
             }
 
-            // Yeni cihaz için InterfaceData oluştur ve cihazı sözlüğe ekle
             var interfaceData = new InterfaceData(device);
             device.Info.ID = deviceId;
 
@@ -37,11 +42,11 @@ namespace Advanced_Dynotis_Software.Models.Devices
                 throw new InvalidOperationException($"Failed to add device with ID '{deviceId}'.");
             }
 
-            OnPropertyChanged(nameof(Devices)); // UI güncellenmesi için bildir
+            OnPropertyChanged(nameof(Devices));
         }
 
         // Bir cihazı listeden kaldırmak için yöntem
-        public void RemoveDevice(string deviceId)
+        private void RemoveDevice(string deviceId)
         {
             if (string.IsNullOrWhiteSpace(deviceId)) throw new ArgumentException("Device ID cannot be null or empty.", nameof(deviceId));
 
@@ -50,25 +55,53 @@ namespace Advanced_Dynotis_Software.Models.Devices
                 throw new KeyNotFoundException($"No device found with ID '{deviceId}'.");
             }
 
-            OnPropertyChanged(nameof(Devices)); // UI güncellenmesi için bildir
+            OnPropertyChanged(nameof(Devices));
         }
 
-        // Belirli bir cihazı seri porta bağlamak için yöntem
+        // Belirli bir porta bağlandığında _devices listesine cihazın eklenmesini yöntem
         public async Task ConnectDevice(string deviceId, string portName)
         {
-            if (string.IsNullOrWhiteSpace(deviceId)) throw new ArgumentException("Device ID cannot be null or empty.", nameof(deviceId));
-            if (string.IsNullOrWhiteSpace(portName)) throw new ArgumentException("Port name cannot be null or empty.", nameof(portName));
+            if (string.IsNullOrWhiteSpace(deviceId))
+                throw new ArgumentException("Device ID cannot be null or empty.", nameof(deviceId));
+            if (string.IsNullOrWhiteSpace(portName))
+                throw new ArgumentException("Port name cannot be null or empty.", nameof(portName));
 
-            if (!_devices.TryGetValue(deviceId, out var deviceData))
+            if (_devices.ContainsKey(deviceId))
             {
-                throw new KeyNotFoundException($"No device found with ID '{deviceId}'.");
+                throw new InvalidOperationException($"Device with ID '{deviceId}' is already connected.");
             }
 
-            await deviceData.Device.SerialPortConnect(portName);
+            var newDevice = new DeviceModel();
+
+            try
+            {
+                await newDevice.SerialPortConnect(portName);
+
+                int retryCount = 0;
+                while (!newDevice.Info.DeviceIdentified && retryCount < 10)
+                {
+                    await Task.Delay(100);
+                    retryCount++;
+                }
+
+                if (newDevice.Info.DeviceIdentified)
+                {
+                    AddDevice(newDevice, deviceId);
+                }
+                else
+                {
+                    throw new InvalidOperationException($"Device on port '{portName}' could not be identified.");
+                }
+            }
+            catch (Exception ex)
+            {
+                newDevice.StopSerialPort();
+                throw new InvalidOperationException($"Failed to connect device with ID '{deviceId}' on port '{portName}': {ex.Message}", ex);
+            }
         }
 
         // Tüm cihazları seri port bağlantısını durdurmak için yöntem
-        public void StopAllDevices()
+        private void StopAllDevices()
         {
             Parallel.ForEach(_devices.Values, deviceData =>
             {
@@ -77,27 +110,13 @@ namespace Advanced_Dynotis_Software.Models.Devices
         }
 
         // Tüm cihazların verilerini güncellemek için yöntem
-        public void UpdateAllDevices()
+        private void UpdateAllDevices()
         {
             Parallel.ForEach(_devices.Values, deviceData =>
             {
                 deviceData.InterfaceData.UpdateDeviceData(deviceData.Device);
                 deviceData.InterfaceData.UpdateCharts(deviceData.Device);
             });
-        }
-
-        // Belirli bir cihazın verilerini güncellemek için yöntem
-        public void UpdateDevice(string deviceId)
-        {
-            if (string.IsNullOrWhiteSpace(deviceId)) throw new ArgumentException("Device ID cannot be null or empty.", nameof(deviceId));
-
-            if (!_devices.TryGetValue(deviceId, out var deviceData))
-            {
-                throw new KeyNotFoundException($"No device found with ID '{deviceId}'.");
-            }
-
-            deviceData.InterfaceData.UpdateDeviceData(deviceData.Device);
-            deviceData.InterfaceData.UpdateCharts(deviceData.Device);
         }
     }
 }
