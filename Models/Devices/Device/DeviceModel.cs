@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using Advanced_Dynotis_Software.Models.Devices.Sensors;
 using Advanced_Dynotis_Software.Models.Dynotis;
 using Advanced_Dynotis_Software.Services.BindableBase;
+using Advanced_Dynotis_Software.Services.Logger;
 using Irony.Parsing;
 using static Advanced_Dynotis_Software.Models.Devices.Sensors.Anemometer;
 
@@ -112,13 +114,14 @@ namespace Advanced_Dynotis_Software.Models.Devices.Device
 
                 SerialPort.DataReceived += SerialPort_DataReceived;
                 SerialPort.Open();
+                Logger.LogInfo($"Serial port {portName} successfully opened.");
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error connecting to port: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Logger.LogError($"Error connecting to port {portName}.", ex);
             }
         }
-
+        private StringBuilder dataBuffer = new StringBuilder();
         private void SerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             try
@@ -128,20 +131,32 @@ namespace Advanced_Dynotis_Software.Models.Devices.Device
                 string indata = SerialPort.ReadExisting();
                 if (string.IsNullOrEmpty(indata)) return;
 
-                if (!Info.DeviceIdentified)
+                dataBuffer.Append(indata);
+
+                // Mesajın tamamlanıp tamamlanmadığını kontrol et (örnek: '\n' ile biten mesajlar)
+                if (dataBuffer.ToString().Contains("\n"))
                 {
-                    // Asenkron cihaz tanımlama metodunu çağır
-                    _ = Task.Run(() => IdentifyDevice(indata));
-                }
-                else
-                {
-                    // Cihaz tanımlandıysa sensör verilerini işle
-                    ProcessSensorData(indata);
+                    string[] messages = dataBuffer.ToString().Split('\n');
+                    for (int i = 0; i < messages.Length - 1; i++)
+                    {
+                        string message = messages[i].Trim();
+                        if (!Info.DeviceIdentified)
+                        {
+                            _ = Task.Run(() => IdentifyDevice(message));
+                        }
+                        else
+                        {
+                            ProcessSensorData(message);
+                        }
+                    }
+                    // Buffer'daki kalan veriyi sakla
+                    dataBuffer.Clear();
+                    dataBuffer.Append(messages[^1]);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Serial Port Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Logger.LogError("Error processing serial port data.", ex);
             }
         }
 
@@ -149,6 +164,14 @@ namespace Advanced_Dynotis_Software.Models.Devices.Device
         {
             try
             {
+                // Veri formatını kontrol etmek için regex
+                string devicePattern = @"^[^;]+;[^;]+;[^;]+;[^;]+;[^;]+;[^;]+$";
+                if (!Regex.IsMatch(indata, devicePattern))
+                {
+                    Logger.LogError($"Invalid device data received: {indata}");
+                    return;
+                }
+
                 // Cihaz bilgilerini ayır
                 string[] infoParts = indata.Split(';');
                 if (infoParts.Length == 6)
@@ -160,24 +183,23 @@ namespace Advanced_Dynotis_Software.Models.Devices.Device
                     Info.ManufactureDate = infoParts[3].Trim();
                     Info.Model = infoParts[4].Trim();
                     Info.FirmwareVersion = infoParts[5].Trim();
-
+                    Info.Mode = "2";
                     // Cihaz tanımlandı olarak işaretle
                     Info.DeviceIdentified = true;
-
-                    Info.Mode = "2";
+                    Logger.LogInfo($"Device identified: {Info.DeviceName} ({Info.Model})");
+                 
                     // Cihaza gönderilen mesaj taslağı: Device_Status:2;ESC:800;
-                    // Sürekli cihaza mesaj gönderimini başlat
                     await StartSendingMessagesAsync();
                 }
                 else
                 {
                     Info.DeviceIdentified = false;
-                    throw new Exception("Cihaz bilgileri eksik veya hatalı.");
+                    //throw new Exception("Cihaz bilgileri eksik veya hatalı.");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Cihaz Tanımlama Hatası: {ex.Message}", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
+                Logger.LogError($"Error identifying device with data: {indata}", ex);
             }
         }
 
@@ -195,7 +217,7 @@ namespace Advanced_Dynotis_Software.Models.Devices.Device
                     if (SerialPort != null && SerialPort.IsOpen)
                     {
                         // Cihaza mesaj gönder
-                        SerialPort.WriteLine($"Device_Status:{Info.Mode};ESC:{ESCSensor.Value};");
+                        SerialPort.WriteLine($"Device_Status:{2};ESC:{800};");
                     }
 
                     // 10 ms bekle
@@ -223,6 +245,12 @@ namespace Advanced_Dynotis_Software.Models.Devices.Device
             try
             {
                 string[] dataParts = indata.Split(',');
+
+                if (dataParts.Length != 16)
+                {
+                    Logger.LogError($"Invalid sensor data format: {indata}");
+                    return;
+                }
 
                 // Sensör verisini doğrula ve ayrıştır
                 if (dataParts.Length == 16 &&
@@ -283,12 +311,12 @@ namespace Advanced_Dynotis_Software.Models.Devices.Device
                 }
                 else
                 {
-                    throw new Exception("Sensör verisi formatı hatalı.");
+                    Logger.LogError($"Error parsing sensor data: {indata}");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Sensör Verisi İşleme Hatası: {ex.Message}", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
+                Logger.LogError($"Error processing sensor data: {indata}", ex);
             }
         }
 
@@ -327,11 +355,15 @@ namespace Advanced_Dynotis_Software.Models.Devices.Device
         }
         public void StopSerialPort()
         {
-            if (SerialPort?.IsOpen == true)
+            try
             {
-                SerialPort.Close();
-                SerialPort.DataReceived -= SerialPort_DataReceived;
+                if (SerialPort?.IsOpen == true)
+                {
+                    SerialPort.Close();
+                    SerialPort.DataReceived -= SerialPort_DataReceived;
+                }
             }
+            catch (Exception) { }
         }
         public class DeviceInfo : BindableBase
         {

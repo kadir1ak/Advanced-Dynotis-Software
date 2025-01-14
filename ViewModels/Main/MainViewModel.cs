@@ -16,8 +16,9 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         public MainViewModel()
         {
             Devices = new DevicesModel();
-
+          
             serialPortsManager = new SerialPortsManager();
+            Devices.ConnectDevice("001", "COM16");
         }
 
         private readonly SerialPortsManager serialPortsManager;

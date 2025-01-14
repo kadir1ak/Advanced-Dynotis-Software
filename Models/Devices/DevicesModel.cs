@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using Advanced_Dynotis_Software.Models.Devices.Device;
 using Advanced_Dynotis_Software.Models.Interface;
 using Advanced_Dynotis_Software.Services.BindableBase;
@@ -90,7 +91,7 @@ namespace Advanced_Dynotis_Software.Models.Devices
                 }
                 else
                 {
-                    throw new InvalidOperationException($"Device on port '{portName}' could not be identified.");
+                   // throw new InvalidOperationException($"Device on port '{portName}' could not be identified.");
                 }
             }
             catch (Exception ex)

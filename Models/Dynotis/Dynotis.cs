@@ -238,7 +238,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 }
                 catch (Exception ex)
                 {
-                    Logger.Log($"Failed to open port: {ex.Message}");
+                    Logger.LogInfo($"Failed to open port: {ex.Message}");
                     Error = $"Failed to open port: {ex.Message}";
                 }
             }
@@ -255,7 +255,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 }
                 catch (Exception ex)
                 {
-                    Logger.Log($"Failed to close port: {ex.Message}");
+                    Logger.LogInfo($"Failed to close port: {ex.Message}");
                     Error = $"Failed to close port: {ex.Message}";
                 }
             }
@@ -283,7 +283,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 while (!token.IsCancellationRequested && Port.IsOpen && !deviceInfoReceived)
                 {
                     string indata = await Task.Run(() => Port.ReadExisting(), token);
-                    Logger.Log($"Received data: {indata}");
+                    Logger.LogInfo($"Received data: {indata}");
                     if (indata.Contains("Semai Aviation Ltd."))
                     {
                         string[] parts = indata.Split(';');
@@ -431,7 +431,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                             await Dynotis_Mod_2(token);
                             break;
                         default:
-                            Logger.Log("Unknown test mode.");
+                            Logger.LogInfo("Unknown test mode.");
                             break;
                     }
                     await Task.Delay(1);
@@ -439,7 +439,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             }
             catch (Exception ex)
             {
-                Logger.Log($"An error occurred: {ex.Message}");
+                Logger.LogInfo($"An error occurred: {ex.Message}");
             }
         }
 
@@ -449,7 +449,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             {
                 if (!File.Exists(binFilePath))
                 {
-                    Logger.Log("Bin file does not exist at the specified path.");
+                    Logger.LogInfo("Bin file does not exist at the specified path.");
                     return;
                 }
 
@@ -458,13 +458,13 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                 int bufferSize = 256;
                 int totalChunks = (int)Math.Ceiling((double)totalSize / bufferSize);
 
-                Logger.Log($"Firmware size: {totalSize} bytes. Sending in {totalChunks} chunks.");
+                Logger.LogInfo($"Firmware size: {totalSize} bytes. Sending in {totalChunks} chunks.");
 
                 for (int i = 0; i < totalChunks; i++)
                 {
                     if (token.IsCancellationRequested)
                     {
-                        Logger.Log("Firmware sending was cancelled.");
+                        Logger.LogInfo("Firmware sending was cancelled.");
                         break;
                     }
 
@@ -474,17 +474,17 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
 
                     Port.Write(buffer, 0, currentChunkSize);
                     await Task.Delay(1, token);
-                    Logger.Log($"Chunk {i + 1}/{totalChunks} sent.");
+                    Logger.LogInfo($"Chunk {i + 1}/{totalChunks} sent.");
                 }
 
-                Logger.Log("Firmware update completed.");
+                Logger.LogInfo("Firmware update completed.");
                 Mode = "0";
                 Bootloader_Mode = "0";
                 FirmwareUpdateStatus = "0";
             }
             catch (Exception ex)
             {
-                Logger.Log($"An error occurred while sending firmware: {ex.Message}");
+                Logger.LogInfo($"An error occurred while sending firmware: {ex.Message}");
             }
         }
 
@@ -785,7 +785,7 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
             }
             catch (Exception ex)
             {
-                Logger.Log($"An error occurred during theoretical calculations: {ex.Message}");
+                Logger.LogInfo($"An error occurred during theoretical calculations: {ex.Message}");
             }
         }
         private const int WindowSize = 25; // kayan pencere boyutu örneğin 25

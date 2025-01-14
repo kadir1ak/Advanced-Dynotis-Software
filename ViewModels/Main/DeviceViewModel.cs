@@ -41,7 +41,6 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                 }
             }
         }
-
         public DeviceViewModel(string portName)
         {
             if (!DesignerProperties.GetIsInDesignMode(new DependencyObject()))

@@ -5,22 +5,19 @@ namespace Advanced_Dynotis_Software.Services.Logger
 {
     public static class Logger
     {
-        private static readonly string LogFilePath = "log.txt";
+        private static readonly string logFilePath = "application_log.txt";
 
-        public static void Log(string message)
+        public static void LogError(string message, Exception ex = null)
         {
-            try
-            {
-                using (StreamWriter writer = new StreamWriter(LogFilePath, true))
-                {
-                    writer.WriteLine($"{DateTime.Now:G}: {message}");
-                }
-            }
-            catch (Exception ex)
-            {
-                // Handle exceptions related to logging
-                Console.WriteLine($"Failed to log message: {ex.Message}");
-            }
+            string logMessage = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] ERROR: {message}";
+            if (ex != null) logMessage += $"\nException: {ex.Message}\nStackTrace: {ex.StackTrace}";
+            File.AppendAllText(logFilePath, logMessage + Environment.NewLine);
+        }
+
+        public static void LogInfo(string message)
+        {
+            string logMessage = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] INFO: {message}";
+            File.AppendAllText(logFilePath, logMessage + Environment.NewLine);
         }
     }
 }

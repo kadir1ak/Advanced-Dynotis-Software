@@ -97,7 +97,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             }
             catch (Exception ex)
             {
-                Logger.Log($"Bootloader işleminde hata oluştu (FirmwareUpdateAsync): {ex.Message}");
+                Logger.LogInfo($"Bootloader işleminde hata oluştu (FirmwareUpdateAsync): {ex.Message}");
                 MessageBox.Show($"Bootloader işleminde hata: {ex.Message}");
             }
         }
@@ -118,7 +118,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Pages
             }
             catch (Exception ex)
             {
-                Logger.Log($"OnDeviceDisconnected: {ex.Message}");
+                Logger.LogInfo($"OnDeviceDisconnected: {ex.Message}");
             }
         }
 
