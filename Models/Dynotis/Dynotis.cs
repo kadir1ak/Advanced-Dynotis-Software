@@ -1,4 +1,5 @@
-﻿using Advanced_Dynotis_Software.Services.Logger;
+﻿using Advanced_Dynotis_Software.Models.Devices.Sensors;
+using Advanced_Dynotis_Software.Services.Logger;
 using Irony.Parsing;
 using LiveCharts.Wpf;
 using Microsoft.Win32;
@@ -514,9 +515,20 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                     Humidity = TryParseDouble(dataParts[15], out double humidity) ? humidity : double.NaN
                 };
 
-                await Application.Current.Dispatcher.InvokeAsync(() =>
+                if (Application.Current?.Dispatcher.CheckAccess() == true)
                 {
-                    lock (_dataLock)
+                    TransferStoredData(DynotisData, newData);
+
+                    VibrationCalculations();
+
+                    TheoreticalCalculations();
+
+                    OnPropertyChanged(nameof(DynotisData));
+                }
+                else
+                {
+                    // UI iş parçacığında değilsek Dispatcher kullan
+                    Application.Current?.Dispatcher.BeginInvoke(new Action(() =>
                     {
                         TransferStoredData(DynotisData, newData);
 
@@ -525,8 +537,8 @@ namespace Advanced_Dynotis_Software.Models.Dynotis
                         TheoreticalCalculations();
 
                         OnPropertyChanged(nameof(DynotisData));
-                    }
-                });
+                    }));
+                }               
             }
         } 
 

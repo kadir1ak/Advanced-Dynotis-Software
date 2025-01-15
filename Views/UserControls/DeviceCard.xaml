@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:Advanced_Dynotis_Software.Views.UserControls"
              xmlns:vm="clr-namespace:Advanced_Dynotis_Software.ViewModels.Main"
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:oxy="http://oxyplot.org/wpf"   
              xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:p="clr-namespace:Advanced_Dynotis_Software.Properties"
              mc:Ignorable="d" 
@@ -165,7 +166,7 @@
             </StackPanel>
         </Border>
 
-        <!-- @@@@@@@@@@@@@@@    Motor Speed Chart    @@@@@@@@@@@@@@@ -->
+        <!-- @@@@@@@@@@@@@@@    Motor Speed Chart    @@@@@@@@@@@@@@@ --><!--
         <Grid Grid.Row="1" Grid.Column="1" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -194,7 +195,7 @@
                 </lvc:CartesianChart>
             </Border>
         </Grid>
-        <!-- @@@@@@@@@@@@@@@    Thrust Chart    @@@@@@@@@@@@@@@ -->
+         @@@@@@@@@@@@@@@    Thrust Chart    @@@@@@@@@@@@@@@ 
         <Grid Grid.Row="1" Grid.Column="2" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -222,7 +223,7 @@
                 </lvc:CartesianChart>
             </Border>
         </Grid>
-        <!-- @@@@@@@@@@@@@@@    Torque Chart    @@@@@@@@@@@@@@@ -->
+         @@@@@@@@@@@@@@@    Torque Chart    @@@@@@@@@@@@@@@ 
         <Grid Grid.Row="1" Grid.Column="3" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -250,7 +251,7 @@
                 </lvc:CartesianChart>
             </Border>
         </Grid>
-        <!-- @@@@@@@@@@@@@@@    Voltage Chart    @@@@@@@@@@@@@@@ -->
+         @@@@@@@@@@@@@@@    Voltage Chart    @@@@@@@@@@@@@@@ 
         <Grid Grid.Row="2" Grid.Column="1" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -278,7 +279,7 @@
                 </lvc:CartesianChart>
             </Border>
         </Grid>
-        <!-- @@@@@@@@@@@@@@@    Current Chart    @@@@@@@@@@@@@@@ -->
+         @@@@@@@@@@@@@@@    Current Chart    @@@@@@@@@@@@@@@ 
         <Grid Grid.Row="2" Grid.Column="2" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -306,7 +307,7 @@
                 </lvc:CartesianChart>
             </Border>
         </Grid>
-        <!-- @@@@@@@@@@@@@@@    Vibration Chart    @@@@@@@@@@@@@@@ -->
+         @@@@@@@@@@@@@@@    Vibration Chart    @@@@@@@@@@@@@@@ 
         <Grid Grid.Row="2" Grid.Column="3" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -323,12 +324,12 @@
                                 <TextBlock FontSize="12" Text="Max(g):" Margin="0 0 5 0" Foreground="{DynamicResource Text}"/>
                                 <TextBlock FontSize="12" Text="{Binding DeviceInterfaceVariables.Vibration.HighVibration, Mode=OneWay, StringFormat={}{0:0.000}}" Foreground="{DynamicResource Text}"/>
                             </StackPanel>
-                            <!--
+                            
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock FontSize="12" Text="Max(IPS):" Margin="0 0 5 0" Foreground="{DynamicResource Text}"/>
                                 <TextBlock FontSize="12" Text="{Binding DeviceInterfaceVariables.Vibration.HighIPSVibration, Mode=OneWay, StringFormat={}{0:0.000}}" Foreground="{DynamicResource Text}"/>
                             </StackPanel>
-                            -->
+                            
                         </StackPanel>
                     </Border>
                     <lvc:CartesianChart Series="{Binding ChartViewModel.VibrationSeriesCollection}" Margin="2 0 0 2" DisableAnimations="True" DataTooltip="{x:Null}">
@@ -349,6 +350,92 @@
                     </lvc:CartesianChart>
                 </Grid>
             </Border>
+        </Grid>-->
+
+         <!--@@@@@@@@@@@@@@@    Motor Speed Chart    @@@@@@@@@@@@@@@-->         
+        <Grid Grid.Row="1" Grid.Column="1" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" Margin="0 3 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
+                <TextBlock FontSize="12" Text="Motor Speed" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <Border Grid.Row="1" Margin="0 0 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
+                <oxy:PlotView x:Name="MotorSpeedPlot" FontSize="16" Model="{Binding ChartViewModel.MotorSpeedPlotModel}" />
+            </Border>
         </Grid>
+        
+         <!--@@@@@@@@@@@@@@@    Thrust Chart    @@@@@@@@@@@@@@@--> 
+        <Grid Grid.Row="1" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" Margin="0 3 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
+                <TextBlock FontSize="12" Text="Thrust" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <Border Grid.Row="1" Margin="0 0 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
+                <oxy:PlotView x:Name="ThrustPlot" FontSize="16" Model="{Binding ChartViewModel.ThrustPlotModel}" />
+            </Border>
+        </Grid>
+        
+        <!--@@@@@@@@@@@@@@@    Torque Chart    @@@@@@@@@@@@@@@--> 
+        <Grid Grid.Row="1" Grid.Column="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" Margin="0 3 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
+                <TextBlock FontSize="12" Text="Torque" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <Border Grid.Row="1" Margin="0 0 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
+                <oxy:PlotView x:Name="TorquePlot" FontSize="16" Model="{Binding ChartViewModel.TorquePlotModel}" />
+            </Border>
+        </Grid>
+
+        <!-- @@@@@@@@@@@@@@@    Voltage Chart    @@@@@@@@@@@@@@@ -->
+        <Grid Grid.Row="2" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" Margin="0 3 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
+                <TextBlock FontSize="12" Text="Voltage" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <Border Grid.Row="1" Margin="0 0 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
+                <oxy:PlotView x:Name="VoltagePlot" FontSize="16" Model="{Binding ChartViewModel.VoltagePlotModel}" />
+            </Border>
+        </Grid>
+
+        <!-- @@@@@@@@@@@@@@@    Current Chart    @@@@@@@@@@@@@@@ -->
+        <Grid Grid.Row="2" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" Margin="0 3 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
+                <TextBlock FontSize="12" Text="Current" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <Border Grid.Row="1" Margin="0 0 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
+                <oxy:PlotView x:Name="CurrentPlot" FontSize="16" Model="{Binding ChartViewModel.CurrentPlotModel}" />
+            </Border>
+        </Grid>
+
+        <!-- @@@@@@@@@@@@@@@    Vibration Chart    @@@@@@@@@@@@@@@ -->
+        <Grid Grid.Row="2" Grid.Column="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" Margin="0 3 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
+                <TextBlock FontSize="12" Text="Vibration" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <Border Grid.Row="1" Margin="0 0 3 3" BorderThickness="1" BorderBrush="{DynamicResource PageBorder}">
+                <oxy:PlotView x:Name="VibrationPlot" FontSize="16" Model="{Binding ChartViewModel.VibrationPlotModel}" />
+            </Border>
+        </Grid>
+ 
+
     </Grid>
 </UserControl>

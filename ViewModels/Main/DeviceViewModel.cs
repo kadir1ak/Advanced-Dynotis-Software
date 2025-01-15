@@ -26,9 +26,9 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         private DynotisData _latestDynotisData;
         private readonly object _dataLock = new();
         private CancellationTokenSource _cancellationTokenSource;
-        private int SaveTimeMillisecond = 1; // 1000 Hz (10ms)
-        private int UpdateTimeMillisecond = 10; // 100 Hz (10ms)
-        private int ChartUpdateTimeMillisecond = 20; // 50 Hz (20ms)
+        private int SaveTimeMillisecond = 10; // 100 Hz (10ms)
+        private int UpdateTimeMillisecond = 40; // 25 Hz (50ms)
+        private int ChartUpdateTimeMillisecond = 10; // 100 Hz (10ms)
         public Dynotis Device
         {
             get => _device;
@@ -141,10 +141,16 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
 
                 if (latestData != null)
                 {
-                    await Application.Current.Dispatcher.InvokeAsync(() =>
+                    try
                     {
-                        ChartViewModel.UpdateChartData(latestData,DeviceInterfaceVariables);
-                    });
+                        // ChartViewModel'deki UpdateChartData metodunu çağır
+                        await ChartViewModel.UpdateChartData(latestData, DeviceInterfaceVariables);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Hata durumunda bir loglama mekanizması eklenebilir
+                        MessageBox.Show($"Grafik güncellenirken bir hata oluştu: {ex.Message}");
+                    }
                 }
             }
         }
