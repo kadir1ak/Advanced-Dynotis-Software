@@ -24,6 +24,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         public PlotModel TorquePlotModel { get; private set; }
         public PlotModel ThrustPlotModel { get; private set; }
         public PlotModel MotorSpeedPlotModel { get; private set; }
+        // Her bir PlotModel için özel padding ve ölçekleme faktörü
+        private readonly Dictionary<PlotModel, double> ModelSettings;
 
         private const int MaxDataPoints = 100;
         private readonly object _dataLock = new();
@@ -31,12 +33,22 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         public ChartViewModel()
         {
             VibrationPlotModel = CreatePlotModel("Vibration (g)", OxyColors.Red);
-            SetYAxis(VibrationPlotModel, -2, 2);
+            SetYAxis(VibrationPlotModel, -1.5, 1.5);
+            AdjustYAxisToEightDivisions(VibrationPlotModel);
             CurrentPlotModel = CreatePlotModel("Current (A)", OxyColors.Blue);
             VoltagePlotModel = CreatePlotModel("Voltage (V)", OxyColors.Purple);
             TorquePlotModel = CreatePlotModel("Torque (Nm)", OxyColors.Green);
             ThrustPlotModel = CreatePlotModel("Thrust (N)", OxyColors.Orange);
             MotorSpeedPlotModel = CreatePlotModel("Motor Speed (RPM)", OxyColors.SkyBlue);
+            // Her bir model için özel ayarları tanımla
+            ModelSettings = new Dictionary<PlotModel, double>
+            {
+                { CurrentPlotModel, 20.0 },
+                { VoltagePlotModel, 20.0 },
+                { TorquePlotModel, 500.0 },
+                { ThrustPlotModel, 500.0 },
+                { MotorSpeedPlotModel, 500.0 }
+            };
         }
 
         private PlotModel CreatePlotModel(string title, OxyColor color)
@@ -72,7 +84,12 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                 double seriesMax = series.Points.Max(p => p.Y);
 
                 // Biraz boşluk bırakmak için sınırları genişlet
-                double padding = Math.Abs(seriesMax - seriesMin) * 0.1; // %10 boşluk ekle
+                double padding = Math.Abs(seriesMax - seriesMin) * 0.10; // %10 boşluk ekle
+                
+                // ModelSettings'ten MinPadding değerini al
+                double minPadding = ModelSettings.TryGetValue(plotModel, out double paddingValue) ? paddingValue : 50.0;
+                padding = Math.Max(padding, minPadding);
+
                 double newMin = seriesMin - padding;
                 double newMax = seriesMax + padding;
 
@@ -114,6 +131,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
 
                 // Eksen etiketlerini güncelle
                 yAxis.IntervalLength = 50; // Her bir separatorun uzunluğu (isteğe bağlı)
+                                           
+                yAxis.StringFormat = "F2"; // Ondalık basamak sayısını 2 olarak ayarla
             }
             else
             {
