@@ -11,6 +11,7 @@ using Advanced_Dynotis_Software.Models.Dynotis;
 //using LiveCharts.Defaults;
 //using LiveCharts.Wpf;
 using OxyPlot;
+using OxyPlot.Axes;
 using OxyPlot.Series;
 
 namespace Advanced_Dynotis_Software.ViewModels.Main
@@ -30,6 +31,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         public ChartViewModel()
         {
             VibrationPlotModel = CreatePlotModel("Vibration (g)", OxyColors.Red);
+            SetYAxis(VibrationPlotModel, -2, 2);
             CurrentPlotModel = CreatePlotModel("Current (A)", OxyColors.Blue);
             VoltagePlotModel = CreatePlotModel("Voltage (V)", OxyColors.Purple);
             TorquePlotModel = CreatePlotModel("Torque (Nm)", OxyColors.Green);
@@ -47,6 +49,78 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             plotModel.Series.Add(series);
             return plotModel;
         }
+        private void SetYAxis(PlotModel plotModel, double min, double max, string title = "Y Axis")
+        {
+            var yAxis = new LinearAxis
+            {
+                Position = AxisPosition.Left, // Sol tarafta Y ekseni
+                Minimum = min,                // Minimum değer
+                Maximum = max,                // Maksimum değer
+                Title = title,                // Y ekseni başlığı (isteğe bağlı)
+                IsZoomEnabled = true,         // Zoom özelliği etkin
+                IsPanEnabled = true           // Pan özelliği etkin
+            };
+            plotModel.Axes.Add(yAxis);
+        }
+        private void AdjustYAxis(PlotModel plotModel)
+        {
+            // Veri serisini kontrol et
+            if (plotModel.Series.Count > 0 && plotModel.Series[0] is LineSeries series)
+            {
+                // Veri serisindeki minimum ve maksimum değerleri bul
+                double seriesMin = series.Points.Min(p => p.Y);
+                double seriesMax = series.Points.Max(p => p.Y);
+
+                // Biraz boşluk bırakmak için sınırları genişlet
+                double padding = Math.Abs(seriesMax - seriesMin) * 0.1; // %10 boşluk ekle
+                double newMin = seriesMin - padding;
+                double newMax = seriesMax + padding;
+
+                // Mevcut Y eksenini kontrol et
+                if (plotModel.Axes.Count > 0 && plotModel.Axes[0] is LinearAxis yAxis)
+                {
+                    // Eğer sınırlar değiştiyse, Y eksenini yeniden ayarla
+                    if (newMin != yAxis.Minimum || newMax != yAxis.Maximum)
+                    {
+                        yAxis.Minimum = newMin;
+                        yAxis.Maximum = newMax;
+                    }
+                }
+                else
+                {
+                    // Eğer Y ekseni yoksa, yeni bir Y ekseni ekle
+                    SetYAxis(plotModel, newMin, newMax);
+                }
+            }
+        }
+        private void AdjustYAxisToEightDivisions(PlotModel plotModel)
+        {
+            // Mevcut Y eksenini bul
+            if (plotModel.Axes.Count > 0 && plotModel.Axes[0] is LinearAxis yAxis)
+            {
+                // Minimum ve maksimum değerleri al
+                double yMin = yAxis.Minimum;
+                double yMax = yAxis.Maximum;
+
+                // Eğer minimum ve maksimum değerler uygunsa, MajorStep'i hesapla
+                if (yMax > yMin)
+                {
+                    double range = yMax - yMin;
+                    yAxis.MajorStep = range / 8.0; // 8 parçaya böl
+                }
+
+                // Gereksiz küçük separatorları gizlemek için MinorStep'i ayarla
+                yAxis.MinorStep = yAxis.MajorStep / 2.0;
+
+                // Eksen etiketlerini güncelle
+                yAxis.IntervalLength = 50; // Her bir separatorun uzunluğu (isteğe bağlı)
+            }
+            else
+            {
+                // Eğer Y ekseni yoksa, hata mesajı yazdırabilir veya yeni bir eksen ekleyebilirsiniz
+                Console.WriteLine("Y ekseni bulunamadı!");
+            }
+        }
 
         public async Task UpdateChartData(DynotisData data, InterfaceVariables interfaceData)
         {
@@ -59,6 +133,18 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                 UpdatePlotData(TorquePlotModel, data.Time / 1000.0, data.Torque.Value);
                 UpdatePlotData(ThrustPlotModel, data.Time / 1000.0, data.Thrust.Value);
                 UpdatePlotData(MotorSpeedPlotModel, data.Time / 1000.0, data.MotorSpeed.Value);
+
+                // Dinamik olarak Y ekseni sınırlarını ayarla
+                AdjustYAxis(CurrentPlotModel);
+                AdjustYAxis(VoltagePlotModel);
+                AdjustYAxis(TorquePlotModel);
+                AdjustYAxis(ThrustPlotModel);
+                AdjustYAxis(MotorSpeedPlotModel);
+                AdjustYAxisToEightDivisions(CurrentPlotModel);
+                AdjustYAxisToEightDivisions(VoltagePlotModel);
+                AdjustYAxisToEightDivisions(TorquePlotModel);
+                AdjustYAxisToEightDivisions(ThrustPlotModel);
+                AdjustYAxisToEightDivisions(MotorSpeedPlotModel);
             }
 
             // UI thread üzerinde grafiklerin yeniden çizimi
@@ -74,11 +160,28 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         }
         private void UpdatePlotData(PlotModel plotModel, double time, double value)
         {
-            if (plotModel.Series.Count > 0 && plotModel.Series[0] is LineSeries series)
+            try
             {
-                series.Points.Add(new DataPoint(time, value));
-                if (series.Points.Count > MaxDataPoints)
-                    series.Points.RemoveAt(0);
+                // Veri serisini kontrol et
+                if (plotModel.Series.Count > 0 && plotModel.Series[0] is LineSeries series)
+                {
+                    // Yeni veri noktası ekle
+                    series.Points.Add(new DataPoint(time, value));
+
+                    // Maksimum veri noktası sayısını kontrol et
+                    if (series.Points.Count > MaxDataPoints)
+                    {
+                        series.Points.RemoveAt(0);
+                    }
+
+                    // Grafiği yenile
+                    plotModel.InvalidatePlot(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Hata durumunda loglama yapabilirsiniz
+                Console.WriteLine($"Hata: {ex.Message}");
             }
         }
 
