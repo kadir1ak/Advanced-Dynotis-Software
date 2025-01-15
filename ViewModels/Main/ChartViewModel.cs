@@ -33,8 +33,6 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         public ChartViewModel()
         {
             VibrationPlotModel = CreatePlotModel("Vibration (g)", OxyColors.Red);
-            SetYAxis(VibrationPlotModel, -1.5, 1.5);
-            AdjustYAxisToEightDivisions(VibrationPlotModel);
             CurrentPlotModel = CreatePlotModel("Current (A)", OxyColors.Blue);
             VoltagePlotModel = CreatePlotModel("Voltage (V)", OxyColors.Purple);
             TorquePlotModel = CreatePlotModel("Torque (Nm)", OxyColors.Green);
@@ -43,6 +41,7 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
             // Her bir model için özel ayarları tanımla
             ModelSettings = new Dictionary<PlotModel, double>
             {
+                { VibrationPlotModel, 1.0 },
                 { CurrentPlotModel, 20.0 },
                 { VoltagePlotModel, 20.0 },
                 { TorquePlotModel, 500.0 },
@@ -54,14 +53,27 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         private PlotModel CreatePlotModel(string title, OxyColor color)
         {
             var plotModel = new PlotModel { };
+
+            // Veri serisi
             var series = new LineSeries
             {
+                Title = title,                
+                TrackerFormatString = "{0}\nTime: {2:0.000}\nValue: {4:0.000}",
                 Color = color
             };
             plotModel.Series.Add(series);
+
+            /*
+            plotModel.Legends.Add(new OxyPlot.Legends.Legend
+            {
+                LegendPosition = OxyPlot.Legends.LegendPosition.TopCenter,
+                LegendTextColor = color
+            });
+            */
+
             return plotModel;
         }
-        private void SetYAxis(PlotModel plotModel, double min, double max, string title = "Y Axis")
+        private void SetYAxis(PlotModel plotModel, double min, double max, string title = "Value")
         {
             var yAxis = new LinearAxis
             {
@@ -154,11 +166,13 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
                 UpdatePlotData(MotorSpeedPlotModel, data.Time / 1000.0, data.MotorSpeed.Value);
 
                 // Dinamik olarak Y ekseni sınırlarını ayarla
+                AdjustYAxis(VibrationPlotModel);
                 AdjustYAxis(CurrentPlotModel);
                 AdjustYAxis(VoltagePlotModel);
                 AdjustYAxis(TorquePlotModel);
                 AdjustYAxis(ThrustPlotModel);
                 AdjustYAxis(MotorSpeedPlotModel);
+                AdjustYAxisToEightDivisions(VibrationPlotModel);
                 AdjustYAxisToEightDivisions(CurrentPlotModel);
                 AdjustYAxisToEightDivisions(VoltagePlotModel);
                 AdjustYAxisToEightDivisions(TorquePlotModel);

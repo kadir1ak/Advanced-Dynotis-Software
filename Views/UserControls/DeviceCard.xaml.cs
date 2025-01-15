@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OxyPlot;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,19 @@ namespace Advanced_Dynotis_Software.Views.UserControls
         public DeviceCard()
         {
             InitializeComponent();
+            // Yeni bir PlotController oluştur
+            var controller = new PlotController();
+
+            // Fare tekerleği olaylarını devre dışı bırak
+            controller.UnbindMouseWheel();
+
+            // Tüm PlotView kontrolleri için kontrolörü ayarla
+            MotorSpeedPlot.Controller = controller;
+            ThrustPlot.Controller = controller;
+            TorquePlot.Controller = controller;
+            VoltagePlot.Controller = controller;
+            CurrentPlot.Controller = controller;
+            VibrationPlot.Controller = controller;
         }
     }
 }
