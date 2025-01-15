@@ -27,8 +27,8 @@ namespace Advanced_Dynotis_Software.ViewModels.Main
         private readonly object _dataLock = new();
         private CancellationTokenSource _cancellationTokenSource;
         private int SaveTimeMillisecond = 10; // 100 Hz (10ms)
-        private int UpdateTimeMillisecond = 40; // 25 Hz (50ms)
-        private int ChartUpdateTimeMillisecond = 10; // 100 Hz (10ms)
+        private int UpdateTimeMillisecond = 20; // 50 Hz (20ms)
+        private int ChartUpdateTimeMillisecond = 5; // 200 Hz (2ms)
         public Dynotis Device
         {
             get => _device;
